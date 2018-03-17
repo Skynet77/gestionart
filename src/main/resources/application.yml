@@ -1,0 +1,16 @@
+spring:
+  datasource: 
+    url: jdbc:postgresql://localhost:5432/gestionart
+    username: postgres
+    password: postgre
+  
+  jpa: 
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        
