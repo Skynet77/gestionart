@@ -98,6 +98,14 @@ public class Cliente {
 	public void setEstado(char estado) {
 		this.estado = estado;
 	}
+
+	@Override
+	public String toString() {
+		return "Cliente [idCliente=" + idCliente + ", nombre=" + nombre + ", apellido=" + apellido + ", ruc=" + ruc
+				+ ", nroTelefono=" + nroTelefono + ", correoElectronico=" + correoElectronico + ", direccion="
+				+ direccion + ", estado=" + estado + "]";
+	}
+	
 	
 	
 	

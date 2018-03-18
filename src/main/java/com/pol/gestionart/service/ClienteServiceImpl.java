@@ -20,4 +20,11 @@ public class ClienteServiceImpl implements ClienteService {
 		return clienteDao.findAll();
 	}
 
+
+	@Override
+	public boolean agregarCliente(Cliente cliente) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

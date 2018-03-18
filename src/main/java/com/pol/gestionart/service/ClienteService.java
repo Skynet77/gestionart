@@ -6,5 +6,7 @@ import com.pol.gestionart.entity.Cliente;
 
 public interface ClienteService {
 	public abstract List<Cliente> listarClientes();
+	
+	public boolean agregarCliente(Cliente cliente);
 
 }
