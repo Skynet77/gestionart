@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Producto</title>
+</head>
+<body>
+	<table>
+		<thead>
+			<tr>
+				<th>Tipo Producto</th>
+				<th>Descripcion</th>
+				<th>Marca</th>
+				<th>Capacidad</th>
+				<th>Precio De Compra</th>
+				<th>Precio de Venta</th>
+				<th>IVA</th>
+			</tr>
+		</thead>
+		<tbody>
+<!-- 		productos de model and view -->
+			<tr th:each="producto : ${producto}"> 
+				<th><span th:text="${producto.tipoProducto}"> </span></th>
+				<th><span th:text="${producto.descripcion}"> </span></th>
+				<th><span th:text="${producto.marca}"> </span></th>
+				<th><span th:text="${producto.capacidad}"> </span></th>
+				<th><span th:text="${producto.precioCompra}"> </span></th>
+				<th><span th:text="${producto.precioVenta}"> </span></th>
+				<th><span th:text="${producto.iva}"> </span></th>
+			</tr>
+		</tbody>
+	</table>
+
+</body>
+</html>
