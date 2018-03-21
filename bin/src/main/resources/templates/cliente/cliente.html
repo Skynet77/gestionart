@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>Cliente</title>
+</head>
+<body>
+	<table>
+		<thead>
+			<tr>
+				<th>Ruc</th>
+				<th>Nombre</th>
+				<th>Apellido</th>
+				<th>Direccion</th>
+				<th>Numero de Telefono</th>
+				<th>Correo Electronico</th>
+				<th>Estado</th>
+			</tr>
+		</thead>
+		<tbody>
+<!-- 		clientes de model and view -->
+			<tr th:each="cliente : ${clientes}"> 
+				<th><span th:text="${cliente.ruc}"> </span></th>
+				<th><span th:text="${cliente.nombre}"> </span></th>
+				<th><span th:text="${cliente.apellido}"> </span></th>
+				<th><span th:text="${cliente.direccion}"> </span></th>
+				<th><span th:text="${cliente.nroTelefono}"> </span></th>
+				<th><span th:text="${cliente.correoElectronico}"> </span></th>
+				<th><span th:text="${cliente.estado}"> </span></th>
+			</tr>
+		</tbody>
+	</table>
+
+</body>
+</html>
