@@ -29,4 +29,19 @@ public class ClienteServiceImpl implements ClienteService {
 		return false;
 	}
 
+
+	@Override
+	public boolean modificarCliente(Cliente cliente) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public void eliminarCliente(String id) {
+		clienteDao.deleteById(id);
+		
+	}
+
+
 }

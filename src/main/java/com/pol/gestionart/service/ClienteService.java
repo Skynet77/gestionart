@@ -9,4 +9,7 @@ public interface ClienteService {
 	
 	public boolean agregarCliente(Cliente cliente);
 
+	public boolean modificarCliente(Cliente cliente);
+
+	public void eliminarCliente(String id);
 }
