@@ -8,10 +8,12 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import com.pol.gestionart.bean.GenericEntity;
+
 
 @Entity
 @Table 
-public class Cliente {
+public class Cliente extends GenericEntity{
 	
 	private static final String SECUENCIA = "cliente_id_seq";
 
@@ -104,6 +106,18 @@ public class Cliente {
 		return "Cliente [idCliente=" + idCliente + ", nombre=" + nombre + ", apellido=" + apellido + ", ruc=" + ruc
 				+ ", nroTelefono=" + nroTelefono + ", correoElectronico=" + correoElectronico + ", direccion="
 				+ direccion + ", estado=" + estado + "]";
+	}
+
+	@Override
+	public Long getId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setId(Long id) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

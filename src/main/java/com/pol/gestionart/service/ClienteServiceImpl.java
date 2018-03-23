@@ -11,13 +11,15 @@ import com.pol.gestionart.entity.Cliente;
 @Service
 public class ClienteServiceImpl implements ClienteService {
 	
+	@SuppressWarnings("unused")
 	@Autowired
 	private ClienteDao clienteDao;
 	
 
 	@Override
 	public List<Cliente> listarClientes() {
-		return clienteDao.findAll();
+//		return clienteDao.findAll();
+		return null;
 	}
 
 

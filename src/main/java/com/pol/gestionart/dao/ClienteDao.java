@@ -7,7 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import com.pol.gestionart.entity.Cliente;
 
-@Repository
-public interface ClienteDao extends JpaRepository <Cliente,Serializable>{
+
+//public interface ClienteDao extends JpaRepository <Cliente,Serializable>{
+public interface ClienteDao extends Dao<Cliente>{
 
 }
