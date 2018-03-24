@@ -19,7 +19,7 @@ import com.pol.gestionart.service.UsuarioServiceImpl;
 
 public class UsuarioController {
 	
-	private static final String USUARIO_VIEW = "/usuario/usuario";
+	private static final String USUARIO_VIEW = "/usuario";
 	
 	private static final Log LOG = LogFactory.getLog(UsuarioController.class);
 	
