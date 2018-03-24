@@ -19,6 +19,8 @@ import com.pol.gestionart.controller.list.ClienteListController;
 import com.pol.gestionart.dao.ClienteDao;
 import com.pol.gestionart.dao.Dao;
 import com.pol.gestionart.entity.Cliente;
+import com.pol.gestionart.service.ClienteService;
+import com.pol.gestionart.service.Service;
 
 
 
@@ -28,7 +30,7 @@ import com.pol.gestionart.entity.Cliente;
 public class ClienteFormController extends FormController<Cliente> {
 
 	@Autowired
-	private ClienteDao clienteDao;
+	private ClienteService clienteService;
 	
 
 	@Autowired
@@ -57,14 +59,9 @@ public class ClienteFormController extends FormController<Cliente> {
 		map.addAttribute("columnasPersona", clienteList.getColumnasPersona());
 		map.addAttribute("columnasStrPersona", clienteList.getColumnasStr(clienteList.getColumnasPersona()));
 		
-		map.addAttribute("personaList", clienteDao.getList(0, 100, null));
+		map.addAttribute("personaList", clienteService.getList(0, 100, null));
 
 		super.agregarValoresAdicionales(map);
-	}
-
-	@Override
-	public Dao<Cliente> getDao() {
-		return clienteDao;
 	}
 
 	@RequestMapping(value = "accion2", method = RequestMethod.POST)
@@ -83,6 +80,12 @@ public class ClienteFormController extends FormController<Cliente> {
 		}
 		return getTemplatePath();
 
+	}
+
+	@Override
+	public Service<Cliente> getService() {
+
+		return clienteService;
 	}
 
 	/*

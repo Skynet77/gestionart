@@ -26,29 +26,29 @@ public class ClienteController {
 	@Autowired
 	private ClienteServiceImpl clienteService;
 	
-	@GetMapping("/listar")
-	public ModelAndView listarClientes() {
-		LOG.info("Call: " + "listarClientes()");
-		ModelAndView mav = new ModelAndView(CLIENTE_VIEW);
-		mav.addObject("clientes",clienteService.listarClientes());
-		return mav;
-	}
-	
-	@PostMapping("/agregarCliente")
-	public String agregarCliente(@ModelAttribute("cliente") Cliente cliente, Model model) {
-		LOG.info("Call: " + "agregarCliente()");
-		clienteService.agregarCliente(cliente);
-//		model.addAttribute(arg0, arg1)
-		return "redirect:/cliente/listar"; //nombre del mapping
-		
-	}
-	
-	@RequestMapping("/eliminarCliente")
-	public String eliminarCliente(@PathVariable String Id) {
-		LOG.info("Call: " + "eliminarCliente()");
-		clienteService.eliminarCliente(Id);
-		return "redirect:/products";
-		
-	}
+//	@GetMapping("/listar")
+//	public ModelAndView listarClientes() {
+//		LOG.info("Call: " + "listarClientes()");
+//		ModelAndView mav = new ModelAndView(CLIENTE_VIEW);
+//		mav.addObject("clientes",clienteService.listarClientes());
+//		return mav;
+//	}
+//	
+//	@PostMapping("/agregarCliente")
+//	public String agregarCliente(@ModelAttribute("cliente") Cliente cliente, Model model) {
+//		LOG.info("Call: " + "agregarCliente()");
+//		clienteService.agregarCliente(cliente);
+////		model.addAttribute(arg0, arg1)
+//		return "redirect:/cliente/listar"; //nombre del mapping
+//		
+//	}
+//	
+//	@RequestMapping("/eliminarCliente")
+//	public String eliminarCliente(@PathVariable String Id) {
+//		LOG.info("Call: " + "eliminarCliente()");
+//		clienteService.eliminarCliente(Id);
+//		return "redirect:/products";
+//		
+//	}
 
 }
