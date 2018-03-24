@@ -8,7 +8,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
-import com.pol.gestionart.bean.GenericEntity;
+import com.pol.gestionart.main.GenericEntity;
 
 
 @Entity

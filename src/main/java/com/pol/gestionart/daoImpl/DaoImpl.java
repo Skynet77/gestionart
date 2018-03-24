@@ -1,5 +1,8 @@
 package com.pol.gestionart.daoImpl;
 
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 import java.util.List;
@@ -7,156 +10,123 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.pol.gestionart.bean.GenericEntity;
 import com.pol.gestionart.dao.Dao;
+import com.pol.gestionart.main.GenericEntity;
 
-
-
-//para que po lo menos tenga emetodo getId()
-public abstract class DaoImpl<T extends GenericEntity> implements Dao<T> {
-
+public abstract class DaoImpl<T extends GenericEntity> implements Dao<T>{
+	
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
-
-	@Autowired
+	
+	@Autowired 
 	protected EntityManager entityManager;
 	private String entityName;
 	private Class<T> entityClass;
-
+	
 	@Transactional
 	@Override
 	public void create(T obj) {
-
-		logger.info("Insertando registro {}", obj);
+		
+		logger.info("Insertando registro {} ", obj);
 		entityManager.persist(obj);
 		entityManager.flush();
 	}
-
-	@Transactional
-	@Override
+	
+	@Transactional 
+	@Override 
 	public void createOrUpdate(T obj) {
-
-		logger.info("Insertando registro {}", obj);
+		
+		logger.info("Insertando registro {}",obj);
 		entityManager.merge(obj);
 		entityManager.flush();
 	}
-
+	
 	@Transactional
 	@Override
 	public void edit(T obj) {
-		logger.info("Editando registro {}", obj);
+		logger.info("Editando registro {}",obj);
 		entityManager.merge(obj);
-
 	}
-
+	
 	@Transactional
 	@Override
 	public T find(Long id) {
-		logger.info("Buscando registro con id: {}", id);
+		logger.info("Buscando un registro con id: {}", id);
 		return entityManager.find(getEntityClass(), id);
-
 	}
-
+	
 	@Transactional
 	@Override
 	public void destroy(T obj) {
-		logger.info("Borrando registro {}", obj);
+		logger.info("Borrando Registro {}",obj);
 		entityManager.remove(find(obj.getId()));
-
 	}
-
-	/**
-	 * @param sSearch
-	 *            es el texto a buscar por cada registro.
-	 *
-	 *            <code>
-	*
-	Suponiendo que se busca 'JUAN PEREZ', entonces se
-	*
-	generará la siguiente consulta
-	*
-	*
-	SELECT *
-	*
-	FROM persona
-	*
-	WHERE lower(cedula||nombre||apellido) LIKE lower('%juan%perez%')
-	*
-	*
-	La búsqueda se hace en los campos cedula, nombre y apellido
-	* </code>
-	 **/
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public List<T> obtenerListadoPorFiltro(Integer filaInicio, Integer filaFin, String sSearch) {
+	public List<T> getList(Integer filaInicio, Integer filaFin, String sSearch){
 		logger.info("Obteniendo lista de personas, sSearch: {}", sSearch);
-
+		
 		String sql = "SELECT object(#ENTITY#) FROM #ENTITY# AS #ENTITY# ";
 		sql = sql.replace("#ENTITY#", getEntityName());
 		Query query = null;
-		// Usuario no envió ningún filtro
-
-		if (StringUtils.isBlank(sSearch)) {
+		//el usuario no ha enviado ningun filtro
+		
+		if (" ".equals(sSearch)) {
 			query = entityManager.createQuery(sql);
 		} else {
-			sql = sql + " WHERE lower(" + getCamposFiltrables() + ") LIKE lower(?1)";
+			sql = sql + "WHERE lower(" + getCamposFiltrables() + ")LIKE lower (?1)";
 			query = entityManager.createQuery(sql);
 			query.setParameter(1, "%" + sSearch.replace(" ", "%") + "%");
 		}
 		query.setFirstResult(filaInicio);
 		query.setMaxResults(filaFin);
 		List<T> list = query.getResultList();
-		logger.info("Cantidad de registros encontrados: {}", list);
-		return list;
+		logger.info("Cantidad de registros encontrados: {}",list);
+		return list;		
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public List<T> getListAll(String sSearch) {
-		logger.info("Obteniendo lista de {}, sSearch: {}",getEntityName(), sSearch);
-
-		String sql = "SELECT object(#ENTITY#) FROM #ENTITY# AS #ENTITY# ";
+	public List<T> getListAll(String sSearch){
+		logger.info("Obteniendo lista de {}, sSearch: {}", getEntityName(),sSearch);
+		
+		String sql = "SELECT object (#ENTITY#) FROM #ENTITY AS #ENTITY# ";
 		sql = sql.replace("#ENTITY#", getEntityName());
 		Query query = null;
-		// Usuario no envió ningún filtro
-
-		if (StringUtils.isBlank(sSearch)) {
+		
+		if (" ".equals(sSearch)) {
 			query = entityManager.createQuery(sql);
 		} else {
-			sql = sql + " WHERE lower(" + getCamposFiltrables() + ") LIKE lower(?1)";
+			sql = sql + "WHERE lower(" + getCamposFiltrables() + ") + LIKE lower(?1)";
 			query = entityManager.createQuery(sql);
 			query.setParameter(1, "%" + sSearch.replace(" ", "%") + "%");
 		}
 		List<T> list = query.getResultList();
-		logger.info("Cantidad de registros encontrados: {}", list);
+		logger.info("Cantidad de registros encontrados): {}", list);
 		return list;
 	}
-
+	
 	public abstract String getCamposFiltrables();
-
+	
 	public String getEntityName() {
 		if (entityName == null) {
 			Entity entity = getEntityClass().getAnnotation(Entity.class);
 			if (entity.name() == null || entity.name().compareTo("") == 0) {
 				entityName = getEntityClass().getSimpleName();
-			} else {
+			}else 
 				entityName = entity.name();
-			}
 		}
 		return entityName;
 	}
-
+	
 	@SuppressWarnings("unchecked")
-	public Class<T> getEntityClass() {
+	public Class<T> getEntityClass(){
 		if (entityClass == null) {
 			ParameterizedType superClass = (ParameterizedType) this.getClass().getGenericSuperclass();
 			logger.info(String.valueOf(this.getClass()));
@@ -164,11 +134,45 @@ public abstract class DaoImpl<T extends GenericEntity> implements Dao<T> {
 		}
 		return entityClass;
 	}
-
+	
 	protected void initializeCollection(Collection<?> collection) {
 		if (collection == null) {
 			return;
 		}
 		collection.iterator().hasNext();
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -39,7 +39,7 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Override
 	public void eliminarCliente(String id) {
-		clienteDao.deleteById(id);
+		//clienteDao.deleteById(id);
 		
 	}
 
