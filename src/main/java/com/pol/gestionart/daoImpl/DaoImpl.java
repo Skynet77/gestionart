@@ -76,7 +76,7 @@ public abstract class DaoImpl<T extends GenericEntity> implements Dao<T>{
 		Query query = null;
 		//el usuario no ha enviado ningun filtro
 		
-		if (" ".equals(sSearch)) {
+		if (sSearch== null || "".equals(sSearch)) {
 			query = entityManager.createQuery(sql);
 		} else {
 			sql = sql + "WHERE lower(" + getCamposFiltrables() + ")LIKE lower (?1)";

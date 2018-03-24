@@ -13,7 +13,7 @@ public class ClienteDaoImpl extends DaoImpl<Cliente> implements ClienteDao{
 	@Override
 	public String getCamposFiltrables() {
 		// TODO Auto-generated method stub
-		return null;
+		return "";
 	}
 
 }

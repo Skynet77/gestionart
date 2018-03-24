@@ -2,6 +2,7 @@ package com.pol.gestionart.bean;
 
 import java.util.List;
 
+import com.pol.gestionart.validation.ErrorCampo;
 
 public class Respuesta<T> {
 
