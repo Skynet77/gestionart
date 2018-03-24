@@ -1,4 +1,4 @@
-package com.pol.gestionart.controllers.list;
+package com.pol.gestionart.controller.list;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pol.gestionart.bean.DataTable;
-import com.pol.gestionart.bean.SesionUsuario;
+import com.pol.gestionart.main.SesionUsuario;
 import com.pol.gestionart.dao.Dao;
 
 
@@ -29,13 +29,12 @@ public abstract class ListController<T> {
 			@RequestParam(required = false, defaultValue = "0") Integer iDisplayStart,
 			@RequestParam(required = false, defaultValue = "10") Integer iDisplayLength) {
 
-		logger.info("json?sSearch={}, iDisplayStart={}, iDisplayLength={}",
+			logger.info("json?sSearch={}, iDisplayStart={}, iDisplayLength={}",
 				new Object[] { sSearch, iDisplayStart, iDisplayLength });
 
 		try {
 			DataTable<T> dt = new DataTable<>();
-			List<T> list = null; 
-//					getDao().obtenerListadoPorFiltro(iDisplayStart, iDisplayStart + iDisplayLength, sSearch);
+			List<T> list = getDao().getList(iDisplayStart, iDisplayStart + iDisplayLength, sSearch); 
 			Long size = Long.valueOf(list.size());
 			dt.setRecordsTotal(size);
 			dt.setAaData(list);

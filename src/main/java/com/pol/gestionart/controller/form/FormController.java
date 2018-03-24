@@ -21,8 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.pol.gestionart.main.GenericEntity;
 import com.pol.gestionart.main.Message;
 import com.pol.gestionart.main.SesionUsuario;
-
-import com.pol.gestionart.controllers.Respuesta;
+import com.pol.gestionart.bean.Respuesta;
 import com.pol.gestionart.dao.Dao;
 import com.pol.gestionart.security.Usuario;
 
@@ -107,7 +106,7 @@ public abstract class FormController<T extends GenericEntity>{
 		return getTemplatePath();
 	}
 	
-	@RequestMapping("delet/{id}")
+	@RequestMapping("delete/{id}")
 	public String delete(ModelMap map, @PathVariable Long id) {
 		try {
 			T obj = getDao().find(id);
