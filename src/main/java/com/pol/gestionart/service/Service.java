@@ -2,15 +2,8 @@ package com.pol.gestionart.service;
 
 import java.util.List;
 
-import com.pol.gestionart.entity.Cliente;
-
 public interface Service<T> {
-	
-	/**
-	 * Inserta un registro en la base de datos
-	 */
 	void create(T obj);
-
 	void createOrUpdate(T obj);
 
 	/**
@@ -37,9 +30,5 @@ public interface Service<T> {
 	List<T> getList(Integer filaInicio, Integer filaFin, String sSearch);
 
 	List<T> getListAll(String sSearch);
-
-	void create(Cliente cliente);
-
-
-	
 }
+

@@ -24,6 +24,7 @@ import com.pol.gestionart.main.SesionUsuario;
 import com.pol.gestionart.bean.Respuesta;
 import com.pol.gestionart.dao.Dao;
 import com.pol.gestionart.security.Usuario;
+import com.pol.gestionart.service.Service;
 
 
 
@@ -71,10 +72,10 @@ public abstract class FormController<T extends GenericEntity>{
 				map.addAttribute("errorList", errores);
 			} else {
 				if (obj.getId() == null) {
-					getDao().edit(obj);
+					getService().edit(obj);
 					map.addAttribute("msgExito", msg.get("registro agregado"));
 				} else {
-					getDao().edit(obj);
+					getService().edit(obj);
 					map.addAttribute("msgExito", msg.get("Registro actualizado"));
 				}
 				
@@ -91,7 +92,7 @@ public abstract class FormController<T extends GenericEntity>{
 	@RequestMapping("edit/{id}")
 	public String edit (ModelMap map, @PathVariable Long id) {
 		try {
-			T obj = getDao().find(id);
+			T obj = getService().find(id);
 			if (obj == null) {
 				map.addAttribute("error", "No se encontraron registros con el id "+ id);
 				obj = getNuevaInstancia();
@@ -109,11 +110,11 @@ public abstract class FormController<T extends GenericEntity>{
 	@RequestMapping("delete/{id}")
 	public String delete(ModelMap map, @PathVariable Long id) {
 		try {
-			T obj = getDao().find(id);
+			T obj = getService().find(id);
 			if (obj == null) {
 				map.addAttribute("error", "No se han encontrado registros con el id: " + id);
 			} else {
-				getDao().destroy(obj);
+				getService().destroy(obj);
 				obj = getNuevaInstancia();
 				map.addAttribute(getNombreObjeto(), obj);
 				logger.info("registro eliminado");
@@ -165,7 +166,7 @@ public abstract class FormController<T extends GenericEntity>{
 		Respuesta<T> resp = new Respuesta<>();
 
 		try {
-			T obj = getDao().find(id);
+			T obj = getService().find(id);
 			if (obj == null) {
 				throw new Exception("No se encontró usuario");
 			}
@@ -179,7 +180,8 @@ public abstract class FormController<T extends GenericEntity>{
 		return resp;
 	}
 
-	public abstract Dao<T> getDao();
+//	public abstract Dao<T> getService();
+	public abstract Service<T> getService();
 }
 
 
