@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <title>Usuario</title>
 </head>
 <body>
 	<table>
-		<thear>
+		<thead>
 			<tr>
 				<th>Rol</th>
 				<th>Alias</th>
 				<th>Estado</th>
 			</tr>
-		</thear>
+		</thead>
 		<tbody>
 			<tr th:each="usuario : ${usuario}">
-				<th><span th:text="{usuario.rol}"></th>
-				<th><span th:text="{usuario.alias}"></th>
-				<th><span th:text="{usuario.estado}"></th>
+				<th><span th:text="{usuario.rol}">Rol</span></th>
+				<th><span th:text="{usuario.alias}">Alias</span></span></th>
+				<th><span th:text="{usuario.estado}">Estado</span></th>
 			</tr>
 		</tbody>
 	</table>
