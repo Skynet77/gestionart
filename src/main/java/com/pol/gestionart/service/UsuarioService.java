@@ -6,7 +6,9 @@ public interface UsuarioService {
 	
 	Iterable <Usuario> listAllUsers();
 	
-	Usuario saveUser(Usuario usuario);
+	Usuario addUser(Usuario usuario);
+	
+	Usuario updateUser(Usuario usuario);
 	
 	void deleteUser(String Id);
 

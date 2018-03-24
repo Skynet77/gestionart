@@ -27,23 +27,23 @@ public class UsuarioController {
 	private UsuarioServiceImpl usuarioService;
 	
 	@GetMapping("/listar")
-	public ModelAndView listarProductos(){
-		LOG.info("Call: "+ "listarUsuarios()");
+	public ModelAndView listAllUsers(){
+		LOG.info("Call: "+ "listAllUsers()");
 		ModelAndView mav = new ModelAndView(USUARIO_VIEW);
 		mav.addObject("usuario", usuarioService.listAllUsers());
 		return mav;
 	}
 	
 	@PostMapping("/crearUsuario")
-	public String crearUsuario(@ModelAttribute("usuario") Usuario usuario) {
-		LOG.info("Call: " + "agregarUsuario()");
-		usuarioService.saveUser(usuario);
+	public String addUser(@ModelAttribute("usuario") Usuario usuario) {
+		LOG.info("Call: " + "addUser()" + " -- Param: " + usuario.toString());
+		usuarioService.addUser(usuario);
 		return "redirect:/usuario/listar";
 	}
 	
 	@RequestMapping("/eliminarUsuario")
-	public String eliminarUsuario(@PathVariable String Id) {
-		LOG.info("Call: " + "eliminarUsuario()");
+	public String deleteUser(@PathVariable String Id) {
+		LOG.info("Call: " + "deleteUser()");
 		usuarioService.deleteUser(Id);
 		return "redirect:/usuario";
 		

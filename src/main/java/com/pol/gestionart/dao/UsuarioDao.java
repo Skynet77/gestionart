@@ -10,5 +10,5 @@ import com.pol.gestionart.entity.Usuario;
 
 @Repository
 public interface UsuarioDao extends JpaRepository <Usuario, Serializable> {
-
+	
 }
