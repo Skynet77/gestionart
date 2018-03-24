@@ -4,6 +4,7 @@ import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,9 +35,10 @@ public class ClienteController {
 	}
 	
 	@PostMapping("/agregarCliente")
-	public String agregarCliente(@ModelAttribute("cliente") Cliente cliente) {
+	public String agregarCliente(@ModelAttribute("cliente") Cliente cliente, Model model) {
 		LOG.info("Call: " + "agregarCliente()");
 		clienteService.agregarCliente(cliente);
+//		model.addAttribute(arg0, arg1)
 		return "redirect:/cliente/listar"; //nombre del mapping
 		
 	}
