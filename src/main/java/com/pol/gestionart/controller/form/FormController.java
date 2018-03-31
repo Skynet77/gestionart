@@ -72,7 +72,7 @@ public abstract class FormController<T extends GenericEntity>{
 				map.addAttribute("errorList", errores);
 			} else {
 				if (obj.getId() == null) {
-					getDao().edit(obj);
+					getDao().create(obj);
 					map.addAttribute("msgExito", msg.get("registro agregado"));
 				} else {
 					getDao().edit(obj);

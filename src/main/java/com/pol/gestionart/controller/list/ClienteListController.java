@@ -20,7 +20,7 @@ public class ClienteListController extends ListController<Cliente> {
 
 	@Override
 	public String[] getColumnas() {
-		return new String[] { "id", "persona.cedula_ruc", "persona.nombre_razonSocial", "persona.apellido" };
+		return new String[] { "id", "nombre", "apellido", "ruc", "nroTelefono", "correoElectronico", "direccion" };
 	}
 
 	@Override
@@ -29,6 +29,6 @@ public class ClienteListController extends ListController<Cliente> {
 	}
 
 	public String[] getColumnasPersona() {
-		return new String[] { "id", "cedula_ruc", "nombre_razonSocial", "apellido" };
+		return new String[] { "id", "cedula_ruc", "nombre_razonSocial", "apellido","estado" };
 	}
 }

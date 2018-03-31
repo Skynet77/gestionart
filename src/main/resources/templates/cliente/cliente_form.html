@@ -7,33 +7,60 @@
 			</div>
 			<!-- /.box-header -->
 			<!-- form start -->
-			<form role="form">
+			<form th:action="@{/cliente/accion}" th:object="${cliente}" method="post"
+		role="form" id="form-usuario">
 				<div class="box-body">
 					<div class="form-group">
-						<label for="exampleInputEmail1">Email address</label> <input
-							type="email" class="form-control" id="exampleInputEmail1"
-							placeholder="Enter email">
+						<label for="inputNombre">Nombre:</label> 
+						<input th:field="*{nombre}" type="text" class="form-control" id="nombre"
+							placeholder="Ingrese Nombre">
 					</div>
 					<div class="form-group">
-						<label for="exampleInputPassword1">Password</label> <input
-							type="password" class="form-control" id="exampleInputPassword1"
-							placeholder="Password">
+						<label for="exampleInputPassword1">Apellido:</label> 
+						<input th:field="*{apellido}" type="text" class="form-control" id="apellido"
+							placeholder="Ingrese su apellido">
 					</div>
 					<div class="form-group">
-						<label for="exampleInputFile">File input</label> <input
-							type="file" id="exampleInputFile">
-
-						<p class="help-block">Example block-level help text here.</p>
+						<label for="exampleInputFile">R.U.C./ C.I.:</label>
+						<input th:field="*{ruc}" type="text" class="form-control" id="ruc"
+							placeholder="Ingrese su RUC o CI">
 					</div>
-					<div class="checkbox">
-						<label> <input type="checkbox"> Check me out
-						</label>
+					<div class="form-group">
+						<label for="exampleInputFile">Teléfono / Cel.:</label>
+						<input th:field="*{nroTelefono}" type="text" class="form-control" id="telefono"
+							placeholder="Ingrese telefono o cel">
 					</div>
+					<div class="form-group">
+						<label for="exampleInputFile">Email:</label>
+						<input th:field="*{correoElectronico}" type="email" class="form-control" id="correoElectronico"
+							placeholder="correo@hotmail.com">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputFile">Dirección:</label>
+						<input th:field="*{direccion}" type="text" class="form-control" id="direccion"
+							placeholder="Ingrese dirección">
+					</div>		
+					<div class="form-group">
+	                  <div class="col-sm-offset-2 col-sm-10">
+	                    <div class="checkbox">
+	                      <label>
+	                        <input type="checkbox" th:field="*{estado}" value="f"> Activo?
+	                      </label>
+	                    </div>
+	                  </div>
+                	</div>
 				</div>
 				<!-- /.box-body -->
 
 				<div class="box-footer">
-					<button type="submit" class="btn btn-primary">Submit</button>
+					<div class="form-group col-xs-12 col-sm-12 modal-footer" th:fragment="footerModal">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+						<button type="submit" class="btn btn-primary" name="accion" >Guardar</button>
+						<button type="submit" class="btn btn-primary hidden" name="accion" id="edit"
+							value="edit">Confirmar</button>
+						<button type="submit" class="btn btn-primary hidden" name="accion" id="delete"
+							value="delete">Eliminar</button>
+					</div>
 				</div>
 			</form>
 		</div>

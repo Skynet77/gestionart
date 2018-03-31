@@ -20,7 +20,7 @@ public class Cliente extends GenericEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SECUENCIA)
 	@SequenceGenerator(name = SECUENCIA, sequenceName = SECUENCIA)
-	private Long idCliente;
+	private Long id;
 	
 	@Size(max = 50)
 	private String nombre;
@@ -43,7 +43,7 @@ public class Cliente extends GenericEntity{
 	public Cliente(Long idCliente, String nombre, String apellido, String ruc, String nroTelefono, String correoElectronico,
 		String direccion, char estado) {
 		super();
-		this.idCliente = idCliente;
+		this.id = idCliente;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.ruc = ruc;
@@ -52,12 +52,7 @@ public class Cliente extends GenericEntity{
 		this.direccion = direccion;
 		this.estado = estado;
 	}
-	public Long getIdCliente() {
-		return idCliente;
-	}
-	public void setIdCliente(Long idCliente) {
-		this.idCliente = idCliente;
-	}
+
 	public String getNombre() {
 		return nombre;
 	}
@@ -103,21 +98,19 @@ public class Cliente extends GenericEntity{
 
 	@Override
 	public String toString() {
-		return "Cliente [idCliente=" + idCliente + ", nombre=" + nombre + ", apellido=" + apellido + ", ruc=" + ruc
+		return "Cliente [idCliente=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", ruc=" + ruc
 				+ ", nroTelefono=" + nroTelefono + ", correoElectronico=" + correoElectronico + ", direccion="
 				+ direccion + ", estado=" + estado + "]";
 	}
 
 	@Override
 	public Long getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return id;
 	}
 
 	@Override
 	public void setId(Long id) {
-		// TODO Auto-generated method stub
-		
+		this.id = id;
 	}
 	
 	
