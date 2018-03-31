@@ -30,7 +30,7 @@ import com.pol.gestionart.service.Service;
 public class ClienteFormController extends FormController<Cliente> {
 
 	@Autowired
-	private ClienteService clienteService;
+	private ClienteDao clienteDao;
 	
 
 	@Autowired
@@ -39,7 +39,7 @@ public class ClienteFormController extends FormController<Cliente> {
 	
 	@Override
 	public String getTemplatePath() {
-		return "";
+		return "cliente/cliente_index";
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class ClienteFormController extends FormController<Cliente> {
 		map.addAttribute("columnasPersona", clienteList.getColumnasPersona());
 		map.addAttribute("columnasStrPersona", clienteList.getColumnasStr(clienteList.getColumnasPersona()));
 		
-		map.addAttribute("personaList", clienteService.getList(0, 100, null));
+		map.addAttribute("personaList", getDao().getList(0, 100, null));
 
 		super.agregarValoresAdicionales(map);
 	}
@@ -83,10 +83,10 @@ public class ClienteFormController extends FormController<Cliente> {
 	}
 
 	@Override
-	public Service<Cliente> getService() {
-
-		return clienteService;
+	public Dao<Cliente> getDao() {
+		return clienteDao;
 	}
+
 
 	/*
 	@RequestMapping(value = "save_listado", method = RequestMethod.POST)

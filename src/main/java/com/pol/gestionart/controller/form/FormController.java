@@ -72,10 +72,10 @@ public abstract class FormController<T extends GenericEntity>{
 				map.addAttribute("errorList", errores);
 			} else {
 				if (obj.getId() == null) {
-					getService().edit(obj);
+					getDao().edit(obj);
 					map.addAttribute("msgExito", msg.get("registro agregado"));
 				} else {
-					getService().edit(obj);
+					getDao().edit(obj);
 					map.addAttribute("msgExito", msg.get("Registro actualizado"));
 				}
 				
@@ -92,7 +92,7 @@ public abstract class FormController<T extends GenericEntity>{
 	@RequestMapping("edit/{id}")
 	public String edit (ModelMap map, @PathVariable Long id) {
 		try {
-			T obj = getService().find(id);
+			T obj = getDao().find(id);
 			if (obj == null) {
 				map.addAttribute("error", "No se encontraron registros con el id "+ id);
 				obj = getNuevaInstancia();
@@ -110,11 +110,11 @@ public abstract class FormController<T extends GenericEntity>{
 	@RequestMapping("delete/{id}")
 	public String delete(ModelMap map, @PathVariable Long id) {
 		try {
-			T obj = getService().find(id);
+			T obj = getDao().find(id);
 			if (obj == null) {
 				map.addAttribute("error", "No se han encontrado registros con el id: " + id);
 			} else {
-				getService().destroy(obj);
+				getDao().destroy(obj);
 				obj = getNuevaInstancia();
 				map.addAttribute(getNombreObjeto(), obj);
 				logger.info("registro eliminado");
@@ -166,7 +166,7 @@ public abstract class FormController<T extends GenericEntity>{
 		Respuesta<T> resp = new Respuesta<>();
 
 		try {
-			T obj = getService().find(id);
+			T obj = getDao().find(id);
 			if (obj == null) {
 				throw new Exception("No se encontró usuario");
 			}
@@ -180,8 +180,7 @@ public abstract class FormController<T extends GenericEntity>{
 		return resp;
 	}
 
-//	public abstract Dao<T> getService();
-	public abstract Service<T> getService();
+	public abstract Dao<T> getDao();
 }
 
 
