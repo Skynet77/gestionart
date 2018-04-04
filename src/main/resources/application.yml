@@ -3,7 +3,11 @@ spring:
     url: jdbc:postgresql://localhost:5432/gestionart
     username: postgres
     password: luis1994
-  
+  messages:
+    basename: Messages
+    encoding: UTF-8
+  thymeleaf:
+    encoding: UTF-8
   jpa: 
     show-sql: true
     hibernate:

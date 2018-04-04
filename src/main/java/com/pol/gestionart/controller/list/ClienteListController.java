@@ -20,7 +20,7 @@ public class ClienteListController extends ListController<Cliente> {
 
 	@Override
 	public String[] getColumnas() {
-		return new String[] { "id", "nombre", "apellido", "ruc", "nroTelefono", "correoElectronico", "direccion" };
+		return new String[] { "id", "nombre", "apellido", "ruc", "nroTelefono", "correoElectronico" };
 	}
 
 	@Override
