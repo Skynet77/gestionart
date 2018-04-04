@@ -40,7 +40,7 @@ public abstract class FormController<T extends GenericEntity>{
 	@Autowired
 	private SesionUsuario sesionUsuario;
 	
-	@RequestMapping
+	@RequestMapping("")
 	public String index(ModelMap map) {
 		
 		map.addAttribute(getNombreObjeto(), getNuevaInstancia());
