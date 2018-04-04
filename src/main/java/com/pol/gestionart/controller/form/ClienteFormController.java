@@ -56,7 +56,7 @@ public class ClienteFormController extends FormController<Cliente> {
 	public void agregarValoresAdicionales(ModelMap map) {
 		map.addAttribute("columnas", clienteList.getColumnas());
 		map.addAttribute("columnasStr", clienteList.getColumnasStr(null));
-		map.addAttribute("personaList", getDao().getList(0, 100, null));
+		map.addAttribute("clienteList", getDao().getList(0, 100, null));
 		map.addAttribute("cliente", new Cliente());
 		super.agregarValoresAdicionales(map);
 	}

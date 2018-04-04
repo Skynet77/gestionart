@@ -56,8 +56,9 @@
 
 				<div class="box-footer">
 					<div class="form-group col-xs-12 col-sm-12 modal-footer" th:fragment="footerModal">
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 						<button type="submit" class="btn btn-primary" name="accion" >Guardar</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+						
 						<button type="submit" class="btn btn-primary hidden" name="accion" id="edit"
 							value="edit">Confirmar</button>
 						<button type="submit" class="btn btn-primary hidden" name="accion" id="delete"
@@ -71,7 +72,7 @@
 	<div class="col-md-6">
 		<div class="box">
 			<div class="box-header">
-				<h3 class="box-title">Listado de clientes</h3>
+				<h3 class="box-title">Lista de Clientes</h3>
 			</div>
 			<!-- /.box-header -->
 			<div class="box-body">
@@ -91,6 +92,39 @@
 
 		<!-- /.box -->
 	</div>
+	
+	<div class="modal fade" id="borradoPopup" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<form th:object="${cliente}" th:action="@{/cliente/eliminar}"
+				method="post" role="form" id="idCliente">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">&times;</button>
+							<h4 class="modal-title" id="myModalLabel">Borrado de
+								Registro</h4>
+						</div>
+						<div class="modal-body">
+							�Desea borrar registro de forma permanente? <input
+								type="hidden" for="id_objeto" id="id_objeto" name="id_objeto" />
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Cancelar</button>
+							<button type="submit" class="btn btn-primary" name="accion"
+								value="delete">Confirmar</button>
+						</div>
+
+					</div>
+					<!-- /.modal-content -->
+				</div>
+			</form>
+			<!-- /.modal-dialog -->
+		</div>
+		<!-- FIN Modal borrar -->
+		
+	
 
 
 	
