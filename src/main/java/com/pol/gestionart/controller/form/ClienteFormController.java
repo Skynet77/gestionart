@@ -142,18 +142,18 @@ public class ClienteFormController extends FormController<Cliente> {
 		agregarValoresAdicionales(map);
 		return getTemplatePath();
 
-	}
+	}*/
 
+	//metodo eliminar cliente
 	@RequestMapping(value = "eliminar_listado", method = RequestMethod.POST)
 	public String eliminar_listado(ModelMap map, @RequestParam("id_objeto") Long id_objeto) {
 		Cliente cliente = new Cliente();
-		Persona persona = null;
 		try {
 			logger.info("ID DE OBJ {}", id_objeto);
 			if (id_objeto != null) {
 				cliente = getDao().find(id_objeto);
-				cliente.getPersona().setDisponible("SI");
-				personaDao.edit(cliente.getPersona());
+				cliente.setEstado('A');
+				clienteDao.edit(cliente);
 				clienteDao.destroy(cliente);
 				logger.info("Cliente eliminado {}", cliente);
 				map.addAttribute("msgExito", msg.get("Registro Eliminado"));
@@ -170,6 +170,5 @@ public class ClienteFormController extends FormController<Cliente> {
 		return getTemplatePath();
 
 	}
-	*/
 
 }
