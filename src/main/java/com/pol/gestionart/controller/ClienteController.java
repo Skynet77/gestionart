@@ -34,21 +34,34 @@ public class ClienteController {
 //		return mav;
 //	}
 //	
-//	@PostMapping("/agregarCliente")
-//	public String agregarCliente(@ModelAttribute("cliente") Cliente cliente, Model model) {
-//		LOG.info("Call: " + "agregarCliente()");
-//		clienteService.agregarCliente(cliente);
-////		model.addAttribute(arg0, arg1)
-//		return "redirect:/cliente/listar"; //nombre del mapping
-//		
-//	}
-//	
-//	@RequestMapping("/eliminarCliente")
-//	public String eliminarCliente(@PathVariable String Id) {
-//		LOG.info("Call: " + "eliminarCliente()");
-//		clienteService.eliminarCliente(Id);
-//		return "redirect:/products";
-//		
-//	}
-
+	@PostMapping("/agregarCliente")
+	public String agregarCliente(@ModelAttribute("cliente") Cliente cliente, Model model) {
+		LOG.info("Call: " + "agregarCliente");
+		clienteService.create(cliente);
+		model.addAttribute("clientes"); //revisar porque habia dos arg
+		return "redirect:/cliente/agregar"; //nombre del mapping	
+	}
+	
+	@PostMapping("/actualizarCliente")
+	public String modificarCliente(@ModelAttribute("cliente") Cliente cliente, Model model) {
+		LOG.info("Call: " + "actualizarCliente()" + " -- Param " + cliente.toString()); //agrego metodo to string
+		clienteService.createOrUpdate(cliente);
+		model.addAttribute("clientes"); //revisar porque habia dos arg
+		return "redirect:/cliente/actualizar"; //nombre del mapping	
+	}
+	
+	@RequestMapping("/buscarCliente")
+	public String buscarCliente(@PathVariable Long Id) {
+		LOG.info("Call: " + "buscarCliente()");
+		clienteService.find(Id);
+		return "redirect:/cliente/buscar";
+	}
+	
+	@RequestMapping("/eliminarCliente")
+	public String eliminarCliente(@PathVariable String Id) {
+		LOG.info("Call: " + "eliminarCliente()");
+		clienteService.destroy(Id);
+		return "redirect:/cliente/eliminar";
+	}
 }
+

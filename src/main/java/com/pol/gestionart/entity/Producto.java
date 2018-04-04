@@ -35,6 +35,9 @@ public class Producto {
 	private Integer precioVenta;
 	@Size(max = 50)
 	private Integer iva;
+	@Size(max = 50)
+	private Integer cantidad;
+	
 	public Long getIdProducto() {
 		return idProducto;
 	}
@@ -43,9 +46,10 @@ public class Producto {
 		super();
 	}
 
+	
 	public Producto(Long idProducto, @NotNull char tipoProducto, @Size(max = 100) String descripcion,
 			@Size(max = 50) String marca, @Size(max = 5) String capacidad, @Size(max = 50) Integer precioCompra,
-			@Size(max = 50) Integer precioVenta, @Size(max = 50) Integer iva) {
+			@Size(max = 50) Integer precioVenta, @Size(max = 50) Integer iva, @Size(max = 50) Integer cantidad) {
 		super();
 		this.idProducto = idProducto;
 		this.tipoProducto = tipoProducto;
@@ -55,9 +59,17 @@ public class Producto {
 		this.precioCompra = precioCompra;
 		this.precioVenta = precioVenta;
 		this.iva = iva;
+		this.cantidad = cantidad;
 	}
 
-	
+	public Integer getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
+	}
+
 	public void setIdProducto(Long idProducto) {
 		this.idProducto = idProducto;
 	}
