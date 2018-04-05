@@ -9,10 +9,12 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.pol.gestionart.main.GenericEntity;
+
 @Entity
 @Table
 
-public class Producto {
+public class Producto extends GenericEntity {
 	
 	private static final String SECUENCIA = "producto_id_seq";
 
@@ -117,6 +119,17 @@ public class Producto {
 	}
 	public static String getSecuencia() {
 		return SECUENCIA;
+	}
+
+	@Override
+	public Long getId() {
+		return idProducto;
+	}
+
+	@Override
+	public void setId(Long id) {
+		this.idProducto = idProducto;
+		
 	}
 	
 	

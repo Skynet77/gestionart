@@ -28,6 +28,7 @@ public class ClienteListController extends ListController<Cliente> {
 		return clienteDao;
 	}
 
+	//este debo borrar?
 	public String[] getColumnasPersona() {
 		return new String[] { "id", "cedula_ruc", "nombre_razonSocial", "apellido","estado" };
 	}
