@@ -16,4 +16,10 @@ public class ClienteDaoImpl extends DaoImpl<Cliente> implements ClienteDao{
 		return "";
 	}
 
+	@Override
+	public void destroy(String id) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

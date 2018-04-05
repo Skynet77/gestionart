@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pol.gestionart.entity.Cliente;
-import com.pol.gestionart.service.ClienteServiceImpl;
 
 @Controller
 public class HomeController {

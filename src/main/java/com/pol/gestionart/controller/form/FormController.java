@@ -24,7 +24,6 @@ import com.pol.gestionart.main.SesionUsuario;
 import com.pol.gestionart.bean.Respuesta;
 import com.pol.gestionart.dao.Dao;
 import com.pol.gestionart.security.Usuario;
-import com.pol.gestionart.service.Service;
 
 
 

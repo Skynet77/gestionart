@@ -19,8 +19,6 @@ import com.pol.gestionart.controller.list.ClienteListController;
 import com.pol.gestionart.dao.ClienteDao;
 import com.pol.gestionart.dao.Dao;
 import com.pol.gestionart.entity.Cliente;
-import com.pol.gestionart.service.ClienteService;
-import com.pol.gestionart.service.Service;
 
 
 

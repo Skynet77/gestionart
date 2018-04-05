@@ -23,7 +23,7 @@ public interface Dao<T> {
 	/**
 	 * Elimina un registro de la base de datos.
 	 */
-	void destroy(T obj);
+	void destroy(String id); //cambie de objeto T a id
 
 	/**
 	 * @param sSearch
@@ -34,5 +34,7 @@ public interface Dao<T> {
 	List<T> getList(Integer filaInicio, Integer filaFin, String sSearch);
 
 	List<T> getListAll(String sSearch);
+
+	void destroy(T obj);
 
 }
