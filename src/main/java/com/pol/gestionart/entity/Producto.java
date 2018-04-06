@@ -9,10 +9,12 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.pol.gestionart.main.GenericEntity;
+
 @Entity
 @Table
 
-public class Producto {
+public class Producto extends GenericEntity {
 	
 	private static final String SECUENCIA = "producto_id_seq";
 
@@ -22,7 +24,7 @@ public class Producto {
 	private Long idProducto;
 	@NotNull
 	
-	private char tipoProducto;
+	private String tipoProducto;
 	@Size(max = 100)
 	private String descripcion;
 	@Size(max = 50)
@@ -52,7 +54,7 @@ public class Producto {
 			@Size(max = 50) Integer precioVenta, @Size(max = 50) Integer iva, @Size(max = 50) Integer cantidad) {
 		super();
 		this.idProducto = idProducto;
-		this.tipoProducto = tipoProducto;
+		this.tipoProducto = "";
 		this.descripcion = descripcion;
 		this.marca = marca;
 		this.capacidad = capacidad;
@@ -73,10 +75,10 @@ public class Producto {
 	public void setIdProducto(Long idProducto) {
 		this.idProducto = idProducto;
 	}
-	public char getTipoProducto() {
+	public String getTipoProducto() {
 		return tipoProducto;
 	}
-	public void setTipoProducto(char tipoProducto) {
+	public void setTipoProducto(String tipoProducto) {
 		this.tipoProducto = tipoProducto;
 	}
 	public String getDescripcion() {
@@ -117,6 +119,17 @@ public class Producto {
 	}
 	public static String getSecuencia() {
 		return SECUENCIA;
+	}
+
+	@Override
+	public Long getId() {
+		return idProducto;
+	}
+
+	@Override
+	public void setId(Long id) {
+		this.idProducto = idProducto;
+		
 	}
 	
 	

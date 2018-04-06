@@ -1,14 +1,11 @@
 package com.pol.gestionart.daoImpl;
 
-import java.util.List;
-
 import org.springframework.stereotype.Repository;
 
-import com.pol.gestionart.dao.ClienteDao;
-import com.pol.gestionart.entity.Cliente;
-
+import com.pol.gestionart.dao.ProductoDao;
+import com.pol.gestionart.entity.Producto;
 @Repository
-public class ClienteDaoImpl extends DaoImpl<Cliente> implements ClienteDao{
+public class ProductoDaoImpl extends DaoImpl<Producto> implements ProductoDao {
 
 	@Override
 	public String getCamposFiltrables() {
