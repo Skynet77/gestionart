@@ -24,7 +24,7 @@ public class Producto extends GenericEntity {
 	private Long idProducto;
 	@NotNull
 	
-	private char tipoProducto;
+	private String tipoProducto;
 	@Size(max = 100)
 	private String descripcion;
 	@Size(max = 50)
@@ -54,7 +54,7 @@ public class Producto extends GenericEntity {
 			@Size(max = 50) Integer precioVenta, @Size(max = 50) Integer iva, @Size(max = 50) Integer cantidad) {
 		super();
 		this.idProducto = idProducto;
-		this.tipoProducto = tipoProducto;
+		this.tipoProducto = "";
 		this.descripcion = descripcion;
 		this.marca = marca;
 		this.capacidad = capacidad;
@@ -75,10 +75,10 @@ public class Producto extends GenericEntity {
 	public void setIdProducto(Long idProducto) {
 		this.idProducto = idProducto;
 	}
-	public char getTipoProducto() {
+	public String getTipoProducto() {
 		return tipoProducto;
 	}
-	public void setTipoProducto(char tipoProducto) {
+	public void setTipoProducto(String tipoProducto) {
 		this.tipoProducto = tipoProducto;
 	}
 	public String getDescripcion() {

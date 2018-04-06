@@ -1,8 +1,10 @@
 package com.pol.gestionart.daoImpl;
 
+import org.springframework.stereotype.Repository;
+
 import com.pol.gestionart.dao.ProductoDao;
 import com.pol.gestionart.entity.Producto;
-
+@Repository
 public class ProductoDaoImpl extends DaoImpl<Producto> implements ProductoDao {
 
 	@Override
