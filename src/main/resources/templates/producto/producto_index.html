@@ -1,66 +1,10 @@
 <html xmlns:th="http://www.thymeleaf.org" th:replace="starter">
 <meta charset="utf-8"/>
 <div class="row" th:fragment="contenido">
-	<div class="col-md-6" th:fragment="form">
-		<!-- general form elements -->
-		<div class="box box-primary">
-			<div class="box-header with-border">
-				<h3 class="box-title">Registrar Producto</h3>
-			</div>
-			<!-- /.box-header -->
-			<!-- form start -->
-			<form th:action="@{/producto/accion}" th:object="${producto}" method="post"
-		role="form" id="form-usuario">
-				<div class="box-body">
-					<div class="form-group">
-						<label for="inputNombre">Tipo de Producto: </label> 
-						<input th:field="*{tipoProducto}" type="text" class="form-control" id="tipoProducto"
-							placeholder="Ingrese Tipo de Producto">
-					</div>
-					<div class="form-group">
-						<label for="exampleInputPassword1">Descripción:</label> 
-						<input th:field="*{descripcion}" type="text" class="form-control" id="descripcion"
-							placeholder="Ingrese descripcion">
-					</div>
-					<div class="form-group">
-						<label for="exampleInputFile">Marca: </label>
-						<input th:field="*{marca}" type="text" class="form-control" id="marca"
-							placeholder="Ingrese Marca">
-					</div>
-					<div class="form-group">
-						<label for="exampleInputFile">Capacidad: </label>
-						<input th:field="*{capacidad}" type="text" class="form-control" id="capacidad"
-							placeholder="Ingrese Capacidad">
-					</div>
-					<div class="form-group">
-						<label for="exampleInputFile">Precio de Compra:</label>
-						<input th:field="*{precioCompra}" type="email" class="form-control" id="precioCompra"
-							placeholder="Ingrese Precio de Compra">
-					</div>
-					<div class="form-group">
-						<label for="exampleInputFile">Precio de Venta:</label>
-						<input th:field="*{precioVenta}" type="text" class="form-control" id="precioVenta"
-							placeholder="Ingrese Precio de Venta">
-					</div>		
-					
-				</div>
-				<!-- /.box-body -->
-
-				<div class="box-footer">
-					<div class="form-group col-xs-12 col-sm-12 modal-footer" th:fragment="footerModal">
-						<button type="submit" class="btn btn-primary" name="accion" >Guardar</button>
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-						
-						<button type="submit" class="btn btn-primary hidden" name="accion" id="edit"
-							value="edit">Confirmar</button>
-						<button type="submit" class="btn btn-primary hidden" name="accion" id="delete"
-							value="delete">Eliminar</button>
-					</div>
-				</div>
-			</form>
-		</div>
-		<!-- /.box -->
-	</div>
+	<div id="formularioProducto">
+				<div th:replace="producto/producto_form::form">aqui va
+										un fragmento de codigo del form</div>
+		    </div>
 	<div class="col-md-6">
 		<div class="box">
 			<div class="box-header">
@@ -125,6 +69,15 @@
 		$(document).ready(function() {
 		  crearDataTable("productoDT", "[[@{/producto/json}]]", "[[${columnasStr}]]", "[[@{/producto/edit/}]]");
 		});
+		
+		function accion (idProducto, accion){
+			if(accion=="EDITAR"){
+				editarProducto();
+			}
+			else if(accion="ELIMINAR"){
+				eliminarProducto();
+			}
+		}
 	</script>
 </div>
 </html>

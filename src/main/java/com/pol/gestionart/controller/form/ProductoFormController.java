@@ -55,6 +55,7 @@ public class ProductoFormController extends FormController<Producto> {
 		map.addAttribute("columnas", productoList.getColumnas());
 		map.addAttribute("columnasStr", productoList.getColumnasStr(null));
 		map.addAttribute("productoList", getDao().getList(0, 100, null));
+		map.addAttribute("tituloFormulario", "Registrar Producto");
 		map.addAttribute("producto", new Producto());
 		super.agregarValoresAdicionales(map);
 	}
@@ -76,6 +77,61 @@ public class ProductoFormController extends FormController<Producto> {
 		return getTemplatePath();
 
 	}
+	
+	@RequestMapping(value = "buscar", method = RequestMethod.POST)
+	public String editar_listado(ModelMap map, 
+			@RequestParam(value = "id_producto", required = false) Long idProducto) {
+		try {
+			Producto producto = null;
+			if (idProducto != null ) {
+					producto = productoDao.find(idProducto);
+					logger.info("Producto encontrado{}", producto);
+			}
+			agregarValoresAdicionales(map);
+			map.addAttribute("producto", producto);
+			map.addAttribute("tituloFormulario", "Editar Producto");
+
+		} catch (Exception ex) {
+			Producto producto = new Producto();
+			producto.setIdProducto(null);
+			map.addAttribute("error", getErrorFromException(ex));
+			return getTemplatePath();
+			
+		}
+		return "producto/producto_form";
+
+	}
+	
+	
+	/*@RequestMapping(value = "editar", method = RequestMethod.POST)
+	public String editar_listado(ModelMap map, 
+			@RequestParam(value = "id_producto", required = false) Long idProducto //mismo nombre de js
+			BindingResult bindingResult) {
+		try {
+			Producto producto = null;
+			if (idProducto != null ) {
+				if (obj.getPersona().getId() != null) {
+					persona = personaDao.find(obj.getPersona().getId());
+					obj.setPersona(persona);
+				}
+
+			}
+			
+			getDao().createOrUpdate(obj);
+			logger.info("Cliente Actualizado {}", obj);
+			map.addAttribute("msgExito", msg.get("Registro Actualizado"));
+
+		} catch (Exception ex) {
+			obj.setId(null);
+			map.addAttribute("error", getErrorFromException(ex));
+			map.addAttribute(getNombreObjeto(), obj);
+		}
+		Cliente c = new Cliente();
+		map.addAttribute(getNombreObjeto(), c);
+		agregarValoresAdicionales(map);
+		return getTemplatePath();
+
+	}*/
 
 	@Override
 	public Dao<Producto> getDao() {

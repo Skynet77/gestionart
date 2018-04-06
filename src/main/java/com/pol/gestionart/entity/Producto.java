@@ -31,13 +31,9 @@ public class Producto extends GenericEntity {
 	private String marca;
 	@Size(max = 5)
 	private String capacidad;
-	@Size(max = 50)
 	private Integer precioCompra;
-	@Size(max = 50)
 	private Integer precioVenta;
-	@Size(max = 50)
 	private Integer iva;
-	@Size(max = 50)
 	private Integer cantidad;
 	
 	public Long getIdProducto() {
