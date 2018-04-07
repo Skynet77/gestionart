@@ -124,7 +124,7 @@ function buscarProducto(idProducto){
         type: "POST",
         url: "producto/buscar",
         data: { 
-         id_producto:idProducto;
+         id_producto:idProducto
         }
     }).done(function(data){
     	$("#formularioProducto").html(data);
