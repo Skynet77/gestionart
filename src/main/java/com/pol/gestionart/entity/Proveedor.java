@@ -8,7 +8,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
-import com.pol.gestionart.bean.GenericEntity;
+import com.pol.gestionart.main.GenericEntity;
 
 @Entity
 @Table
@@ -19,7 +19,7 @@ public class Proveedor extends GenericEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SECUENCIA)
 	@SequenceGenerator(name = SECUENCIA, sequenceName = SECUENCIA)
-	private Long idProveedor;
+	private Long id;
 	
 	@Size(max = 50)
 	private String nombre;
@@ -40,7 +40,7 @@ public class Proveedor extends GenericEntity {
 			@Size(max = 15) String nroTelefono, @Size(max = 30) String correoElectronico,
 			@Size(max = 100) String direccion, char estado) {
 		super();
-		this.idProveedor = idProveedor;
+		this.id = idProveedor;
 		this.nombre = nombre;
 		this.ruc = ruc;
 		this.nroTelefono = nroTelefono;
@@ -48,12 +48,8 @@ public class Proveedor extends GenericEntity {
 		this.direccion = direccion;
 		this.estado = estado;
 	}
-	public Long getIdProveedor() {
-		return idProveedor;
-	}
-	public void setIdProveedor(Long idProveedor) {
-		this.idProveedor = idProveedor;
-	}
+
+
 	public String getNombre() {
 		return nombre;
 	}
@@ -93,17 +89,21 @@ public class Proveedor extends GenericEntity {
 	public static String getSecuencia() {
 		return SECUENCIA;
 	}
+	
 	@Override
 	public Long getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return id;
 	}
+
 	@Override
 	public void setId(Long id) {
-		// TODO Auto-generated method stub
-		
+		this.id = id;
 	}
 	
+	@Override
+	public String toString() {
+		return "Proveedor [id=" + id + ", nombre=" + nombre + ", ruc=" + ruc + ", nroTelefono=" + nroTelefono
+				+ ", correoElectronico=" + correoElectronico + ", direccion=" + direccion + ", estado=" + estado + "]";
+	}
 	
-
 }
