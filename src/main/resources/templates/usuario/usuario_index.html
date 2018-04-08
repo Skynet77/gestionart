@@ -1,185 +1,120 @@
-
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:replace="starter">
+<meta charset="utf-8"/>
+<div class="row" th:fragment="contenido">
+	<div class="col-md-6" th:fragment="form">
+		<!-- general form elements -->
+		<div class="box box-primary">
+			<div class="box-header with-border">
+				<h3 class="box-title">Registrar Usuario</h3>
+			</div>
+			<!-- /.box-header -->
+			<!-- form start -->
+			<form th:action="@{/usuario/accion}" th:object="${usuario}" method="post"
+		role="form" id="form-usuario">
+				<div class="box-body">
+					<div class="form-group">
+						<label for="inputNombre">Nombre o razon social:</label> 
+						<input th:field="*{nombreRazonSocial}" type="text" class="form-control" id="nombreRazonSocial"
+							placeholder="Ingrese Nombre">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputFile">Apellido:</label>
+						<input th:field="*{apellido}" type="text" class="form-control" id="apellido"
+							placeholder="Ingrese apellido">
+					</div>
+					<div class="form-group">
+						<label >R.U.C./ C.I.:</label>
+						<input th:field="*{cedulaRuc}" type="text" class="form-control" id="cedulaRuc"
+							placeholder="Ingrese su RUC o CI">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputFile">Password:</label>
+						<input th:field="*{password}" type="text" class="form-control" id="password"
+							placeholder="Ingrese password">
+					</div>
 
-<body>
+				</div>
+				<!-- /.box-body -->
 
-	<div class="row" th:fragment="contenido">
-		
-			<div class="col-xs-12">		
-					<div class="box box-solid box-primary">
-						<div class="box-header">
-							<h3>Listado de Usuarios</h3>
-						</div>
+				<div class="box-footer">
+					<div class="form-group col-xs-12 col-sm-12 modal-footer" th:fragment="footerModal">
+						<button type="submit" class="btn btn-primary" name="accion" >Guardar</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 						
-						<div class="box-body no-padding">
-							<button class="btn btn-success" id="botonAgregar"
-								 onclick="agregar('','r')">
-								<i class="glyphicon glyphicon-plus"></i> Nuevo Usuario
-							</button>
-							
-							<br><br>
-							<table
-								class="table table-bordered table-striped col-xs-12 no-padding "
-								id="usuarioDT">
-								<thead>
-									<tr>
-										 <th th:each="col : ${columnas}" th:text="#{'usuario.' + ${col} + '.header'}">CÓDIGO</th>
-										<th>Accion</th>
-									</tr>
-								</thead>
-							</table>
-							
-							<script type="text/javascript">
-							
-							 $(document).ready(function() {
-							   crearDataTable("usuarioDT", "[[@{/usuario/json}]]", "[[${columnasStr}]]", "[[@{/usuario/edit/}]]");
-							 });
-							
-								function agregar(obj, accion){
-									
-									if(obj != ''){
-										var id = obj.id;
-									}
-									
-									if(accion === 'd'){
-										if(id !== null || id !== undefined || id !== "" ){
-											$('#delete').removeClass('hidden');
-											$('#save').addClass('hidden');
-											$('#edit').addClass('hidden');
-											$('#id_objeto').val(obj.id);
-											$('#id').val('');
-											$('#cedulaRuc').val('');						
-											$('#nombreRazonSocial').val('');
-											$('#apellido').val('');
-											$('#password').val('');
-											$('#rol').val('');
-											$("#borradoPopup").modal("show");
-										}	
-									}else if(accion === 'e'){
-										if(id !== null || id !== undefined || id !== "" ){
-											$('#edit').removeClass('hidden');
-											$('#save').addClass('hidden');
-											$('#delete').addClass('hidden');
-											
-											$('#id').val(obj.id);
-											$('#cedulaRuc').val(obj.cedulaRuc);
-											$('#nombreRazonSocial').val(obj.nombreRazonSocial);
-											$('#apellido').val(obj.apellido);
-											$('#password').val(obj.password);
-											var rol = obj.rol.id;
-											$('#rol').val(rol).change();
-											$('#cedulaRuc').attr('disabled', false);
-											$('#nombreRazonSocial').attr('disabled', false);
-											$('#apellido').attr('disabled', false);
-											$('#password').attr('disabled', false);
-											$('#rol').attr('disabled', false);
-
-											
-											$("#formModal").modal("show");
-										}	
-									}else if(accion === 'r'){
-										$('#delete').addClass('hidden');
-										$('#edit').addClass('hidden');
-										$('#save').removeClass('hidden');
-										$('#cedulaRuc').attr('disabled', false);
-										$('#nombreRazonSocial').attr('disabled', false);
-										$('#apellido').attr('disabled', false);
-										$('#password').attr('disabled', false);
-										$('#rol').attr('disabled', false);
-										
-										$('#id').val('');
-										$('#cedulaRuc').val('');
-										$('#nombreRazonSocial').val('');
-										$('#password').val('');
-										$('#apellido').val('');
-										$('#rol').val('');
-										
-										$("#formModal").modal("show");
-									}else if(accion === 'v'){
-										$('#delete').addClass('hidden');
-										$('#edit').addClass('hidden');
-										$('#save').addClass('hidden');
-										$('#id').val(obj.id);
-										$('#cedulaRuc').val(obj.cedulaRuc);
-										$('#nombreRazonSocial').val(obj.nombreRazonSocial);
-										$('#apellido').val(obj.apellido);
-										$('#password').val(obj.password);
-										$('#rol').val(obj.rol);
-										
-										$('#cedulaRuc').attr('disabled', false);
-										$('#nombreRazonSocial').attr('disabled', false);
-										$('#apellido').attr('disabled', false);
-										$('#password').attr('disabled', false);
-										$('#rol').attr('disabled', false);
-										$("#formModal").modal("show");
-									}
-								}
-			 			</script>
-			 			
-						</div>
-						<!-- /.box-body -->
-					</div>
-					<!-- /.box -->
-					</div>
-
-<div class="modal fade" id="borradoPopup" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel" aria-hidden="true">
-			<form th:object="${usuario}" th:action="@{/usuario/eliminar_listado}" method="post" role="form"
-						id="idUsuario">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-hidden="true">&times;</button>
-						<h4 class="modal-title" id="myModalLabel">Borrado de
-							Registro</h4>
-					</div>
-					<div class="modal-body">Está seguro que desea borrar registro de forma
-						permanente?
-						
-						<input type="hidden" for="id_objeto" id="id_objeto" name="id_objeto"/>
-						</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-						<button type="submit" class="btn btn-primary" name="accion"
-							value="delete">Confirmar</button>
+						<button type="submit" class="btn btn-primary hidden" name="accion" id="edit"
+							value="edit">Confirmar</button>
+						<button type="submit" class="btn btn-primary hidden" name="accion" id="delete"
+							value="delete">Eliminar</button>
 					</div>
 				</div>
-				<!-- /.modal-content -->
+			</form>
+		</div>
+		<!-- /.box -->
+	</div>
+	<div class="col-md-6">
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title">Lista de Usuarios</h3>
 			</div>
+			<!-- /.box-header -->
+			<div class="box-body">
+              <table id="usuarioDT" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+					<th th:each="col : ${columnas}" th:text="#{'usuario.' + ${col} + '.header'}">CÓDIGO</th>
+					<th>Accion</th>
+				</tr>
+                </thead>
+              </table>
+            </div>
+			<!-- /.box-body -->
+		</div>
+		<!-- /.box -->
+
+
+		<!-- /.box -->
+	</div>
+	
+	<div class="modal fade" id="borradoPopup" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<form th:object="${usuario}" th:action="@{/usuario/eliminar_listado}"
+				method="post" role="form" id="idUsuario">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">&times;</button>
+							<h4 class="modal-title" id="myModalLabel">Borrado de
+								Registro</h4>
+						</div>
+						<div class="modal-body">
+							¿Desea borrar registro de forma permanente? <input
+								type="hidden" for="id_objeto" id="id_objeto" name="id_objeto" />
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Cancelar</button>
+							<button type="submit" class="btn btn-primary" name="accion"
+								value="delete">Confirmar</button>
+						</div>
+
+					</div>
+					<!-- /.modal-content -->
+				</div>
 			</form>
 			<!-- /.modal-dialog -->
-			</div>
-
-				<!-- Modal borrar -->
-		<div class="modal fade" id="formModal" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content col-xs-12">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-hidden="true">&times;</button>
-						<h4 class="modal-title" id="myModalLabel"
-							>Nuevo Registro</h4>
-					</div>
-					<div class="modal-body">
-						<div th:replace="usuario/usuario_form::form">aqui va un
-								fragmento de codigo del form</div>
-					</div>
-					
-				</div>
-				<!-- /.modal-content -->
-			</div>
-			<!-- /.modal-dialog -->
-			
-			
 		</div>
-		<!-- Modal borrar -->
+		<!-- FIN Modal borrar -->
+		
+	
 
-			
-	</div>
-	 <!-- <script th:src="@{/plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js}" src="../plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js"></script> -->
-	 	
-</body>
+
+	
+	<script type="text/javascript">
+		
+		$(document).ready(function() {
+		  crearDataTable("usuarioDT", "[[@{/usuario/json}]]", "[[${columnasStr}]]", "[[@{/usuario/edit/}]]");
+		});
+	</script>
+</div>
 </html>
