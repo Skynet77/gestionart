@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.pol.gestionart.controller.list.ProveedorListController;
 import com.pol.gestionart.dao.ProveedorDao;
 import com.pol.gestionart.dao.Dao;
-import com.pol.gestionart.entity.Cliente;
 import com.pol.gestionart.entity.Proveedor;
 
 @Controller

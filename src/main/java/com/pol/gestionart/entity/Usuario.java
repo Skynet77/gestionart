@@ -51,6 +51,23 @@ public class Usuario extends GenericEntity {
 		super();
 	}
 
+	
+	
+	public Usuario(Long idUsuario,
+			String cedulaRuc,
+			String nombreRazonSocial,
+			String apellido,
+			String password) {
+		super();
+		this.id = idUsuario;
+		this.cedulaRuc = cedulaRuc;
+		this.nombreRazonSocial = nombreRazonSocial;
+		this.apellido = apellido;
+		this.password = password;
+	}
+
+
+
 	public String getCedulaRuc() {
 		return cedulaRuc;
 	}
@@ -97,7 +114,7 @@ public class Usuario extends GenericEntity {
 
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", cedulaRuc=" + cedulaRuc + ", nombreRazonSocial=" + nombreRazonSocial
+		return "Usuario [idUsuario=" + id + ", cedulaRuc=" + cedulaRuc + ", nombreRazonSocial=" + nombreRazonSocial
 				+ ", apellido=" + apellido + ", password=" + password + "]";
 	}
 
