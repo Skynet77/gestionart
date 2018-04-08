@@ -36,9 +36,9 @@ public class Proveedor extends GenericEntity {
 	public Proveedor() {
 		super();
 	}
-	public Proveedor(Long idProveedor, @Size(max = 50) String nombre, @Size(max = 50) String ruc,
-			@Size(max = 15) String nroTelefono, @Size(max = 30) String correoElectronico,
-			@Size(max = 100) String direccion, char estado) {
+	public Proveedor(Long idProveedor, String nombre, String ruc,
+			String nroTelefono, String correoElectronico,
+			String direccion, char estado) {
 		super();
 		this.id = idProveedor;
 		this.nombre = nombre;
@@ -102,7 +102,7 @@ public class Proveedor extends GenericEntity {
 	
 	@Override
 	public String toString() {
-		return "Proveedor [id=" + id + ", nombre=" + nombre + ", ruc=" + ruc + ", nroTelefono=" + nroTelefono
+		return "Proveedor [idProveedor=" + id + ", nombre=" + nombre + ", ruc=" + ruc + ", nroTelefono=" + nroTelefono
 				+ ", correoElectronico=" + correoElectronico + ", direccion=" + direccion + ", estado=" + estado + "]";
 	}
 	
