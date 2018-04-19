@@ -1,5 +1,7 @@
 package com.pol.gestionart.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,10 +33,11 @@ public class Producto extends GenericEntity {
 	private String marca;
 	@Size(max = 5)
 	private String capacidad;
-	private Integer precioCompra;
-	private Integer precioVenta;
-	private Integer iva;
-	private Integer cantidad;
+	private BigDecimal precioCompra;
+	private BigDecimal precioVenta;
+	private BigDecimal iva;
+	private int cantidad;
+	private String estado;
 	
 	public Long getIdProducto() {
 		return idProducto;
@@ -46,8 +49,8 @@ public class Producto extends GenericEntity {
 
 	
 	public Producto(Long idProducto, @NotNull char tipoProducto, @Size(max = 100) String descripcion,
-			@Size(max = 50) String marca, @Size(max = 5) String capacidad, @Size(max = 50) Integer precioCompra,
-			@Size(max = 50) Integer precioVenta, @Size(max = 50) Integer iva, @Size(max = 50) Integer cantidad) {
+			@Size(max = 50) String marca, @Size(max = 5) String capacidad, @Size(max = 50) BigDecimal precioCompra,
+			@Size(max = 50) BigDecimal precioVenta, @Size(max = 50) BigDecimal iva, @Size(max = 50) Integer cantidad,String estado) {
 		super();
 		this.idProducto = idProducto;
 		this.tipoProducto = "";
@@ -58,6 +61,7 @@ public class Producto extends GenericEntity {
 		this.precioVenta = precioVenta;
 		this.iva = iva;
 		this.cantidad = cantidad;
+		this.estado = estado;
 	}
 
 	public Integer getCantidad() {
@@ -95,26 +99,38 @@ public class Producto extends GenericEntity {
 	public void setCapacidad(String capacidad) {
 		this.capacidad = capacidad;
 	}
-	public Integer getPrecioCompra() {
+	public BigDecimal getPrecioCompra() {
 		return precioCompra;
 	}
-	public void setPrecioCompra(Integer precioCompra) {
+	public void setPrecioCompra(BigDecimal precioCompra) {
 		this.precioCompra = precioCompra;
 	}
-	public Integer getPrecioVenta() {
+	public BigDecimal getPrecioVenta() {
 		return precioVenta;
 	}
-	public void setPrecioVenta(Integer precioVenta) {
+	public void setPrecioVenta(BigDecimal precioVenta) {
 		this.precioVenta = precioVenta;
 	}
-	public Integer getIva() {
+	public BigDecimal getIva() {
 		return iva;
 	}
-	public void setIva(Integer iva) {
+	public void setIva(BigDecimal iva) {
 		this.iva = iva;
 	}
 	public static String getSecuencia() {
 		return SECUENCIA;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
 	}
 
 	@Override
