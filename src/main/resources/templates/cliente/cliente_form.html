@@ -1,5 +1,5 @@
 <html xmlns:th="http://www.thymeleaf.org" th:fragment="formulario">
-<div class="col-md-6" th:fragment="form">
+<div class="col-md-6"  th:fragment="form">
 		<!-- general form elements -->
 		<div class="box box-primary">
 			<div class="box-header with-border">
@@ -9,6 +9,7 @@
 			<!-- form start -->
 			<form th:action="@{/cliente/accion}" th:object="${cliente}" method="post"
 		role="form" id="form-usuario">
+		<input type="hidden" th:field="*{id}" />
 				<div class="box-body">
 					<div class="form-group">
 						<label for="inputNombre">Nombre:</label> 
@@ -27,7 +28,8 @@
 					</div>
 					<div class="form-group">
 						<label for="exampleInputFile">Teléfono / Cel.:</label>
-						<input th:field="*{nroTelefono}" type="text" class="form-control" id="telefono"
+						<input th:fie
+						ld="*{nroTelefono}" type="text" class="form-control" id="telefono"
 							placeholder="Ingrese telefono o cel">
 					</div>
 					<div class="form-group">
@@ -55,10 +57,11 @@
 				<div class="box-footer">
 					<div class="form-group col-xs-12 col-sm-12 modal-footer" th:fragment="footerModal">
 						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-						<button type="submit" class="btn btn-primary" name="${accion}" >Guardar</button>
-						<button type="submit" class="btn btn-primary hidden" name="accion" id="edit"
+						
+						<button th:if="${accion=='guardar'}" type="submit" class="btn btn-primary" name="accion" value="save" >Guardar</button>
+						<button th:if="${accion=='editar'}"type="submit" class="btn btn-primary" name="accion" id="edit"
 							value="edit">Confirmar</button>
-						<button type="submit" class="btn btn-primary hidden" name="accion" id="delete"
+						<button th:if="${accion=='eliminar'}" type="submit" class="btn btn-primary hidden" name="accion" id="delete"
 							value="delete">Eliminar</button>
 					</div>
 				</div>
@@ -71,23 +74,26 @@
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Default Modal</h4>
+                <h4 class="modal-title">Esta Seguro?</h4>
               </div>
+              <form th:action="@{/cliente/accion2}" method="post" role="form" id="form-usuario">
+              <input type="hidden" name="id_objeto" id="eliminarcliente">
               <div class="modal-body">
-                <p>One fine body&hellip;</p>
+                <p><b>Aceptar:</b> Para eliminar el cliente</p>
+                <p><b>Cancelar:</b> Para cancelar la operación</p>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary" name="accion" value="delete">Aceptar</button>
               </div>
+              </form>
             </div>
             <!-- /.modal-content -->
           </div>
           <!-- /.modal-dialog -->
         </div>
         <!-- /.modal -->
-	</html>
 	</div>
 	<!-- /.col -->
-	
+	</html>
 	

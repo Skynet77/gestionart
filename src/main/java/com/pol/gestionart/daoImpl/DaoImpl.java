@@ -75,7 +75,7 @@ public abstract class DaoImpl<T extends GenericEntity> implements Dao<T>{
 		sql = sql.replace("#ENTITY#", getEntityName());
 		Query query = null;
 		//el usuario no ha enviado ningun filtro
-		
+		//sSearch = "A"; // Solo traerá con estados activos
 		if (sSearch== null || "".equals(sSearch)) {
 			query = entityManager.createQuery(sql);
 		} else {

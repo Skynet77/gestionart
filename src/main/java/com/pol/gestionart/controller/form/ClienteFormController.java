@@ -70,13 +70,33 @@ public class ClienteFormController extends FormController<Cliente> {
 			return guardar(map, obj, bindingResult);
 		} else if (StringUtils.equals(accion, "edit")) {
 			logger.info("OBJETO PROCESO {}", obj);
-			return edit(map, obj.getId());
-		} else if (id_objeto != null) {
-			return delete(map, id_objeto);
+			return edit(map, obj.getId(),obj);
+		} else if ("delete".equals(accion)) {
+			return editarEstado(map, id_objeto);
 
 		}
 		return getTemplatePath();
 
+	}
+// función para actualizar el estado a inactivo en vez de eliminarlo
+	private String editarEstado(ModelMap map, Long id_objeto) {
+		try {
+			Cliente obj = getDao().find(id_objeto);
+			if (obj == null) {
+				map.addAttribute("error", "No se han encontrado registros con el id: " + id_objeto);
+			} else {
+				obj.setEstado('I');
+				getDao().createOrUpdate(obj);
+				map.addAttribute(getNombreObjeto(), obj);
+				map.addAttribute("msgExito", "Registro eliminado correctamente");
+				logger.info("registro eliminado");
+			}
+		} catch (Exception ex){
+			map.addAttribute("error", "Error al eliminar el registro. " + ex.getMessage());
+		}
+		agregarValoresAdicionales(map);
+		logger.info("Registro retorna {}", getTemplatePath());
+		return getTemplatePath();
 	}
 
 	@Override

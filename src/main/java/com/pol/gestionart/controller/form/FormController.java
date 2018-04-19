@@ -55,7 +55,10 @@ public abstract class FormController<T extends GenericEntity>{
 	@RequestMapping(value = "accion", method = RequestMethod.POST)
 	public String accion(ModelMap map, @Valid T obj, BindingResult bindingResult,
 		@RequestParam(required = false) String accion) {
-		if (accion!= null && !"".equals(accion)) {
+		
+		if("edit".equalsIgnoreCase(accion)){
+			return edit(map,obj.getId(), obj);
+		}else if (accion!= null && !"".equals(accion)) {
 			return delete (map, obj.getId());
 		} else {
 			return guardar(map, obj, bindingResult);
@@ -89,12 +92,14 @@ public abstract class FormController<T extends GenericEntity>{
 	}
 	
 	@RequestMapping("edit/{id}")
-	public String edit (ModelMap map, @PathVariable Long id) {
+	public String edit (ModelMap map, @PathVariable Long id, T objeto) {
 		try {
 			T obj = getDao().find(id);
 			if (obj == null) {
 				map.addAttribute("error", "No se encontraron registros con el id "+ id);
 				obj = getNuevaInstancia();
+			}else{
+				getDao().createOrUpdate(objeto);
 			}
 			map.addAttribute(getNombreObjeto(),obj);
 		} catch (Exception ex) {

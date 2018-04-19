@@ -69,7 +69,7 @@ public class ProductoFormController extends FormController<Producto> {
 			return guardar(map, obj, bindingResult);
 		} else if (StringUtils.equals(accion, "edit")) {
 			logger.info("OBJETO PROCESO {}", obj);
-			return edit(map, obj.getId());
+			return edit(map, obj.getId(),obj);
 		} else if (id_objeto != null) {
 			return delete(map, id_objeto);
 

@@ -123,7 +123,7 @@ function editarCliente(idCliente){
 	
 	$.ajax({
         type: "POST",
-        url: "cliente/buscar",
+        url: "/gestionart/cliente/buscar",
         data: { 
             id_cliente:idCliente
         }
@@ -135,7 +135,8 @@ function editarCliente(idCliente){
 
 
 function eliminarCliente(idCliente){
-	$("#modal-default").click();
+	$("#eliminarcliente").val(idCliente);
+	$("#modal-default").modal('show');
 	/*$.ajax({
         type: "POST",
         url: "cliente/buscar",
