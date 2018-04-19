@@ -44,41 +44,41 @@ function crearDataTable(dataTableId, ajaxSource, columnas, editUrl){
 			 //Ocultamos la primera columna (id)
 			 //dataTable.fnSetColumnVis(0, false);
 			dataTable.column(0).visible(false);		
-			 $('#'+dataTableId+' tbody').on('click', 'tr', function() {
+			// $('#'+dataTableId+' tbody').on('click', 'tr', function() {
 				 //Obtenemos el valor de la columna id
 				 //ver equivalente a fnGetdata
 				 //var id = dataTable.fnGetData(this, 0);
 				 //Si id no es número, no hacemos nada
-				 if (isNaN(id)) {
+				 /*if (isNaN(id)) {
 				 return;
 				 }
 				
 				 window.location.href = editUrl+"/" + id;
-			 });
+			 });*/
 			
-//				$('#'+ dataTableId + ' tbody').on('click','button.editar', function(){
-//					/*Con esto tenemos un objeto de tipo {id: 1, codigo: "ejc", descripcion: "Ejecutivo", materia: Object}
-//					 teniendo en cuenta que ejecutamos http://localhost:8090/sigj/proceso/ 
-//					 entonces para obtener el id de este objeto accedemos por su llave "id"*/
-////					console.log($('#'+dataTableId+ ' tbody tr'));
-//					var ob = dataTable.row( $(this).parents('tr') ).data();
-//					console.log(ob);
-//					console.log( ob["id"] );
-//					agregar(ob, 'e');
-//
-//					}); 
+				$('#'+ dataTableId + ' tbody').on('click','button.editar', function(){
+					/*Con esto tenemos un objeto de tipo {id: 1, codigo: "ejc", descripcion: "Ejecutivo", materia: Object}
+					 teniendo en cuenta que ejecutamos http://localhost:8090/sigj/proceso/ 
+					 entonces para obtener el id de este objeto accedemos por su llave "id"*/
+//					console.log($('#'+dataTableId+ ' tbody tr'));
+					var ob = dataTable.row( $(this).parents('tr') ).data();
+					console.log(ob);
+					console.log( ob["id"] );
+					accion(ob.id, "EDITAR");
+
+					}); 
 //				
-//				$('#'+ dataTableId + ' tbody').on('click','button.eliminar', function(){
-//					/*Con esto tenemos un objeto de tipo {id: 1, codigo: "ejc", descripcion: "Ejecutivo", materia: Object}
-//					 teniendo en cuenta que ejecutamos http://localhost:8090/sigj/proceso/ 
-//					 entonces para obtener el id de este objeto accedemos por su llave "id"*/
-////					console.log($('#'+dataTableId+ ' tbody tr'));
-//					var ob = dataTable.row( $(this).parents('tr') ).data();
-//					console.log(ob);
-//					console.log( ob["id"] );
-//					agregar(ob, 'd');
-//
-//					}); 
+				$('#'+ dataTableId + ' tbody').on('click','button.eliminar', function(){
+					/*Con esto tenemos un objeto de tipo {id: 1, codigo: "ejc", descripcion: "Ejecutivo", materia: Object}
+					 teniendo en cuenta que ejecutamos http://localhost:8090/sigj/proceso/ 
+					 entonces para obtener el id de este objeto accedemos por su llave "id"*/
+//					console.log($('#'+dataTableId+ ' tbody tr'));
+					var ob = dataTable.row( $(this).parents('tr') ).data();
+					console.log(ob);
+					console.log( ob["id"] );
+					accion(ob.id, 'ELIMINAR');
+
+					}); 
 //			
 //				 $('#'+ dataTableId + ' tbody').on('click','button.ver', function(){
 //					var ob = dataTable.row( $(this).parents('tr') ).data();
@@ -113,9 +113,37 @@ function getColumnasArray(colsStr){
 		});
 		columnsArray.push(
                 {'defaultContent': "<button type='button' class='editar btn btn-primary btn-xs'><i class='fa fa-edit'></i></button>"+
-			                    "<button type='button' class='eliminar btn btn-danger btn-xs' data-toggle='modal'><i class='fa fa-trash-o' aria-hidden='true'></i></button>"+
-			                    "<button type='button' class='ver btn btn-primary btn-xs' ><i class='fa fa-search'></i></button>"}
+			                    "<button type='button' class='eliminar btn btn-danger btn-xs' data-toggle='modal'><i class='fa fa-trash-o' aria-hidden='true'></i></button>"}
                 );
 		
 		return columnsArray;
+}
+
+function editarCliente(idCliente){
+	
+	$.ajax({
+        type: "POST",
+        url: "cliente/buscar",
+        data: { 
+            id_cliente:idCliente
+        }
+    }).done(function(data){
+        $("#formularioCliente").html(data);
+        
+    });
+}
+
+
+function eliminarCliente(idCliente){
+	$("#modal-default").click();
+	/*$.ajax({
+        type: "POST",
+        url: "cliente/buscar",
+        data: { 
+            id_cliente:idCliente
+        }
+    }).done(function(data){
+        $("#formularioCliente").html(data);
+        
+    });*/
 }

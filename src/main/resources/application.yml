@@ -8,6 +8,7 @@ spring:
     encoding: UTF-8
   thymeleaf:
     encoding: UTF-8
+    cache: false
   jpa: 
     show-sql: true
     hibernate:

@@ -56,6 +56,8 @@ public class ClienteFormController extends FormController<Cliente> {
 		map.addAttribute("columnasStr", clienteList.getColumnasStr(null));
 		map.addAttribute("clienteList", getDao().getList(0, 100, null));
 		map.addAttribute("cliente", new Cliente());
+		map.addAttribute("tituloFormulario", "Registrar Cliente");
+		map.addAttribute("accion", "guardar");
 		super.agregarValoresAdicionales(map);
 	}
 
@@ -108,25 +110,50 @@ public class ClienteFormController extends FormController<Cliente> {
 		agregarValoresAdicionales(map);
 		return getTemplatePath();
 
-	}
+	}*/
+	
+	@RequestMapping(value = "buscar", method = RequestMethod.POST)
+	public String buscarEditar(ModelMap map, 
+			@RequestParam(value = "id_cliente", required = true) Long idCliente) {
+		try {
+			
+			Cliente cliente = null;
+			if (idCliente != null ) {
+				cliente = clienteDao.find(idCliente);
+				logger.info("Cliente encontrado {}", cliente);
+			}
+			agregarValoresAdicionales(map);
+			map.addAttribute("cliente", cliente);
+			map.addAttribute("tituloFormulario", "Editar Cliente");
+			map.addAttribute("accion", "editar");
 
-	@RequestMapping(value = "editar_listado", method = RequestMethod.POST)
+		} catch (Exception ex) {
+			Cliente cliente = new Cliente();
+			cliente.setId(null);
+			map.addAttribute("error", getErrorFromException(ex));
+			map.addAttribute(getNombreObjeto(), cliente);
+			return getTemplatePath();
+		}
+
+		
+		return "cliente/cliente_form";
+
+	}
+	
+	
+
+	/*@RequestMapping(value = "editar", method = RequestMethod.POST)
 	public String editar_listado(ModelMap map, 
-			@Valid Cliente obj,
+			@RequestParam(value = "id_cliente", required = true) Long idCliente,
 			BindingResult bindingResult) {
 		try {
-			List<FacturaCabecera> listFactura = new ArrayList<FacturaCabecera>();
-			List<Expediente> listExpediente = new ArrayList<Expediente>();
-			Persona persona = null;
-			if (obj != null ) {
-				if (obj.getPersona().getId() != null) {
-					persona = personaDao.find(obj.getPersona().getId());
-					obj.setPersona(persona);
-				}
-
+			
+			Cliente cliente = null;
+			if (idCliente != null ) {
+				cliente = clienteDao.find(idCliente);
 			}
 			
-			getDao().createOrUpdate(obj);
+			
 			logger.info("Cliente Actualizado {}", obj);
 			map.addAttribute("msgExito", msg.get("Registro Actualizado"));
 
