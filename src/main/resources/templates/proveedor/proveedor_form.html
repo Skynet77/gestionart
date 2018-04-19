@@ -3,27 +3,22 @@
 		<!-- general form elements -->
 		<div class="box box-primary">
 			<div class="box-header with-border">
-				<h3 class="box-title" th:text="${tituloFormulario}"></h3>
+				<h3 class="box-title">Registrar Proveedor</h3>
 			</div>
 			<!-- /.box-header -->
 			<!-- form start -->
-			<form th:action="@{/cliente/accion}" th:object="${cliente}" method="post"
+			<form th:action="@{/proveedor/accion}" th:object="${proveedor}" method="post"
 		role="form" id="form-usuario">
 				<div class="box-body">
 					<div class="form-group">
-						<label for="inputNombre">Nombre:</label> 
+						<label for="inputNombre">Nombre o razon social:</label> 
 						<input th:field="*{nombre}" type="text" class="form-control" id="nombre"
 							placeholder="Ingrese Nombre">
 					</div>
 					<div class="form-group">
-						<label for="exampleInputPassword1">Apellido:</label> 
-						<input th:field="*{apellido}" type="text" class="form-control" id="apellido"
-							placeholder="Ingrese su apellido">
-					</div>
-					<div class="form-group">
-						<label for="exampleInputFile">R.U.C./ C.I.:</label>
+						<label for="exampleInputFile">R.U.C.:</label>
 						<input th:field="*{ruc}" type="text" class="form-control" id="ruc"
-							placeholder="Ingrese su RUC o CI">
+							placeholder="Ingrese su RUC">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputFile">Teléfono / Cel.:</label>
@@ -55,7 +50,7 @@
 				<div class="box-footer">
 					<div class="form-group col-xs-12 col-sm-12 modal-footer" th:fragment="footerModal">
 						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-						<button type="submit" class="btn btn-primary" name="${accion}" >Guardar</button>
+						<button type="submit" class="btn btn-primary" name="accion" >Guardar</button>
 						<button type="submit" class="btn btn-primary hidden" name="accion" id="edit"
 							value="edit">Confirmar</button>
 						<button type="submit" class="btn btn-primary hidden" name="accion" id="delete"
@@ -65,29 +60,6 @@
 			</form>
 		</div>
 		<!-- /.box -->
-		<div class="modal fade" id="modal-default">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Default Modal</h4>
-              </div>
-              <div class="modal-body">
-                <p>One fine body&hellip;</p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
-        </div>
-        <!-- /.modal -->
-	</html>
 	</div>
 	<!-- /.col -->
-	
-	
+	</html>

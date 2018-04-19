@@ -147,3 +147,15 @@ function eliminarCliente(idCliente){
         
     });*/
 }
+function buscarProducto(idProducto){
+	$.ajax({
+        type: "POST",
+        url: "producto/buscar",
+        data: { 
+         id_producto:idProducto
+        }
+    }).done(function(data){
+    	$("#formularioProducto").html(data);
+    });
+}
+	

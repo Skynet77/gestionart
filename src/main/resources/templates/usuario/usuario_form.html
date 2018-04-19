@@ -3,54 +3,56 @@
 <html xmlns:th="http://www.thymeleaf.org" th:fragment="formulario">
 
 <body class="hold-transition skin-blue-light sidebar-mini ">
-   <div class="row form-class-modal" style="margin-right: -404; padding-top: 15px; margin-right: 0px; margin-left: 0px;" th:fragment="form">
-	<input type="hidden" id="usu" th:value="${session.usuario}" >
-	<form th:action="@{/usuario/accion2}" th:object="${usuario}" method="post"
+	<div class="col-md-6" th:fragment="form">
+		<!-- general form elements -->
+		<div class="box box-primary">
+			<div class="box-header with-border">
+				<h3 class="box-title">Registrar Usuario</h3>
+			</div>
+			<!-- /.box-header -->
+			<!-- form start -->
+			<form th:action="@{/usuario/accion}" th:object="${usuario}" method="post"
 		role="form" id="form-usuario">
-		<input type="hidden" th:field="*{id}" />
-		<div class="modal-movil hidden-xs col-sm-12">
-			<div class="form-group col-xs-12 col-sm-12">
-				<label for="cedula_ruc" th:text="#{usuario.cedula_ruc.lbl}"
-					class="field-label col-xs-7 col-sm-7">Cédula o Ruc:</label> 
-					<input type="text"
-					th:field="*{cedulaRuc}" maxlength="18" class="form-control col-xs-6 col-sm-6" />
-			</div>
-			<div class="form-group col-xs-12 col-sm-12">
-				<label for="nombre_razonSocial" th:text="#{usuario.nombre_razon_social.lbl}" class="field-label col-xs-7 col-sm-7">Nombre:</label>
-				<input type="text" th:field="*{nombreRazonSocial}" maxlength="60"
-					class="form-control col-xs-6 col-sm-6" />
-			</div>
-		
-		<div class="form-group col-xs-12 col-sm-12">
-			<label for="apellido" th:text="#{usuario.apellido.lbl}"
-				class="field-label col-xs-7 col-sm-7">Apellido:</label> <input type="text"
-				th:field="*{apellido}" maxlength="60" class="form-control col-xs-6 col-sm-6" />
-		</div>
-		<div class="form-group col-xs-12 col-sm-12">
-			<label for="password" th:text="#{usuario.password.lbl}"
-				class="field-label col-xs-7 col-sm-7">Password:</label> <input type="text"
-				th:field="*{password}" maxlength="18" class="form-control col-xs-6 col-sm-6" />
-		</div>
-		<div class="form-group col-xs-12 col-sm-12">
-			<label for="rol" th:text="#{usuario.rol.lbl}"
-				class="field-label col-xs-7 col-sm-7">Rol:</label> <select
-				th:field="*{rol}" class="form-control col-xs-6 col-sm-6 rol" id="rol">
-				<option th:each="rol: ${rolList}" th:value="${rol.id}"
-					th:text="${rol.descripcion}">Administrador</option>
+				<div class="box-body">
+					<div class="form-group">
+						<label for="inputNombre">Nombre o razon social:</label> 
+						<input th:field="*{nombre}" type="text" class="form-control" id="nombre"
+							placeholder="Ingrese Nombre">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputFile">Apellido:</label>
+						<input th:field="*{apellido}" type="text" class="form-control" id="apellido"
+							placeholder="Ingrese apellido">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputFile">R.U.C./C.I.:</label>
+						<input th:field="*{cedularuc}" type="text" class="form-control" id="cedularuc"
+							placeholder="Ingrese su RUC o CI">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputFile">Password:</label>
+						<input th:field="*{password}" type="password" class="form-control" id="password"
+							placeholder="Ingrese password">
+					</div>
 
-			</select>
+				</div>
+				<!-- /.box-body -->
 
+				<div class="box-footer">
+					<div class="form-group col-xs-12 col-sm-12 modal-footer" th:fragment="footerModal">
+						<button type="submit" class="btn btn-primary" name="accion" >Guardar</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+						
+						<button type="submit" class="btn btn-primary hidden" name="accion" id="edit"
+							value="edit">Confirmar</button>
+						<button type="submit" class="btn btn-primary hidden" name="accion" id="delete"
+							value="delete">Eliminar</button>
+					</div>
+				</div>
+			</form>
 		</div>
-			
-			</div>
-			<!-- Inicio panel botones -->
-		<div th:replace="botones::footerModal">aqui van los botones</div>
-	</form>
-	
-	
-	
-	<!-- Fin panel botones -->
-   </div>
+		<!-- /.box -->
+	</div>
   
 </body>
 </html>

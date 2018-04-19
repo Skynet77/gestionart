@@ -5,27 +5,25 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.pol.gestionart.dao.ProveedorDao;
 import com.pol.gestionart.dao.Dao;
-import com.pol.gestionart.dao.ProductoDao;
-import com.pol.gestionart.entity.Producto;
+import com.pol.gestionart.entity.Proveedor;
 
 @Controller
 @Scope("session")
-@RequestMapping("producto")
-public class ProductoListController extends ListController<Producto> {
-	
+@RequestMapping("proveedor")
+public class ProveedorListController extends ListController<Proveedor> {
+
 	@Autowired
-	private ProductoDao productoDao;
+	private ProveedorDao proveedorDao;
 
 	@Override
 	public String[] getColumnas() {
-		return new String[] {"tipoProducto", "descripcion", "marca", "capacidad", "precioCompra", "precioVenta","cantidad" };
+		return new String[] { "id", "nombre", "ruc", "nroTelefono", "correoElectronico", "direccion" };
 	}
 
 	@Override
-	public Dao<Producto> getDao() {
-		return productoDao;
+	public Dao<Proveedor> getDao() {
+		return proveedorDao;
 	}
-
-	
 }
