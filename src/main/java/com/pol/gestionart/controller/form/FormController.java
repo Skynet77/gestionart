@@ -56,11 +56,11 @@ public abstract class FormController<T extends GenericEntity>{
 	public String accion(ModelMap map, @Valid T obj, BindingResult bindingResult,
 		@RequestParam(required = false) String accion) {
 		
-		if("edit".equalsIgnoreCase(accion)){
+		if(accion!= null && "edit".equalsIgnoreCase(accion)){
 			return edit(map,obj.getId(), obj);
 		}else if (accion!= null && "save".equalsIgnoreCase(accion)) {
 			return guardar(map, obj, bindingResult);
-		}else if (accion!= null && !"delete".equals(accion)) {
+		}else if (accion!= null && "delete".equals(accion)) {
 			return delete (map, obj.getId());
 		}	
 		return null;
