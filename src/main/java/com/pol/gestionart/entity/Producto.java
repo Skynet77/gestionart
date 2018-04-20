@@ -126,7 +126,12 @@ public class Producto extends GenericEntity {
 	}
 
 	public void setEstado(String estado) {
-		this.estado = estado;
+		if(estado == null){
+			this.estado = "I";
+		}else{
+			this.estado = estado;
+		}
+		
 	}
 
 	public void setCantidad(int cantidad) {

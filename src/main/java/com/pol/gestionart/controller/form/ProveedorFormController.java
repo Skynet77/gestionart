@@ -143,7 +143,7 @@ public class ProveedorFormController extends FormController<Proveedor> {
 			logger.info("ID DE OBJ {}", id_objeto);
 			if (id_objeto != null) {
 				proveedor = getDao().find(id_objeto);
-				proveedor.setEstado('A');
+				proveedor.setEstado("A");
 				proveedorDao.edit(proveedor);
 				proveedorDao.destroy(proveedor);
 				logger.info("Proveedor eliminado {}", proveedor);

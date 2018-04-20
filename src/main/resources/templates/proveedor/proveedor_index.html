@@ -11,6 +11,7 @@
 			<!-- form start -->
 			<form th:action="@{/proveedor/accion}" th:object="${proveedor}" method="post"
 		role="form" id="form-usuario">
+				<input type="hidden" th:field="*{id}" />
 				<div class="box-body">
 					<div class="form-group">
 						<label for="inputNombre">Nombre o razon social:</label> 
@@ -51,7 +52,7 @@
 
 				<div class="box-footer">
 					<div class="form-group col-xs-12 col-sm-12 modal-footer" th:fragment="footerModal">
-						<button type="submit" class="btn btn-primary" name="accion" >Guardar</button>
+						<button type="submit" class="btn btn-primary" name="accion" value="save">Guardar</button>
 						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 						
 						<button type="submit" class="btn btn-primary hidden" name="accion" id="edit"

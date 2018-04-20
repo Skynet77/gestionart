@@ -58,11 +58,12 @@ public abstract class FormController<T extends GenericEntity>{
 		
 		if("edit".equalsIgnoreCase(accion)){
 			return edit(map,obj.getId(), obj);
-		}else if (accion!= null && !"".equals(accion)) {
-			return delete (map, obj.getId());
-		} else {
+		}else if (accion!= null && "save".equalsIgnoreCase(accion)) {
 			return guardar(map, obj, bindingResult);
+		}else if (accion!= null && !"delete".equals(accion)) {
+			return delete (map, obj.getId());
 		}	
+		return null;
 	}
 	
 	@RequestMapping(value = "save", method = RequestMethod.POST)
@@ -100,8 +101,10 @@ public abstract class FormController<T extends GenericEntity>{
 				obj = getNuevaInstancia();
 			}else{
 				getDao().createOrUpdate(objeto);
+				map.addAttribute("msgExito", "Registro actualizado con éxito");
 			}
 			map.addAttribute(getNombreObjeto(),obj);
+			
 		} catch (Exception ex) {
 			map.addAttribute("error", "Error al buscar el registro " + ex.getMessage());
 			map.addAttribute(getNombreObjeto(), getNuevaInstancia());

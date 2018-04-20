@@ -34,14 +34,14 @@ public class Cliente extends GenericEntity{
 	private String correoElectronico;
 	@Size(max = 100)
 	private String direccion;
-	private char estado;
+	private String estado;
 	
 	public Cliente() {
 		super();
 	}
 	
 	public Cliente(Long idCliente, String nombre, String apellido, String ruc, String nroTelefono, String correoElectronico,
-		String direccion, char estado) {
+		String direccion, String estado) {
 		super();
 		this.id = idCliente;
 		this.nombre = nombre;
@@ -89,11 +89,15 @@ public class Cliente extends GenericEntity{
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
-	public char getEstado() {
+	public String getEstado() {
 		return estado;
 	}
-	public void setEstado(char estado) {
-		this.estado = estado;
+	public void setEstado(String estado) {
+		if(estado == null){
+			this.estado = "I";
+		}else{
+			this.estado = estado;
+		}
 	}
 
 	@Override

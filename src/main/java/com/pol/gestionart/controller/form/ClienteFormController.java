@@ -85,7 +85,7 @@ public class ClienteFormController extends FormController<Cliente> {
 			if (obj == null) {
 				map.addAttribute("error", "No se han encontrado registros con el id: " + id_objeto);
 			} else {
-				obj.setEstado('I');
+				obj.setEstado("I");
 				getDao().createOrUpdate(obj);
 				map.addAttribute(getNombreObjeto(), obj);
 				map.addAttribute("msgExito", "Registro eliminado correctamente");
@@ -197,7 +197,7 @@ public class ClienteFormController extends FormController<Cliente> {
 			logger.info("ID DE OBJ {}", id_objeto);
 			if (id_objeto != null) {
 				cliente = getDao().find(id_objeto);
-				cliente.setEstado('A');
+				cliente.setEstado("A");
 				clienteDao.edit(cliente);
 				clienteDao.destroy(cliente);
 				logger.info("Cliente eliminado {}", cliente);
