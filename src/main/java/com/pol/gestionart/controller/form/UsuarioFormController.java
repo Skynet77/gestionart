@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.pol.gestionart.controller.list.UsuarioListController;
 import com.pol.gestionart.dao.Dao;
 import com.pol.gestionart.dao.UsuarioDao;
+import com.pol.gestionart.entity.Cliente;
 import com.pol.gestionart.entity.Usuario;
 
 @Controller
@@ -51,6 +52,8 @@ public class UsuarioFormController extends FormController<Usuario> {
 		map.addAttribute("columnasStr", usuarioList.getColumnasStr(null));
 		map.addAttribute("usuarioList", getDao().getList(0, 100, null));
 		map.addAttribute("usuario", new Usuario());
+		map.addAttribute("tituloFormulario", "Registrar Usuario");
+		map.addAttribute("accion", "guardar");
 		super.agregarValoresAdicionales(map);
 	}
 
@@ -64,8 +67,8 @@ public class UsuarioFormController extends FormController<Usuario> {
 		} else if (StringUtils.equals(accion, "edit")) {
 			logger.info("OBJETO PROCESO {}", obj);
 			return edit(map, obj.getId(),obj);
-		} else if (id_objeto != null) {
-			return delete(map, id_objeto);
+		} else if ("delete".equals(accion)) {
+			return editarEstado(map, id_objeto);
 
 		}
 		return getTemplatePath();
@@ -76,65 +79,56 @@ public class UsuarioFormController extends FormController<Usuario> {
 	public Dao<Usuario> getDao() {
 		return usuarioDao;
 	}
-
-	/*
-	@RequestMapping(value = "save_listado", method = RequestMethod.POST)
-	public String guardar_listado(ModelMap map, 
-			@Valid Cliente obj,
-			BindingResult bindingResult) {
-		try {
-			if (obj.getId() == null) {
-				Cliente cliente = clienteDao.find(obj.getCliente().getId());
-				cliente.setDisponible("NO");
-				clienteDao.createOrUpdate(cliente);
-				getDao().createOrUpdate(obj);
+	
+	// función para actualizar el estado a inactivo en vez de eliminarlo
+		private String editarEstado(ModelMap map, Long id_objeto) {
+			try {
+				Usuario obj = getDao().find(id_objeto);
+				if (obj == null) {
+					map.addAttribute("error", "No se han encontrado registros con el id: " + id_objeto);
+				} else {
+					obj.setEstado("I");
+					getDao().createOrUpdate(obj);
+					map.addAttribute(getNombreObjeto(), obj);
+					map.addAttribute("msgExito", "Registro eliminado correctamente");
+					logger.info("registro eliminado");
+				}
+			} catch (Exception ex){
+				map.addAttribute("error", "Error al eliminar el registro. " + ex.getMessage());
 			}
+			agregarValoresAdicionales(map);
+			logger.info("Registro retorna {}", getTemplatePath());
+			return getTemplatePath();
+		}
 
-			map.addAttribute("msgExito", msg.get("Registro agregado"));
-			logger.info("Se crea cliente nuevo -> {}", obj);
+	@RequestMapping(value = "buscar", method = RequestMethod.POST)
+	public String buscarEditar(ModelMap map, 
+			@RequestParam(value = "id_usuario", required = true) Long idUsuario) {
+		try {
+			
+			Usuario usuario = null;
+			if (idUsuario != null ) {
+				usuario = usuarioDao.find(idUsuario);
+				logger.info("Usuario encontrado {}", usuario);
+			}
+			agregarValoresAdicionales(map);
+			map.addAttribute("usuario", usuario);
+			map.addAttribute("tituloFormulario", "Editar Usuario");
+			map.addAttribute("accion", "editar");
 
 		} catch (Exception ex) {
-			obj.setId(null);
+			Usuario usuario = new Usuario();
+			usuario.setId(null);
 			map.addAttribute("error", getErrorFromException(ex));
-
+			map.addAttribute(getNombreObjeto(), usuario);
+			return getTemplatePath();
 		}
-		map.addAttribute(getNombreObjeto(), obj);
-		agregarValoresAdicionales(map);
-		return getTemplatePath();
+
+		
+		return "usuario/usuario_form";
 
 	}
-
-	@RequestMapping(value = "editar_listado", method = RequestMethod.POST)
-	public String editar_listado(ModelMap map, 
-			@Valid Cliente obj,
-			BindingResult bindingResult) {
-		try {
-			List<FacturaCabecera> listFactura = new ArrayList<FacturaCabecera>();
-			List<Expediente> listExpediente = new ArrayList<Expediente>();
-			Persona persona = null;
-			if (obj != null ) {
-				if (obj.getPersona().getId() != null) {
-					persona = personaDao.find(obj.getPersona().getId());
-					obj.setPersona(persona);
-				}
-
-			}
-			
-			getDao().createOrUpdate(obj);
-			logger.info("Cliente Actualizado {}", obj);
-			map.addAttribute("msgExito", msg.get("Registro Actualizado"));
-
-		} catch (Exception ex) {
-			obj.setId(null);
-			map.addAttribute("error", getErrorFromException(ex));
-			map.addAttribute(getNombreObjeto(), obj);
-		}
-		Cliente c = new Cliente();
-		map.addAttribute(getNombreObjeto(), c);
-		agregarValoresAdicionales(map);
-		return getTemplatePath();
-
-	}*/
+	
 	
 	//metodo eliminar usuario
 	@RequestMapping(value = "eliminar_listado", method = RequestMethod.POST)

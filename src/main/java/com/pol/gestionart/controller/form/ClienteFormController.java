@@ -104,33 +104,6 @@ public class ClienteFormController extends FormController<Cliente> {
 		return clienteDao;
 	}
 
-
-	/*
-	@RequestMapping(value = "save_listado", method = RequestMethod.POST)
-	public String guardar_listado(ModelMap map, 
-			@Valid Cliente obj,
-			BindingResult bindingResult) {
-		try {
-			if (obj.getId() == null) {
-				Cliente cliente = clienteDao.find(obj.getCliente().getId());
-				cliente.setDisponible("NO");
-				clienteDao.createOrUpdate(cliente);
-				getDao().createOrUpdate(obj);
-			}
-
-			map.addAttribute("msgExito", msg.get("Registro agregado"));
-			logger.info("Se crea cliente nuevo -> {}", obj);
-
-		} catch (Exception ex) {
-			obj.setId(null);
-			map.addAttribute("error", getErrorFromException(ex));
-
-		}
-		map.addAttribute(getNombreObjeto(), obj);
-		agregarValoresAdicionales(map);
-		return getTemplatePath();
-
-	}*/
 	
 	@RequestMapping(value = "buscar", method = RequestMethod.POST)
 	public String buscarEditar(ModelMap map, 
@@ -160,34 +133,7 @@ public class ClienteFormController extends FormController<Cliente> {
 
 	}
 	
-	
 
-	/*@RequestMapping(value = "editar", method = RequestMethod.POST)
-	public String editar_listado(ModelMap map, 
-			@RequestParam(value = "id_cliente", required = true) Long idCliente,
-			BindingResult bindingResult) {
-		try {
-			
-			Cliente cliente = null;
-			if (idCliente != null ) {
-				cliente = clienteDao.find(idCliente);
-			}
-			
-			
-			logger.info("Cliente Actualizado {}", obj);
-			map.addAttribute("msgExito", msg.get("Registro Actualizado"));
-
-		} catch (Exception ex) {
-			obj.setId(null);
-			map.addAttribute("error", getErrorFromException(ex));
-			map.addAttribute(getNombreObjeto(), obj);
-		}
-		Cliente c = new Cliente();
-		map.addAttribute(getNombreObjeto(), c);
-		agregarValoresAdicionales(map);
-		return getTemplatePath();
-
-	}*/
 
 	//metodo eliminar cliente
 	@RequestMapping(value = "eliminar_listado", method = RequestMethod.POST)

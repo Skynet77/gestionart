@@ -12,8 +12,7 @@ public class UsuarioDaoImpl extends DaoImpl<Usuario> implements UsuarioDao{
 
 	@Override
 	public String getCamposFiltrables() {
-		// TODO Auto-generated method stub
-		return "";
+		return "estado";
 	}
 
 	@Override

@@ -29,54 +29,20 @@
 		<!-- /.box -->
 	</div>
 	
-	<div class="modal fade" id="borradoPopup" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel" aria-hidden="true">
-			<form th:object="${producto}" th:action="@{/producto/eliminar_listado}"
-				method="post" role="form" id="idCliente">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal"
-								aria-hidden="true">&times;</button>
-							<h4 class="modal-title" id="myModalLabel">Borrado de
-								Registro</h4>
-						</div>
-						<div class="modal-body">
-							¿Desea borrar registro de forma permanente? <input
-								type="hidden" for="id_objeto" id="id_objeto" name="id_objeto" />
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default"
-								data-dismiss="modal">Cancelar</button>
-							<button type="submit" class="btn btn-primary" name="accion"
-								value="delete">Confirmar</button>
-						</div>
-
-					</div>
-					<!-- /.modal-content -->
-				</div>
-			</form>
-			<!-- /.modal-dialog -->
-		</div>
-		<!-- FIN Modal borrar -->
-		
-	
-
-
-	
 	<script type="text/javascript">
 		
 		$(document).ready(function() {
-		  crearDataTable("productoDT", "[[@{/producto/json}]]", "[[${columnasStr}]]", "[[@{/producto/edit/}]]");
+			//mandamos sSearch A. Para mostrar solo los activos
+		  crearDataTable("productoDT", "[[@{/producto/json?sSearch=A}]]", "[[${columnasStr}]]", "[[@{/producto/edit/}]]");
 		});
 		
-		function accion (idProducto, accion){
+		function accion(idProducto, accion){
 			if(accion=="EDITAR"){
-				editarProducto();
+				editarProducto(idProducto);	
+			}else if(accion="ELIMINAR"){
+				eliminarProducto(idProducto);
 			}
-			else if(accion="ELIMINAR"){
-				eliminarProducto();
-			}
+			
 		}
 	</script>
 </div>

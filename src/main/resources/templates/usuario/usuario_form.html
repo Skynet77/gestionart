@@ -1,57 +1,87 @@
-
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:fragment="formulario">
-
-<body class="hold-transition skin-blue-light sidebar-mini ">
-	<div class="col-md-6" th:fragment="form">
+<div class="col-md-6"  th:fragment="form">
 		<!-- general form elements -->
 		<div class="box box-primary">
 			<div class="box-header with-border">
-				<h3 class="box-title">Registrar Usuario</h3>
+				<h3 class="box-title" th:text="${tituloFormulario}">Registrar Usuario</h3>
 			</div>
 			<!-- /.box-header -->
 			<!-- form start -->
-			<form th:action="@{/usuario/accion}" th:object="${usuario}" method="post"
-		role="form" id="form-usuario">
-				<div class="box-body">
-					<div class="form-group">
-						<label for="inputNombre">Nombre o razon social:</label> 
-						<input th:field="*{nombre}" type="text" class="form-control" id="nombre"
-							placeholder="Ingrese Nombre">
-					</div>
-					<div class="form-group">
-						<label for="exampleInputFile">Apellido:</label>
-						<input th:field="*{apellido}" type="text" class="form-control" id="apellido"
-							placeholder="Ingrese apellido">
-					</div>
-					<div class="form-group">
-						<label for="exampleInputFile">R.U.C./C.I.:</label>
-						<input th:field="*{cedularuc}" type="text" class="form-control" id="cedularuc"
-							placeholder="Ingrese su RUC o CI">
-					</div>
-					<div class="form-group">
-						<label for="exampleInputFile">Password:</label>
-						<input th:field="*{password}" type="password" class="form-control" id="password"
-							placeholder="Ingrese password">
-					</div>
-
-				</div>
-				<!-- /.box-body -->
-
-				<div class="box-footer">
-					<div class="form-group col-xs-12 col-sm-12 modal-footer" th:fragment="footerModal">
-						<button type="submit" class="btn btn-primary" name="accion" value="save" id="save" >Guardar1</button>
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-						
-						<button type="submit" class="btn btn-primary hidden" name="accion" id="edit"
-							value="edit">Confirmar</button>
-						<button type="submit" class="btn btn-primary hidden" name="accion" id="delete"
-							value="delete">Eliminar</button>
-					</div>
-				</div>
-			</form>
+			 <form th:action="@{/usuario/accion}" th:object="${usuario}" method="post" 
+    role="form" id="form-usuario"> 
+    <input type="hidden" th:field="*{id}" />
+        <div class="box-body"> 
+          <div class="form-group"> 
+            <label for="inputNombre">Nombre o razon social:</label>  
+            <input th:field="*{nombreRazonSocial}" type="text" class="form-control" id="nombreRazonSocial" 
+              placeholder="Ingrese Nombre"> 
+          </div> 
+          <div class="form-group"> 
+            <label for="exampleInputFile">Apellido:</label> 
+            <input th:field="*{apellido}" type="text" class="form-control" id="apellido" 
+              placeholder="Ingrese apellido"> 
+          </div> 
+          <div class="form-group"> 
+            <label >R.U.C./ C.I.:</label> 
+            <input th:field="*{cedulaRuc}" type="text" class="form-control" id="cedulaRuc" 
+              placeholder="Ingrese su RUC o CI"> 
+          </div> 
+          <div class="form-group"> 
+            <label for="exampleInputFile">Password:</label> 
+            <input th:field="*{password}" type="text" class="form-control" id="password" 
+              placeholder="Ingrese password"> 
+          </div> 
+ 		<div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" th:field="*{estado}" value="A"> Activo?
+              </label>
+            </div>
+          </div>
+       	</div>
+        </div> 
+        <!-- /.box-body --> 
+ 
+        <div class="box-footer">
+			<div class="form-group col-xs-12 col-sm-12 modal-footer" th:fragment="footerModal">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+				<button th:if="${accion=='guardar'}" type="submit" class="btn btn-primary" name="accion" value="save" >Guardar</button>
+				<button th:if="${accion=='editar'}"type="submit" class="btn btn-primary" name="accion" id="edit"
+					value="edit">Confirmar</button>
+				<button th:if="${accion=='eliminar'}" type="submit" class="btn btn-primary hidden" name="accion" id="delete"
+					value="delete">Eliminar</button>
+			</div>
+		</div>
+      </form> 
 		</div>
 		<!-- /.box -->
+		
+		<div class="modal fade" id="modal-default">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Esta Seguro?</h4>
+              </div>
+              <form th:action="@{/usuario/accion2}" method="post" role="form" id="form-usuario">
+              <input type="hidden" name="id_objeto" id="eliminarUsuario">
+              <div class="modal-body">
+                <p><b>Aceptar:</b> Para eliminar el Usuario</p>
+                <p><b>Cancelar:</b> Para cancelar la operación</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary" name="accion" value="delete">Aceptar</button>
+              </div>
+              </form>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
 	</div>
   
 </body>

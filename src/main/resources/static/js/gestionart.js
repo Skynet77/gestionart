@@ -119,6 +119,7 @@ function getColumnasArray(colsStr){
 		return columnsArray;
 }
 
+//Cliente
 function editarCliente(idCliente){
 	
 	$.ajax({
@@ -133,30 +134,72 @@ function editarCliente(idCliente){
     });
 }
 
-
 function eliminarCliente(idCliente){
 	$("#eliminarcliente").val(idCliente);
 	$("#modal-default").modal('show');
-	/*$.ajax({
-        type: "POST",
-        url: "cliente/buscar",
-        data: { 
-            id_cliente:idCliente
-        }
-    }).done(function(data){
-        $("#formularioCliente").html(data);
-        
-    });*/
 }
-function buscarProducto(idProducto){
+
+// ./ Cliente
+
+//Producto
+function editarProducto(idProducto){
+	
 	$.ajax({
         type: "POST",
-        url: "producto/buscar",
+        url: "/gestionart/producto/buscar",
         data: { 
-         id_producto:idProducto
+            id_producto:idProducto
         }
     }).done(function(data){
-    	$("#formularioProducto").html(data);
+        $("#formularioProducto").html(data);
+        
     });
 }
+
+function eliminarProducto(idProducto){
+	$("#eliminarProducto").val(idProducto);
+	$("#modal-default").modal('show');
+}
+
+
+//Usuario
+function editarUsuario(id){
+	
+	$.ajax({
+        type: "POST",
+        url: "/gestionart/usuario/buscar",
+        data: { 
+            id_usuario:id
+        }
+    }).done(function(data){
+        $("#formularioUsuario").html(data);
+        
+    });
+}
+
+function eliminarUsuario(id){
+	$("#eliminarUsuario").val(id);
+	$("#modal-default").modal('show');
+}
+
+//Proveedor
+function editarProveedor(id){
+	
+	$.ajax({
+        type: "POST",
+        url: "/gestionart/proveedor/buscar",
+        data: { 
+            id_proveedor:id
+        }
+    }).done(function(data){
+        $("#formularioProveedor").html(data);
+        
+    });
+}
+
+function eliminarProveedor(id){
+	$("#eliminarProveedor").val(id);
+	$("#modal-default").modal('show');
+}
+
 	

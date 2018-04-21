@@ -6,13 +6,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Size;
 
 import com.pol.gestionart.main.GenericEntity;
 
 @Entity
-@Table
-
+@Table(uniqueConstraints = { @UniqueConstraint(name = "proveedor_ruc_uk", columnNames = { "ruc" }) })
 public class Proveedor extends GenericEntity {
 	private static final String SECUENCIA = "proveedor_id_seq";
 

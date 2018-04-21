@@ -79,14 +79,14 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="starter
 						<!-- User Account: style can be found in dropdown.less -->
 						<li class="dropdown user user-menu"><a href="#"
 							class="dropdown-toggle" data-toggle="dropdown"> <img
-								th:src="@{/img/team/carlos_mendez.jpg}"
+								th:src="@{/img/team/profile.jpg}"
 								src="../dist/img/user2-160x160.jpg" class="user-image"
 								alt="User Image"> <span class="hidden-xs" th:text="${session.currentUserName + ' '+ session.currentUserLast}">Carlos A.
 									Méndez G. </span>
 						</a>
 							<ul class="dropdown-menu">
 								<!-- User image -->
-								<li class="user-header"><img th:src="@{/img/team/carlos_mendez.jpg}" 
+								<li class="user-header"><img th:src="@{/img/team/profile.jpg}" 
 									src="../dist/img/user2-160x160.jpg" class="img-circle"
 									alt="User Image">
 									<p th:text="${session.currentUserName + ' '+ session.currentUserLast}">
@@ -276,10 +276,10 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="starter
 	<script th:src="@{/js/demo.js}" src="../js/demo.js"></script>
 
 	<!-- GART -->
-		<script type="text/javascript" src="../js/locales/es.js"
+		<!-- <script type="text/javascript" src="../js/locales/es.js"
 		th:src="@{/js/locales/es.js}"></script>
 		<script type="text/javascript" src="../js/spin.min.js"
-		th:src="@{/js/spin.min.js}"></script>
+		th:src="@{/js/spin.min.js}"></script> -->
 		<script type="text/javascript" src="../js/gestionart.js"
 		th:src="@{/js/gestionart.js}"></script>
 </body>

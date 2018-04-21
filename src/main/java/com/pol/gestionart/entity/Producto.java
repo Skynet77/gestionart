@@ -8,14 +8,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.pol.gestionart.main.GenericEntity;
 
 @Entity
-@Table
-
+@Table(uniqueConstraints = { @UniqueConstraint(name = "producto_codigo_uk", columnNames = { "codigo" }) })
 public class Producto extends GenericEntity {
 	
 	private static final String SECUENCIA = "producto_id_seq";
@@ -24,15 +24,15 @@ public class Producto extends GenericEntity {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SECUENCIA)
 	@SequenceGenerator(name = SECUENCIA, sequenceName = SECUENCIA)
 	private Long idProducto;
-	@NotNull
 	
-	private String tipoProducto;
+	private String codigo;
+	@NotNull
+	private String tipoProducto; // P producto, M materia prima
 	@Size(max = 100)
 	private String descripcion;
 	@Size(max = 50)
 	private String marca;
-	@Size(max = 5)
-	private String capacidad;
+	private String capacidad; //capacidad en litros o kg valores numericos
 	private BigDecimal precioCompra;
 	private BigDecimal precioVenta;
 	private BigDecimal iva;
@@ -47,13 +47,13 @@ public class Producto extends GenericEntity {
 		super();
 	}
 
-	
-	public Producto(Long idProducto, @NotNull char tipoProducto, @Size(max = 100) String descripcion,
-			@Size(max = 50) String marca, @Size(max = 5) String capacidad, @Size(max = 50) BigDecimal precioCompra,
-			@Size(max = 50) BigDecimal precioVenta, @Size(max = 50) BigDecimal iva, @Size(max = 50) Integer cantidad,String estado) {
+	public Producto(Long idProducto, String codigo, @NotNull String tipoProducto, @Size(max = 100) String descripcion,
+			@Size(max = 50) String marca, String capacidad, BigDecimal precioCompra, BigDecimal precioVenta,
+			BigDecimal iva, int cantidad, String estado) {
 		super();
 		this.idProducto = idProducto;
-		this.tipoProducto = "";
+		this.codigo = codigo;
+		this.tipoProducto = tipoProducto;
 		this.descripcion = descripcion;
 		this.marca = marca;
 		this.capacidad = capacidad;
@@ -132,6 +132,14 @@ public class Producto extends GenericEntity {
 			this.estado = estado;
 		}
 		
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 
 	public void setCantidad(int cantidad) {

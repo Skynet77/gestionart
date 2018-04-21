@@ -15,6 +15,7 @@ import com.pol.gestionart.controller.list.ProveedorListController;
 import com.pol.gestionart.dao.ProveedorDao;
 import com.pol.gestionart.dao.Dao;
 import com.pol.gestionart.entity.Proveedor;
+import com.pol.gestionart.entity.Proveedor;
 
 @Controller
 @Scope("request")
@@ -50,6 +51,8 @@ public class ProveedorFormController extends FormController<Proveedor> {
 		map.addAttribute("columnasStr", proveedorList.getColumnasStr(null));
 		map.addAttribute("proveedorList", getDao().getList(0, 100, null));
 		map.addAttribute("proveedor", new Proveedor());
+		map.addAttribute("tituloFormulario", "Registrar Cliente");
+		map.addAttribute("accion", "guardar");
 		super.agregarValoresAdicionales(map);
 	}
 
@@ -63,8 +66,8 @@ public class ProveedorFormController extends FormController<Proveedor> {
 		} else if (StringUtils.equals(accion, "edit")) {
 			logger.info("OBJETO PROCESO {}", obj);
 			return edit(map, obj.getId(),obj);
-		} else if (id_objeto != null) {
-			return delete(map, id_objeto);
+		} else if ("delete".equals(accion)) {
+			return editarEstado(map, id_objeto);
 
 		}
 		return getTemplatePath();
@@ -76,65 +79,55 @@ public class ProveedorFormController extends FormController<Proveedor> {
 		return proveedorDao;
 	}
 
-	/*
-	@RequestMapping(value = "save_listado", method = RequestMethod.POST)
-	public String guardar_listado(ModelMap map, 
-			@Valid Cliente obj,
-			BindingResult bindingResult) {
-		try {
-			if (obj.getId() == null) {
-				Cliente cliente = clienteDao.find(obj.getCliente().getId());
-				cliente.setDisponible("NO");
-				clienteDao.createOrUpdate(cliente);
-				getDao().createOrUpdate(obj);
-			}
-
-			map.addAttribute("msgExito", msg.get("Registro agregado"));
-			logger.info("Se crea cliente nuevo -> {}", obj);
-
-		} catch (Exception ex) {
-			obj.setId(null);
-			map.addAttribute("error", getErrorFromException(ex));
-
-		}
-		map.addAttribute(getNombreObjeto(), obj);
-		agregarValoresAdicionales(map);
-		return getTemplatePath();
-
-	}
-
-	@RequestMapping(value = "editar_listado", method = RequestMethod.POST)
-	public String editar_listado(ModelMap map, 
-			@Valid Cliente obj,
-			BindingResult bindingResult) {
-		try {
-			List<FacturaCabecera> listFactura = new ArrayList<FacturaCabecera>();
-			List<Expediente> listExpediente = new ArrayList<Expediente>();
-			Persona persona = null;
-			if (obj != null ) {
-				if (obj.getPersona().getId() != null) {
-					persona = personaDao.find(obj.getPersona().getId());
-					obj.setPersona(persona);
+	// función para actualizar el estado a inactivo en vez de eliminarlo
+		private String editarEstado(ModelMap map, Long id_objeto) {
+			try {
+				Proveedor obj = getDao().find(id_objeto);
+				if (obj == null) {
+					map.addAttribute("error", "No se han encontrado registros con el id: " + id_objeto);
+				} else {
+					obj.setEstado("I");
+					getDao().createOrUpdate(obj);
+					map.addAttribute(getNombreObjeto(), obj);
+					map.addAttribute("msgExito", "Registro eliminado correctamente");
+					logger.info("registro eliminado");
 				}
-
+			} catch (Exception ex){
+				map.addAttribute("error", "Error al eliminar el registro. " + ex.getMessage());
 			}
-			
-			getDao().createOrUpdate(obj);
-			logger.info("Cliente Actualizado {}", obj);
-			map.addAttribute("msgExito", msg.get("Registro Actualizado"));
-
-		} catch (Exception ex) {
-			obj.setId(null);
-			map.addAttribute("error", getErrorFromException(ex));
-			map.addAttribute(getNombreObjeto(), obj);
+			agregarValoresAdicionales(map);
+			logger.info("Registro retorna {}", getTemplatePath());
+			return getTemplatePath();
 		}
-		Cliente c = new Cliente();
-		map.addAttribute(getNombreObjeto(), c);
-		agregarValoresAdicionales(map);
-		return getTemplatePath();
 
-	}*/
-	
+		@RequestMapping(value = "buscar", method = RequestMethod.POST)
+		public String buscarEditar(ModelMap map, 
+				@RequestParam(value = "id_proveedor", required = true) Long idProveedor) {
+			try {
+				
+				Proveedor proveedor = null;
+				if (idProveedor != null ) {
+					proveedor = getDao().find(idProveedor);
+					logger.info("Proveedor encontrado {}", proveedor);
+				}
+				agregarValoresAdicionales(map);
+				map.addAttribute("proveedor", proveedor);
+				map.addAttribute("tituloFormulario", "Editar Proveedor");
+				map.addAttribute("accion", "editar");
+
+			} catch (Exception ex) {
+				Proveedor proveedor = new Proveedor();
+				proveedor.setId(null);
+				map.addAttribute("error", getErrorFromException(ex));
+				map.addAttribute(getNombreObjeto(), proveedor);
+				return getTemplatePath();
+			}
+
+			
+			return "proveedor/proveedor_form";
+
+		}
+		
 	//metodo eliminar proveedor
 	@RequestMapping(value = "eliminar_listado", method = RequestMethod.POST)
 	public String eliminar_listado(ModelMap map, @RequestParam("id_objeto") Long id_objeto) {

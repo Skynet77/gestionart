@@ -12,8 +12,7 @@ public class ProveedorDaoImpl extends DaoImpl<Proveedor> implements ProveedorDao
 
 	@Override
 	public String getCamposFiltrables() {
-		// TODO Auto-generated method stub
-		return "";
+		return "estado";
 	}
 
 	@Override

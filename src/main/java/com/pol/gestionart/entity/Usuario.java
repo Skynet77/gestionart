@@ -45,28 +45,26 @@ public class Usuario extends GenericEntity {
 	@Size(max = 256, message = "usuario.password.size")
 	private String password;
 
+	private String estado;
 
 	
 	public Usuario() {
 		super();
 	}
 
-	
-	
-	public Usuario(Long idUsuario,
-			String cedulaRuc,
-			String nombreRazonSocial,
-			String apellido,
-			String password) {
+	public Usuario(Long id,
+			@NotNull(message = "usuario.cedula_ruc.notNull") @NotBlank(message = "usuario.cedula_ruc.notBlank") @Size(max = 20, message = "usuario.cedula_ruc.size") String cedulaRuc,
+			@NotNull(message = "usuario.nombreRazonSocial.notNull") @NotBlank(message = "usuario.nombreRazonSocial.notBlank") @Size(max = 60, message = "usuario.nombreRazonSocial.size") String nombreRazonSocial,
+			@Size(max = 60, message = "usuario.apellido.size") String apellido,
+			@Size(max = 256, message = "usuario.password.size") String password, String estado) {
 		super();
-		this.id = idUsuario;
+		this.id = id;
 		this.cedulaRuc = cedulaRuc;
 		this.nombreRazonSocial = nombreRazonSocial;
 		this.apellido = apellido;
 		this.password = password;
+		this.estado = estado;
 	}
-
-
 
 	public String getCedulaRuc() {
 		return cedulaRuc;
@@ -110,6 +108,14 @@ public class Usuario extends GenericEntity {
 	public void setId(Long id) {
 		this.id = id;
 
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
 	@Override
