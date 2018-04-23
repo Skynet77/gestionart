@@ -10,7 +10,7 @@ public class ProductoDaoImpl extends DaoImpl<Producto> implements ProductoDao {
 	@Override
 	public String getCamposFiltrables() {
 		// TODO Auto-generated method stub
-		return "";
+		return "estado";
 	}
 
 	@Override

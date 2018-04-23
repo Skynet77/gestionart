@@ -177,6 +177,7 @@ function editarUsuario(id){
     });
 }
 
+
 function eliminarUsuario(id){
 	$("#eliminarUsuario").val(id);
 	$("#modal-default").modal('show');
@@ -193,7 +194,19 @@ function editarProveedor(id){
         }
     }).done(function(data){
         $("#formularioProveedor").html(data);
-        
+    });
+}
+    
+function editarProducto(idProducto){
+	
+	$.ajax({
+        type: "POST",
+        url: "/gestionart/producto/buscar",
+        data: { 
+            id_producto:idProducto
+        }
+    }).done(function(data){
+        $("#formularioProducto").html(data);
     });
 }
 
@@ -202,4 +215,18 @@ function eliminarProveedor(id){
 	$("#modal-default").modal('show');
 }
 
-	
+
+function eliminarProducto(idProducto){
+	$("#eliminarproducto").val(idProducto);
+	$("#modal-default").modal('show');
+	/*$.ajax({
+        type: "POST",
+        url: "cliente/buscar",
+        data: { 
+            id_cliente:idCliente
+        }
+    }).done(function(data){
+        $("#formularioCliente").html(data);
+        
+    });*/
+}

@@ -51,7 +51,7 @@ public class ProveedorFormController extends FormController<Proveedor> {
 		map.addAttribute("columnasStr", proveedorList.getColumnasStr(null));
 		map.addAttribute("proveedorList", getDao().getList(0, 100, null));
 		map.addAttribute("proveedor", new Proveedor());
-		map.addAttribute("tituloFormulario", "Registrar Cliente");
+		map.addAttribute("tituloFormulario", "Registrar Proveedor");
 		map.addAttribute("accion", "guardar");
 		super.agregarValoresAdicionales(map);
 	}
