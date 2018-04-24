@@ -12,11 +12,11 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.pol.gestionart.bean.GenericEntity;
+import com.pol.gestionart.main.GenericEntity;
 
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint(name = "compra_detalle_uk", columnNames = { "id_compra", "id_producto" }) })
-
+@Table
+//uniqueConstraints = { @UniqueConstraint(name = "compra_detalle_uk", columnNames = { "id_compra", "id_producto" }) }
 public class CompraDetalle extends GenericEntity {
 private static final String SECUENCIA = "compraDetalle_id_seq";
 	
@@ -25,10 +25,10 @@ private static final String SECUENCIA = "compraDetalle_id_seq";
 	@SequenceGenerator(name = SECUENCIA, sequenceName = SECUENCIA)
 	private Long id;
 	
-	@ManyToOne
-	@NotNull(message = "compraDetalle.compraCabecera.notNull")
-	//@JoinColumn(foreignKey = @ForeignKey(name = "compraDetalle_compraCabecera_fk"))
-	private CompraCabecera compraCabecera;
+//	@ManyToOne
+//	@NotNull(message = "compraDetalle.compraCabecera.notNull")
+//	//@JoinColumn(foreignKey = @ForeignKey(name = "compraDetalle_compraCabecera_fk"))
+//	private CompraCabecera compraCabecera;
 	
 	@ManyToOne
 	@NotNull(message = "compraDetalle.producto.notNull")
@@ -64,7 +64,6 @@ private static final String SECUENCIA = "compraDetalle_id_seq";
 			@Size(max = 50) @NotNull(message = "compraDetalle.cantidad.notNull") int cantidad) {
 		super();
 		this.id = id;
-		this.compraCabecera = compraCabecera;
 		this.producto = producto;
 		this.descripcion = descripcion;
 		this.precioUnitario = precioUnitario;
@@ -72,13 +71,13 @@ private static final String SECUENCIA = "compraDetalle_id_seq";
 		this.cantidad = cantidad;
 	}
 
-	public CompraCabecera getCompraCabecera() {
-		return compraCabecera;
-	}
-
-	public void setCompraCabecera(CompraCabecera compraCabecera) {
-		this.compraCabecera = compraCabecera;
-	}
+//	public CompraCabecera getCompraCabecera() {
+//		return compraCabecera;
+//	}
+//
+//	public void setCompraCabecera(CompraCabecera compraCabecera) {
+//		this.compraCabecera = compraCabecera;
+//	}
 
 	public Producto getProducto() {
 		return producto;
@@ -132,11 +131,11 @@ private static final String SECUENCIA = "compraDetalle_id_seq";
 		
 	}
 
-	@Override
-	public String toString() {
-		return "CompraDetalle [id=" + id + ", compraCabecera=" + compraCabecera + ", producto=" + producto
-				+ ", descripcion=" + descripcion + ", precioUnitario=" + precioUnitario + ", iva=" + iva + ", cantidad="
-				+ cantidad + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "CompraDetalle [id=" + id + ", compraCabecera=" + compraCabecera + ", producto=" + producto
+//				+ ", descripcion=" + descripcion + ", precioUnitario=" + precioUnitario + ", iva=" + iva + ", cantidad="
+//				+ cantidad + "]";
+//	}
 
 }
