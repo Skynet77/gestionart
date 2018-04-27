@@ -50,6 +50,9 @@ public class CompraCabecera extends GenericEntity{
 	@Size(max = 50)
 	@NotNull(message = "compraCabecera.tipoCompra.notNull")
 	private String tipoCompra;
+	@Size(max = 50)
+	@NotNull(message = "compraCabecera.estado.notNull")
+	private String estado;
 	
 	@OneToMany
 	private List<CompraDetalle> compraDetalle;
@@ -65,7 +68,9 @@ public class CompraCabecera extends GenericEntity{
 			@Size(max = 50) @NotNull(message = "compraCabecera.timbrado.notNull") String timbrado,
 			@Size(max = 50) @NotNull(message = "compraCabecera.fechaCompra.notNull") String fechaCompra,
 			@Size(max = 50) @NotNull(message = "compraCabecera.monto.notNull") String monto,
-			@Size(max = 50) @NotNull(message = "compraCabecera.tipoCompra.notNull") String tipoCompra) {
+			@Size(max = 50) @NotNull(message = "compraCabecera.tipoCompra.notNull") String tipoCompra,
+			@Size(max = 50) @NotNull(message = "compraCabecera.estado.notNull") String estado,
+			List<CompraDetalle> compraDetalle) {
 		super();
 		this.id = id;
 		this.idUsuario = idUsuario;
@@ -75,67 +80,128 @@ public class CompraCabecera extends GenericEntity{
 		this.fechaCompra = fechaCompra;
 		this.monto = monto;
 		this.tipoCompra = tipoCompra;
+		this.estado = estado;
+		this.compraDetalle = compraDetalle;
 	}
+
+
+
+
+
+
+
 
 	public String getIdUsuario() {
 		return idUsuario;
 	}
 
+
+
+
 	public void setIdUsuario(String idUsuario) {
 		this.idUsuario = idUsuario;
 	}
+
+
+
 
 	public String getIdProveedor() {
 		return idProveedor;
 	}
 
+
+
+
 	public void setIdProveedor(String idProveedor) {
 		this.idProveedor = idProveedor;
 	}
+
+
+
 
 	public String getNroFactura() {
 		return nroFactura;
 	}
 
+
+
+
 	public void setNroFactura(String nroFactura) {
 		this.nroFactura = nroFactura;
 	}
+
+
+
 
 	public String getTimbrado() {
 		return timbrado;
 	}
 
+
+
+
 	public void setTimbrado(String timbrado) {
 		this.timbrado = timbrado;
 	}
+
+
+
 
 	public String getFechaCompra() {
 		return fechaCompra;
 	}
 
+
+
+
 	public void setFechaCompra(String fechaCompra) {
 		this.fechaCompra = fechaCompra;
 	}
+
+
+
 
 	public String getMonto() {
 		return monto;
 	}
 
+
+
+
 	public void setMonto(String monto) {
 		this.monto = monto;
 	}
+
+
+
 
 	public String getTipoCompra() {
 		return tipoCompra;
 	}
 
+
+
+
 	public void setTipoCompra(String tipoCompra) {
 		this.tipoCompra = tipoCompra;
 	}
 
-	public static String getSecuencia() {
-		return SECUENCIA;
+
+
+
+	public String getEstado() {
+		return estado;
 	}
+
+
+
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+
+
 
 	@Override
 	public Long getId() {
@@ -161,8 +227,11 @@ public class CompraCabecera extends GenericEntity{
 	public String toString() {
 		return "CompraCabecera [id=" + id + ", idUsuario=" + idUsuario + ", idProveedor=" + idProveedor
 				+ ", nroFactura=" + nroFactura + ", timbrado=" + timbrado + ", fechaCompra=" + fechaCompra + ", monto="
-				+ monto + ", tipoCompra=" + tipoCompra + "]";
+				+ monto + ", tipoCompra=" + tipoCompra + ", estado=" + estado + ", compraDetalle=" + compraDetalle
+				+ "]";
 	}
+
+	
 	
 	
 
