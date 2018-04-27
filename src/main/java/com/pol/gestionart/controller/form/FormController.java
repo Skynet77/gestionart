@@ -65,7 +65,6 @@ public abstract class FormController<T extends GenericEntity>{
 		}	
 		return null;
 	}
-	
 	@RequestMapping(value = "save", method = RequestMethod.POST)
 	public String guardar(ModelMap map, @Valid T obj, BindingResult bindingResult) {
 		try {

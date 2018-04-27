@@ -59,6 +59,7 @@ public class ProductoFormController extends FormController<Producto> {
 		map.addAttribute("tituloFormulario", "Registrar Producto");
 		map.addAttribute("producto", new Producto());
 		map.addAttribute("accion", "guardar");
+		map.addAttribute("familiaList", getDao().findEntities(true,-1,-1, "Familia"));
 		super.agregarValoresAdicionales(map);
 	}
 

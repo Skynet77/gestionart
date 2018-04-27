@@ -37,4 +37,6 @@ public interface Dao<T> {
 
 	void destroy(T obj);
 
+	List<T> findEntities(boolean all, int maxResults, int firstResult, String name);
+
 }

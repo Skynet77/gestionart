@@ -52,6 +52,15 @@
 							placeholder="Ingrese Precio de Venta">
 					</div>	
 					<div class="form-group">
+						<label for="exampleInputFile">Familia:</label>
+						<select class="form-control"
+							th:field="*{familia}">
+							<option th:each="familia : ${familiaList}"
+								th:value="${familia.id}" th:text="${familia.nombre}">Bebidas</option>
+						</select>
+					</div>	
+					
+					<div class="form-group">
 	                  <div class="col-sm-offset-2 col-sm-10">
 	                    <div class="checkbox">
 	                      <label>

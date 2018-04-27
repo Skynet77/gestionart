@@ -21,6 +21,7 @@ public abstract class DaoImpl<T extends GenericEntity> implements Dao<T>{
 	
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 	
+	private static final String UNCHECKED = "unchecked";
 	@Autowired 
 	protected EntityManager entityManager;
 	private String entityName;
@@ -125,7 +126,7 @@ public abstract class DaoImpl<T extends GenericEntity> implements Dao<T>{
 		return entityName;
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings(UNCHECKED)
 	public Class<T> getEntityClass(){
 		if (entityClass == null) {
 			ParameterizedType superClass = (ParameterizedType) this.getClass().getGenericSuperclass();
@@ -140,6 +141,62 @@ public abstract class DaoImpl<T extends GenericEntity> implements Dao<T>{
 			return;
 		}
 		collection.iterator().hasNext();
+	}
+	
+	@Transactional
+	@SuppressWarnings(UNCHECKED)
+	public List<T> findEntities(boolean all, int maxResults, int firstResult) {
+
+		EntityManager em = entityManager;
+		String sql = "select object(ENTITY) from ENTITY as ENTITY";
+		sql = sql.replace("ENTITY", getEntityName());
+		logger.debug("Realizando consulta: {}", sql);
+
+		Query query = em.createQuery(sql);
+		if (!all) {
+			query.setMaxResults(maxResults);
+			query.setFirstResult(firstResult);
+		}
+		List<T> list = query.getResultList();
+		logger.info("Registros encontrados: {}", list.size());
+		return list;
+	}
+	
+	@Transactional
+	@Override
+	@SuppressWarnings(UNCHECKED)
+	public List<T> findEntities(boolean all, int maxResults, int firstResult, String name) {
+
+		if(name== null){
+			EntityManager em = entityManager;
+			String sql = "select object(ENTITY) from ENTITY as ENTITY";
+			sql = sql.replace("ENTITY", getEntityName());
+			logger.debug("Realizando consulta: {}", sql);
+
+			Query query = em.createQuery(sql);
+			if (!all) {
+				query.setMaxResults(maxResults);
+				query.setFirstResult(firstResult);
+			}
+			List<T> list = query.getResultList();
+			logger.info("Registros encontrados: {}", list.size());
+			return list;
+		}else{
+			EntityManager em = entityManager;
+			String sql = "select object(ENTITY) from ENTITY as ENTITY";
+			sql = sql.replace("ENTITY", name);
+			logger.debug("Realizando consulta: {}", sql);
+
+			Query query = em.createQuery(sql);
+			if (!all) {
+				query.setMaxResults(maxResults);
+				query.setFirstResult(firstResult);
+			}
+			List<T> list = query.getResultList();
+			logger.info("Registros encontrados: {}", list.size());
+			return list;
+		}
+		
 	}
 	
 	
