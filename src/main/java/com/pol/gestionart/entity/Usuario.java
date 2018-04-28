@@ -10,10 +10,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotBlank;
 
 import com.pol.gestionart.main.GenericEntity;
 
@@ -31,18 +30,15 @@ public class Usuario extends GenericEntity {
 
 	@NotNull(message = "usuario.cedula_ruc.notNull")
 	@NotBlank(message = "usuario.cedula_ruc.notBlank")
-	@Size(max = 20, message = "usuario.cedula_ruc.size")
+	@Size(max = 20)
 	private String cedulaRuc;
-
-	@NotNull(message = "usuario.nombreRazonSocial.notNull")
-	@NotBlank(message = "usuario.nombreRazonSocial.notBlank")
-	@Size(max = 60, message = "usuario.nombreRazonSocial.size")
+	@NotNull
+	@Size(max = 60)
 	private String nombreRazonSocial;
-
-	@Size(max = 60, message = "usuario.apellido.size")
+	@Size(max = 60)
 	private String apellido;
-
-	@Size(max = 256, message = "usuario.password.size")
+	@NotNull
+	@Size(max = 256)
 	private String password;
 
 	private String estado;
@@ -53,10 +49,10 @@ public class Usuario extends GenericEntity {
 	}
 
 	public Usuario(Long id,
-			@NotNull(message = "usuario.cedula_ruc.notNull") @NotBlank(message = "usuario.cedula_ruc.notBlank") @Size(max = 20, message = "usuario.cedula_ruc.size") String cedulaRuc,
-			@NotNull(message = "usuario.nombreRazonSocial.notNull") @NotBlank(message = "usuario.nombreRazonSocial.notBlank") @Size(max = 60, message = "usuario.nombreRazonSocial.size") String nombreRazonSocial,
-			@Size(max = 60, message = "usuario.apellido.size") String apellido,
-			@Size(max = 256, message = "usuario.password.size") String password, String estado) {
+			@NotNull(message = "usuario.cedula_ruc.notNull") @Size(max = 20) String cedulaRuc,
+			@NotNull @Size(max = 60) String nombreRazonSocial,
+			@Size(max = 60) String apellido,
+			@NotNull @Size(max = 256) String password, String estado) {
 		super();
 		this.id = id;
 		this.cedulaRuc = cedulaRuc;
@@ -123,14 +119,5 @@ public class Usuario extends GenericEntity {
 		return "Usuario [idUsuario=" + id + ", cedulaRuc=" + cedulaRuc + ", nombreRazonSocial=" + nombreRazonSocial
 				+ ", apellido=" + apellido + ", password=" + password + "]";
 	}
-
-	
-
-	
-
-
-	
-	
-
 	
 }

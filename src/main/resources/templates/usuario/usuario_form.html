@@ -12,9 +12,11 @@
     <input type="hidden" th:field="*{id}" />
         <div class="box-body"> 
           <div class="form-group"> 
-            <label for="inputNombre">Nombre o razon social:</label>  
+            <label for="inputNombre">Nombre o raz√≥n social:</label>  
             <input th:field="*{nombreRazonSocial}" type="text" class="form-control" id="nombreRazonSocial" 
-              placeholder="Ingrese Nombre"> 
+              placeholder="Ingrese Nombre"
+			  data-validation="required"
+			  data-validation-error-msg-required="Debe ingresar el nombre del usuario">
           </div> 
           <div class="form-group"> 
             <label for="exampleInputFile">Apellido:</label> 
@@ -24,12 +26,16 @@
           <div class="form-group"> 
             <label >R.U.C./ C.I.:</label> 
             <input th:field="*{cedulaRuc}" type="text" class="form-control" id="cedulaRuc" 
-              placeholder="Ingrese su RUC o CI"> 
+              placeholder="Ingrese su RUC o CI"							
+              data-validation="required"
+              data-validation-error-msg-required="Debe ingresar su CI o RUC">
           </div> 
           <div class="form-group"> 
             <label for="exampleInputFile">Password:</label> 
             <input th:field="*{password}" type="text" class="form-control" id="password" 
-              placeholder="Ingrese password"> 
+              placeholder="Ingrese password"							
+              data-validation="required"
+              data-validation-error-msg-required="Debe ingresar nueva contraseÒa">
           </div> 
  		<div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
@@ -82,6 +88,19 @@
           <!-- /.modal-dialog -->
         </div>
         <!-- /.modal -->
+        <script>
+		    $.validate({
+	        form: '#form-usuario',
+	        errorElementClass: 'validation-error',
+	        errorMessageClass: 'input-error',
+	        borderColorOnError: '',
+	        validateOnBlur: true,
+	        scrollToTopOnError: false,
+	        onError: function(){
+	        	console.log("ds")
+	        	}
+	        })
+	    </script>
 	</div>
   
 </body>
