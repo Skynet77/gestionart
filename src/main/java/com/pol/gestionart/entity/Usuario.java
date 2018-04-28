@@ -1,12 +1,9 @@
 package com.pol.gestionart.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -111,7 +108,11 @@ public class Usuario extends GenericEntity {
 	}
 
 	public void setEstado(String estado) {
-		this.estado = estado;
+		if(estado == null){
+			this.estado = "I";
+		}else{
+			this.estado = estado;
+		}
 	}
 
 	@Override

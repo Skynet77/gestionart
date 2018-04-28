@@ -164,7 +164,7 @@ public class Producto extends GenericEntity {
 
 	@Override
 	public void setId(Long id) {
-		this.idProducto = idProducto;
+		this.idProducto = id;
 		
 	}
 

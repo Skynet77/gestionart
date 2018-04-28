@@ -19,7 +19,7 @@ public class ProveedorListController extends ListController<Proveedor> {
 
 	@Override
 	public String[] getColumnas() {
-		return new String[] { "id", "nombre", "ruc", "nombre_contacto", "nroTelefono", "correoElectronico", "direccion" };
+		return new String[] { "id", "nombre", "ruc", "nombre_contacto", "nroTelefono", "correoElectronico" };
 	}
 
 	@Override

@@ -42,7 +42,9 @@
 					<div class="form-group">
 						<label for="exampleInputFile">Email:</label>
 						<input th:field="*{correoElectronico}" type="email" class="form-control" id="correoElectronico"
-							placeholder="correo@hotmail.com">
+							placeholder="correo@hotmail.com"
+							data-validation="required"
+							data-validation-error-msg-required="Debe ingresar email de contacto">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputFile">Dirección:</label>
