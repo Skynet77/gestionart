@@ -11,51 +11,77 @@
 		role="form" id="form-usuario">
 		<input type="hidden" th:field="*{idProducto}" />
 				<div class="box-body">
-					<div class="form-group">
-						<label for="inputNombre">Tipo de Producto: </label> 
-						<input th:field="*{tipoProducto}" type="text" class="form-control" id="tipoProducto"
-							placeholder="Ingrese Tipo de Producto">
-					</div>
+				<div class="form-group">
+						<label for="exampleInputFile">Tipo de producto:</label>
+						<select class="form-control" name="type-product"
+							data-validation="required"
+							data-validation-error-msg-required="Debe seleccionar el tipo de producto">
+							<option value="MP">Materia Prima</option>
+							<option value="P">Producto</option>
+						</select>
+					</div>	
+<!-- 					<div class="form-group"> -->
+<!-- 						<label for="inputNombre">Tipo de Producto: </label>  -->
+<!-- 						<input th:field="*{tipoProducto}" type="text" class="form-control" id="tipoProducto" -->
+<!-- 							placeholder="Ingrese Tipo de Producto" -->
+<!-- 							data-validation="required" -->
+<!-- 							data-validation-error-msg-required="Debe seleccionar el tipo de producto"> -->
+<!-- 					</div> -->
 					<div class="form-group">
 						<label for="exampleInputPassword1">Código:</label> 
 						<input th:field="*{codigo}" type="text" class="form-control" id="codigo"
-							placeholder="Ingrese código">
+							placeholder="Ingrese código"
+							data-validation="required"
+							data-validation-error-msg-required="Debe ingresar el código">
 					</div>					
 					<div class="form-group">
 						<label for="exampleInputPassword1">Descripción:</label> 
 						<input th:field="*{descripcion}" type="text" class="form-control" id="descripcion"
-							placeholder="Ingrese descripcion">
+							placeholder="Ingrese descripcion"
+							data-validation="required"
+							data-validation-error-msg-required="Debe ingresar la descripcion">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputFile">Marca: </label>
 						<input th:field="*{marca}" type="text" class="form-control" id="marca"
-							placeholder="Ingrese Marca">
+							placeholder="Ingrese Marca"
+							data-validation="required"
+							data-validation-error-msg-required="Debe seleccionar la marca">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputFile">Capacidad: </label>
 						<input th:field="*{capacidad}" type="text" class="form-control" id="capacidad"
-							placeholder="Ingrese Capacidad">
+							placeholder="Ingrese Capacidad"
+							data-validation="required"
+							data-validation-error-msg-required="Debe ingresar la capacidad">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputFile">Cantidad: </label>
 						<input th:field="*{cantidad}" type="text" class="form-control" id="cantidad"
-							placeholder="Ingrese cantidad en stock">
+							placeholder="Ingrese cantidad en stock"
+							data-validation="required"
+							data-validation-error-msg-required="Debe ingresar la cantidad">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputFile">Precio de Compra:</label>
 						<input th:field="*{precioCompra}" type="text" class="form-control" id="precioCompra"
 							placeholder="Ingrese Precio de Compra"
-							data-validation="number" data-validation-allowing="float">
+							data-validation="required"
+							data-validation-error-msg-required="Debe ingresar el precio de compra">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputFile">Precio de Venta:</label>
 						<input th:field="*{precioVenta}" type="text" class="form-control" id="precioVenta"
-							placeholder="Ingrese Precio de Venta">
+							placeholder="Ingrese Precio de Venta"
+							data-validation="required"
+							data-validation-error-msg-required="Debe ingresar el precio de venta">
 					</div>	
 					<div class="form-group">
 						<label for="exampleInputFile">Familia:</label>
 						<select class="form-control"
-							th:field="*{familia}">
+							th:field="*{familia}"
+							data-validation="required"
+							data-validation-error-msg-required="Debe seleccionar la familia">
 							<option th:each="familia : ${familiaList}"
 								th:value="${familia.id}" th:text="${familia.nombre}">Bebidas</option>
 						</select>
@@ -110,28 +136,22 @@
           <!-- /.modal-dialog -->
         </div>
         <!-- /.modal -->
+        <script>
+	$.validate({
+        form: '#form-usuario',
+        errorElementClass: 'validation-error',
+        errorMessageClass: 'input-error',
+        borderColorOnError: '',
+        validateOnBlur: true,
+        scrollToTopOnError: false,
+        onError: function(){
+        	console.log("ds")
+        	}
+    })
+	
+	
+</script>
 	</div>
 	<!-- /.col -->
-	<script>
-	$.validate({
-	    form : '#form-usuario',
-	    modules : 'security',
-	    onError : function($form) {
-	      alert('Validation of form '+$form.attr('id')+' failed!');
-	    },
-	    onSuccess : function($form) {
-	      alert('The form '+$form.attr('id')+' is valid!');
-	      return false; // Will stop the submission of the form
-	    },
-	    onValidate : function($form) {
-	      return {
-	        element : $('#some-input'),
-	        message : 'This input has an invalid value for some reason'
-	      }
-	    },
-	    onElementValidate : function(valid, $el, $form, errorMess) {
-	      console.log('Input ' +$el.attr('name')+ ' is ' + ( valid ? 'VALID':'NOT VALID') );
-	    }
-	  });
-</script>
+	
 	</html>

@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -28,6 +29,8 @@ public class Producto extends GenericEntity {
 	@SequenceGenerator(name = SECUENCIA, sequenceName = SECUENCIA)
 	private Long idProducto;
 	
+	@NotBlank(message = "producto.codigo.notBlank")
+	@NotNull(message = "producto.codigo.notNull")
 	private String codigo;
 	@NotNull
 	private String tipoProducto; // P producto, M materia prima
