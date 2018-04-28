@@ -14,32 +14,58 @@
 					<div class="form-group">
 						<label for="inputNombre">Nombre:</label> 
 						<input th:field="*{nombre}" type="text" class="form-control" id="nombre"
-							placeholder="Ingrese Nombre">
+							placeholder="Ingrese Nombre"
+							data-validation="required"
+			 				data-validation-error-msg-required="Debe ingresar el nombre del cliente">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputPassword1">Apellido:</label> 
 						<input th:field="*{apellido}" type="text" class="form-control" id="apellido"
-							placeholder="Ingrese su apellido">
+							placeholder="Ingrese su apellido"
+							data-validation="required"
+							data-validation-error-msg-required="Debe ingresar el apellido del cliente">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputFile">R.U.C./ C.I.:</label>
 						<input th:field="*{ruc}" type="text" class="form-control" id="ruc"
-							placeholder="Ingrese su RUC o CI">
+							placeholder="Ingrese su RUC o CI"
+							data-validation="required"
+			  				data-validation-error-msg-required="Debe ingresar el RUC/CI del cliente">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputFile">Fecha de nacimiento:</label>
+						<input th:field="*{fecha_nacimiento}" type="date" class="form-control" id="fecha"
+							placeholder="Ingrese fecha"
+							data-validation="required"
+			  				data-validation-error-msg-required="Ingrese fecha de nacimiento del cliente">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputFile">Sexo:</label>
+						<select class="form-control" name="sexo">
+							<option value="H">Hombre</option>
+							<option value="M">Mujer</option>
+						</select>
 					</div>
 					<div class="form-group">
 						<label for="exampleInputFile">Teléfono / Cel.:</label>
 						<input th:field="*{nroTelefono}" type="text" class="form-control" id="telefono"
-							placeholder="Ingrese telefono o cel">
+							placeholder="Ingrese telefono o cel"
+							data-validation="required"
+							data-validation-error-msg-required="Debe ingresar el telefono del cliente">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputFile">Email:</label>
 						<input th:field="*{correoElectronico}" type="email" class="form-control" id="correoElectronico"
-							placeholder="correo@hotmail.com">
+							placeholder="correo@hotmail.com"
+							data-validation="required"
+							data-validation-error-msg-required="Debe ingresar el email del cliente">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputFile">Dirección:</label>
 						<input th:field="*{direccion}" type="text" class="form-control" id="direccion"
-							placeholder="Ingrese dirección">
+							placeholder="Ingrese dirección"
+							data-validation="required"
+							data-validation-error-msg-required="Debe ingresar la dirección del cliente">
 					</div>		
 					<div class="form-group">
 	                  <div class="col-sm-offset-2 col-sm-10">
@@ -91,6 +117,19 @@
           <!-- /.modal-dialog -->
         </div>
         <!-- /.modal -->
+                <script>
+		    $.validate({
+	        form: '#form-usuario',
+	        errorElementClass: 'validation-error',
+	        errorMessageClass: 'input-error',
+	        borderColorOnError: '',
+	        validateOnBlur: true,
+	        scrollToTopOnError: false,
+	        onError: function(){
+	        	console.log("ds")
+	        	}
+	        })
+	    </script>
 	</div>
 	<!-- /.col -->
 	</html>
