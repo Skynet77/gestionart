@@ -1,0 +1,45 @@
+<html xmlns:th="http://www.thymeleaf.org" th:replace="starter">
+<meta charset="utf-8"/>
+<div class="row" th:fragment="contenido">
+
+	<div class="col-md-6">
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title">Listado de Ventas</h3>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body">
+              <table id="ventaDT" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+					<th th:each="col : ${columnas}" th:text="#{'venta.' + ${col} + '.header'}">CÓDIGO</th>
+					<th>Accion</th>
+				</tr>
+                </thead>
+              </table>
+            </div>
+			<!-- /.box-body -->
+		</div>
+		<!-- /.box -->
+
+
+		<!-- /.box -->
+	</div>
+	
+	<script type="text/javascript">
+		
+		$(document).ready(function() {
+		  crearDataTable("ventaDT", "[[@{/venta/json?sSearch=A}]]", "[[${columnasStr}]]", "[[@{/venta/edit/}]]");
+		});
+		
+		function accion(idVenta, accion){
+			if(accion=="EDITAR"){
+				editarCliente(idVenta);	
+			}else if(accion="ELIMINAR"){
+				eliminarCliente(idVenta);
+			}
+			
+		}
+	</script>
+</div>
+</html>

@@ -1,5 +1,7 @@
 package com.pol.gestionart.entity;
 
+import java.sql.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,6 +31,9 @@ public class Cliente extends GenericEntity{
 	private String nombre;
 	@Size(max = 50)
 	private String apellido;
+	private Date fecha_nacimiento;
+	@Size(max = 20)
+	private String sexo;
 	@Size(max = 50)
 	private String ruc;
 	@Size(max = 15)
@@ -43,12 +48,15 @@ public class Cliente extends GenericEntity{
 		super();
 	}
 	
-	public Cliente(Long idCliente, String nombre, String apellido, String ruc, String nroTelefono, String correoElectronico,
-		String direccion, String estado) {
+	public Cliente(Long id, @Size(max = 50) String nombre, @Size(max = 50) String apellido, Date fecha_nacimiento,
+			@Size(max = 20) String sexo, @Size(max = 50) String ruc, @Size(max = 15) String nroTelefono,
+			@Size(max = 30) String correoElectronico, @Size(max = 100) String direccion, String estado) {
 		super();
-		this.id = idCliente;
+		this.id = id;
 		this.nombre = nombre;
 		this.apellido = apellido;
+		this.fecha_nacimiento = fecha_nacimiento;
+		this.sexo = sexo;
 		this.ruc = ruc;
 		this.nroTelefono = nroTelefono;
 		this.correoElectronico = correoElectronico;
@@ -105,9 +113,9 @@ public class Cliente extends GenericEntity{
 
 	@Override
 	public String toString() {
-		return "Cliente [idCliente=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", ruc=" + ruc
-				+ ", nroTelefono=" + nroTelefono + ", correoElectronico=" + correoElectronico + ", direccion="
-				+ direccion + ", estado=" + estado + "]";
+		return "Cliente [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", fecha_nacimiento="
+				+ fecha_nacimiento + ", sexo=" + sexo + ", ruc=" + ruc + ", nroTelefono=" + nroTelefono
+				+ ", correoElectronico=" + correoElectronico + ", direccion=" + direccion + ", estado=" + estado + "]";
 	}
 
 	@Override
@@ -118,6 +126,14 @@ public class Cliente extends GenericEntity{
 	@Override
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Date getFecha_nacimiento() {
+		return fecha_nacimiento;
+	}
+
+	public void setFecha_nacimiento(Date fecha_nacimiento) {
+		this.fecha_nacimiento = fecha_nacimiento;
 	}
 	
 	

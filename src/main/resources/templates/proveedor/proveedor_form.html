@@ -12,27 +12,42 @@
 				<input type="hidden" th:field="*{id}" />
 				<div class="box-body">
 					<div class="form-group">
-						<label for="inputNombre">Nombre o razon social:</label> 
+						<label for="inputNombre">Nombre o razón social:</label> 
 						<input th:field="*{nombre}" type="text" class="form-control" id="nombre"
-							placeholder="Ingrese Nombre">
+							placeholder="Ingrese Proveedor"
+							data-validation="required"
+							data-validation-error-msg-required="Debe ingresar nombre de proveedor">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputFile">R.U.C.:</label>
 						<input th:field="*{ruc}" type="text" class="form-control" id="ruc"
-							placeholder="Ingrese su RUC">
+							placeholder="Ingrese su RUC"
+							data-validation="required"
+							data-validation-error-msg-required="Debe ingresar RUC del proveedor">
 					</div>
 					<div class="form-group">
-						<label for="exampleInputFile">Telefono / Cel.:</label>
+						<label for="inputNombre">Nombre de contacto:</label> 
+						<input th:field="*{nombre_contacto}" type="text" class="form-control" id="nombre_contacto"
+							placeholder="Ingrese Nombre"
+							data-validation="required"
+							data-validation-error-msg-required="Debe ingresar nombre de contacto a proveedor">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputFile">Teléfono / Cel.:</label>
 						<input th:field="*{nroTelefono}" type="text" class="form-control" id="telefono"
-							placeholder="Ingrese telefono o cel">
+							placeholder="Ingrese telefono o cel"
+							data-validation="required"
+							data-validation-error-msg-required="Debe ingresar telefono para contacto">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputFile">Email:</label>
 						<input th:field="*{correoElectronico}" type="email" class="form-control" id="correoElectronico"
-							placeholder="correo@hotmail.com">
+							placeholder="correo@hotmail.com"
+							data-validation="required"
+							data-validation-error-msg-required="Debe ingresar email de contacto">
 					</div>
 					<div class="form-group">
-						<label for="exampleInputFile">Direccion:</label>
+						<label for="exampleInputFile">Dirección:</label>
 						<input th:field="*{direccion}" type="text" class="form-control" id="direccion"
 							placeholder="Ingrese dirección">
 					</div>		
@@ -86,6 +101,19 @@
           <!-- /.modal-dialog -->
         </div>
         <!-- /.modal -->
+        <script>
+		    $.validate({
+	        form: '#form-usuario',
+	        errorElementClass: 'validation-error',
+	        errorMessageClass: 'input-error',
+	        borderColorOnError: '',
+	        validateOnBlur: true,
+	        scrollToTopOnError: false,
+	        onError: function(){
+	        	console.log("ds")
+	        	}
+	        })
+	    </script>
 	</div>
 	<!-- /.col -->
 	</html>
