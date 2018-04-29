@@ -119,6 +119,39 @@ function getColumnasArray(colsStr){
 		return columnsArray;
 }
 
+
+
+/**
+ * 
+ * @param magicSuggestId
+ * @param urlData
+ * @param pValueField
+ * @param pNameDisplay
+ * @returns un listado de clientes, tipo cliente entre otros.
+ */
+function crearMagicSuggest(magicSuggestId, urlData, pValueField, pNameDisplay) {
+	var suggest = $('#'+ magicSuggestId).magicSuggest({
+		data : urlData,
+		useZebraStyle: true,
+		sortDir: 'asc',
+		valueFiel : pValueField,
+		sortOrder : pNameDisplay,
+		method : 'get',
+		displayField : pNameDisplay,
+		queryParam : 'q',
+		selectFirst : true,
+		requerid : true,
+		maxSelection : 1,
+		resultAsString: true,
+		placeholder : 'Ingrese texto para buscar'
+	});
+
+	$(suggest).on('selectionchange', function(a,b,c){
+		  console.log("cambió el valor del maicsuggest: " + this.getValue());
+		  
+		});
+}
+
 //Cliente
 function editarCliente(idCliente){
 	
@@ -214,3 +247,4 @@ function eliminarProveedor(id){
 	$("#eliminarProveedor").val(id);
 	$("#modal-default").modal('show');
 }
+
