@@ -39,9 +39,15 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="starter
 	href="../css/skins/_all-skins.min.css"/>
 <link rel="stylesheet" th:href="@{/css/gestionart.css}"
 	href="../css/gestionart.css"/>
+	<!-- suggest -->
+	<link rel="stylesheet" th:href="@{/css/magicsuggest-min.css}"
+	href="../css/magicsuggest-min.css"/>
 <!-- jQuery 2.2.3 -->
 <script th:src="@{/js/jquery.js}"
 	src="../js/jquery.js"></script>
+	<script th:src="@{/js/magicsuggest.js}"
+	src="../js/magicsuggest.js"></script>
+	
 	<!-- validator -->
 		<script type="text/javascript" src="../js/gestionart.js"
 		th:src="@{/js/jquery.form-validator.min.js}"></script>
@@ -177,7 +183,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="starter
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
-				<h1>Sistema de Gestión Artesanal</h1>
+				<h1 th:text="${titlePage==null?'Sistema de Gestión Artesanal':titlePage}"></h1>
 				<ol class="breadcrumb">
 					<li><a href="#"><i class="fa fa-dashboard"></i>Inicio</a></li>
 					<li class="active">Gestión Artesanal</li>

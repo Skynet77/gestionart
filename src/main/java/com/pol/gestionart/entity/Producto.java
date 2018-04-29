@@ -175,4 +175,14 @@ public class Producto extends GenericEntity {
 	public void setFamilia(Familia familia) {
 		this.familia = familia;
 	}
+
+	@Override
+	public String toString() {
+		return "Producto [idProducto=" + idProducto + ", codigo=" + codigo + ", tipoProducto=" + tipoProducto
+				+ ", descripcion=" + descripcion + ", marca=" + marca + ", capacidad=" + capacidad + ", precioCompra="
+				+ precioCompra + ", precioVenta=" + precioVenta + ", iva=" + iva + ", cantidad=" + cantidad
+				+ ", estado=" + estado + ", familia=" + familia + "]";
+	}
+	
+	
 }

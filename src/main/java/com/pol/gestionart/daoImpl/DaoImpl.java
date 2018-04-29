@@ -104,7 +104,7 @@ public abstract class DaoImpl<T extends GenericEntity> implements Dao<T>{
 		if (" ".equals(sSearch)) {
 			query = entityManager.createQuery(sql);
 		} else {
-			sql = sql + "WHERE lower(" + getCamposFiltrables() + ") + LIKE lower(?1)";
+			sql = sql + "WHERE lower(" + getCamposFiltrables() + ") LIKE lower(?1)";
 			query = entityManager.createQuery(sql);
 			query.setParameter(1, "%" + sSearch.replace(" ", "%") + "%");
 		}

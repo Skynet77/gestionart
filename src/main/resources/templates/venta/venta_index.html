@@ -5,18 +5,11 @@
 	<div class="col-md-6">
 		<div class="box">
 			<div class="box-header">
-				<h3 class="box-title">Listado de Ventas</h3>
+				<h3 class="box-title">Producto</h3>
 			</div>
 			<!-- /.box-header -->
 			<div class="box-body">
-              <table id="ventaDT" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-					<th th:each="col : ${columnas}" th:text="#{'venta.' + ${col} + '.header'}">CÓDIGO</th>
-					<th>Accion</th>
-				</tr>
-                </thead>
-              </table>
+              <div id="magicsuggest"></div>
             </div>
 			<!-- /.box-body -->
 		</div>
@@ -29,17 +22,9 @@
 	<script type="text/javascript">
 		
 		$(document).ready(function() {
-		  crearDataTable("ventaDT", "[[@{/venta/json?sSearch=A}]]", "[[${columnasStr}]]", "[[@{/venta/edit/}]]");
+			crearMagicSuggest('magicsuggest', "[[@{/producto/suggest}]]", 'id','descripcion')
 		});
 		
-		function accion(idVenta, accion){
-			if(accion=="EDITAR"){
-				editarCliente(idVenta);	
-			}else if(accion="ELIMINAR"){
-				eliminarCliente(idVenta);
-			}
-			
-		}
 	</script>
 </div>
 </html>
