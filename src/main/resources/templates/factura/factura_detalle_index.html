@@ -1,0 +1,49 @@
+<html xmlns:th="http://www.thymeleaf.org" th:replace="starter">
+<meta charset="utf-8"/>
+<div class="row" th:fragment="contenido">
+	<div id="formularioProducto">
+				<div th:replace="producto/producto_form::form">aqui va
+										un fragmento de codigo del form</div>
+		    </div>
+	<div class="col-md-6">
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title">Lista de Productos</h3>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body">
+              <table id="productoDT" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+					<th th:each="col : ${columnas}" th:text="#{'producto.' + ${col} + '.header'}">CÓDIGO</th>
+					<th>Accion</th>
+				</tr>
+                </thead>
+              </table>
+            </div>
+			<!-- /.box-body -->
+		</div>
+		<!-- /.box -->
+
+
+		<!-- /.box -->
+	</div>
+	
+	<script type="text/javascript">
+		
+		$(document).ready(function() {
+			//mandamos sSearch A. Para mostrar solo los activos
+		  crearDataTable("productoDT", "[[@{/producto/json?sSearch=A}]]", "[[${columnasStr}]]", "[[@{/producto/edit/}]]");
+		});
+		
+		function accion(idProducto, accion){
+			if(accion=="EDITAR"){
+				editarProducto(idProducto);	
+			}else if(accion="ELIMINAR"){
+				eliminarProducto(idProducto);
+			}
+			
+		}
+	</script>
+</div>
+</html>

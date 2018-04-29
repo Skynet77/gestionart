@@ -214,19 +214,3 @@ function eliminarProveedor(id){
 	$("#eliminarProveedor").val(id);
 	$("#modal-default").modal('show');
 }
-
-
-function eliminarProducto(idProducto){
-	$("#eliminarproducto").val(idProducto);
-	$("#modal-default").modal('show');
-	/*$.ajax({
-        type: "POST",
-        url: "cliente/buscar",
-        data: { 
-            id_cliente:idCliente
-        }
-    }).done(function(data){
-        $("#formularioCliente").html(data);
-        
-    });*/
-}
