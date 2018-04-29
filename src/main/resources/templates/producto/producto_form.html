@@ -11,7 +11,7 @@
 		role="form" id="form-usuario">
 		<input type="hidden" th:field="*{idProducto}" />
 				<div class="box-body">
-				<!--<div class="form-group">
+					<div class="form-group">
 						<label for="exampleInputFile">Tipo de producto:</label>
 						<select class="form-control" name="tipoProducto"
 							data-validation="required"
@@ -19,14 +19,14 @@
 							<option value="MP">Materia Prima</option>
 							<option value="P">Producto</option>
 						</select>
-					</div>	-->
- 					<div class="form-group"> 
+					</div>
+ 					<!--<div class="form-group"> 
  						<label for="inputNombre">Tipo de Producto: </label>  
 						<input th:field="*{tipoProducto}" type="text" class="form-control" id="tipoProducto" 
  							placeholder="Ingrese Tipo de Producto"
 							data-validation="required"
  							data-validation-error-msg-required="Debe seleccionar el tipo de producto"> 
- 					</div>
+ 					</div>-->
 					<div class="form-group">
 						<label for="exampleInputPassword1">Código:</label> 
 						<input th:field="*{codigo}" type="text" class="form-control" id="codigo"
