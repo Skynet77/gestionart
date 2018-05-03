@@ -20,6 +20,16 @@
 							<option value="P">Producto</option>
 						</select>
 					</div>
+						<div class="form-group">
+						<label for="exampleInputFile">Familia:</label>
+						<select class="form-control"
+							th:field="*{familia}"
+							data-validation="required"
+							data-validation-error-msg-required="Debe seleccionar la familia">
+							<option th:each="familia : ${familiaList}"
+								th:value="${familia.id}" th:text="${familia.nombre}">Bebidas</option>
+						</select>
+					</div>	
  					<!--<div class="form-group"> 
  						<label for="inputNombre">Tipo de Producto: </label>  
 						<input th:field="*{tipoProducto}" type="text" class="form-control" id="tipoProducto" 
@@ -42,20 +52,6 @@
 							data-validation-error-msg-required="Debe ingresar la descripcion">
 					</div>
 					<div class="form-group">
-						<label for="exampleInputFile">Marca: </label>
-						<input th:field="*{marca}" type="text" class="form-control" id="marca"
-							placeholder="Ingrese Marca"
-							data-validation="required"
-							data-validation-error-msg-required="Debe seleccionar la marca">
-					</div>
-					<div class="form-group">
-						<label for="exampleInputFile">Capacidad: </label>
-						<input th:field="*{capacidad}" type="text" class="form-control" id="capacidad"
-							placeholder="Ingrese Capacidad"
-							data-validation="required"
-							data-validation-error-msg-required="Debe ingresar la capacidad">
-					</div>
-					<div class="form-group">
 						<label for="exampleInputFile">Cantidad: </label>
 						<input th:field="*{cantidad}" type="text" class="form-control" id="cantidad"
 							placeholder="Ingrese cantidad en stock"
@@ -76,16 +72,7 @@
 							data-validation="required"
 							data-validation-error-msg-required="Debe ingresar el precio de venta">
 					</div>	
-					<div class="form-group">
-						<label for="exampleInputFile">Familia:</label>
-						<select class="form-control"
-							th:field="*{familia}"
-							data-validation="required"
-							data-validation-error-msg-required="Debe seleccionar la familia">
-							<option th:each="familia : ${familiaList}"
-								th:value="${familia.id}" th:text="${familia.nombre}">Bebidas</option>
-						</select>
-					</div>	
+				
 					
 					<div class="form-group">
 	                  <div class="col-sm-offset-2 col-sm-10">
