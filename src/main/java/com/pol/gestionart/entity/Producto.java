@@ -36,7 +36,6 @@ public class Producto extends GenericEntity {
 	private String tipoProducto; // P producto, M materia prima
 	@Size(max = 100)
 	private String descripcion;
-	@Size(max = 50)
 	private BigDecimal precioCompra;
 	private BigDecimal precioVenta;
 	private BigDecimal iva;

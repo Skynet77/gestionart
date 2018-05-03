@@ -19,7 +19,7 @@ public class ProductoListController extends ListController<Producto> {
 
 	@Override
 	public String[] getColumnas() {
-		return new String[] {"id","codigo","tipoProducto", "familia", "descripcion", "precioCompra", "precioVenta","cantidad" };
+		return new String[] {"id","codigo","tipoProducto", "descripcion", "precioCompra", "precioVenta","cantidad" };
 	}
 
 	@Override
