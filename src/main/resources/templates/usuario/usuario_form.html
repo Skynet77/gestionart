@@ -11,26 +11,26 @@
     role="form" id="form-usuario"> 
     <input type="hidden" th:field="*{id}" />
         <div class="box-body"> 
-          <div class="form-group"> 
+          <div class="form-group reg-charac-number"> 
             <label for="inputNombre">Nombre o razón social:</label>  
             <input th:field="*{nombreRazonSocial}" type="text" class="form-control" id="nombreRazonSocial" 
               placeholder="Ingrese Nombre"
 			  data-validation="required"
 			  data-validation-error-msg-required="Debe ingresar el nombre del usuario">
           </div> 
-          <div class="form-group"> 
+          <div class="form-group reg-charac-number"> 
             <label for="exampleInputFile">Apellido:</label> 
             <input th:field="*{apellido}" type="text" class="form-control" id="apellido" 
               placeholder="Ingrese apellido"> 
           </div> 
-          <div class="form-group"> 
+          <div class="form-group reg-charac-number"> 
             <label >R.U.C./ C.I.:</label> 
             <input th:field="*{cedulaRuc}" type="text" class="form-control" id="cedulaRuc" 
               placeholder="Ingrese su RUC o CI"							
               data-validation="required"
               data-validation-error-msg-required="Debe ingresar su CI o RUC">
           </div> 
-          <div class="form-group"> 
+          <div class="form-group reg-charac-number"> 
             <label for="exampleInputFile">Password:</label> 
             <input th:field="*{password}" type="text" class="form-control" id="password" 
               placeholder="Ingrese password"							
@@ -100,6 +100,15 @@
 	        	console.log("ds")
 	        	}
 	        })
+	
+			var REGEX_LETTERS = "^[a-zA-Z0-9]+$";
+			$(".reg-charac-number").on('keypress', function(event){
+					var key= String.fromCharCode(!event.charCode ? event.witch : event.charCode);
+					if (!regex.test(key)){
+						event.preventDefault();
+						return false;
+					}
+			});
 	    </script>
 	</div>
   
