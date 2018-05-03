@@ -37,14 +37,14 @@
 							data-validation="required"
  							data-validation-error-msg-required="Debe seleccionar el tipo de producto"> 
  					</div>-->
-					<div class="form-group">
+					<div class="form-group reg-charac-number">
 						<label for="exampleInputPassword1">Código:</label> 
 						<input th:field="*{codigo}" type="text" class="form-control" id="codigo"
 							placeholder="Ingrese código"
 							data-validation="required"
 							data-validation-error-msg-required="Debe ingresar el código">
 					</div>					
-					<div class="form-group">
+					<div class="form-group reg-charac-number">
 						<label for="exampleInputPassword1">Descripción:</label> 
 						<input th:field="*{descripcion}" type="text" class="form-control" id="descripcion"
 							placeholder="Ingrese descripcion"
@@ -145,8 +145,17 @@
 		       event.preventDefault();
 		       return false;
 		    }
-        });
+    });
 	
+	var REGEX_LETTERS = "^[a-zA-Z0-9]+$";
+	
+	$(".reg-charac-number").on('keypress', function(event){
+			var key= String.fromCharCode(!event.charCode ? event.witch : event.charCode);
+			if (!regex.test(key)){
+				event.preventDefault();
+				return false;
+			}
+	});
 	
 </script>
 	</div>
