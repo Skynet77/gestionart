@@ -20,63 +20,7 @@
 							<option value="P">Producto</option>
 						</select>
 					</div>
- 					<!--<div class="form-group"> 
- 						<label for="inputNombre">Tipo de Producto: </label>  
-						<input th:field="*{tipoProducto}" type="text" class="form-control" id="tipoProducto" 
- 							placeholder="Ingrese Tipo de Producto"
-							data-validation="required"
- 							data-validation-error-msg-required="Debe seleccionar el tipo de producto"> 
- 					</div>-->
-					<div class="form-group">
-						<label for="exampleInputPassword1">Código:</label> 
-						<input th:field="*{codigo}" type="text" class="form-control" id="codigo"
-							placeholder="Ingrese código"
-							data-validation="required"
-							data-validation-error-msg-required="Debe ingresar el código">
-					</div>					
-					<div class="form-group">
-						<label for="exampleInputPassword1">Descripción:</label> 
-						<input th:field="*{descripcion}" type="text" class="form-control" id="descripcion"
-							placeholder="Ingrese descripcion"
-							data-validation="required"
-							data-validation-error-msg-required="Debe ingresar la descripcion">
-					</div>
-					<div class="form-group">
-						<label for="exampleInputFile">Marca: </label>
-						<input th:field="*{marca}" type="text" class="form-control" id="marca"
-							placeholder="Ingrese Marca"
-							data-validation="required"
-							data-validation-error-msg-required="Debe seleccionar la marca">
-					</div>
-					<div class="form-group">
-						<label for="exampleInputFile">Capacidad: </label>
-						<input th:field="*{capacidad}" type="text" class="form-control" id="capacidad"
-							placeholder="Ingrese Capacidad"
-							data-validation="required"
-							data-validation-error-msg-required="Debe ingresar la capacidad">
-					</div>
-					<div class="form-group">
-						<label for="exampleInputFile">Cantidad: </label>
-						<input th:field="*{cantidad}" type="text" class="form-control" id="cantidad"
-							placeholder="Ingrese cantidad en stock"
-							data-validation="required"
-							data-validation-error-msg-required="Debe ingresar la cantidad">
-					</div>
-					<div class="form-group">
-						<label for="exampleInputFile">Precio de Compra:</label>
-						<input th:field="*{precioCompra}" type="text" class="form-control" id="precioCompra"
-							placeholder="Ingrese Precio de Compra"
-							data-validation="required"
-							data-validation-error-msg-required="Debe ingresar el precio de compra">
-					</div>
-					<div class="form-group">
-						<label for="exampleInputFile">Precio de Venta:</label>
-						<input th:field="*{precioVenta}" type="text" class="form-control" id="precioVenta"
-							placeholder="Ingrese Precio de Venta"
-							data-validation="required"
-							data-validation-error-msg-required="Debe ingresar el precio de venta">
-					</div>	
-					<div class="form-group">
+						<div class="form-group">
 						<label for="exampleInputFile">Familia:</label>
 						<select class="form-control"
 							th:field="*{familia}"
@@ -86,6 +30,49 @@
 								th:value="${familia.id}" th:text="${familia.nombre}">Bebidas</option>
 						</select>
 					</div>	
+ 					<!--<div class="form-group"> 
+ 						<label for="inputNombre">Tipo de Producto: </label>  
+						<input th:field="*{tipoProducto}" type="text" class="form-control" id="tipoProducto" 
+ 							placeholder="Ingrese Tipo de Producto"
+							data-validation="required"
+ 							data-validation-error-msg-required="Debe seleccionar el tipo de producto"> 
+ 					</div>-->
+					<div class="form-group reg-charac-number">
+						<label for="exampleInputPassword1">Código:</label> 
+						<input th:field="*{codigo}" type="text" class="form-control" id="codigo"
+							placeholder="Ingrese código"
+							data-validation="required"
+							data-validation-error-msg-required="Debe ingresar el código">
+					</div>					
+					<div class="form-group reg-charac-number">
+						<label for="exampleInputPassword1">Descripción:</label> 
+						<input th:field="*{descripcion}" type="text" class="form-control" id="descripcion"
+							placeholder="Ingrese descripcion"
+							data-validation="required"
+							data-validation-error-msg-required="Debe ingresar la descripcion">
+					</div>
+					<div class="form-group reg-number">
+						<label for="exampleInputFile">Cantidad: </label>
+						<input th:field="*{cantidad}" type="text" class="form-control" id="cantidad"
+							placeholder="Ingrese cantidad en stock"
+							data-validation="required"
+							data-validation-error-msg-required="Debe ingresar la cantidad">
+					</div>
+					<div class="form-group reg-number">
+						<label for="exampleInputFile">Precio de Compra:</label>
+						<input th:field="*{precioCompra}" type="text" class="form-control" id="precioCompra"
+							placeholder="Ingrese Precio de Compra"
+							data-validation="required"
+							data-validation-error-msg-required="Debe ingresar el precio de compra">
+					</div>
+					<div class="form-group reg-number">
+						<label for="exampleInputFile">Precio de Venta:</label>
+						<input th:field="*{precioVenta}" type="text" class="form-control" id="precioVenta"
+							placeholder="Ingrese Precio de Venta"
+							data-validation="required"
+							data-validation-error-msg-required="Debe ingresar el precio de venta">
+					</div>	
+				
 					
 					<div class="form-group">
 	                  <div class="col-sm-offset-2 col-sm-10">
@@ -148,7 +135,27 @@
         	console.log("ds")
         	}
     })
+    
+    var REGEX_NUMBERS_ONLY = "^[0-9\b]+$";
+
+	$(".reg-number").on('keypress', function(event){
+	    	var regex = new RegExp(REGEX_NUMBERS_ONLY);
+		    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+		    if (!regex.test(key)) {
+		       event.preventDefault();
+		       return false;
+		    }
+    });
 	
+	var REGEX_LETTERS = "^[a-zA-Z0-9]+$";
+	
+	$(".reg-charac-number").on('keypress', function(event){
+			var key= String.fromCharCode(!event.charCode ? event.witch : event.charCode);
+			if (!regex.test(key)){
+				event.preventDefault();
+				return false;
+			}
+	});
 	
 </script>
 	</div>

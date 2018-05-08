@@ -13,12 +13,12 @@
 				<div class="box-body">
 					<div class="form-group">
 						<label for="inputNombre">Nombre o razón social:</label> 
-						<input th:field="*{nombre}" type="text" class="form-control" id="nombre"
+						<input th:field="*{nombre}" type="text" class="form-control" id="nombre" pattern="[a-zA-Z]{3,}+([,]{1})+[a-zA-Z]{1,}"
 							placeholder="Ingrese Proveedor"
 							data-validation="required"
 							data-validation-error-msg-required="Debe ingresar nombre de proveedor">
 					</div>
-					<div class="form-group">
+					<div class="form-group reg-number">
 						<label for="exampleInputFile">R.U.C.:</label>
 						<input th:field="*{ruc}" type="text" class="form-control" id="ruc"
 							placeholder="Ingrese su RUC"
@@ -27,12 +27,12 @@
 					</div>
 					<div class="form-group">
 						<label for="inputNombre">Nombre de contacto:</label> 
-						<input th:field="*{nombre_contacto}" type="text" class="form-control" id="nombre_contacto"
+						<input th:field="*{nombre_contacto}" type="text" class="form-control" id="nombre_contacto" pattern="[a-zA-Z]{3,}+([,]{1})+[a-zA-Z]{4,}"
 							placeholder="Ingrese Nombre"
 							data-validation="required"
 							data-validation-error-msg-required="Debe ingresar nombre de contacto a proveedor">
 					</div>
-					<div class="form-group">
+					<div class="form-group reg-number">
 						<label for="exampleInputFile">Teléfono / Cel.:</label>
 						<input th:field="*{nroTelefono}" type="text" class="form-control" id="telefono"
 							placeholder="Ingrese telefono o cel"
@@ -46,10 +46,12 @@
 							data-validation="required"
 							data-validation-error-msg-required="Debe ingresar email de contacto">
 					</div>
-					<div class="form-group">
+					<div class="form-group reg-charac-number">
 						<label for="exampleInputFile">Dirección:</label>
 						<input th:field="*{direccion}" type="text" class="form-control" id="direccion"
-							placeholder="Ingrese dirección">
+							placeholder="Ingrese dirección"
+							data-validation="required"
+							data-validation-error-msg-required="Debe ingresar dirección del proveedor">
 					</div>		
 					<div class="form-group">
 	                  <div class="col-sm-offset-2 col-sm-10">
@@ -113,6 +115,25 @@
 	        	console.log("ds")
 	        	}
 	        })
+	        
+			var REGEX_NUMBERS_ONLY = "^[0-9\b]+$";
+			$(".reg-number").on('keypress', function(event){
+			    	var regex = new RegExp(REGEX_NUMBERS_ONLY);
+				    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+				    if (!regex.test(key)) {
+				       event.preventDefault();
+				       return false;
+				    }
+		    });
+	        
+	        var REGEX_LETTERS = "^[a-zA-Z0-9]+$";
+			$(".reg-charac-number").on('keypress', function(event){
+					var key= String.fromCharCode(!event.charCode ? event.witch : event.charCode);
+					if (!regex.test(key)){
+						event.preventDefault();
+						return false;
+					}
+			});
 	    </script>
 	</div>
 	<!-- /.col -->

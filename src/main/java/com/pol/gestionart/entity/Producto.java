@@ -36,9 +36,6 @@ public class Producto extends GenericEntity {
 	private String tipoProducto; // P producto, M materia prima
 	@Size(max = 100)
 	private String descripcion;
-	@Size(max = 50)
-	private String marca;
-	private String capacidad; //capacidad en litros o kg valores numericos
 	private BigDecimal precioCompra;
 	private BigDecimal precioVenta;
 	private BigDecimal iva;
@@ -49,6 +46,7 @@ public class Producto extends GenericEntity {
 	@NotNull(message = "{producto.familia.notNull}")
 	@JoinColumn(foreignKey = @ForeignKey(name = "producto_familia_fk"))
 	private Familia familia;
+	
 	
 	public Long getIdProducto() {
 		return idProducto;
@@ -66,8 +64,6 @@ public class Producto extends GenericEntity {
 		this.codigo = codigo;
 		this.tipoProducto = tipoProducto;
 		this.descripcion = descripcion;
-		this.marca = marca;
-		this.capacidad = capacidad;
 		this.precioCompra = precioCompra;
 		this.precioVenta = precioVenta;
 		this.iva = iva;
@@ -97,18 +93,6 @@ public class Producto extends GenericEntity {
 	}
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
-	}
-	public String getMarca() {
-		return marca;
-	}
-	public void setMarca(String marca) {
-		this.marca = marca;
-	}
-	public String getCapacidad() {
-		return capacidad;
-	}
-	public void setCapacidad(String capacidad) {
-		this.capacidad = capacidad;
 	}
 	public BigDecimal getPrecioCompra() {
 		return precioCompra;
@@ -179,7 +163,7 @@ public class Producto extends GenericEntity {
 	@Override
 	public String toString() {
 		return "Producto [idProducto=" + idProducto + ", codigo=" + codigo + ", tipoProducto=" + tipoProducto
-				+ ", descripcion=" + descripcion + ", marca=" + marca + ", capacidad=" + capacidad + ", precioCompra="
+				+ ", descripcion=" + descripcion + ", precioCompra="
 				+ precioCompra + ", precioVenta=" + precioVenta + ", iva=" + iva + ", cantidad=" + cantidad
 				+ ", estado=" + estado + ", familia=" + familia + "]";
 	}

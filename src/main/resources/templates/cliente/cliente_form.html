@@ -13,19 +13,19 @@
 				<div class="box-body">
 					<div class="form-group">
 						<label for="inputNombre">Nombre:</label> 
-						<input th:field="*{nombre}" type="text" class="form-control" id="nombre"
+						<input th:field="*{nombre}" type="text" class="form-control" id="nombre" pattern="[a-zA-Z]{3,}"
 							placeholder="Ingrese Nombre"
 							data-validation="required"
 			 				data-validation-error-msg-required="Debe ingresar el nombre del cliente">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputPassword1">Apellido:</label> 
-						<input th:field="*{apellido}" type="text" class="form-control" id="apellido"
+						<input th:field="*{apellido}" type="text" class="form-control" id="apellido" pattern="[a-zA-Z]{3,}"
 							placeholder="Ingrese su apellido"
 							data-validation="required"
 							data-validation-error-msg-required="Debe ingresar el apellido del cliente">
 					</div>
-					<div class="form-group">
+					<div class="form-group reg-number">
 						<label for="exampleInputFile">R.U.C./ C.I.:</label>
 						<input th:field="*{ruc}" type="text" class="form-control" id="ruc"
 							placeholder="Ingrese su RUC o CI"
@@ -44,11 +44,12 @@
 						<select class="form-control" name="sexo"
 							data-validation="required"
 							data-validation-error-msg-required="Debe seleccionar sexo del cliente">
+							<option value=""></option>
 							<option value="H">Hombre</option>
 							<option value="M">Mujer</option>
 						</select>
 					</div>
-					<div class="form-group">
+					<div class="form-group reg-number">
 						<label for="exampleInputFile">Teléfono / Cel.:</label>
 						<input th:field="*{nroTelefono}" type="text" class="form-control" id="telefono"
 							placeholder="Ingrese telefono o cel"
@@ -62,7 +63,7 @@
 							data-validation="required"
 							data-validation-error-msg-required="Debe ingresar el email del cliente">
 					</div>
-					<div class="form-group">
+					<div class="form-group reg-charac-number">
 						<label for="exampleInputFile">Dirección:</label>
 						<input th:field="*{direccion}" type="text" class="form-control" id="direccion"
 							placeholder="Ingrese dirección"
@@ -119,7 +120,7 @@
           <!-- /.modal-dialog -->
         </div>
         <!-- /.modal -->
-                <script>
+        <script>
 		    $.validate({
 	        form: '#form-usuario',
 	        errorElementClass: 'validation-error',
@@ -130,7 +131,26 @@
 	        onError: function(){
 	        	console.log("ds")
 	        	}
-	        })
+	        });
+	        
+			var REGEX_NUMBERS_ONLY = "^[0-9\b]+$";
+			$(".reg-number").on('keypress', function(event){
+			    	var regex = new RegExp(REGEX_NUMBERS_ONLY);
+				    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+				    if (!regex.test(key)) {
+				       event.preventDefault();
+				       return false;
+				    }
+		    });
+	        
+	        var REGEX_LETTERS = "^[a-zA-Z0-9]+$";
+			$(".reg-charac-number").on('keypress', function(event){
+					var key= String.fromCharCode(!event.charCode ? event.witch : event.charCode);
+					if (!regex.test(key)){
+						event.preventDefault();
+						return false;
+					}
+			});
 	    </script>
 	</div>
 	<!-- /.col -->
