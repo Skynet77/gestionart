@@ -12,7 +12,7 @@ public class ClienteDaoImpl extends DaoImpl<Cliente> implements ClienteDao{
 
 	@Override
 	public String getCamposFiltrables() {
-		return "estado";
+		return "estado||apellido||nombre||ruc";
 	}
 
 	@Override

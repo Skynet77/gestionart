@@ -6,3 +6,9 @@
     right: 0;
     top: 1px;	
 }
+
+.input-money{
+	height: 50px;
+    text-align: center;
+    font-size: 35px;
+}
