@@ -32,24 +32,31 @@
 						</div>
 						<!-- /.form-group -->
 						<div class="form-group">
-							<label for="inputNombre">Código:</label> <input type="text"
-								class="form-control" id="nombreProducto">
+							<label for="inputNombre">Código:</label> 
+							<input name="codigo" type="text" class="form-control" id="codigo"
+							data-validation="required">
 						</div>
 						<div class="form-group">
-							<label for="inputNombre">Nombre:</label> <input type="text"
-								class="form-control" id="nombreProducto">
+							<label for="inputNombre">Nombre:</label> 
+							<input type="text" class="form-control" id="nombre" name="nombre"
+							placeholder="Ingrese Nombre"
+							data-validation="required"
+			 				data-validation-error-msg-required="Debe ingresar el nombre del cliente">	
 						</div>
 					</div>
 					<!-- /.col -->
 					<div class="col-md-6">
 						<div class="form-group">
 							<label>Precio Venta:</label>
-
 							<div class="input-group">
 								<div class="input-group-addon">
 									<i class="fa fa-usd"></i>
 								</div>
-								<input type="text" class="form-control">
+								<input type="text" class="form-control" id="precioVenta" name="precioVenta"
+							placeholder="Ingrese Precio de Venta"
+							data-validation="required"
+			 				data-validation-error-msg-required="Debe ingresar el precio de venta">
+
 							</div>
 							<!-- /.input group -->
 						</div>
@@ -72,13 +79,14 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<label>Cantidad:</label>
-
 							<div class="input-group">
 								<div class="input-group-addon">
 									<i class="fa fa-usd"></i>
 								</div>
-								<input type="text" class="form-control"
-									data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="">
+								<input type="text" class="form-control" id="cantidad" name="cantidad"
+							placeholder="Ingrese cantidad"
+							data-validation="required"
+			 				data-validation-error-msg-required="Debe ingresar la cantidad">
 							</div>
 							<!-- /.input group -->
 						</div>
@@ -120,7 +128,42 @@
 				<div class="row">
 					<div class="col-md-12">
 
-						<!-- total a pahar  -->
+						<!-- total a pagar  -->
+						<div class="col-md-12">
+							<div class="form-group">
+								<label>Cliente:</label>
+								<div class="box-body">
+									<div id="magicsuggestCliente"></div>
+								</div>
+								<!-- /.box-body -->
+							</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Sub-Total:</label>
+
+								<div class="input-group">
+									<div class="input-group-addon">
+										<i class="fa fa-usd"></i>
+									</div>
+									<input type="text" class="form-control" id="subTotal" name="subTotal"
+							placeholder="Ingrese sub-total"
+							data-validation="required"
+			 				data-validation-error-msg-required="Debe ingresar monto sin iva">
+								</div>
+								<!-- /.input group -->
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="exampleInputFile">Fecha:</label>
+									<input type="date" class="form-control" id="fechaVenta" name="fechaVenta"
+							placeholder="Ingrese fecha"
+							data-validation="required"
+			  				data-validation-error-msg-required="Ingrese fecha en la cual se realizo la venta">
+							</div>
+						</div>
+						
+						<label>Total:</label>
 						<div class="col-md-12">
 							<div class="form-group">
 								<div class="input-group">
@@ -132,34 +175,8 @@
 								<!-- /.input group -->
 							</div>
 						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label>Sub-Total:</label>
-
-								<div class="input-group">
-									<div class="input-group-addon">
-										<i class="fa fa-usd"></i>
-									</div>
-									<input type="text" class="form-control">
-								</div>
-								<!-- /.input group -->
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="exampleInputFile">Fecha:</label> <input type="date"
-									class="form-control" id="fechaVenta">
-							</div>
-						</div>
 						
-						<div class="col-md-12">
-							<div class="form-group">
-								<label>Cliente:</label>
-								<div class="box-body">
-									<div id="magicsuggestCliente"></div>
-								</div>
-								<!-- /.box-body -->
-							</div>
+						
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-primary">
