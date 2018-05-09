@@ -146,10 +146,11 @@ function crearMagicSuggest(magicSuggestId, urlData, pValueField, pNameDisplay) {
 		placeholder : 'Ingrese texto para buscar'
 	});
 
-	$(suggest).on('selectionchange', function(a,b,c){
+	/*$(suggest).on('selectionchange', function(a,b,c){
 		  console.log("cambió el valor del maicsuggest: " + this.getValue());
 		  
-		});
+		});*/
+	return suggest;
 }
 
 //Cliente

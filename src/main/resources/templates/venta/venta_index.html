@@ -64,13 +64,13 @@
 
 					<div class="col-md-6">
 						<div class="form-group">
-							<label>Stock:</label>
+							<label>Stock Actual:</label>
 
 							<div class="input-group">
 								<div class="input-group-addon">
 									<i class="fa fa-hashtag"></i>
 								</div>
-								<input type="text" class="form-control">
+								<input type="text" class="form-control" id="stockActual" name="stockActual">
 							</div>
 							<!-- /.input group -->
 						</div>
@@ -233,10 +233,46 @@
 	<script type="text/javascript">
 		$(document).ready(
 				function() {
-					crearMagicSuggest('magicsuggest',
+					var suggestProducto = crearMagicSuggest('magicsuggest',
 							"[[@{/producto/suggest}]]", 'id', 'descripcion');
 					crearMagicSuggest('magicsuggestCliente',
-							"[[@{/cliente/suggest}]]", 'id', 'nombre')
+							"[[@{/cliente/suggest}]]", 'id', 'nombre');
+					
+					//buscar producto
+					$(suggestProducto).on('selectionchange', function(a,b,c){
+						if (c.length == 0){
+							$("#codigo").val("");
+							$("#nombre").val("");
+							$("#precioVenta").val("");
+							$("#cantidad").val("");
+							$("#stockActual").val("");
+						}else{
+							var producto = c[0];
+							$("#codigo").val(producto.codigo);
+							$("#nombre").val(producto.descripcion);
+							$("#precioVenta").val(producto.precioVenta);
+							$("#cantidad").val(1);
+							$("#stockActual").val(producto.cantidad);	
+						}
+						
+						  console.log("cambió el valor del maicsuggest: " + this.getValue());
+						});
+					
+					var fecha = new Date();
+					var dd = fecha.getDate();
+					var mm = (fecha.getMonth() +1);
+					dd=addZero(dd);
+					mm=addZero(mm);
+					fechaActual = fecha.getFullYear()+"-"+mm+"-"+dd;
+					$("#fechaVenta").val(fechaActual);
+					
+					function addZero(i) {
+					    if (i < 10) {
+					        i = '0' + i;
+					    }
+					    return i;
+					}
+					
 				});
 	</script>
 </div>
