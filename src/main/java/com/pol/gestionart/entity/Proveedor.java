@@ -38,11 +38,11 @@ public class Proveedor extends GenericEntity {
 	public Proveedor() {
 		super();
 	}
-	public Proveedor(Long idProveedor, @Size(max = 50) String nombre, @Size(max = 50) String ruc,
+	public Proveedor(Long id, @Size(max = 50) String nombre, @Size(max = 50) String ruc,
 			@Size(max = 50) String nombre_contacto,@Size(max = 15) String nroTelefono, @Size(max = 30) String correoElectronico,
 			@Size(max = 100) String direccion, String estado) {
 		super();
-		this.id = idProveedor;
+		this.id = id;
 		this.nombre = nombre;
 		this.ruc = ruc;
 		this.nroTelefono = nroTelefono;
