@@ -3,6 +3,7 @@ package com.pol.gestionart.controller.form;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
@@ -16,11 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pol.gestionart.controller.list.VentaCabeceraListController;
-import com.pol.gestionart.dao.VentaCabeceraDao;
-import com.pol.gestionart.dao.VentaCabeceraDao;
 import com.pol.gestionart.dao.Dao;
-import com.pol.gestionart.entity.Cliente;
-import com.pol.gestionart.entity.VentaCabecera;
+import com.pol.gestionart.dao.ProductoDao;
+import com.pol.gestionart.dao.VentaCabeceraDao;
+import com.pol.gestionart.entity.Producto;
 import com.pol.gestionart.entity.VentaCabecera;
 
 
@@ -36,6 +36,9 @@ public class VentaFormController extends FormController<VentaCabecera> {
 
 	@Autowired
 	private VentaCabeceraListController productoList;
+	
+	@Autowired 
+	private ProductoDao productoDao;
 
 	
 	@Override
@@ -65,6 +68,35 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		map.addAttribute("titlePage", "Registro de Venta");
 		super.agregarValoresAdicionales(map);
 	}
+	
+	
+	
+	@RequestMapping(value = "agregar-detalle", method = RequestMethod.POST)
+	public String addProducto(ModelMap map,
+			@RequestParam(required = true, value="id-producto") Long idProducto, HttpSession session) {
+		
+		List<Producto> listProducto = null;
+		
+		if(session.getAttribute("listDetalle")!=null){
+			listProducto = (List<Producto>) session.getAttribute("listDetalle");
+		}else{
+			listProducto = new ArrayList<>();
+		}
+		
+		Producto producto = productoDao.find(idProducto);
+		if(producto != null){
+			listProducto.add(producto);
+		}
+		
+		
+		listProducto.add(producto)
+		session.setAttribute("listDetalle", arg1);
+		
+		return "";
+
+	}
+	
+	
 
 	@RequestMapping(value = "accion2", method = RequestMethod.POST)
 	public String accion2(ModelMap map, @Valid VentaCabecera obj,
@@ -83,6 +115,8 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		return getTemplatePath();
 
 	}
+	
+	
 	
 	
 	
