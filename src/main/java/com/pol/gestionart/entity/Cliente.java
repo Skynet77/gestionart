@@ -135,6 +135,18 @@ public class Cliente extends GenericEntity{
 	public void setFecha_nacimiento(Date fecha_nacimiento) {
 		this.fecha_nacimiento = fecha_nacimiento;
 	}
+
+	public String getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
+
+	public static String getSecuencia() {
+		return SECUENCIA;
+	}
 	
 	
 	

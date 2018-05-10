@@ -12,22 +12,22 @@
 		<input type="hidden" th:field="*{id}" />
 				<div class="box-body">
 					<div class="form-group">
-						<label for="inputNombre">Nombre:</label> 
-						<input th:field="*{nombre}" type="text" class="form-control" id="nombre" pattern="[a-zA-Z]{3,}"
-							placeholder="Ingrese Nombre"
+						<label for="exampleInputFile">Nombre:</label> 
+						<input th:field="*{nombre}" type="text" class="form-control" id="nombre" maxlength="30" onkeypress="return soloLetras(event);" onKeyUp="this.value = this.value.toUpperCase();"
+							placeholder="Ingrese su/s nombre/s Ej: Luis Alberto"
 							data-validation="required"
 			 				data-validation-error-msg-required="Debe ingresar el nombre del cliente">
 					</div>
 					<div class="form-group">
-						<label for="exampleInputPassword1">Apellido:</label> 
-						<input th:field="*{apellido}" type="text" class="form-control" id="apellido" pattern="[a-zA-Z]{3,}"
-							placeholder="Ingrese su apellido"
+						<label for="exampleInputFile">Apellido:</label> 
+						<input th:field="*{apellido}" type="text" class="form-control" id="apellido" maxlength="30" onkeypress="return soloLetras(event);" onKeyUp="this.value = this.value.toUpperCase();"
+							placeholder="Ingrese su/s apellido/s Ej: Lopez Diaz"
 							data-validation="required"
 							data-validation-error-msg-required="Debe ingresar el apellido del cliente">
 					</div>
-					<div class="form-group reg-number">
+					<div class="form-group">
 						<label for="exampleInputFile">R.U.C./ C.I.:</label>
-						<input th:field="*{ruc}" type="text" class="form-control" id="ruc"
+						<input th:field="*{ruc}" type="text" class="form-control" id="ruc" pattern="[0-9_-]{6,20}" title="Por ejemplo CI 123456 y/o RUC 789456-1"
 							placeholder="Ingrese su RUC o CI"
 							data-validation="required"
 			  				data-validation-error-msg-required="Debe ingresar el RUC/CI del cliente">
@@ -41,27 +41,22 @@
 					</div>
 					<div class="form-group">
 						<label for="exampleInputFile">Sexo:</label>
-						<select class="form-control" name="sexo"
+						<input th:field="*{sexo}" type="text" class="form-control" id="sexo" pattern="[M|H]" maxlength="1" title="Seleccione H para hombre y/o M para mujer" onkeydown="prueba(event)" onKeyUp="this.value = this.value.toUpperCase();"
+							placeholder="Ingrese sexo del cliente Ej: H hombre y/o M mujer"
 							data-validation="required"
-							data-validation-error-msg-required="Debe seleccionar sexo del cliente">
-							<option value=""></option>
-							<option value="H">Hombre</option>
-							<option value="M">Mujer</option>
-						</select>
+							data-validation-error-msg-required="Debe seleccionar sexo del cliente: H hombre y/o M mujer">
 					</div>
 					<div class="form-group reg-number">
 						<label for="exampleInputFile">Tel√©fono / Cel.:</label>
 						<input th:field="*{nroTelefono}" type="text" class="form-control" id="telefono"
-							placeholder="Ingrese telefono o cel"
-							data-validation="required"
-							data-validation-error-msg-required="Debe ingresar el telefono del cliente">
+							placeholder="Ingrese telefono o cel">
+							
 					</div>
 					<div class="form-group">
 						<label for="exampleInputFile">Email:</label>
 						<input th:field="*{correoElectronico}" type="email" class="form-control" id="correoElectronico"
-							placeholder="correo@hotmail.com"
-							data-validation="required"
-							data-validation-error-msg-required="Debe ingresar el email del cliente">
+							placeholder="correo@hotmail.com">
+
 					</div>
 					<div class="form-group reg-charac-number">
 						<label for="exampleInputFile">Direcci√≥n:</label>
@@ -151,6 +146,35 @@
 						return false;
 					}
 			});
+			
+	        var REGEX_CHAR = "^[A-Z]+$";
+			$(".reg-charac").on('keypress', function(event){
+					var key= String.fromCharCode(!event.charCode ? event.witch : event.charCode);
+					if (!regex.test(key)){
+						event.preventDefault();
+						return false;
+					}
+			});
+			
+			function soloLetras(e) {
+			    key = e.keyCode || e.which;
+			    tecla = String.fromCharCode(key).toString();
+			    letras = " ·ÈÌÛ˙abcdefghijklmnÒopqrstuvwxyz¡…Õ”⁄ABCDEFGHIJKLMN—OPQRSTUVWXYZ";//Se define todo el abecedario que se quiere que se muestre.
+			    especiales = [8, 37, 39, 46, 6]; //Es la validaciÛn del KeyCodes, que teclas recibe el campo de texto.
+
+			    tecla_especial = false
+			    for(var i in especiales) {
+			        if(key == especiales[i]) {
+			            tecla_especial = true;
+			            break;
+			        }
+			    }
+
+			    if(letras.indexOf(tecla) == -1 && !tecla_especial){
+					alert('Solo se acepta letras');
+			        return false;
+			      }
+			}
 	    </script>
 	</div>
 	<!-- /.col -->
