@@ -79,8 +79,8 @@ public class VentaFormController extends FormController<VentaCabecera> {
 	
 	
 	@RequestMapping(value = "agregar-detalle", method = RequestMethod.POST)
-	public @ResponseBody VentaDetalle addProducto(ModelMap map,
-			@RequestParam(required = true, value="id-producto") Long idProducto, 
+	public String addProducto(ModelMap map,
+			@RequestParam(required = true, value="id_producto") Long idProducto, 
 			@RequestParam(required = true, value="cantidad") BigDecimal cantidad, HttpSession session) {
 		
 		List<Producto> listProducto = null;
@@ -111,14 +111,20 @@ public class VentaFormController extends FormController<VentaCabecera> {
 			listProducto.add(producto);
 		}
 		//obtenemos el monto total de la cabecera
-		montoTotal = ventaCab.getMontoTotal();
+		if(ventaCab.getMontoTotal()!=null){
+			montoTotal = ventaCab.getMontoTotal();
+		}else{
+			montoTotal = new BigDecimal(0);
+		}
+		
 		//multiplicamos el precio de venta por la cantidad
 		BigDecimal montoVenta = producto.getPrecioVenta().multiply(cantidad);
 		//sumamos el monto total que teniamos por 
 		montoTotal = montoTotal.add(montoVenta);
 		//volvemos a guardar el monto total
 		ventaCab.setMontoTotal(montoTotal);
-		
+		//el detalle actual que se esta procesando
+		ventaDet = new VentaDetalle();
 		ventaDet.setCantidad(cantidad);
 		ventaDet.setPrecioTotal(montoVenta);
 		ventaDet.setPrecioUnitario(producto.getPrecioVenta());
@@ -128,10 +134,12 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		session.setAttribute(LISTA_DETALLE,listDetalle);
 		session.setAttribute(VENTA_CABECERA, ventaCab);
 		session.setAttribute(VENTA_DETALLE, ventaDet);
+		map.addAttribute(LISTA_DETALLE,listDetalle);
+		map.addAttribute(VENTA_CABECERA, ventaCab);
+		map.addAttribute(VENTA_DETALLE, ventaDet);
 		
 		
-		
-		return ventaDet;
+		return "venta/venta_detail";
 
 	}
 	

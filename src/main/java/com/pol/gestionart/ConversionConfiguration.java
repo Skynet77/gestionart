@@ -8,7 +8,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ConversionServiceFactoryBean;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.converter.Converter;
+
 import com.pol.gestionart.converters.FamiliaConverter;
+import com.pol.gestionart.converters.ProductoConverter;
+import com.pol.gestionart.converters.VentaCabeceraConverter;
 
 @Configuration
 public class ConversionConfiguration {
@@ -26,6 +29,8 @@ public class ConversionConfiguration {
         Set<Converter> converters = new HashSet<Converter>();
 
         converters.add(new FamiliaConverter());
+        converters.add(new ProductoConverter());
+        converters.add(new VentaCabeceraConverter());
 
         return converters;
     }

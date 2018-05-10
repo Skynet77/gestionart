@@ -35,6 +35,7 @@
 							<label for="inputNombre">Código:</label> 
 							<input name="codigo" type="text" class="form-control" id="codigo"
 							data-validation="required">
+							<input name="id" type="hidden" id="id">
 						</div>
 						<div class="form-group">
 							<label for="inputNombre">Nombre:</label> 
@@ -97,7 +98,7 @@
 			</div>
 			<!-- /.box-body -->
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success">
+				<button type="button" class="btn btn-success" onclick="agregarDetalle()">
 					<span class="glyphicon glyphicon-shopping-cart"></span> Agregar
 					Producto
 				</button>
@@ -198,7 +199,7 @@
               <h3 class="box-title">Productos Agregados</h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body table-responsive no-padding">
+            <div class="box-body table-responsive no-padding" id="tableDetail">
               <table class="table table-hover" id="tabla-detalle">
                 <tbody><tr>
                   <th>Código</th>
@@ -243,18 +244,20 @@
 							$("#precioVenta").val("");
 							$("#cantidad").val("");
 							$("#stockActual").val("");
+							$("#id").val("");
 						}else{
 							var producto = c[0];
 							$("#codigo").val(producto.codigo);
 							$("#nombre").val(producto.descripcion);
 							$("#precioVenta").val(producto.precioVenta);
 							$("#cantidad").val(1);
-							$("#stockActual").val(producto.cantidad);	
+							$("#stockActual").val(producto.cantidad);
+							$("#id").val(producto.id);
 						}
 						
 						  console.log("cambió el valor del maicsuggest: " + this.getValue());
 						});
-					
+					1
 					var fecha = new Date();
 					var dd = fecha.getDate();
 					var mm = (fecha.getMonth() +1);
@@ -271,6 +274,25 @@
 					}
 					
 				});
+		
+		
+		function agregarDetalle(){
+			var idProduto = $("#id").val();
+			var cantidad = $("#cantidad").val();
+			$.ajax({
+		        type: "POST",
+		        url: "/gestionart/venta/agregar-detalle",
+		        data: { 
+		        	id_producto: idProduto,
+		        	cantidad: cantidad
+		        }
+		    }).done(function(data){
+		    	//agregamos una fila mas al table de detalle
+		    	data.replace("<html>");
+		    	$('#tableDetail').html(data);
+		        
+		    });
+		}
 	</script>
 </div>
 </html>
