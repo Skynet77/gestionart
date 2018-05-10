@@ -13,22 +13,22 @@
 				<div class="box-body">
 					<div class="form-group">
 						<label for="inputNombre">Nombre o raz√≥n social:</label> 
-						<input th:field="*{nombre}" type="text" class="form-control" id="nombre" pattern="[a-zA-Z]{3,}+([,]{1})+[a-zA-Z]{1,}"
+						<input th:field="*{nombre}" type="text" class="form-control" id="nombre" maxlength="30" onkeypress="return soloLetras(event);" onKeyUp="this.value = this.value.toUpperCase();"
 							placeholder="Ingrese Proveedor"
 							data-validation="required"
 							data-validation-error-msg-required="Debe ingresar nombre de proveedor">
 					</div>
-					<div class="form-group reg-number">
+					<div class="form-group">
 						<label for="exampleInputFile">R.U.C.:</label>
-						<input th:field="*{ruc}" type="text" class="form-control" id="ruc"
+						<input th:field="*{ruc}" type="text" class="form-control" id="ruc" pattern="[0-9_-]{6,20}" title="Por ejemplo CI 123456 y/o RUC 789456-1"
 							placeholder="Ingrese su RUC"
 							data-validation="required"
 							data-validation-error-msg-required="Debe ingresar RUC del proveedor">
 					</div>
 					<div class="form-group">
 						<label for="inputNombre">Nombre de contacto:</label> 
-						<input th:field="*{nombre_contacto}" type="text" class="form-control" id="nombre_contacto" pattern="[a-zA-Z]{3,}+([,]{1})+[a-zA-Z]{4,}"
-							placeholder="Ingrese Nombre"
+						<input th:field="*{nombre_contacto}" type="text" class="form-control" id="nombre_contacto" maxlength="30" onkeypress="return soloLetras(event);" onKeyUp="this.value = this.value.toUpperCase();"
+							placeholder="Ingrese nombre y apellido"
 							data-validation="required"
 							data-validation-error-msg-required="Debe ingresar nombre de contacto a proveedor">
 					</div>
@@ -134,6 +134,28 @@
 						return false;
 					}
 			});
+			
+			function soloLetras(e) {
+			    key = e.keyCode || e.which;
+			    tecla = String.fromCharCode(key).toString();
+			    letras = " ·ÈÌÛ˙abcdefghijklmnÒopqrstuvwxyz¡…Õ”⁄ABCDEFGHIJKLMN—OPQRSTUVWXYZ";//Se define todo el abecedario que se quiere que se muestre.
+			    especiales = [8, 37, 39, 46, 6]; //Es la validaciÛn del KeyCodes, que teclas recibe el campo de texto.
+
+			    tecla_especial = false
+			    for(var i in especiales) {
+			        if(key == especiales[i]) {
+			            tecla_especial = true;
+			            break;
+			        }
+			    }
+
+			    if(letras.indexOf(tecla) == -1 && !tecla_especial){
+				alert('Solo se permite letras en este campo');
+			        return false;
+			      }
+			}
+			
+		</script>
 	    </script>
 	</div>
 	<!-- /.col -->
