@@ -1,5 +1,7 @@
 package com.pol.gestionart.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
@@ -30,98 +32,54 @@ public class VentaCabecera extends GenericEntity{
 	
 
 	@NotNull
-	@Size(max = 20)
-	private String nroFactura;
+	private String nroComprobante;
 	
-
 	@NotNull
-	@Size(max = 20)
-	private String rucFactura;
+	private String ruc;
 	
-
-	@NotNull
-	@Size(max = 20)
-	private String timbrado;
-
-
 	@ManyToOne
-	@NotNull(message = "{ventacabecera.producto.notNull}")
-	@JoinColumn(foreignKey = @ForeignKey(name = "venta_producto_fk"))
-	private Producto producto;
-		
-	@NotNull
-	@Size(max = 60)
-	private String nombreRazonSocial;
+	@NotNull(message = "ventaCabecera.cliente.notNull")
+	@JoinColumn(foreignKey = @ForeignKey(name = "ventaCabecera_cliente_fk"))
+	private Cliente cliente;
 
 	@NotNull
 	@Size(max = 20)
-	private String cedulaRuc;
+	private String fechaEmision;
 
 	@NotNull
-	@Size(max = 20)
-	private String fecha;
-
-	@NotNull
-	private Long montoTotal;
+	private BigDecimal montoTotal;
 
 
 	@NotNull
-	private Long subTotal;
+	private BigDecimal subTotal;
 	
 	
 	@NotNull
-	private Float iva;
+	private BigDecimal iva;
 	
+	private String estado;
+
+	public VentaCabecera(Long idVenta, @NotNull String nroComprobante, @NotNull String ruc,
+			@NotNull(message = "ventaCabecera.cliente.notNull") Cliente cliente,
+			@NotNull @Size(max = 20) String fechaEmision, @NotNull BigDecimal montoTotal, @NotNull BigDecimal subTotal,
+			@NotNull BigDecimal iva, String estado) {
+		super();
+		this.idVenta = idVenta;
+		this.nroComprobante = nroComprobante;
+		this.ruc = ruc;
+		this.cliente = cliente;
+		this.fechaEmision = fechaEmision;
+		this.montoTotal = montoTotal;
+		this.subTotal = subTotal;
+		this.iva = iva;
+		this.estado = estado;
+	}
+
 
 	public VentaCabecera() {
 		super();
 	}
 
-
-	public VentaCabecera(Long idVenta, @NotNull @Size(max = 20) String nroFactura,
-			@NotNull @Size(max = 20) String rucFactura, @NotNull @Size(max = 20) String timbrado,
-			@NotNull(message = "{ventacabecera.producto.notNull}") Producto producto,
-			@NotNull @Size(max = 60) String nombreRazonSocial, @NotNull @Size(max = 20) String cedulaRuc,
-			@NotNull @Size(max = 20) String fecha, @NotNull Long montoTotal, @NotNull Long subTotal,
-			@NotNull Float iva) {
-		super();
-		this.idVenta = idVenta;
-		this.nroFactura = nroFactura;
-		this.rucFactura = rucFactura;
-		this.timbrado = timbrado;
-		this.producto = producto;
-		this.nombreRazonSocial = nombreRazonSocial;
-		this.cedulaRuc = cedulaRuc;
-		this.fecha = fecha;
-		this.montoTotal = montoTotal;
-		this.subTotal = subTotal;
-		this.iva = iva;
-	}
-
-
-	public String getNroFactura() {
-		return nroFactura;
-	}
-
-	public void setNroFactura(String nroFactura) {
-		this.nroFactura = nroFactura;
-	}
-
-	public String getRucFactura() {
-		return rucFactura;
-	}
-
-	public void setRucFactura(String rucFactura) {
-		this.rucFactura = rucFactura;
-	}
-
-	public String getTimbrado() {
-		return timbrado;
-	}
-
-	public void setTimbrado(String timbrado) {
-		this.timbrado = timbrado;
-	}
 
 	public Long getIdVenta() {
 		return idVenta;
@@ -133,85 +91,107 @@ public class VentaCabecera extends GenericEntity{
 	}
 
 
-	public Producto getProducto() {
-		return producto;
+	public String getNroComprobante() {
+		return nroComprobante;
 	}
 
 
-	public void setProducto(Producto producto) {
-		this.producto = producto;
+	public void setNroComprobante(String nroComprobante) {
+		this.nroComprobante = nroComprobante;
 	}
 
 
-	public void setIva(Float iva) {
+	public String getRuc() {
+		return ruc;
+	}
+
+
+	public void setRuc(String ruc) {
+		this.ruc = ruc;
+	}
+
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+
+	public String getFechaEmision() {
+		return fechaEmision;
+	}
+
+
+	public void setFechaEmision(String fechaEmision) {
+		this.fechaEmision = fechaEmision;
+	}
+
+
+	public BigDecimal getMontoTotal() {
+		return montoTotal;
+	}
+
+
+	public void setMontoTotal(BigDecimal montoTotal) {
+		this.montoTotal = montoTotal;
+	}
+
+
+	public BigDecimal getSubTotal() {
+		return subTotal;
+	}
+
+
+	public void setSubTotal(BigDecimal subTotal) {
+		this.subTotal = subTotal;
+	}
+
+
+	public BigDecimal getIva() {
+		return iva;
+	}
+
+
+	public void setIva(BigDecimal iva) {
 		this.iva = iva;
 	}
 
 
-	public String getNombreRazonSocial() {
-		return nombreRazonSocial;
+	public String getEstado() {
+		return estado;
 	}
 
-	public void setNombreRazonSocial(String nombreRazonSocial) {
-		this.nombreRazonSocial = nombreRazonSocial;
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
-	public String getCedulaRuc() {
-		return cedulaRuc;
-	}
-
-	public void setCedulaRuc(String cedulaRuc) {
-		this.cedulaRuc = cedulaRuc;
-	}
-
-	public String getFecha() {
-		return fecha;
-	}
-
-	public void setFecha(String fecha) {
-		this.fecha = fecha;
-	}
-
-	public Long getMontoTotal() {
-		return montoTotal;
-	}
-
-	public void setMontoTotal(Long montoTotal) {
-		this.montoTotal = montoTotal;
-	}
-
-	public Long getSubTotal() {
-		return subTotal;
-	}
-
-	public void setSubTotal(Long subTotal) {
-		this.subTotal = subTotal;
-	}
-
-	public static String getSecuencia() {
-		return SECUENCIA;
-	}
 	
+
 	@Override
 	public String toString() {
-		return "VentaCabecera [idVenta=" + idVenta + ", nroFactura=" + nroFactura + ", rucFactura=" + rucFactura
-				+ ", timbrado=" + timbrado + ", producto=" + producto + ", nombreRazonSocial=" + nombreRazonSocial
-				+ ", cedulaRuc=" + cedulaRuc + ", fecha=" + fecha + ", montoTotal=" + montoTotal + ", subTotal="
-				+ subTotal + ", iva=" + iva + "]";
+		return "VentaCabecera [idVenta=" + idVenta + ", nroComprobante=" + nroComprobante + ", ruc=" + ruc
+				+ ", cliente=" + cliente + ", fechaEmision=" + fechaEmision + ", montoTotal=" + montoTotal
+				+ ", subTotal=" + subTotal + ", iva=" + iva + ", estado=" + estado + "]";
 	}
 
 
 	@Override
 	public Long getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.idVenta;
 	}
 
 
 	@Override
 	public void setId(Long id) {
-		// TODO Auto-generated method stub
+		this.idVenta = id;
 		
 	}
+
 	
 }
+	

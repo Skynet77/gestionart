@@ -1,5 +1,6 @@
 package com.pol.gestionart.controller.form;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pol.gestionart.controller.list.VentaCabeceraListController;
 import com.pol.gestionart.dao.Dao;
@@ -22,6 +24,7 @@ import com.pol.gestionart.dao.ProductoDao;
 import com.pol.gestionart.dao.VentaCabeceraDao;
 import com.pol.gestionart.entity.Producto;
 import com.pol.gestionart.entity.VentaCabecera;
+import com.pol.gestionart.entity.VentaDetalle;
 
 
 
@@ -30,6 +33,10 @@ import com.pol.gestionart.entity.VentaCabecera;
 @RequestMapping("venta")
 public class VentaFormController extends FormController<VentaCabecera> {
 
+	public static final String LISTA_DETALLE = "listaDetalle";
+	public static final String LISTA_PRODUCTO = "listaProducto";
+	public static final String VENTA_CABECERA = "ventaCabecera";
+	public static final String VENTA_DETALLE = "ventaDetalle";
 	@Autowired
 	private VentaCabeceraDao ventaCabeceraDao;
 	
@@ -72,27 +79,59 @@ public class VentaFormController extends FormController<VentaCabecera> {
 	
 	
 	@RequestMapping(value = "agregar-detalle", method = RequestMethod.POST)
-	public String addProducto(ModelMap map,
-			@RequestParam(required = true, value="id-producto") Long idProducto, HttpSession session) {
+	public @ResponseBody VentaDetalle addProducto(ModelMap map,
+			@RequestParam(required = true, value="id-producto") Long idProducto, 
+			@RequestParam(required = true, value="cantidad") BigDecimal cantidad, HttpSession session) {
 		
 		List<Producto> listProducto = null;
-		
-		if(session.getAttribute("listDetalle")!=null){
-			listProducto = (List<Producto>) session.getAttribute("listDetalle");
+		VentaCabecera ventaCab = null;
+		VentaDetalle ventaDet = null;
+		List<VentaDetalle> listDetalle = null;
+		BigDecimal montoTotal;
+		if(session.getAttribute(LISTA_DETALLE)!=null){
+			listProducto = (List<Producto>) session.getAttribute(LISTA_DETALLE);
 		}else{
 			listProducto = new ArrayList<>();
+		}
+		
+		if(session.getAttribute(LISTA_DETALLE)!=null){
+			listDetalle = (List<VentaDetalle>) session.getAttribute(LISTA_DETALLE);
+		}else{
+			listDetalle = new ArrayList<>();
+		}
+		
+		if(session.getAttribute(VENTA_CABECERA)!=null){
+			ventaCab = (VentaCabecera) session.getAttribute(VENTA_CABECERA);
+		}else{
+			ventaCab = new VentaCabecera();
 		}
 		
 		Producto producto = productoDao.find(idProducto);
 		if(producto != null){
 			listProducto.add(producto);
 		}
+		//obtenemos el monto total de la cabecera
+		montoTotal = ventaCab.getMontoTotal();
+		//multiplicamos el precio de venta por la cantidad
+		BigDecimal montoVenta = producto.getPrecioVenta().multiply(cantidad);
+		//sumamos el monto total que teniamos por 
+		montoTotal = montoTotal.add(montoVenta);
+		//volvemos a guardar el monto total
+		ventaCab.setMontoTotal(montoTotal);
+		
+		ventaDet.setCantidad(cantidad);
+		ventaDet.setPrecioTotal(montoVenta);
+		ventaDet.setPrecioUnitario(producto.getPrecioVenta());
+		ventaDet.setProducto(producto);
+		ventaDet.setVentaCabecera(ventaCab);
+		listDetalle.add(ventaDet);
+		session.setAttribute(LISTA_DETALLE,listDetalle);
+		session.setAttribute(VENTA_CABECERA, ventaCab);
+		session.setAttribute(VENTA_DETALLE, ventaDet);
 		
 		
-		listProducto.add(producto)
-		session.setAttribute("listDetalle", arg1);
 		
-		return "";
+		return ventaDet;
 
 	}
 	
