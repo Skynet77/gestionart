@@ -98,14 +98,17 @@ public class Producto extends GenericEntity {
 		return precioCompra;
 	}
 	public void setPrecioCompra(BigDecimal precioCompra) {
-		this.precioCompra = precioCompra;
+		String monto = precioCompra.toPlainString().replace(".", "");
+		this.precioCompra = new BigDecimal(monto);
 	}
 	public BigDecimal getPrecioVenta() {
 		return precioVenta;
 	}
 	public void setPrecioVenta(BigDecimal precioVenta) {
-		this.precioVenta = precioVenta;
+		String monto = precioVenta.toPlainString().replace(".", "");
+		this.precioVenta = new BigDecimal(monto);
 	}
+
 	public BigDecimal getIva() {
 		return iva;
 	}
