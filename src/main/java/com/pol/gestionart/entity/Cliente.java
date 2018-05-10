@@ -31,7 +31,8 @@ public class Cliente extends GenericEntity{
 	private String nombre;
 	@Size(max = 50)
 	private String apellido;
-	private Date fecha_nacimiento;
+	@Size(max = 10)
+	private String fecha_nacimiento;
 	@Size(max = 20)
 	private String sexo;
 	@Size(max = 50)
@@ -48,7 +49,7 @@ public class Cliente extends GenericEntity{
 		super();
 	}
 	
-	public Cliente(Long id, @Size(max = 50) String nombre, @Size(max = 50) String apellido, Date fecha_nacimiento,
+	public Cliente(Long id, @Size(max = 50) String nombre, @Size(max = 50) String apellido, String fecha_nacimiento,
 			@Size(max = 20) String sexo, @Size(max = 50) String ruc, @Size(max = 15) String nroTelefono,
 			@Size(max = 30) String correoElectronico, @Size(max = 100) String direccion, String estado) {
 		super();
@@ -128,11 +129,11 @@ public class Cliente extends GenericEntity{
 		this.id = id;
 	}
 
-	public Date getFecha_nacimiento() {
+	public String getFecha_nacimiento() {
 		return fecha_nacimiento;
 	}
 
-	public void setFecha_nacimiento(Date fecha_nacimiento) {
+	public void setFecha_nacimiento(String fecha_nacimiento) {
 		this.fecha_nacimiento = fecha_nacimiento;
 	}
 
