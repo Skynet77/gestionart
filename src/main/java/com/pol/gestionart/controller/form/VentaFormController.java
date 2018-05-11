@@ -37,6 +37,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 	public static final String LISTA_PRODUCTO = "listaProducto";
 	public static final String VENTA_CABECERA = "ventaCabecera";
 	public static final String VENTA_DETALLE = "ventaDetalle";
+	public static final String PRODUCTO_DETALLE = "productoDetalle";
 	@Autowired
 	private VentaCabeceraDao ventaCabeceraDao;
 	
@@ -88,8 +89,8 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		VentaDetalle ventaDet = null;
 		List<VentaDetalle> listDetalle = null;
 		BigDecimal montoTotal;
-		if(session.getAttribute(LISTA_DETALLE)!=null){
-			listProducto = (List<Producto>) session.getAttribute(LISTA_DETALLE);
+		if(session.getAttribute(LISTA_PRODUCTO)!=null){
+			listProducto = (List<Producto>) session.getAttribute(LISTA_PRODUCTO);
 		}else{
 			listProducto = new ArrayList<>();
 		}
@@ -133,10 +134,12 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		listDetalle.add(ventaDet);
 		session.setAttribute(LISTA_DETALLE,listDetalle);
 		session.setAttribute(VENTA_CABECERA, ventaCab);
-		session.setAttribute(VENTA_DETALLE, ventaDet);
+		session.setAttribute(VENTA_DETALLE, listDetalle);
 		map.addAttribute(LISTA_DETALLE,listDetalle);
 		map.addAttribute(VENTA_CABECERA, ventaCab);
+//		map.addAttribute(VENTA_DETALLE, ventaDet);
 		map.addAttribute(VENTA_DETALLE, ventaDet);
+		map.addAttribute(PRODUCTO_DETALLE, producto);
 		
 		
 		return "venta/venta_detail";

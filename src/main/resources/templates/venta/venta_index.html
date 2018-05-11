@@ -289,8 +289,39 @@
 		    }).done(function(data){
 		    	//agregamos una fila mas al table de detalle
 		    	data.replace("<html>");
-		    	$('#tableDetail').html(data);
+		    	$('#tableDetail tbody').append(data);
+		    	$("#textError").html("Producto agregado corretamente al detalle");
+		    	$('html, body').animate({scrollTop: 0}, 800);
+
+		    	$("#alerta").fadeIn(2000);
+				$("#alerta").fadeOut(8000);
+// 		    	$('#tableDetail').html(data);
 		        
+		    }).fail(function (request, status, error) {
+	   	        var errorData = request.responseJSON;
+		    });
+		}
+		
+		function removerDetalle(idProducto){
+			
+			$.ajax({
+		        type: "POST",
+		        url: "/gestionart/venta/eliminar-detalle",
+		        data: { 
+		        	id_producto: idProduto,
+		        }
+		    }).done(function(data){
+		    	//eliminamos una fila mas al table de detalle
+		    	$('#tableDetail tbody').append(data);
+		    	$("#textError").html("Producto agregado corretamente al detalle");
+		    	
+
+		    	$("#alerta").fadeIn(2000);
+				$("#alerta").fadeOut(8000);
+// 		    	$('#tableDetail').html(data);
+		        
+		    }).fail(function (request, status, error) {
+	   	        var errorData = request.responseJSON;
 		    });
 		}
 	</script>
