@@ -209,16 +209,8 @@
                   <th>Precio Total</th>
                   <th>Acción</th>
                 </tr>
-                <tr>
-                  <td>183</td>
-                  <td>Cocal Cola de ejemplo</td>
-                  <td>2</td>
-                  <td>5.000</td>
-                  <td>10.000</td>
-                  <td><button type="button" class="btn btn-danger" onclick="removerDetalle()">
-								<span class="glyphicon glyphicon-remove"></span>
-							</button>
-					</td>
+                <tr id="sin">
+                  <td colspan="6">sin datos..</td>
                 </tr>
               </tbody></table>
             </div>
@@ -231,9 +223,9 @@
 	<script type="text/javascript">
 		$(document).ready(
 				function() {
-					var suggestProducto = crearMagicSuggest('magicsuggest',
+					suggestProducto = crearMagicSuggest('magicsuggest',
 							"[[@{/producto/suggest}]]", 'id', 'descripcion');
-					crearMagicSuggest('magicsuggestCliente',
+					suggestCliente = crearMagicSuggest('magicsuggestCliente',
 							"[[@{/cliente/suggest}]]", 'id', 'nombre');
 					
 					//buscar producto
@@ -287,12 +279,22 @@
 		        	cantidad: cantidad
 		        }
 		    }).done(function(data){
+		    	$('#sin').remove();
 		    	//agregamos una fila mas al table de detalle
-		    	data.replace("<html>");
-		    	$('#tableDetail tbody').append(data);
+// 		    	$('#tableDetail tbody').append(data);
+		    	$('#tableDetail').html();
+		    	$('#tableDetail').html(data);
+		    	//limpiamos todos los campos
+		    	suggestProducto.clear();
+		    	$("#codigo").val("");
+				$("#nombre").val("");
+				$("#precioVenta").val("");
+				$("#cantidad").val("");
+				$("#stockActual").val("");
+				$("#id").val("");
+		    	
 		    	$("#textError").html("Producto agregado corretamente al detalle");
 		    	$('html, body').animate({scrollTop: 0}, 800);
-
 		    	$("#alerta").fadeIn(2000);
 				$("#alerta").fadeOut(8000);
 // 		    	$('#tableDetail').html(data);
@@ -311,6 +313,8 @@
 		        	id_producto: idProduto,
 		        }
 		    }).done(function(data){
+		    	
+		    	
 		    	//eliminamos una fila mas al table de detalle
 		    	$('#tableDetail tbody').append(data);
 		    	$("#textError").html("Producto agregado corretamente al detalle");

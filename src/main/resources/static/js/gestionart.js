@@ -1,3 +1,7 @@
+var suggestProducto = null;
+var suggestCliente = null;
+
+
 function crearDataTable(dataTableId, ajaxSource, columnas, editUrl){
 			console.log("creando DT:", dataTableId, ajaxSource, columnas, editUrl)
 			
