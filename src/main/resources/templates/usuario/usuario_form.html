@@ -13,14 +13,14 @@
         <div class="box-body"> 
           <div class="form-group reg-charac-number"> 
             <label for="inputNombre">Nombre o razón social:</label>  
-            <input th:field="*{nombreRazonSocial}" type="text" class="form-control" id="nombreRazonSocial" 
+            <input th:field="*{nombreRazonSocial}" type="text" class="form-control" id="nombreRazonSocial" onKeyUp="this.value = this.value.toUpperCase();"
               placeholder="Ingrese Nombre"
 			  data-validation="required"
 			  data-validation-error-msg-required="Debe ingresar el nombre del usuario">
           </div> 
           <div class="form-group reg-charac-number"> 
             <label for="exampleInputFile">Apellido:</label> 
-            <input th:field="*{apellido}" type="text" class="form-control" id="apellido" 
+            <input th:field="*{apellido}" type="text" class="form-control" id="apellido" onKeyUp="this.value = this.value.toUpperCase();"
               placeholder="Ingrese apellido"> 
           </div> 
           <div class="form-group reg-charac-number"> 
@@ -41,7 +41,7 @@
           <div class="col-sm-offset-2 col-sm-10">
             <div class="checkbox">
               <label>
-                <input type="checkbox" th:field="*{estado}" value="A"> Activo?
+                <input type="hidden" th:field="*{estado}" value="A">
               </label>
             </div>
           </div>

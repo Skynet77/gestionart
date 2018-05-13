@@ -13,7 +13,8 @@
 				<div class="box-body">
 					<div class="form-group">
 						<label for="exampleInputFile">Tipo de producto:</label>
-						<select class="form-control" name="tipoProducto"
+						<select class="form-control" 
+							th:field="*{tipoProducto}"
 							data-validation="required"
 							data-validation-error-msg-required="Debe seleccionar el tipo de producto">
 							<option value="MP">Materia Prima</option>
@@ -46,18 +47,18 @@
 					</div>					
 					<div class="form-group reg-charac-number">
 						<label for="exampleInputPassword1">Descripción:</label> 
-						<input th:field="*{descripcion}" type="text" class="form-control" id="descripcion"
+						<input th:field="*{descripcion}" type="text" class="form-control" id="descripcion" onKeyUp="this.value = this.value.toUpperCase();"
 							placeholder="Ingrese descripcion"
 							data-validation="required"
 							data-validation-error-msg-required="Debe ingresar la descripcion">
 					</div>
-					<div class="form-group reg-number">
+					<!--div class="form-group reg-number">
 						<label for="exampleInputFile">Cantidad: </label>
 						<input th:field="*{cantidad}" type="text" class="form-control" id="cantidad"
 							placeholder="Ingrese cantidad en stock"
 							data-validation="required"
 							data-validation-error-msg-required="Debe ingresar la cantidad">
-					</div>
+					</div>-->
 					<div class="form-group reg-number">
 						<label for="exampleInputFile">Precio de Compra:</label>
 						<input th:field="*{precioCompra}" type="text" class="form-control" id="precioCompra" onkeyup="format(this)" onchange="format(this)"
@@ -78,7 +79,7 @@
 	                  <div class="col-sm-offset-2 col-sm-10">
 	                    <div class="checkbox">
 	                      <label>
-	                        <input type="checkbox" th:field="*{estado}" value="A"> Activo?
+	                        <input type="hidden" th:field="*{estado}" value="A">
 	                      </label>
 	                    </div>
 	                  </div>

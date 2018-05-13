@@ -41,10 +41,13 @@
 					</div>
 					<div class="form-group">
 						<label for="exampleInputFile">Sexo:</label>
-						<input th:field="*{sexo}" type="text" class="form-control" id="sexo" pattern="[M|H]" maxlength="1" title="Seleccione H para hombre y/o M para mujer" onkeydown="prueba(event)" onKeyUp="this.value = this.value.toUpperCase();"
-							placeholder="Ingrese sexo del cliente Ej: H hombre y/o M mujer"
+						<select class="form-control" 
+							th:field="*{sexo}"
 							data-validation="required"
-							data-validation-error-msg-required="Debe seleccionar sexo del cliente: H hombre y/o M mujer">
+							data-validation-error-msg-required="Debe seleccionar sexo">
+							<option value="F">Femenino</option>
+							<option value="M">Masculino</option>
+						</select>
 					</div>
 					<div class="form-group reg-number">
 						<label for="exampleInputFile">TelÃ©fono / Cel.:</label>
@@ -60,7 +63,7 @@
 					</div>
 					<div class="form-group reg-charac-number">
 						<label for="exampleInputFile">DirecciÃ³n:</label>
-						<input th:field="*{direccion}" type="text" class="form-control" id="direccion"
+						<input th:field="*{direccion}" type="text" class="form-control" id="direccion" onKeyUp="this.value = this.value.toUpperCase();"
 							placeholder="Ingrese direcciÃ³n"
 							data-validation="required"
 							data-validation-error-msg-required="Debe ingresar la direcciÃ³n del cliente">
@@ -69,7 +72,7 @@
 	                  <div class="col-sm-offset-2 col-sm-10">
 	                    <div class="checkbox">
 	                      <label>
-	                        <input type="checkbox" th:field="*{estado}" value="A"> Activo?
+	                        <input type="hidden" th:field="*{estado}" value="A">
 	                      </label>
 	                    </div>
 	                  </div>
@@ -159,8 +162,8 @@
 			function soloLetras(e) {
 			    key = e.keyCode || e.which;
 			    tecla = String.fromCharCode(key).toString();
-			    letras = " áéíóúabcdefghijklmnñopqrstuvwxyzÁÉÍÓÚABCDEFGHIJKLMNÑOPQRSTUVWXYZ";//Se define todo el abecedario que se quiere que se muestre.
-			    especiales = [8, 37, 39, 46, 6]; //Es la validación del KeyCodes, que teclas recibe el campo de texto.
+			    letras = " ï¿½ï¿½ï¿½ï¿½ï¿½abcdefghijklmnï¿½opqrstuvwxyzï¿½ï¿½ï¿½ï¿½ï¿½ABCDEFGHIJKLMNï¿½OPQRSTUVWXYZ";//Se define todo el abecedario que se quiere que se muestre.
+			    especiales = [8, 37, 39, 46, 6]; //Es la validaciï¿½n del KeyCodes, que teclas recibe el campo de texto.
 
 			    tecla_especial = false
 			    for(var i in especiales) {
@@ -182,7 +185,7 @@
 			for (x=0; x<log; x++) 
 			{ v1=valor.substr(x,1); 
 			v2 = parseInt(v1); 
-			//Compruebo si es un valor numérico 
+			//Compruebo si es un valor numï¿½rico 
 			if (isNaN(v2)) { sw= "N";} 
 			} 
 			if (sw=="S") {return true;} else {return false; } 
@@ -222,7 +225,7 @@
 			dia=fecha.substr(0,2); 
 			mes=fecha.substr(3,2); 
 			ano=fecha.substr(6,4); 
-			// Año no viciesto y es febrero y el dia es mayor a 28 
+			// Aï¿½o no viciesto y es febrero y el dia es mayor a 28 
 			if ( (ano%4 != 0) && (mes ==02) && (dia > 28) ) { fecha=fecha.substr(0,2)+"/"; } 
 			} 
 			return (fecha); 

@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.pol.gestionart.main.GenericEntity;
@@ -21,11 +22,14 @@ public class Proveedor extends GenericEntity {
 	@SequenceGenerator(name = SECUENCIA, sequenceName = SECUENCIA)
 	private Long id;
 	
+	@NotNull
 	@Size(max = 50)
 	private String nombre;
+	@NotNull
 	@Size(max = 50)
 	private String ruc;
 	@Size(max = 50)
+	@NotNull
 	private String nombre_contacto;
 	@Size(max = 15)
 	private String nroTelefono;
