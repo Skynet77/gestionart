@@ -3,6 +3,7 @@ package com.pol.gestionart.controller.form;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -25,6 +26,7 @@ import com.pol.gestionart.dao.VentaCabeceraDao;
 import com.pol.gestionart.entity.Producto;
 import com.pol.gestionart.entity.VentaCabecera;
 import com.pol.gestionart.entity.VentaDetalle;
+import com.pol.gestionart.util.GeneralUtils;
 
 
 
@@ -34,9 +36,11 @@ import com.pol.gestionart.entity.VentaDetalle;
 public class VentaFormController extends FormController<VentaCabecera> {
 
 	public static final String LISTA_DETALLE = "listaDetalle";
+	public static final String MAP_DETALLE = "mapDetalle";
 	public static final String LISTA_PRODUCTO = "listaProducto";
 	public static final String VENTA_CABECERA = "ventaCabecera";
 	public static final String VENTA_DETALLE = "ventaDetalle";
+	public static final String PRODUCTO_DETALLE = "productoDetalle";
 	@Autowired
 	private VentaCabeceraDao ventaCabeceraDao;
 	
@@ -88,8 +92,8 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		VentaDetalle ventaDet = null;
 		List<VentaDetalle> listDetalle = null;
 		BigDecimal montoTotal;
-		if(session.getAttribute(LISTA_DETALLE)!=null){
-			listProducto = (List<Producto>) session.getAttribute(LISTA_DETALLE);
+		if(session.getAttribute(LISTA_PRODUCTO)!=null){
+			listProducto = (List<Producto>) session.getAttribute(LISTA_PRODUCTO);
 		}else{
 			listProducto = new ArrayList<>();
 		}
@@ -131,16 +135,38 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		ventaDet.setProducto(producto);
 		ventaDet.setVentaCabecera(ventaCab);
 		listDetalle.add(ventaDet);
+		Map<String, VentaDetalle> mapaVentaDetalle = GeneralUtils.mapSerializeVentaDetalleOrUpdate(session,listDetalle);
+		session.setAttribute(MAP_DETALLE,mapaVentaDetalle);
 		session.setAttribute(LISTA_DETALLE,listDetalle);
 		session.setAttribute(VENTA_CABECERA, ventaCab);
 		session.setAttribute(VENTA_DETALLE, ventaDet);
-		map.addAttribute(LISTA_DETALLE,listDetalle);
+		map.addAttribute(MAP_DETALLE,mapaVentaDetalle);
 		map.addAttribute(VENTA_CABECERA, ventaCab);
 		map.addAttribute(VENTA_DETALLE, ventaDet);
+		map.addAttribute(PRODUCTO_DETALLE, producto);
 		
 		
 		return "venta/venta_detail";
 
+	}
+	
+	@RequestMapping(value = "eliminar-detalle", method = RequestMethod.POST)
+	public String deleteProducto(ModelMap map,
+			@RequestParam(required = true, value="id_producto") Long idProducto,  HttpSession session) {
+		List<VentaDetalle> listDetalle = null;
+		List<VentaDetalle> listDetalle2 = null;
+		if(idProducto!=null){
+			listDetalle = (List<VentaDetalle>) session.getAttribute(LISTA_DETALLE);
+			listDetalle2 = listDetalle;
+			for (VentaDetalle ventaDetalle : listDetalle) {
+				if(!idProducto.equals(ventaDetalle.getProducto().getId())){
+					listDetalle2.add(ventaDetalle);
+				}
+			}
+		}
+		session.setAttribute(LISTA_DETALLE,listDetalle2);
+		return null;
+		
 	}
 	
 	

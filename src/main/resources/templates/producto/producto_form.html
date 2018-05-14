@@ -31,13 +31,7 @@
 								th:value="${familia.id}" th:text="${familia.nombre}">Bebidas</option>
 						</select>
 					</div>	
- 					<!--<div class="form-group"> 
- 						<label for="inputNombre">Tipo de Producto: </label>  
-						<input th:field="*{tipoProducto}" type="text" class="form-control" id="tipoProducto" 
- 							placeholder="Ingrese Tipo de Producto"
-							data-validation="required"
- 							data-validation-error-msg-required="Debe seleccionar el tipo de producto"> 
- 					</div>-->
+
 					<div class="form-group reg-charac-number">
 						<label for="exampleInputPassword1">Código:</label> 
 						<input th:field="*{codigo}" type="text" class="form-control" id="codigo"
@@ -52,13 +46,7 @@
 							data-validation="required"
 							data-validation-error-msg-required="Debe ingresar la descripcion">
 					</div>
-					<!--div class="form-group reg-number">
-						<label for="exampleInputFile">Cantidad: </label>
-						<input th:field="*{cantidad}" type="text" class="form-control" id="cantidad"
-							placeholder="Ingrese cantidad en stock"
-							data-validation="required"
-							data-validation-error-msg-required="Debe ingresar la cantidad">
-					</div>-->
+
 					<div class="form-group reg-number">
 						<label for="exampleInputFile">Precio de Compra:</label>
 						<input th:field="*{precioCompra}" type="text" class="form-control" id="precioCompra" onkeyup="format(this)" onchange="format(this)"

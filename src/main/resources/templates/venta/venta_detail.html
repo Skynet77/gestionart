@@ -1,18 +1,4 @@
-<html xmlns:th="http://www.thymeleaf.org">
-<!-- <tr th:id="${ventaDetalle.producto.id}"> -->
-<!-- 	<td th:text="${ventaDetalle.producto.codigo}">183</td> -->
-<!-- 	<td th:text="${ventaDetalle.producto.descripcion}">Cocal Cola de ejemplo</td> -->
-<!-- 	<td th:text="${ventaDetalle.cantidad}">2</td> -->
-<!-- 	<td th:text="${ventaDetalle.producto.precioVenta}">5.000</td> -->
-<!-- 	<td th:text="${ventaDetalle.precioTotal}">10.000</td> -->
-<!-- 	<td><button type="button" class="btn btn-danger" -->
-<!-- 			onclick="removerDetalle('${ventaDetalle.producto.id}')"> -->
-<!-- 			<span class="glyphicon glyphicon-remove"></span> -->
-<!-- 		</button></td> -->
-<!-- </tr> -->
-
-
-
+<html xmlns:th="http://www.thymeleaf.org" th:remove="tag">
 <table class="table table-hover" id="tabla-detalle">
                 <tbody><tr>
                   <th>Código</th>
@@ -22,15 +8,31 @@
                   <th>Precio Total</th>
                   <th>Acción</th>
                 </tr>
-                <tr th:each="ventaDetalle : ${listaDetalle}">
-					<td th:text="${ventaDetalle}">183</td>
-<!-- 					<td th:text="${ventaDetalle.producto.descripcion}">Cocal Cola de ejemplo</td> -->
-<!-- 					<td th:text="${ventaDetalle.cantidad}">2</td> -->
-<!-- <!-- 					<td th:text="${ventaDetalle.producto.precioVenta}">5.000</td> --> -->
-<!-- 					<td th:text="${ventaDetalle.precioTotal}">10.000</td> -->
-<!-- 					<td><button type="button" class="btn btn-danger" -->
-<!-- 							onclick="removerDetalle('${ventaDetalle.producto.id}')"> -->
-<!-- 							<span class="glyphicon glyphicon-remove"></span> -->
-<!-- 						</button></td> -->
+                <tr th:each="mapDetalle : ${listaDetalle}"  th:with="ventaDetalle=${mapDetalle.value}" th:id="${mapDetalle.key}">
+					<td th:text="${ventaDetalle.producto.codigo} ">183</td>
+					<td th:text="${ventaDetalle.producto.descripcion}">Cocal Cola de ejemplo</td>
+					<td th:text="${ventaDetalle.cantidad}">2</td>
+					<td th:text="${ventaDetalle.producto.precioVenta}">5.000</td>
+					<td th:text="${ventaDetalle.precioTotal}">10.000</td>
+					<td><button type="button" class="btn btn-danger"
+							th:onclick="'removerDetalle(\'' + ${mapDetalle.key} + '\');'">
+							<span class="glyphicon glyphicon-remove"></span>
+						</button></td>
 				</tr>
               </tbody></table>
+
+
+
+
+
+               <!--  <tr th:id="${ventaDetalle.producto.id}">
+					<td th:text="${ventaDetalle.producto.codigo} ">183</td>
+					<td th:text="${productoDetalle.descripcion}">Cocal Cola de ejemplo</td>
+					<td th:text="${ventaDetalle.cantidad}">2</td>
+					<td th:text="${productoDetalle.precioVenta}">5.000</td>
+					<td th:text="${ventaDetalle.precioTotal}">10.000</td>
+					<td><button type="button" class="btn btn-danger"
+							th:onclick="'removerDetalle(\'' + ${ventaDetalle.producto.id} + '\');'">
+							<span class="glyphicon glyphicon-remove"></span>
+						</button></td>
+				</tr> -->

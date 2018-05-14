@@ -62,5 +62,10 @@ public class Familia extends GenericEntity {
 		this.nombre = nombre;
 	}
 
+	@Override
+	public String toString() {
+		return "Familia [id=" + id + ", codigo=" + codigo + ", nombre=" + nombre + "]";
+	}
+
 
 }

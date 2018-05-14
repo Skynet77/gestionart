@@ -192,7 +192,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="starter
 					<div class="alert alert-success alert-dismissable alinear col-sm-5"
 						role="alert" id="alerta" style="display: none;">
 						<button type="button" class="close" data-dismiss="alert">x</button>
-						<strong th:text="${msgExito} ? ${msgExito} : ${error}">Well
+						<strong th:text="${msgExito} ? ${msgExito} : ${error}" id="textError">Well
 							done!</strong>
 					</div>
 
@@ -220,7 +220,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="starter
 						if(/*[[${msgExito}]]*/){
 							console.log("entro en exito");
 							$("#alerta").fadeIn(2000);
-							$("#alerta").fadeOut(1000);
+							$("#alerta").fadeOut(8000);
 						}
 					});
 					</script>
