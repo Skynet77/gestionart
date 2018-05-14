@@ -1,6 +1,9 @@
 package com.pol.gestionart.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,29 +28,23 @@ private static final String SECUENCIA = "compraDetalle_id_seq";
 	@SequenceGenerator(name = SECUENCIA, sequenceName = SECUENCIA)
 	private Long id;
 	
-//	@ManyToOne
-//	@NotNull(message = "compraDetalle.compraCabecera.notNull")
-//	//@JoinColumn(foreignKey = @ForeignKey(name = "compraDetalle_compraCabecera_fk"))
-//	private CompraCabecera compraCabecera;
+	@ManyToOne
+	@NotNull(message = "compraDetalle.compraCabecera.notNull")
+	@JoinColumn(foreignKey = @ForeignKey(name = "compraDetalle_compraCabecera_fk"))
+	private CompraCabecera compraCabecera;
 	
 	@ManyToOne
 	@NotNull(message = "compraDetalle.producto.notNull")
-	//@JoinColumn(foreignKey = @ForeignKey(name = "compraDetalle_producto_fk"))
+	@JoinColumn(foreignKey = @ForeignKey(name = "compraDetalle_producto_fk"))
 	private Producto producto;
 	
-	@Size(max = 50)
-	@NotNull(message = "compraDetalle.descripcion.notNull")
-	private String descripcion;
-	
-	@Size(max = 50)
+
 	@NotNull(message = "compraDetalle.precioUnitario.notNull")
 	private int precioUnitario;
 	
-	@Size(max = 50)
-	@NotNull(message = "compraDetalle.iva.notNull")
-	private int iva;
+	@NotNull
+	private int precioTotal;
 	
-	@Size(max = 50)
 	@NotNull(message = "compraDetalle.cantidad.notNull")
 	private int cantidad;
 	
@@ -55,29 +52,29 @@ private static final String SECUENCIA = "compraDetalle_id_seq";
 		super();
 	}
 
+
 	public CompraDetalle(Long id,
 			@NotNull(message = "compraDetalle.compraCabecera.notNull") CompraCabecera compraCabecera,
 			@NotNull(message = "compraDetalle.producto.notNull") Producto producto,
-			@Size(max = 50) @NotNull(message = "compraDetalle.descripcion.notNull") String descripcion,
-			@Size(max = 50) @NotNull(message = "compraDetalle.precioUnitario.notNull") int precioUnitario,
-			@Size(max = 50) @NotNull(message = "compraDetalle.iva.notNull") int iva,
-			@Size(max = 50) @NotNull(message = "compraDetalle.cantidad.notNull") int cantidad) {
+			@NotNull(message = "compraDetalle.precioUnitario.notNull") int precioUnitario, @NotNull int precioTotal,
+			@NotNull(message = "compraDetalle.cantidad.notNull") int cantidad) {
 		super();
 		this.id = id;
+		this.compraCabecera = compraCabecera;
 		this.producto = producto;
-		this.descripcion = descripcion;
 		this.precioUnitario = precioUnitario;
-		this.iva = iva;
+		this.precioTotal = precioTotal;
 		this.cantidad = cantidad;
 	}
 
-//	public CompraCabecera getCompraCabecera() {
-//		return compraCabecera;
-//	}
-//
-//	public void setCompraCabecera(CompraCabecera compraCabecera) {
-//		this.compraCabecera = compraCabecera;
-//	}
+
+	public CompraCabecera getCompraCabecera() {
+		return compraCabecera;
+	}
+
+	public void setCompraCabecera(CompraCabecera compraCabecera) {
+		this.compraCabecera = compraCabecera;
+	}
 
 	public Producto getProducto() {
 		return producto;
@@ -85,14 +82,6 @@ private static final String SECUENCIA = "compraDetalle_id_seq";
 
 	public void setProducto(Producto producto) {
 		this.producto = producto;
-	}
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
 	}
 
 	public int getPrecioUnitario() {
@@ -103,13 +92,21 @@ private static final String SECUENCIA = "compraDetalle_id_seq";
 		this.precioUnitario = precioUnitario;
 	}
 
-	public int getIva() {
-		return iva;
+	
+	public int getPrecioTotal() {
+		return precioTotal;
 	}
 
-	public void setIva(int iva) {
-		this.iva = iva;
+
+	public void setPrecioTotal(int precioTotal) {
+		this.precioTotal = precioTotal;
 	}
+
+
+	public static String getSecuencia() {
+		return SECUENCIA;
+	}
+
 
 	public int getCantidad() {
 		return cantidad;
@@ -121,21 +118,20 @@ private static final String SECUENCIA = "compraDetalle_id_seq";
 
 	@Override
 	public Long getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return id;
 	}
 
 	@Override
 	public void setId(Long id) {
-		// TODO Auto-generated method stub
+		this.id = id;
 		
 	}
 
-//	@Override
-//	public String toString() {
-//		return "CompraDetalle [id=" + id + ", compraCabecera=" + compraCabecera + ", producto=" + producto
-//				+ ", descripcion=" + descripcion + ", precioUnitario=" + precioUnitario + ", iva=" + iva + ", cantidad="
-//				+ cantidad + "]";
-//	}
+	@Override
+	public String toString() {
+		return "CompraDetalle [id=" + id + ", compraCabecera=" + compraCabecera + ", producto=" + producto
+				+ ", precioUnitario=" + precioUnitario + ", precioTotal=" + precioTotal + ", cantidad=" + cantidad
+				+ "]";
+	}
 
 }
