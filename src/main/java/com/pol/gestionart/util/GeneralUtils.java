@@ -1,5 +1,6 @@
 package com.pol.gestionart.util;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,25 +17,29 @@ import com.pol.gestionart.entity.VentaDetalle;
 @Component
 public class GeneralUtils {
 	
+	public static String COMPROBANTE_PATTERN = "00000";
 	
-	public static Map<String, VentaDetalle> mapSerializeVentaDetalleOrUpdate(HttpSession session, List<VentaDetalle> listDetalle){
-		if(session.getAttribute(VentaFormController.LISTA_DETALLE) == null){
-			Map<String, VentaDetalle> mapSerializeCdas = new HashMap<>();
-			for(VentaDetalle c : listDetalle){
+	public static Map<String, VentaDetalle> mapSerializeVentaDetalleOrUpdate(HttpSession session, 	
+			VentaDetalle ventaDet){
+		Map<String, VentaDetalle> mapSerializeCdas = new HashMap<>();
+		if(session.getAttribute(VentaFormController.MAP_DETALLE) == null){
 				String keyMap = UUID.randomUUID().toString();
-				mapSerializeCdas.put(keyMap, c);
-			}
+				mapSerializeCdas.put(keyMap, ventaDet);
 
 			return mapSerializeCdas;
 		}else{
-			Map<String, VentaDetalle> mapCdas = (Map<String, VentaDetalle>) session.getAttribute(VentaFormController.LISTA_DETALLE);
-
-			/*for(Entry<String, VentaDetalle> c : mapCdas.entrySet()){
-				for (VentaDetalle cda : listDetalle) {					
-					
-				}
-			}*/
-			return mapCdas;
+			mapSerializeCdas = (Map<String, VentaDetalle>) session.getAttribute(VentaFormController.MAP_DETALLE);
+				String keyMap = UUID.randomUUID().toString();
+				mapSerializeCdas.put(keyMap, ventaDet);
+			return mapSerializeCdas;
 		}
 	}
+	
+	public static String formatoComprobante(double value ) {
+		
+	      DecimalFormat myFormatter = new DecimalFormat(COMPROBANTE_PATTERN);
+	      String output = myFormatter.format(value);
+	      
+	      return output;
+	   }
 }

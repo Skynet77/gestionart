@@ -9,6 +9,7 @@ import org.springframework.context.support.ConversionServiceFactoryBean;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.converter.Converter;
 
+import com.pol.gestionart.converters.ClienteConverter;
 import com.pol.gestionart.converters.FamiliaConverter;
 import com.pol.gestionart.converters.ProductoConverter;
 import com.pol.gestionart.converters.VentaCabeceraConverter;
@@ -31,6 +32,7 @@ public class ConversionConfiguration {
         converters.add(new FamiliaConverter());
         converters.add(new ProductoConverter());
         converters.add(new VentaCabeceraConverter());
+        converters.add(new ClienteConverter());
 
         return converters;
     }

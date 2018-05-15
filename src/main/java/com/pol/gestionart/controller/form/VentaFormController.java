@@ -2,29 +2,29 @@ package com.pol.gestionart.controller.form;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pol.gestionart.controller.list.VentaCabeceraListController;
 import com.pol.gestionart.dao.Dao;
 import com.pol.gestionart.dao.ProductoDao;
 import com.pol.gestionart.dao.VentaCabeceraDao;
+import com.pol.gestionart.dao.VentaDetalleDao;
 import com.pol.gestionart.entity.Producto;
 import com.pol.gestionart.entity.VentaCabecera;
+import com.pol.gestionart.entity.VentaCabecera.Estado;
 import com.pol.gestionart.entity.VentaDetalle;
 import com.pol.gestionart.util.GeneralUtils;
 
@@ -41,16 +41,19 @@ public class VentaFormController extends FormController<VentaCabecera> {
 	public static final String VENTA_CABECERA = "ventaCabecera";
 	public static final String VENTA_DETALLE = "ventaDetalle";
 	public static final String PRODUCTO_DETALLE = "productoDetalle";
-	@Autowired
-	private VentaCabeceraDao ventaCabeceraDao;
-	
+	public static final BigDecimal IVA_10 = new BigDecimal(1.1);
 
 	@Autowired
 	private VentaCabeceraListController productoList;
 	
 	@Autowired 
 	private ProductoDao productoDao;
-
+	
+	@Autowired
+	private VentaCabeceraDao ventaCabeceraDao;
+	
+	@Autowired
+	private VentaDetalleDao ventaDetalleDao;
 	
 	@Override
 	public String getTemplatePath() {
@@ -77,9 +80,23 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		map.addAttribute("accion", "guardar");
 		map.addAttribute("ventaList", getDao().findEntities(true,-1,-1, "VentaCabecera"));
 		map.addAttribute("titlePage", "Registro de Venta");
+		map.addAttribute("ventaCabecera",new VentaCabecera());
+		map.addAttribute("ventaDetalle",new VentaDetalle());
+		
+		
 		super.agregarValoresAdicionales(map);
 	}
 	
+	@RequestMapping("pay")
+	public String index(ModelMap map,HttpSession session) {
+		
+		map.addAttribute(getNombreObjeto(), getNuevaInstancia());
+		agregarValoresAdicionales(map);
+		session.setAttribute(MAP_DETALLE,null);
+		session.setAttribute(VENTA_CABECERA, null);
+		session.setAttribute(VENTA_DETALLE, null);
+		return "venta/venta_pay"; 
+		}
 	
 	
 	@RequestMapping(value = "agregar-detalle", method = RequestMethod.POST)
@@ -98,11 +115,6 @@ public class VentaFormController extends FormController<VentaCabecera> {
 			listProducto = new ArrayList<>();
 		}
 		
-		if(session.getAttribute(LISTA_DETALLE)!=null){
-			listDetalle = (List<VentaDetalle>) session.getAttribute(LISTA_DETALLE);
-		}else{
-			listDetalle = new ArrayList<>();
-		}
 		
 		if(session.getAttribute(VENTA_CABECERA)!=null){
 			ventaCab = (VentaCabecera) session.getAttribute(VENTA_CABECERA);
@@ -127,6 +139,21 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		montoTotal = montoTotal.add(montoVenta);
 		//volvemos a guardar el monto total
 		ventaCab.setMontoTotal(montoTotal);
+		
+		
+		//calculo de subTotal
+		BigDecimal subTotal;
+		BigDecimal IVA;
+		if(ventaCab.getSubTotal()!=null){
+			subTotal = ventaCab.getSubTotal();
+		}else{
+			subTotal = new BigDecimal(0);
+		}
+		subTotal = ventaCab.getMontoTotal().divide(IVA_10,2,BigDecimal.ROUND_HALF_UP);
+		ventaCab.setSubTotal(subTotal);
+		IVA = subTotal.multiply(new BigDecimal(0.1));
+		ventaCab.setIva(IVA);
+		
 		//el detalle actual que se esta procesando
 		ventaDet = new VentaDetalle();
 		ventaDet.setCantidad(cantidad);
@@ -134,10 +161,10 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		ventaDet.setPrecioUnitario(producto.getPrecioVenta());
 		ventaDet.setProducto(producto);
 		ventaDet.setVentaCabecera(ventaCab);
-		listDetalle.add(ventaDet);
-		Map<String, VentaDetalle> mapaVentaDetalle = GeneralUtils.mapSerializeVentaDetalleOrUpdate(session,listDetalle);
+		//listDetalle.add(ventaDet);
+		Map<String, VentaDetalle> mapaVentaDetalle = GeneralUtils.mapSerializeVentaDetalleOrUpdate(session,ventaDet);
 		session.setAttribute(MAP_DETALLE,mapaVentaDetalle);
-		session.setAttribute(LISTA_DETALLE,listDetalle);
+//		session.setAttribute(LISTA_DETALLE,listDetalle);
 		session.setAttribute(VENTA_CABECERA, ventaCab);
 		session.setAttribute(VENTA_DETALLE, ventaDet);
 		map.addAttribute(MAP_DETALLE,mapaVentaDetalle);
@@ -152,40 +179,69 @@ public class VentaFormController extends FormController<VentaCabecera> {
 	
 	@RequestMapping(value = "eliminar-detalle", method = RequestMethod.POST)
 	public String deleteProducto(ModelMap map,
-			@RequestParam(required = true, value="id_producto") Long idProducto,  HttpSession session) {
-		List<VentaDetalle> listDetalle = null;
-		List<VentaDetalle> listDetalle2 = null;
-		if(idProducto!=null){
-			listDetalle = (List<VentaDetalle>) session.getAttribute(LISTA_DETALLE);
-			listDetalle2 = listDetalle;
-			for (VentaDetalle ventaDetalle : listDetalle) {
-				if(!idProducto.equals(ventaDetalle.getProducto().getId())){
-					listDetalle2.add(ventaDetalle);
-				}
-			}
-		}
-		session.setAttribute(LISTA_DETALLE,listDetalle2);
-		return null;
+			@RequestParam(required = true, value="id_producto") String uuid,  HttpSession session) {
+		Map<String, VentaDetalle> mapVentaDetail = new HashMap<>();
+		VentaCabecera ventaCab = null;
+		VentaDetalle ventaDet = null;
 		
+		if(session.getAttribute(VENTA_CABECERA)!=null){
+			ventaCab = (VentaCabecera) session.getAttribute(VENTA_CABECERA);
+		}else{
+			ventaCab = new VentaCabecera();
+		}
+		
+		if(uuid!=null){
+			mapVentaDetail = (Map<String, VentaDetalle>) session.getAttribute(MAP_DETALLE);
+			ventaDet = mapVentaDetail.get(uuid);
+			ventaCab.setMontoTotal(ventaCab.getMontoTotal().subtract(ventaDet.getPrecioTotal()));
+			
+			//calculo de subTotal
+			BigDecimal subTotal;
+			BigDecimal IVA;
+			subTotal = ventaCab.getMontoTotal().divide(IVA_10,2,BigDecimal.ROUND_HALF_UP);
+			ventaCab.setSubTotal(subTotal);
+			IVA = subTotal.multiply(new BigDecimal(0.1));
+			ventaCab.setIva(IVA);
+			
+			mapVentaDetail.remove(uuid);
+			session.setAttribute(MAP_DETALLE,mapVentaDetail);
+			map.addAttribute(MAP_DETALLE,mapVentaDetail);
+		}
+		session.setAttribute(VENTA_CABECERA, ventaCab);
+		map.addAttribute(VENTA_CABECERA, ventaCab);
+		
+		return "venta/venta_detail";
 	}
 	
 	
 
-	@RequestMapping(value = "accion2", method = RequestMethod.POST)
-	public String accion2(ModelMap map, @Valid VentaCabecera obj,
-			BindingResult bindingResult,
-			@RequestParam(required = false) String accion,
-			@RequestParam(value = "id_objeto", required = false) Long id_objeto) {
-		if (StringUtils.equals(accion, "save")) {
-			return guardar(map, obj, bindingResult);
-		} else if (StringUtils.equals(accion, "edit")) {
-			logger.info("OBJETO PROCESO {}", obj);
-			return edit(map, obj.getId(),obj);
-		} else if ("delete".equals(accion)) {
-			//return editarEstado(map, id_objeto);
-
+	@RequestMapping(value = "confirmar", method = RequestMethod.POST)
+	public String confirmarVenta(ModelMap map, @Valid VentaCabecera ventaCabecera,HttpSession session) {
+		
+		VentaCabecera ventaCab = null;
+		VentaDetalle ventaDet = null;
+		Map<String, VentaDetalle> mapaVentaDetalle = null;
+		
+		if(session.getAttribute(VENTA_CABECERA)!=null){
+			ventaCab = (VentaCabecera) session.getAttribute(VENTA_CABECERA);
+		}else{
+			ventaCab = new VentaCabecera();
 		}
-		return getTemplatePath();
+		
+		if(session.getAttribute(MAP_DETALLE)!=null){
+			mapaVentaDetalle  = (Map<String, VentaDetalle>) session.getAttribute(MAP_DETALLE);
+		}
+		
+		ventaCabecera.setIva(ventaCab.getIva());
+		ventaCabecera.setNroComprobante("1");
+		ventaCabecera.setEstado(Estado.CONFIRMADO.name());
+		ventaCabeceraDao.create(ventaCabecera);
+		
+		for (VentaDetalle vd : mapaVentaDetalle.values()) {
+			vd.setVentaCabecera(ventaCabecera);
+			ventaDetalleDao.create(vd);
+		}
+		return "";
 
 	}
 	

@@ -5,8 +5,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.pol.gestionart.dao.VentaCabeceraDao;
 import com.pol.gestionart.dao.Dao;
+import com.pol.gestionart.dao.VentaCabeceraDao;
 import com.pol.gestionart.entity.VentaCabecera;
 
 
@@ -20,7 +20,7 @@ public class VentaCabeceraListController extends ListController<VentaCabecera> {
 
 	@Override
 	public String[] getColumnas() {
-		return new String[] { "id", "nombre", "total" };
+		return new String[] { "id", "nroComprobante", "fechaEmision","cliente.nombre","montoTotal" };
 	}
 
 	@Override

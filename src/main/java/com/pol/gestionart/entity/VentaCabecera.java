@@ -30,15 +30,11 @@ public class VentaCabecera extends GenericEntity{
 	@SequenceGenerator(name = SECUENCIA, sequenceName = SECUENCIA)
 	private Long idVenta;
 	
-
-	@NotNull
+	//@NotNull
 	private String nroComprobante;
 	
-	@NotNull
-	private String ruc;
-	
 	@ManyToOne
-	@NotNull(message = "ventaCabecera.cliente.notNull")
+	//@NotNull(message = "ventaCabecera.cliente.notNull")
 	@JoinColumn(foreignKey = @ForeignKey(name = "ventaCabecera_cliente_fk"))
 	private Cliente cliente;
 
@@ -54,7 +50,7 @@ public class VentaCabecera extends GenericEntity{
 	private BigDecimal subTotal;
 	
 	
-	@NotNull
+	//@NotNull
 	private BigDecimal iva;
 	
 	private String estado;
@@ -66,7 +62,6 @@ public class VentaCabecera extends GenericEntity{
 		super();
 		this.idVenta = idVenta;
 		this.nroComprobante = nroComprobante;
-		this.ruc = ruc;
 		this.cliente = cliente;
 		this.fechaEmision = fechaEmision;
 		this.montoTotal = montoTotal;
@@ -80,6 +75,11 @@ public class VentaCabecera extends GenericEntity{
 		super();
 	}
 
+	public enum Estado{
+		CONFIRMADO,
+		PENDIENTE,
+		INICIADA;
+	}
 
 	public Long getIdVenta() {
 		return idVenta;
@@ -99,17 +99,6 @@ public class VentaCabecera extends GenericEntity{
 	public void setNroComprobante(String nroComprobante) {
 		this.nroComprobante = nroComprobante;
 	}
-
-
-	public String getRuc() {
-		return ruc;
-	}
-
-
-	public void setRuc(String ruc) {
-		this.ruc = ruc;
-	}
-
 
 	public Cliente getCliente() {
 		return cliente;
@@ -170,16 +159,6 @@ public class VentaCabecera extends GenericEntity{
 		this.estado = estado;
 	}
 
-	
-
-	@Override
-	public String toString() {
-		return "VentaCabecera [idVenta=" + idVenta + ", nroComprobante=" + nroComprobante + ", ruc=" + ruc
-				+ ", cliente=" + cliente + ", fechaEmision=" + fechaEmision + ", montoTotal=" + montoTotal
-				+ ", subTotal=" + subTotal + ", iva=" + iva + ", estado=" + estado + "]";
-	}
-
-
 	@Override
 	public Long getId() {
 		return this.idVenta;
@@ -192,6 +171,12 @@ public class VentaCabecera extends GenericEntity{
 		
 	}
 
-	
+	@Override
+	public String toString() {
+		return "VentaCabecera [idVenta=" + idVenta + ", nroComprobante=" + nroComprobante + ", cliente=" + cliente
+				+ ", fechaEmision=" + fechaEmision + ", montoTotal=" + montoTotal + ", subTotal=" + subTotal + ", iva="
+				+ iva + ", estado=" + estado + "]";
+	}
+
 }
 	

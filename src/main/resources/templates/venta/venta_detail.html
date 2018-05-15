@@ -1,4 +1,5 @@
 <html xmlns:th="http://www.thymeleaf.org" th:remove="tag">
+<div id="idTableDetail">
 <table class="table table-hover" id="tabla-detalle">
                 <tbody><tr>
                   <th>Código</th>
@@ -8,31 +9,24 @@
                   <th>Precio Total</th>
                   <th>Acción</th>
                 </tr>
-                <tr th:each="mapDetalle : ${listaDetalle}"  th:with="ventaDetalle=${mapDetalle.value}" th:id="${mapDetalle.key}">
+                <tr th:each="mapDetail : ${mapDetalle}"  th:with="ventaDetalle=${mapDetail.value}" th:id="${mapDetail.key}">
 					<td th:text="${ventaDetalle.producto.codigo} ">183</td>
 					<td th:text="${ventaDetalle.producto.descripcion}">Cocal Cola de ejemplo</td>
 					<td th:text="${ventaDetalle.cantidad}">2</td>
 					<td th:text="${ventaDetalle.producto.precioVenta}">5.000</td>
 					<td th:text="${ventaDetalle.precioTotal}">10.000</td>
 					<td><button type="button" class="btn btn-danger"
-							th:onclick="'removerDetalle(\'' + ${mapDetalle.key} + '\');'">
+							th:onclick="'removerDetalle(\'' + ${mapDetail.key} + '\');'">
 							<span class="glyphicon glyphicon-remove"></span>
 						</button></td>
 				</tr>
               </tbody></table>
-
-
-
-
-
-               <!--  <tr th:id="${ventaDetalle.producto.id}">
-					<td th:text="${ventaDetalle.producto.codigo} ">183</td>
-					<td th:text="${productoDetalle.descripcion}">Cocal Cola de ejemplo</td>
-					<td th:text="${ventaDetalle.cantidad}">2</td>
-					<td th:text="${productoDetalle.precioVenta}">5.000</td>
-					<td th:text="${ventaDetalle.precioTotal}">10.000</td>
-					<td><button type="button" class="btn btn-danger"
-							th:onclick="'removerDetalle(\'' + ${ventaDetalle.producto.id} + '\');'">
-							<span class="glyphicon glyphicon-remove"></span>
-						</button></td>
-				</tr> -->
+		<script th:inline="javascript">
+		/*<![CDATA[*/
+				  var total = [[${ventaCabecera.montoTotal}]];
+				  var subTotal = [[${ventaCabecera.subTotal}]];
+				$("#montoTotal").val(total);
+				$("#subTotal").val(subTotal);
+		/*]]>*/
+		</script>
+</div>

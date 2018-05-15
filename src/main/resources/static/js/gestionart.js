@@ -13,12 +13,13 @@ function crearDataTable(dataTableId, ajaxSource, columnas, editUrl){
                 'sAjaxSource' : ajaxSource,
                 'serverSide' : true,
                 'columns' : getColumnasArray(columnas),
-                'paging'      : true,
-                'lengthChange': false,
-                'searching'   : false,
+                //'paging'      : true,
+                //'lengthChange': false,
+                'searching'   : true,
                 'info'        : true,
                 'autoWidth'   : false,
-                
+                "pagingType": "simple_numbers",
+                "bSort": false,
                 'language' : {
                     "sProcessing": "Procesando...",
                     "sLengthMenu": "Mostrar _MENU_ registros",
@@ -37,11 +38,11 @@ function crearDataTable(dataTableId, ajaxSource, columnas, editUrl){
                         "sLast": "Último",
                         "sNext": "Siguiente",
                         "sPrevious": "Anterior"
-                    },
-                    "oAria": {
+                    }
+                    /*"oAria": {
                         "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                    }
+                    }*/
                 }
 			 });
 
@@ -253,3 +254,96 @@ function eliminarProveedor(id){
 	$("#modal-default").modal('show');
 }
 
+
+
+///////// datatable sin acciones
+function crearDataTableSinAccion(dataTableId, ajaxSource, columnas, editUrl){
+	console.log("creando DT:", dataTableId, ajaxSource, columnas, editUrl)
+	
+	
+	 //var dataTable = $('#'+ dataTableId).dataTable(config);
+	 var dataTable = $('#'+ dataTableId).DataTable({
+        'processing' : true,
+//        'responsive': true,
+        'sAjaxSource' : ajaxSource,
+        'serverSide' : true,
+        'columns' : getColumnasArraySinAccion(columnas),
+        //'paging'      : true,
+        //'lengthChange': false,
+        'searching'   : true,
+        'info'        : true,
+        'autoWidth'   : false,
+        "pagingType": "simple_numbers",
+        "bSort": false,
+        'language' : {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "No hay datos disponibles en esta tabla",
+            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando _MAX_ registros",
+            "sInfoFiltered": " ",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            }
+        }
+	 });
+
+		$('#'+ dataTableId + ' tbody').on('click','button.editar', function(){
+			/*Con esto tenemos un objeto de tipo {id: 1, codigo: "ejc", descripcion: "Ejecutivo", materia: Object}
+			 teniendo en cuenta que ejecutamos http://localhost:8090/sigj/proceso/ 
+			 entonces para obtener el id de este objeto accedemos por su llave "id"*/
+			var ob = dataTable.row( $(this).parents('tr') ).data();
+			console.log(ob);
+			console.log( ob["id"] );
+			accion(ob.id, "EDITAR");
+
+			}); 
+		$('#'+ dataTableId + ' tbody').on('click','button.eliminar', function(){
+			/*Con esto tenemos un objeto de tipo {id: 1, codigo: "ejc", descripcion: "Ejecutivo", materia: Object}
+			 teniendo en cuenta que ejecutamos http://localhost:8090/sigj/proceso/ 
+			 entonces para obtener el id de este objeto accedemos por su llave "id"*/
+			var ob = dataTable.row( $(this).parents('tr') ).data();
+			console.log(ob);
+			console.log( ob["id"] );
+			accion(ob.id, 'ELIMINAR');
+
+			}); 
+		 
+}
+
+function getColumnasArraySinAccion(colsStr){
+	/*
+	1. declarar un array para retornar
+	2. separar colsStr teniendo en cuenta ';''
+	3. iterar para crear el array
+	*/
+	    //1
+		var columnsArray = [];
+		//2
+		var arrayCol = colsStr.split(";");
+		//3 , se puede crear una funcion aparte en vez de hacer function
+		jQuery.each(arrayCol, function(i, val){
+			
+					 if(val==true){
+						val = "Si";
+					}else if(val == false){
+						val="No";
+						
+					}else{
+						columnsArray.push( {"data" : val} );
+					}
+					
+					
+		});
+		
+		return columnsArray;
+}
