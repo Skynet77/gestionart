@@ -29,17 +29,24 @@ public class Producto extends GenericEntity {
 	@SequenceGenerator(name = SECUENCIA, sequenceName = SECUENCIA)
 	private Long idProducto;
 	
+	@Size(max = 10)
 	@NotBlank(message = "producto.codigo.notBlank")
 	@NotNull(message = "producto.codigo.notNull")
 	private String codigo;
 	@NotNull
 	private String tipoProducto; // P producto, M materia prima
+	@NotNull
 	@Size(max = 100)
 	private String descripcion;
+	@NotNull
 	private BigDecimal precioCompra;
+	@NotNull
 	private BigDecimal precioVenta;
+
 	private BigDecimal iva;
+	//@NotNull
 	private int cantidad;
+	@Size(max = 1)
 	private String estado;
 	
 	@ManyToOne
@@ -56,9 +63,9 @@ public class Producto extends GenericEntity {
 		super();
 	}
 
-	public Producto(Long idProducto, String codigo, @NotNull String tipoProducto, @Size(max = 100) String descripcion,
+	public Producto(Long idProducto, @Size(max = 10) String codigo, @NotNull String tipoProducto, @Size(max = 100) String descripcion,
 			@Size(max = 50) String marca, String capacidad, BigDecimal precioCompra, BigDecimal precioVenta,
-			BigDecimal iva, int cantidad, String estado) {
+			BigDecimal iva, int cantidad, @Size(max = 1) String estado) {
 		super();
 		this.idProducto = idProducto;
 		this.codigo = codigo;

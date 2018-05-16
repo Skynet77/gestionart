@@ -30,14 +30,15 @@ public class Usuario extends GenericEntity {
 	@Size(max = 20)
 	private String cedulaRuc;
 	@NotNull
-	@Size(max = 60)
+	@Size(max = 20)
 	private String nombreRazonSocial;
-	@Size(max = 60)
+	@Size(max = 20)
 	private String apellido;
 	@NotNull
-	@Size(max = 256)
+	@Size(max = 20)
 	private String password;
 
+	@Size(max = 1)
 	private String estado;
 
 	
@@ -49,7 +50,7 @@ public class Usuario extends GenericEntity {
 			@NotNull(message = "usuario.cedula_ruc.notNull") @Size(max = 20) String cedulaRuc,
 			@NotNull @Size(max = 60) String nombreRazonSocial,
 			@Size(max = 60) String apellido,
-			@NotNull @Size(max = 256) String password, String estado) {
+			@NotNull @Size(max = 256) String password, @Size(max = 1) String estado) {
 		super();
 		this.id = id;
 		this.cedulaRuc = cedulaRuc;

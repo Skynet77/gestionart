@@ -37,6 +37,7 @@ public class Proveedor extends GenericEntity {
 	private String correoElectronico;
 	@Size(max = 100)
 	private String direccion;
+	@Size(max = 1)
 	private String estado;
 	
 	public Proveedor() {
@@ -44,7 +45,7 @@ public class Proveedor extends GenericEntity {
 	}
 	public Proveedor(Long id, @Size(max = 50) String nombre, @Size(max = 50) String ruc,
 			@Size(max = 50) String nombre_contacto,@Size(max = 15) String nroTelefono, @Size(max = 30) String correoElectronico,
-			@Size(max = 100) String direccion, String estado) {
+			@Size(max = 100) String direccion, @Size(max = 1) String estado) {
 		super();
 		this.id = id;
 		this.nombre = nombre;

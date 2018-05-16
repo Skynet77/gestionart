@@ -34,6 +34,7 @@ public class Cliente extends GenericEntity{
 	@NotNull
 	@Size(max = 50)
 	private String apellido;
+	@NotNull
 	@Size(max = 10)
 	private String fecha_nacimiento;
 	@NotNull
@@ -46,8 +47,10 @@ public class Cliente extends GenericEntity{
 	private String nroTelefono;
 	@Size(max = 30)
 	private String correoElectronico;
+	@NotNull
 	@Size(max = 100)
 	private String direccion;
+	@Size(max = 1)
 	private String estado;
 	
 	public Cliente() {
@@ -56,7 +59,7 @@ public class Cliente extends GenericEntity{
 	
 	public Cliente(Long id, @Size(max = 50) String nombre, @Size(max = 50) String apellido, String fecha_nacimiento,
 			@Size(max = 20) String sexo, @Size(max = 50) String ruc, @Size(max = 15) String nroTelefono,
-			@Size(max = 30) String correoElectronico, @Size(max = 100) String direccion, String estado) {
+			@Size(max = 30) String correoElectronico, @Size(max = 100) String direccion, @Size(max = 1)  String estado) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
