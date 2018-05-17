@@ -8,18 +8,18 @@ function crearDataTable(dataTableId, ajaxSource, columnas, editUrl){
 			
 			 //var dataTable = $('#'+ dataTableId).dataTable(config);
 			 var dataTable = $('#'+ dataTableId).DataTable({
-                'processing' : true,
-//                'responsive': true,
-                'sAjaxSource' : ajaxSource,
-                'serverSide' : true,
-                'columns' : getColumnasArray(columnas),
-                //'paging'      : true,
-                //'lengthChange': false,
-                'searching'   : true,
-                'info'        : true,
-                'autoWidth'   : false,
-                "pagingType": "simple_numbers",
-                "bSort": false,
+				 'processing' : true,
+//		        'responsive': true,
+		        'sAjaxSource' : ajaxSource,
+		        'serverSide' : true,
+		        'columns' : getColumnasArray(columnas),
+		        //'paging'      : true,
+		        //'lengthChange': false,
+		        'searching'   : false,
+		        'info'        : true,
+		        'autoWidth'   : false,
+		        "pagingType": "simple_numbers",
+		        "bSort": false,
                 'language' : {
                     "sProcessing": "Procesando...",
                     "sLengthMenu": "Mostrar _MENU_ registros",
@@ -29,7 +29,7 @@ function crearDataTable(dataTableId, ajaxSource, columnas, editUrl){
                     "sInfoEmpty": "Mostrando _MAX_ registros",
                     "sInfoFiltered": " ",
                     "sInfoPostFix": "",
-                    "sSearch": "Buscar:",
+                    //"sSearch": "Buscar:",
                     "sUrl": "",
                     "sInfoThousands": ",",
                     "sLoadingRecords": "Cargando...",
@@ -38,11 +38,11 @@ function crearDataTable(dataTableId, ajaxSource, columnas, editUrl){
                         "sLast": "Último",
                         "sNext": "Siguiente",
                         "sPrevious": "Anterior"
-                    }
-                    /*"oAria": {
+                    },
+                    "oAria": {
                         "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                    }*/
+                    }
                 }
 			 });
 
@@ -270,7 +270,7 @@ function crearDataTableSinAccion(dataTableId, ajaxSource, columnas, editUrl){
         'columns' : getColumnasArraySinAccion(columnas),
         //'paging'      : true,
         //'lengthChange': false,
-        'searching'   : true,
+        'searching'   : false,
         'info'        : true,
         'autoWidth'   : false,
         "pagingType": "simple_numbers",
@@ -284,7 +284,7 @@ function crearDataTableSinAccion(dataTableId, ajaxSource, columnas, editUrl){
             "sInfoEmpty": "Mostrando _MAX_ registros",
             "sInfoFiltered": " ",
             "sInfoPostFix": "",
-            "sSearch": "Buscar:",
+            //"sSearch": "Buscar:",
             "sUrl": "",
             "sInfoThousands": ",",
             "sLoadingRecords": "Cargando...",

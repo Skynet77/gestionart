@@ -158,10 +158,15 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="exampleInputFile">Fecha:</label>
-									<input type="date" class="form-control" id="fechaEmision"  name="fechaEmision"
-							placeholder="Ingrese fecha"
-							data-validation="required"
-			  				data-validation-error-msg-required="Ingrese fecha en la cual se realizo la venta">
+								<div class="input-group date" >
+									
+								    <input id="fechaEmision"  name="fechaEmision"  type="text" class="form-control datepicker1"
+								    data-validation="required"
+		 			  				data-validation-error-msg-required="Ingrese fecha en la cual se realizo la venta">
+								    <div class="input-group-addon">
+								        <span class="glyphicon glyphicon-th"></span>
+								    </div>
+								</div>
 							</div>
 						</div>
 						
@@ -236,8 +241,13 @@
 						var cliente = c[0];
 						$("#cliente").val(cliente.id);
 					});
-					
-					
+					var fechaInicio = new Date();
+					var fecha=new Date();
+					var year = fecha.getFullYear();
+					var mes = fecha.getMonth()
+					var dia = fecha.getDate();
+					$('.datepicker1').datepicker({endDate:fechaInicio, language:'es', format: 'dd/mm/yyyy'});
+					$('.datepicker1').datepicker('update', new Date(year, mes, dia));
 					//buscar producto
 					$(suggestProducto).on('selectionchange', function(a,b,c){
 						if (c.length == 0){
