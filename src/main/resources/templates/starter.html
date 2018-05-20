@@ -209,6 +209,12 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="starter
 						<button type="button" class="close" data-dismiss="alert">x</button>
 						<strong th:text="#{${err.defaultMessage}}">Well done!</strong>
 					</div>
+					
+					<div class="alert alert-danger alert-dismissable alinear errorEach2 col-sm-5"
+						role="alert" id="alerta3" style="display: none; color: black;">
+						<button type="button" class="close" data-dismiss="alert">x</button>
+						<strong id="errorMensaje"></strong>
+					</div>
 
 					<script th:inline="javascript">
 					/*<![CDATA[*/

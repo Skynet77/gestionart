@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Component;
@@ -48,4 +49,8 @@ public class GeneralUtils {
 		return df.format(date);
 	}
 	
+	public static boolean isAjax(HttpServletRequest request) {
+		String requestedWithHeader = request.getHeader("X-Requested-With");
+		return "XMLHttpRequest".equals(requestedWithHeader);
+	}
 }

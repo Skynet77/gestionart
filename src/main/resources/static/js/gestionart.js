@@ -363,3 +363,15 @@ function printFile(blob, fileName, type){
     }  
 }
 
+
+///ERRORES
+function ajaxErrorHandler(errorData, status, error, idError, idTitleError, idDescError) {
+    $('html, body').animate({scrollTop: 0}, 800);
+    $("#errorMensaje").html(errorData.message);
+    $("#alerta3").removeClass("alert-success");
+	$("#alerta3").addClass("alert-danger");
+	$("#alerta3").fadeIn(5000);
+	$("#alerta3").fadeOut(1000);
+	$(".errorEach").fadeIn(5000);
+	$(".errorEach").fadeOut(1000);    
+}

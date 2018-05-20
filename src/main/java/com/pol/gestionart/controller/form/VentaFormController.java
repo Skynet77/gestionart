@@ -32,6 +32,7 @@ import com.pol.gestionart.entity.Producto;
 import com.pol.gestionart.entity.VentaCabecera;
 import com.pol.gestionart.entity.VentaCabecera.Estado;
 import com.pol.gestionart.entity.VentaDetalle;
+import com.pol.gestionart.exceptions.AjaxException;
 import com.pol.gestionart.util.GeneralUtils;
 
 import net.sf.jasperreports.engine.JREmptyDataSource;
@@ -117,7 +118,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 	@RequestMapping(value = "agregar-detalle", method = RequestMethod.POST)
 	public String addProducto(ModelMap map,
 			@RequestParam(required = true, value="id_producto") Long idProducto, 
-			@RequestParam(required = true, value="cantidad") BigDecimal cantidad, HttpSession session) {
+			@RequestParam(required = true, value="cantidad") BigDecimal cantidad, HttpSession session) throws AjaxException {
 		
 		List<Producto> listProducto = null;
 		VentaCabecera ventaCab = null;
@@ -176,6 +177,19 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		ventaDet.setPrecioUnitario(producto.getPrecioVenta());
 		ventaDet.setProducto(producto);
 		ventaDet.setVentaCabecera(ventaCab);
+		
+		//producto para disminuir el stok
+		Producto productoDisminuir = null;
+		int resta = 0;
+		//disminuimos la cantidad del producto en stock
+		productoDisminuir = producto;
+		resta = productoDisminuir.getCantidad() - ventaDet.getCantidad().intValue();
+		if(resta<0){
+			throw new AjaxException("La cantidad a vender es mayor al stock de la base de datos");
+		}
+		productoDisminuir.setCantidad(resta);
+		productoDao.createOrUpdate(productoDisminuir);
+		
 		//listDetalle.add(ventaDet);
 		Map<String, VentaDetalle> mapaVentaDetalle = GeneralUtils.mapSerializeVentaDetalleOrUpdate(session,ventaDet);
 		session.setAttribute(MAP_DETALLE,mapaVentaDetalle);
@@ -209,6 +223,15 @@ public class VentaFormController extends FormController<VentaCabecera> {
 			mapVentaDetail = (Map<String, VentaDetalle>) session.getAttribute(MAP_DETALLE);
 			ventaDet = mapVentaDetail.get(uuid);
 			ventaCab.setMontoTotal(ventaCab.getMontoTotal().subtract(ventaDet.getPrecioTotal()));
+			
+			//producto para disminuir el stok
+			Producto productoDisminuir = null;
+			int suma = 0;
+			//sumamos la cantidad del producto en stock, ya que se elimino del detalle
+			productoDisminuir = ventaDet.getProducto();
+			suma = productoDisminuir.getCantidad() + ventaDet.getCantidad().intValue();
+			productoDisminuir.setCantidad(suma);
+			productoDao.createOrUpdate(productoDisminuir);
 			
 			//calculo de subTotal
 			BigDecimal subTotal;
@@ -256,10 +279,13 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		ventaCabecera.setNroComprobante(nroComprobante);
 		ventaCabeceraDao.createOrUpdate(ventaCabecera);
 		
+		
 		for (VentaDetalle vd : mapaVentaDetalle.values()) {
 			vd.setVentaCabecera(ventaCabecera);
 			ventaDetalleDao.create(vd);
 		}
+		
+		
 		map.addAttribute("msgExitoVenta", true);
 		map.addAttribute("ventaCabeceraId", ventaCabecera.getIdVenta());
 		session.setAttribute("ventaCabeceraId", ventaCabecera.getIdVenta());

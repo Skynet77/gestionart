@@ -367,7 +367,8 @@
 				$("#alerta").fadeOut(2000);
 		        
 		    }).fail(function (request, status, error) {
-	   	        var errorData = request.responseJSON;
+		        var errorData = request.responseJSON;
+		        ajaxErrorHandler(errorData, status, request.status, "alert-error","msgTitleError","msgDescripcionError");
 		    });
 		}
 		
