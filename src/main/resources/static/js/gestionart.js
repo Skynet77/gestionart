@@ -297,27 +297,16 @@ function crearDataTableSinAccion(dataTableId, ajaxSource, columnas, editUrl){
         }
 	 });
 
-		$('#'+ dataTableId + ' tbody').on('click','button.editar', function(){
-			/*Con esto tenemos un objeto de tipo {id: 1, codigo: "ejc", descripcion: "Ejecutivo", materia: Object}
-			 teniendo en cuenta que ejecutamos http://localhost:8090/sigj/proceso/ 
-			 entonces para obtener el id de este objeto accedemos por su llave "id"*/
-			var ob = dataTable.row( $(this).parents('tr') ).data();
-			console.log(ob);
-			console.log( ob["id"] );
-			accion(ob.id, "EDITAR");
-
-			}); 
-		$('#'+ dataTableId + ' tbody').on('click','button.eliminar', function(){
-			/*Con esto tenemos un objeto de tipo {id: 1, codigo: "ejc", descripcion: "Ejecutivo", materia: Object}
-			 teniendo en cuenta que ejecutamos http://localhost:8090/sigj/proceso/ 
-			 entonces para obtener el id de este objeto accedemos por su llave "id"*/
-			var ob = dataTable.row( $(this).parents('tr') ).data();
-			console.log(ob);
-			console.log( ob["id"] );
-			accion(ob.id, 'ELIMINAR');
-
-			}); 
-		 
+	$('#'+ dataTableId + ' tbody').on('click','button.imprimirComprobante', function(){
+		var ob = dataTable.row( $(this).parents('tr') ).data();
+		var params = 'id_venta_cabecera=' + ob.id;
+		
+		var link = document.createElement('a');
+        link.href = "/gestionart/venta/comprobante?id_venta="+ob.id;
+        link.target = '_blank';
+        document.body.appendChild(link);
+        link.click();
+	});
 }
 
 function getColumnasArraySinAccion(colsStr){
@@ -344,6 +333,33 @@ function getColumnasArraySinAccion(colsStr){
 					
 					
 		});
+		columnsArray.push(
+                {'defaultContent': "<button type='button' class='imprimirComprobante btn btn-success btn-xs'><span class='glyphicon glyphicon-print'></span></button>"}
+                );
 		
 		return columnsArray;
 }
+
+function printFile(blob, fileName, type){
+
+    // Internet Explorer 6-11
+    var isIE = /*@cc_on!@*/ false || !!document.documentMode;
+    var options = {
+			type: "application/pdf"
+		};
+    if (isIE) {
+        // IE workaround for "HTML7007: One or more blob URLs were revoked by closing the blob for which they were created. These URLs will no longer resolve as the data backing the URL has been freed."
+        //window.navigator.msSaveBlob(blob, filename);
+    	var file = new Blob([blob], options);
+        //window.navigator.msSaveBlob(file, fileName);
+        window.navigator.msSaveOrOpenBlob(file, fileName);
+    }else{
+    	var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.open = fileName;
+        //link.target = '_blank';
+        document.body.appendChild(link);
+        link.click();
+    }  
+}
+

@@ -1,10 +1,11 @@
 package com.pol.gestionart.util;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -42,4 +43,9 @@ public class GeneralUtils {
 	      
 	      return output;
 	   }
+	public static String getStringFromDate(Date date, String format) {
+		DateFormat df = new SimpleDateFormat(format);
+		return df.format(date);
+	}
+	
 }

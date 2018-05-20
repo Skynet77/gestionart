@@ -6,12 +6,14 @@
 			<div class="box-header">
 				<h3 class="box-title">Lista de Ventas</h3>
 			</div>
+			<a type="button" th:href="@{/venta/pay}" class="btn btn-primary" >Realizar Venta</a>
 			<!-- /.box-header -->
 			<div class="box-body">
               <table id="ventaDT" class="table table-bordered table-hover">
                 <thead>
                 <tr>
 					<th th:each="col : ${columnas}" th:text="#{'venta.' + ${col} + '.header'}">CÓDIGO</th>
+					<th></th>
 				</tr>
                 </thead>
               </table>
@@ -23,10 +25,17 @@
 
 		<!-- /.box -->
 	</div>
-	<script type="text/javascript">
+	
+	
+        
+        
+	<script th:inline="javascript">
+					/*<![CDATA[*/
 		
 		$(document).ready(function() {
-			crearDataTableSinAccion("ventaDT", "[[@{/venta/json}]]", "[[${columnasStr}]]", "[[@{/venta/edit/}]]");
+			crearDataTableSinAccion("ventaDT", [[@{/venta/json}]], [[${columnasStr}]], [[@{/venta/edit/}]]);
+			
+			
 		});
 	
 	</script>
