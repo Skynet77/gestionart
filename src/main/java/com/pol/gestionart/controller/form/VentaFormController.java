@@ -124,76 +124,79 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		VentaCabecera ventaCab = null;
 		VentaDetalle ventaDet = null;
 		List<VentaDetalle> listDetalle = null;
+		Producto producto = null;
 		BigDecimal montoTotal;
-		if(session.getAttribute(LISTA_PRODUCTO)!=null){
-			listProducto = (List<Producto>) session.getAttribute(LISTA_PRODUCTO);
-		}else{
-			listProducto = new ArrayList<>();
+		try {
+			if(session.getAttribute(LISTA_PRODUCTO)!=null){
+				listProducto = (List<Producto>) session.getAttribute(LISTA_PRODUCTO);
+			}else{
+				listProducto = new ArrayList<>();
+			}
+			
+			
+			if(session.getAttribute(VENTA_CABECERA)!=null){
+				ventaCab = (VentaCabecera) session.getAttribute(VENTA_CABECERA);
+			}else{
+				ventaCab = new VentaCabecera();
+			}
+			
+			producto = productoDao.find(idProducto);
+			if(producto != null){
+				listProducto.add(producto);
+			}
+			//obtenemos el monto total de la cabecera
+			if(ventaCab.getMontoTotal()!=null){
+				montoTotal = ventaCab.getMontoTotal();
+			}else{
+				montoTotal = new BigDecimal(0);
+			}
+			
+			//multiplicamos el precio de venta por la cantidad
+			BigDecimal montoVenta = producto.getPrecioVenta().multiply(cantidad);
+			//sumamos el monto total que teniamos por 
+			montoTotal = montoTotal.add(montoVenta);
+			//volvemos a guardar el monto total
+			ventaCab.setMontoTotal(montoTotal);
+			
+			
+			//calculo de subTotal
+			BigDecimal subTotal;
+			BigDecimal IVA;
+			if(ventaCab.getSubTotal()!=null){
+				subTotal = ventaCab.getSubTotal();
+			}else{
+				subTotal = new BigDecimal(0);
+			}
+			subTotal = ventaCab.getMontoTotal().divide(IVA_10,2,BigDecimal.ROUND_HALF_UP);
+			ventaCab.setSubTotal(subTotal);
+			IVA = subTotal.multiply(new BigDecimal(0.1));
+			ventaCab.setIva(IVA);
+			
+			//el detalle actual que se esta procesando
+			ventaDet = new VentaDetalle();
+			ventaDet.setCantidad(cantidad);
+			ventaDet.setPrecioTotal(montoVenta);
+			ventaDet.setPrecioUnitario(producto.getPrecioVenta());
+			ventaDet.setProducto(producto);
+			ventaDet.setVentaCabecera(ventaCab);
+		} catch (Exception e ) {
+			throw new AjaxException("Ocurrió un error inesperado");
 		}
+			//producto para disminuir el stok
+			Producto productoDisminuir = null;
+			int resta = 0;
+			//disminuimos la cantidad del producto en stock
+			productoDisminuir = producto;
+			resta = productoDisminuir.getCantidad() - ventaDet.getCantidad().intValue();
+			if(resta<0){
+				throw new AjaxException("La cantidad a vender es mayor al stock de la base de datos");
+			}
+			productoDisminuir.setCantidad(resta);
+			productoDao.createOrUpdate(productoDisminuir);
 		
 		
-		if(session.getAttribute(VENTA_CABECERA)!=null){
-			ventaCab = (VentaCabecera) session.getAttribute(VENTA_CABECERA);
-		}else{
-			ventaCab = new VentaCabecera();
-		}
-		
-		Producto producto = productoDao.find(idProducto);
-		if(producto != null){
-			listProducto.add(producto);
-		}
-		//obtenemos el monto total de la cabecera
-		if(ventaCab.getMontoTotal()!=null){
-			montoTotal = ventaCab.getMontoTotal();
-		}else{
-			montoTotal = new BigDecimal(0);
-		}
-		
-		//multiplicamos el precio de venta por la cantidad
-		BigDecimal montoVenta = producto.getPrecioVenta().multiply(cantidad);
-		//sumamos el monto total que teniamos por 
-		montoTotal = montoTotal.add(montoVenta);
-		//volvemos a guardar el monto total
-		ventaCab.setMontoTotal(montoTotal);
-		
-		
-		//calculo de subTotal
-		BigDecimal subTotal;
-		BigDecimal IVA;
-		if(ventaCab.getSubTotal()!=null){
-			subTotal = ventaCab.getSubTotal();
-		}else{
-			subTotal = new BigDecimal(0);
-		}
-		subTotal = ventaCab.getMontoTotal().divide(IVA_10,2,BigDecimal.ROUND_HALF_UP);
-		ventaCab.setSubTotal(subTotal);
-		IVA = subTotal.multiply(new BigDecimal(0.1));
-		ventaCab.setIva(IVA);
-		
-		//el detalle actual que se esta procesando
-		ventaDet = new VentaDetalle();
-		ventaDet.setCantidad(cantidad);
-		ventaDet.setPrecioTotal(montoVenta);
-		ventaDet.setPrecioUnitario(producto.getPrecioVenta());
-		ventaDet.setProducto(producto);
-		ventaDet.setVentaCabecera(ventaCab);
-		
-		//producto para disminuir el stok
-		Producto productoDisminuir = null;
-		int resta = 0;
-		//disminuimos la cantidad del producto en stock
-		productoDisminuir = producto;
-		resta = productoDisminuir.getCantidad() - ventaDet.getCantidad().intValue();
-		if(resta<0){
-			throw new AjaxException("La cantidad a vender es mayor al stock de la base de datos");
-		}
-		productoDisminuir.setCantidad(resta);
-		productoDao.createOrUpdate(productoDisminuir);
-		
-		//listDetalle.add(ventaDet);
 		Map<String, VentaDetalle> mapaVentaDetalle = GeneralUtils.mapSerializeVentaDetalleOrUpdate(session,ventaDet);
 		session.setAttribute(MAP_DETALLE,mapaVentaDetalle);
-//		session.setAttribute(LISTA_DETALLE,listDetalle);
 		session.setAttribute(VENTA_CABECERA, ventaCab);
 		session.setAttribute(VENTA_DETALLE, ventaDet);
 		map.addAttribute(MAP_DETALLE,mapaVentaDetalle);
@@ -212,7 +215,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		Map<String, VentaDetalle> mapVentaDetail = new HashMap<>();
 		VentaCabecera ventaCab = null;
 		VentaDetalle ventaDet = null;
-		
+		int suma = 0;
 		if(session.getAttribute(VENTA_CABECERA)!=null){
 			ventaCab = (VentaCabecera) session.getAttribute(VENTA_CABECERA);
 		}else{
@@ -226,7 +229,6 @@ public class VentaFormController extends FormController<VentaCabecera> {
 			
 			//producto para disminuir el stok
 			Producto productoDisminuir = null;
-			int suma = 0;
 			//sumamos la cantidad del producto en stock, ya que se elimino del detalle
 			productoDisminuir = ventaDet.getProducto();
 			suma = productoDisminuir.getCantidad() + ventaDet.getCantidad().intValue();
@@ -247,6 +249,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		}
 		session.setAttribute(VENTA_CABECERA, ventaCab);
 		map.addAttribute(VENTA_CABECERA, ventaCab);
+		map.addAttribute("cantProducto",suma);
 		
 		return "venta/venta_detail";
 	}
