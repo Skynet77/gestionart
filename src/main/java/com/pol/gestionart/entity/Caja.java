@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
 import com.pol.gestionart.main.GenericEntity;
 
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint(name = "caja_id_uk", columnNames = { "ruc" }) })
+@Table//(uniqueConstraints = { @UniqueConstraint(name = "caja_id_uk", columnNames = { "id" }) })
 public class Caja extends GenericEntity{
 	
 	private static final String SECUENCIA = "caja_id_seq";

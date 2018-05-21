@@ -180,7 +180,19 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="starter
 						<ul class="treeview-menu">
 							<li><a th:href="@{/movimiento}">
 							<i class="fa fa-pie-chart" style="color: blue"></i>Registrar Compra</a></li>
-						</ul></li>					
+						</ul></li>		
+							
+					<!-- Menú de Caja  -->
+					<li class="treeview menu-rrhh"><a href="#"> <i
+							class="fa fa-sitemap"></i> <span>Caja</span> <span
+							class="pull-right-container"> <i
+								class="fa fa-angle-left pull-right"></i>
+						</span>
+					</a>
+						<ul class="treeview-menu">
+							<li><a th:href="@{/movimiento}">
+							<i class="fa fa-pie-chart" style="color: blue"></i>Flujo de dinero</a></li>
+						</ul></li>			
 				</ul>
 			</section>
 			<!-- /.sidebar -->
