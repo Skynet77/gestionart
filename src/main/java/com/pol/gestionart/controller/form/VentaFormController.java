@@ -1,11 +1,17 @@
 package com.pol.gestionart.controller.form;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -26,7 +32,16 @@ import com.pol.gestionart.entity.Producto;
 import com.pol.gestionart.entity.VentaCabecera;
 import com.pol.gestionart.entity.VentaCabecera.Estado;
 import com.pol.gestionart.entity.VentaDetalle;
+import com.pol.gestionart.exceptions.AjaxException;
 import com.pol.gestionart.util.GeneralUtils;
+
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 
 
@@ -42,6 +57,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 	public static final String VENTA_DETALLE = "ventaDetalle";
 	public static final String PRODUCTO_DETALLE = "productoDetalle";
 	public static final BigDecimal IVA_10 = new BigDecimal(1.1);
+	private static final String DATE_FORMAT = "dd/MM/yyyy-HH:mm:ss";
 
 	@Autowired
 	private VentaCabeceraListController productoList;
@@ -88,7 +104,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 	}
 	
 	@RequestMapping("pay")
-	public String index(ModelMap map,HttpSession session) {
+	public String indexPay(ModelMap map,HttpSession session) {
 		
 		map.addAttribute(getNombreObjeto(), getNuevaInstancia());
 		agregarValoresAdicionales(map);
@@ -102,7 +118,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 	@RequestMapping(value = "agregar-detalle", method = RequestMethod.POST)
 	public String addProducto(ModelMap map,
 			@RequestParam(required = true, value="id_producto") Long idProducto, 
-			@RequestParam(required = true, value="cantidad") BigDecimal cantidad, HttpSession session) {
+			@RequestParam(required = true, value="cantidad") BigDecimal cantidad, HttpSession session) throws AjaxException {
 		
 		List<Producto> listProducto = null;
 		VentaCabecera ventaCab = null;
@@ -161,6 +177,19 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		ventaDet.setPrecioUnitario(producto.getPrecioVenta());
 		ventaDet.setProducto(producto);
 		ventaDet.setVentaCabecera(ventaCab);
+		
+		//producto para disminuir el stok
+		Producto productoDisminuir = null;
+		int resta = 0;
+		//disminuimos la cantidad del producto en stock
+		productoDisminuir = producto;
+		resta = productoDisminuir.getCantidad() - ventaDet.getCantidad().intValue();
+		if(resta<0){
+			throw new AjaxException("La cantidad a vender es mayor al stock de la base de datos");
+		}
+		productoDisminuir.setCantidad(resta);
+		productoDao.createOrUpdate(productoDisminuir);
+		
 		//listDetalle.add(ventaDet);
 		Map<String, VentaDetalle> mapaVentaDetalle = GeneralUtils.mapSerializeVentaDetalleOrUpdate(session,ventaDet);
 		session.setAttribute(MAP_DETALLE,mapaVentaDetalle);
@@ -194,6 +223,15 @@ public class VentaFormController extends FormController<VentaCabecera> {
 			mapVentaDetail = (Map<String, VentaDetalle>) session.getAttribute(MAP_DETALLE);
 			ventaDet = mapVentaDetail.get(uuid);
 			ventaCab.setMontoTotal(ventaCab.getMontoTotal().subtract(ventaDet.getPrecioTotal()));
+			
+			//producto para disminuir el stok
+			Producto productoDisminuir = null;
+			int suma = 0;
+			//sumamos la cantidad del producto en stock, ya que se elimino del detalle
+			productoDisminuir = ventaDet.getProducto();
+			suma = productoDisminuir.getCantidad() + ventaDet.getCantidad().intValue();
+			productoDisminuir.setCantidad(suma);
+			productoDao.createOrUpdate(productoDisminuir);
 			
 			//calculo de subTotal
 			BigDecimal subTotal;
@@ -237,16 +275,74 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		ventaCabecera.setEstado(Estado.CONFIRMADO.name());
 		ventaCabeceraDao.create(ventaCabecera);
 		
+		String nroComprobante = GeneralUtils.formatoComprobante(ventaCabecera.getId());
+		ventaCabecera.setNroComprobante(nroComprobante);
+		ventaCabeceraDao.createOrUpdate(ventaCabecera);
+		
+		
 		for (VentaDetalle vd : mapaVentaDetalle.values()) {
 			vd.setVentaCabecera(ventaCabecera);
 			ventaDetalleDao.create(vd);
 		}
-		return "";
+		
+		
+		map.addAttribute("msgExitoVenta", true);
+		map.addAttribute("ventaCabeceraId", ventaCabecera.getIdVenta());
+		session.setAttribute("ventaCabeceraId", ventaCabecera.getIdVenta());
+		return indexPay(map, session);
 
 	}
 	
+	@RequestMapping(value = "comprobante", method = RequestMethod.POST)
+	public void comprobanteVenta(ModelMap map,HttpSession session,HttpServletRequest request,HttpServletResponse response,
+			@RequestParam(required = true, value="id_venta_cabecera") Long idVentaCabecera) {
+		String FOLDER = request.getSession().getServletContext().getRealPath("/reportes/");
+		InputStream jasperStream = null;
+		Map<String, Object> params = new HashMap<>();
+		List<VentaDetalle> listdetalle = ventaDetalleDao.getListDetalle(idVentaCabecera);
+		VentaCabecera ventaCabecera = ventaCabeceraDao.find(idVentaCabecera);
+		
+		params.put("LISTA_DETALLE", listdetalle);
+		params.put("nombreCliente", ventaCabecera.getCliente().getNombre()+", "+ventaCabecera.getCliente().getApellido());
+		params.put("TOTAL_A_PAGAR", ventaCabecera.getMontoTotal());
+		params.put("RUC", ventaCabecera.getCliente().getRuc());
+		params.put("nroVenta", ventaCabecera.getNroComprobante());
+		Date d = new Date();
+		String fechaActual = GeneralUtils.getStringFromDate(d,DATE_FORMAT);
+		params.put("fechaSys", fechaActual);
+		try {
+			jasperStream = new FileInputStream(FOLDER + "/comprobante_venta.jasper");
+		
+		if (jasperStream != null) {
+			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, new JREmptyDataSource());
+
+			byte[] pdfReport = JasperExportManager.exportReportToPdf(jasperPrint);
+			response.setContentType("application/x-pdf");
+			response.setHeader("Content-disposition", "attachment; filename=venta_detalle.pdf");
+			response.reset();
+			response.setContentType("application/pdf");
+			response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+			response.setHeader("Pragma", "private");
+			response.setContentLength(pdfReport.length);
+			response.getOutputStream().write(pdfReport);
+			response.getOutputStream().flush();
+			//response.getOutputStream().close();
+		}
+		
+		} catch (JRException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
 	
-	
+	@RequestMapping(value = "comprobante", method = RequestMethod.GET)
+	public void comprobanteVentaGET(ModelMap map,HttpSession session,HttpServletRequest request,HttpServletResponse response,
+			@RequestParam(required = true, value="id_venta") Long idVentaCabecera) {
+		comprobanteVenta(map, session, request, response, idVentaCabecera);
+	}
 	
 	
 	@Override

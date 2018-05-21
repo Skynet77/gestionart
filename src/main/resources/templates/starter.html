@@ -166,8 +166,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="starter
 						<ul class="treeview-menu">
 							<li><a th:href="@{/venta/pay}"><i
 									class="fa fa-files-o" style="color: blue"></i>Realizar Venta</a></li>
-							<li><a th:href="@{/ingreso_egreso}"><i
-									class="fa fa-calculator" style="color: blue"></i>Consultar Venta</a></li>
+							<li><a th:href="@{/venta}"><i
+									class="fa fa-calculator" style="color: blue"></i>Consultar Ventas</a></li>
 						</ul></li>
 
 					<!-- Menú de Compra  -->
@@ -208,6 +208,12 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="starter
 						role="alert" id="alerta2" style="display: none; color: black;">
 						<button type="button" class="close" data-dismiss="alert">x</button>
 						<strong th:text="#{${err.defaultMessage}}">Well done!</strong>
+					</div>
+					
+					<div class="alert alert-danger alert-dismissable alinear errorEach2 col-sm-5"
+						role="alert" id="alerta3" style="display: none; color: black;">
+						<button type="button" class="close" data-dismiss="alert">x</button>
+						<strong id="errorMensaje"></strong>
 					</div>
 
 					<script th:inline="javascript">

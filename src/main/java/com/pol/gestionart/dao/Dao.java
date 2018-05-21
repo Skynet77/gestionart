@@ -39,4 +39,6 @@ public interface Dao<T> {
 
 	List<T> findEntities(boolean all, int maxResults, int firstResult, String name);
 
+
+
 }

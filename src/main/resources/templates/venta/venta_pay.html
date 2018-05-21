@@ -96,6 +96,9 @@
 				</div>
 				<!-- /.row -->
 			</div>
+			<div class="alert alert-danger col-md-10 col-md-offset-1 hidden" id="errorDiv">
+			  <strong id="msgError"></strong>
+			</div>
 			<!-- /.box-body -->
 			<div class="modal-footer">
 				<button type="button" class="btn btn-success" onclick="agregarDetalle()">
@@ -182,11 +185,12 @@
 								<!-- /.input group -->
 							</div>
 						</div>
-						
-						
-						</div>
-						<div class="modal-footer">
-							<button type="submit" class="btn btn-primary">
+					</div>
+					<div class="alert alert-danger col-md-10 col-md-offset-1 hidden" id="errorDivC">
+					  <strong id="msgErrorC"></strong>
+					</div>
+						<div class="modal-footer" style="border: none;">
+							<button type="button" class="btn btn-primary" id="confirmarVenta" disabled >
 								<span class="glyphicon glyphicon-ok"></span> Confirmar
 							</button>
 						</div>
@@ -227,15 +231,51 @@
           </div>
           <!-- /.box -->
         </div>
+<!-- Modal de confirmación de venta	 -->
+	<div class="modal fade" id="modal-default">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Esta Seguro?</h4>
+            </div>
+            <form th:action="@{/venta/comprobante}" method="post" role="form" id="form-comprobante">
+            <input type="hidden" name="comprobanteVenta" id="comprobanteVenta">
+            <div class="modal-body">
+              <p><b>Venta Realizada con Éxito!!</b></p>
+              <input type="hidden" th:value="${ventaCabeceraId}" name="id_venta_cabecera">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Realizar Otra Venta</button>
+              <button type="submit" class="btn btn-primary" name="accion" value="comprobante">Imprimir Comprobante</button>
+            </div>
+            </form>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
 
-
-	<script type="text/javascript">
+	<script th:inline="javascript">
+					/*<![CDATA[*/
 		$(document).ready(
 				function() {
+
+					var idVenta = '[[${ventaCabeceraId}]]';
+					$("#id_venta_cabecera").val(idVenta);
+					if(/*[[${msgExitoVenta}]]*/){
+						$("#modal-default").modal('show');
+					}
+					
+					$("#confirmarVenta").on("click",function(){
+						confirmarVenta();
+					})
 					suggestProducto = crearMagicSuggest('magicsuggest',
-							"[[@{/producto/suggest}]]", 'id', 'descripcion');
+							[[@{/producto/suggest}]], 'id', 'descripcion');
 					suggestCliente = crearMagicSuggest('magicsuggestCliente',
-							"[[@{/cliente/suggest}]]", 'id', 'nombre');
+							[[@{/cliente/suggest}]], 'id', 'nombre');
 					
 					$(suggestCliente).on('selectionchange', function(a,b,c){
 						var cliente = c[0];
@@ -289,13 +329,22 @@
 		
 		
 		function agregarDetalle(){
-			var idProduto = $("#id").val();
+			var idProducto = $("#id").val();
 			var cantidad = $("#cantidad").val();
+			
+			if(idProducto == "" || cantidad=="" ){
+				$("#msgError").html("Debe seleccionar un producto!!");
+				$("#errorDiv").removeClass("hidden");
+			}else{
+				$("#errorDiv").addClass("hidden");
+				$("#confirmarVenta").removeAttr("disabled");
+			}
+			
 			$.ajax({
 		        type: "POST",
 		        url: "/gestionart/venta/agregar-detalle",
 		        data: { 
-		        	id_producto: idProduto,
+		        	id_producto: idProducto,
 		        	cantidad: cantidad
 		        }
 		    }).done(function(data){
@@ -318,12 +367,13 @@
 				$("#alerta").fadeOut(2000);
 		        
 		    }).fail(function (request, status, error) {
-	   	        var errorData = request.responseJSON;
+		        var errorData = request.responseJSON;
+		        ajaxErrorHandler(errorData, status, request.status, "alert-error","msgTitleError","msgDescripcionError");
 		    });
 		}
 		
 		function removerDetalle(idProducto){
-			
+			$("#confirmarVenta").attr("disabled", "true");
 			$.ajax({
 		        type: "POST",
 		        url: "/gestionart/venta/eliminar-detalle",
@@ -342,6 +392,18 @@
 		    }).fail(function (request, status, error) {
 	   	        var errorData = request.responseJSON;
 		    });
+		}
+		
+		function confirmarVenta(){
+			var idCliente = $("#cliente").val();
+			
+			if(idCliente==""){
+				$("#msgErrorC").html("Debe seleccionar un cliente!!");
+				$("#errorDivC").removeClass("hidden");
+			}else{
+				$("#errorDivC").addClass("hidden");
+				$("#form-cabecera").submit();
+			}
 		}
 	</script>
 </div>

@@ -1,8 +1,10 @@
 package com.pol.gestionart.dao;
 
-import com.pol.gestionart.entity.VentaCabecera;
+import java.util.List;
+
 import com.pol.gestionart.entity.VentaDetalle;
 
 public interface VentaDetalleDao extends Dao<VentaDetalle>{
+	List<VentaDetalle> getListDetalle(Long idCabeceraDetalle);
 
 }
