@@ -1,6 +1,7 @@
 var suggestProducto = null;
 var suggestCliente = null;
-
+var LONG_MAX_DECIMALES_MONTO=2;
+var LONG_MAX_DECIMALES_MONTO_COTIZACION=4;
 
 function crearDataTable(dataTableId, ajaxSource, columnas, editUrl){
 			console.log("creando DT:", dataTableId, ajaxSource, columnas, editUrl)
@@ -370,4 +371,122 @@ function ajaxErrorHandler(errorData, status, error, idError, idTitleError, idDes
     $("#errorMensaje").html(errorData.message);
 	$("#alerta3").fadeIn(8000);
 	$("#alerta3").fadeOut(2000);
+}
+
+
+
+
+
+/*
+ * FORMATEADOR DE ENTEROS Y DECIMALES DE ACUERDO A LA MONEDA
+ * Para utilizar esta función, el jsp debe tener un input hidden con el
+ * id="codigo-moneda-local" value="{bean.moneda.codigo}"
+ * y el input a formatear debe tener una clase llamada importe
+ */
+function formatInput(){
+	$('.importe').on("input", function (e) {
+		var num = $(this).val();
+		
+
+		
+		var codMoneda=$("#codigo-moneda-local").val();
+		codMoneda = $.trim(codMoneda);
+		var moneda=getMonedaDetails(codMoneda);
+		var inputPattern=moneda.inputPattern;
+		var formatPattern=moneda.formatPattern;
+		var numCleaned=num.replace(inputPattern, "");
+		if(codMoneda==="GS"){
+			var numFormated=formatMontoDecimal(numCleaned);
+		}else{
+			var numFormated=formatMontoDecimalCotizacion(numCleaned);
+		}
+	    $(this).val(numFormated);
+	});
+}
+
+
+function getMonedaDetails(codMoneda){
+	var moneda= new Object();
+	switch (codMoneda) {
+	case 'GS':
+		moneda.descripcion='Guaraníes';
+		moneda.formato="0,0";
+		moneda.formatPattern=/\D/g;
+		moneda.inputPattern=/\D/g;
+		break;
+	case 'USD':
+		moneda.descripcion='Dólares';
+		moneda.formato="0,0.00";
+		moneda.formatPattern=/^[0-9]+([,][0-9]+)?$/g;
+		moneda.inputPattern=/[^0-9,]/g;
+		break;
+	case 'EUR':
+		moneda.descripcion='Euros';
+		moneda.formato="0,0.00";
+		moneda.formatPattern=/^[0-9]+([,][0-9]+)?$/g;
+		moneda.inputPattern=/[^0-9,]/g;
+		break;
+	case 'BRL':
+		moneda.descripcion='REALES';
+		moneda.formato="0,0.00";
+		moneda.formatPattern=/^[0-9]+([,][0-9]+)?$/g;
+		moneda.inputPattern=/[^0-9,]/g;
+		break;
+	case 'ARS':
+		moneda.descripcion='PESO ARGENTINO';
+		moneda.formato="0,0.00";
+		moneda.formatPattern=/^[0-9]+([,][0-9]+)?$/g;
+		moneda.inputPattern=/[^0-9,]/g;
+		break;
+	default:
+		moneda.descripcion='Moneda no registrada';
+		moneda.formato="0,0.00";
+		moneda.formatPattern=/^[0-9]+([,][0-9]+)?$/g;
+		moneda.inputPattern=/[^0-9,]/g;
+		break;
+	}
+	return moneda;
+}
+
+function format(input)
+{
+	var num = input.replace(/\./g,'');
+	if(!isNaN(num)){
+		num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
+		num = num.split('').reverse().join('').replace(/^[\.]/,'');
+		input = num;
+	}else{ 		
+		input = "-1";
+	}
+	return input;
+}
+
+function formatMontoDecimal(num){
+	num = num.toString();
+	var separador=num.split(".");
+	var decimal;
+	var entero;
+	if(separador.length>2){
+		entero=separador[0];
+		decimal=separador[1];
+		entero=format(entero);
+		num=entero+","+decimal;
+	}else if(separador.length===2){
+		entero=separador[0];
+		decimal=separador[1];
+		if(decimal.length>0 && decimal.length<=LONG_MAX_DECIMALES_MONTO){
+			entero=format(entero);
+			num=entero+","+decimal;
+		}else if(decimal.length>LONG_MAX_DECIMALES_MONTO){
+			decimal=decimal.slice(0,-1);
+			entero=format(entero);
+			num=entero+","+decimal;
+		}if(decimal.length===0){
+			num=format(entero);
+			num=num+",";
+		}	
+	}else{
+		num=format(num);
+	}
+	return num;
 }

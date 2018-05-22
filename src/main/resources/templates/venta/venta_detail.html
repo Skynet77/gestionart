@@ -13,8 +13,8 @@
 					<td th:text="${ventaDetalle.producto.codigo} ">183</td>
 					<td th:text="${ventaDetalle.producto.descripcion}">Cocal Cola de ejemplo</td>
 					<td th:text="${ventaDetalle.cantidad}">2</td>
-					<td th:text="${ventaDetalle.producto.precioVenta}">5.000</td>
-					<td th:text="${ventaDetalle.precioTotal}">10.000</td>
+					<td th:text="${@generalUtils.formatMontoMonedaToString(ventaDetalle.producto.precioVenta, 'GS','S')}">5.000</td>
+					<td th:text="${@generalUtils.formatMontoMonedaToString(ventaDetalle.precioTotal, 'GS','S')}">10.000</td>
 					<td><button type="button" class="btn btn-danger"
 							th:onclick="'removerDetalle(\'' + ${mapDetail.key} + '\');'">
 							<span class="glyphicon glyphicon-remove"></span>
@@ -26,8 +26,8 @@
 				  var total = [[${ventaCabecera.montoTotal}]];
 				  var subTotal = [[${ventaCabecera.subTotal}]];
 				  var cantStock = [[${cantProducto}]];
-				$("#montoTotal").val(total);
-				$("#subTotal").val(subTotal);
+				$("#montoTotal").val(formatMontoDecimal(total));
+				$("#subTotal").val(formatMontoDecimal(subTotal));
 				$("#stockActual").val(cantStock);
 		/*]]>*/
 		</script>
