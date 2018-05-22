@@ -11,10 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 
 import com.pol.gestionart.main.GenericEntity;
 
@@ -22,17 +20,17 @@ import com.pol.gestionart.main.GenericEntity;
 @Entity
 @Table//(uniqueConstraints = { @UniqueConstraint(name = "ventaCabecera_id_uk", columnNames = { "venta_cab_id" }) })
 public class VentaCabecera extends GenericEntity{
-	
+
 	private static final String SECUENCIA = "ventaCab_id_seq";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SECUENCIA)
 	@SequenceGenerator(name = SECUENCIA, sequenceName = SECUENCIA)
 	private Long idVenta;
-	
+
 	//@NotNull
 	private String nroComprobante;
-	
+
 	@ManyToOne
 	//@NotNull(message = "ventaCabecera.cliente.notNull")
 	@JoinColumn(foreignKey = @ForeignKey(name = "ventaCabecera_cliente_fk"))
@@ -48,11 +46,11 @@ public class VentaCabecera extends GenericEntity{
 
 	@NotNull
 	private BigDecimal subTotal;
-	
-	
+
+
 	//@NotNull
 	private BigDecimal iva;
-	
+
 	private String estado;
 
 	public VentaCabecera(Long idVenta, @NotNull String nroComprobante, @NotNull String ruc,
@@ -126,6 +124,9 @@ public class VentaCabecera extends GenericEntity{
 
 
 	public void setMontoTotal(BigDecimal montoTotal) {
+		/*String monto = montoTotal.toPlainString().replace(".", ""); //primero reemplazamos todos puntos por nada, por vacio
+		monto = monto.replace(",", ".");//segundo reemplazamos todas las comas por puntos
+		this.montoTotal = new BigDecimal(monto);*/
 		this.montoTotal = montoTotal;
 	}
 
@@ -136,6 +137,9 @@ public class VentaCabecera extends GenericEntity{
 
 
 	public void setSubTotal(BigDecimal subTotal) {
+		/*String monto = subTotal.toPlainString().replace(".", ""); //primero reemplazamos todos puntos por nada, por vacio
+		monto = monto.replace(",", ".");//segundo reemplazamos todas las comas por puntos
+		this.subTotal = new BigDecimal(monto);*/
 		this.subTotal = subTotal;
 	}
 
@@ -168,7 +172,7 @@ public class VentaCabecera extends GenericEntity{
 	@Override
 	public void setId(Long id) {
 		this.idVenta = id;
-		
+
 	}
 
 	@Override
@@ -179,4 +183,3 @@ public class VentaCabecera extends GenericEntity{
 	}
 
 }
-	

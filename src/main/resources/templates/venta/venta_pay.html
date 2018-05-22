@@ -301,7 +301,8 @@
 							var producto = c[0];
 							$("#codigo").val(producto.codigo);
 							$("#nombre").val(producto.descripcion);
-							$("#precioVenta").val(formatMontoDecimal(producto.precioVenta.toString()));
+// 							$("#precioVenta").val(formatMontoDecimal(producto.precioVenta.toString()));
+							$("#precioVenta").val(producto.precioVenta);
 							$("#cantidad").val(1);
 							$("#stockActual").val(producto.cantidad);
 							$("#id").val(producto.id);
