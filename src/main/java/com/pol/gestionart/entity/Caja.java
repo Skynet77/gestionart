@@ -129,6 +129,11 @@ public class Caja extends GenericEntity{
 		return SECUENCIA;
 	}
 
+	@Override
+	public String toString() {
+		return "Caja [id=" + id + ", fecha=" + fecha + ", descripcion=" + descripcion + ", entrada=" + entrada
+				+ ", salida=" + salida + ", saldo_actual=" + saldo_actual + ", usuario=" + usuario + "]";
+	}
 
-	
+
 }
