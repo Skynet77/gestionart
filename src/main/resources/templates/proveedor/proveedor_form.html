@@ -11,46 +11,63 @@
 		role="form" id="form-usuario">
 				<input type="hidden" th:field="*{id}" />
 				<div class="box-body">
-					<div class="form-group">
-						<label for="inputNombre">Nombre o razón social:</label> 
-						<input th:field="*{nombre}" type="text" class="form-control" id="nombre" maxlength="30" onkeypress="return soloLetras(event);" onKeyUp="this.value = this.value.toUpperCase();"
-							placeholder="Ingrese Proveedor"
-							data-validation="required"
-							data-validation-error-msg-required="Debe ingresar nombre de proveedor">
+					<div class="col-lg-6">
+						<div class="form-group">
+							<label for="inputNombre">Nombre o razón social:</label> 
+							<input th:field="*{nombre}" type="text" class="form-control" id="nombre" maxlength="30" onkeypress="return soloLetras(event);" onKeyUp="this.value = this.value.toUpperCase();"
+								placeholder="Ingrese Proveedor"
+								data-validation="required"
+								data-validation-error-msg-required="Debe ingresar nombre de proveedor">
+						</div>
 					</div>
-					<div class="form-group">
-						<label for="exampleInputFile">R.U.C.:</label>
-						<input th:field="*{ruc}" type="text" class="form-control" id="ruc" pattern="[0-9_-]{6,20}" title="Por ejemplo CI 123456 y/o RUC 789456-1"
-							placeholder="Ingrese su RUC"
-							data-validation="required"
-							data-validation-error-msg-required="Debe ingresar RUC del proveedor">
+					
+					<div class="col-lg-6">
+						<div class="form-group">
+							<label for="exampleInputFile">R.U.C.:</label>
+							<input th:field="*{ruc}" type="text" class="form-control" id="ruc" pattern="[0-9_-]{6,20}" title="Por ejemplo CI 123456 y/o RUC 789456-1"
+								placeholder="Ingrese su RUC"
+								data-validation="required"
+								data-validation-error-msg-required="Debe ingresar RUC del proveedor">
+						</div>
 					</div>
-					<div class="form-group">
-						<label for="inputNombre">Nombre de contacto:</label> 
-						<input th:field="*{nombre_contacto}" type="text" class="form-control" id="nombre_contacto" maxlength="30" onkeypress="return soloLetras(event);" onKeyUp="this.value = this.value.toUpperCase();"
-							placeholder="Ingrese nombre y apellido"
-							data-validation="required"
-							data-validation-error-msg-required="Debe ingresar nombre de contacto a proveedor">
+					
+					<div class="col-lg-6">
+						<div class="form-group">
+							<label for="inputNombre">Nombre de contacto:</label> 
+							<input th:field="*{nombre_contacto}" type="text" class="form-control" id="nombre_contacto" maxlength="30" onkeypress="return soloLetras(event);" onKeyUp="this.value = this.value.toUpperCase();"
+								placeholder="Ingrese nombre y apellido"
+								data-validation="required"
+								data-validation-error-msg-required="Debe ingresar nombre de contacto a proveedor">
+						</div>
 					</div>
-					<div class="form-group reg-number">
-						<label for="exampleInputFile">Teléfono / Cel.:</label>
-						<input th:field="*{nroTelefono}" type="text" class="form-control" id="telefono"
-							placeholder="Ingrese telefono o cel">
+					
+					<div class="col-lg-6">
+						<div class="form-group reg-number">
+							<label for="exampleInputFile">Teléfono / Cel.:</label>
+							<input th:field="*{nroTelefono}" type="text" class="form-control" id="telefono"
+								placeholder="Ingrese telefono o cel">
 							
+						</div>
 					</div>
-					<div class="form-group">
-						<label for="exampleInputFile">Email:</label>
-						<input th:field="*{correoElectronico}" type="email" class="form-control" id="correoElectronico"
+					
+					<div class="col-lg-6">
+						<div class="form-group">
+							<label for="exampleInputFile">Email:</label>
+							<input th:field="*{correoElectronico}" type="email" class="form-control" id="correoElectronico"
 							placeholder="correo@hotmail.com">
-
+						</div>
 					</div>
-					<div class="form-group reg-charac-number">
-						<label for="exampleInputFile">Dirección:</label>
-						<input th:field="*{direccion}" type="text" class="form-control" id="direccion" onKeyUp="this.value = this.value.toUpperCase();"
-							placeholder="Ingrese dirección"
-							data-validation="required"
-							data-validation-error-msg-required="Debe ingresar dirección del proveedor">
-					</div>		
+					
+					<div class="col-lg-6">	
+						<div class="form-group reg-charac-number">
+							<label for="exampleInputFile">Dirección:</label>
+							<input th:field="*{direccion}" type="text" class="form-control" id="direccion" onKeyUp="this.value = this.value.toUpperCase();"
+								placeholder="Ingrese dirección"
+								data-validation="required"
+								data-validation-error-msg-required="Debe ingresar dirección del proveedor">
+						</div>
+					</div>
+								
 					<div class="form-group">
 	                  <div class="col-sm-offset-2 col-sm-10">
 	                    <div class="checkbox">

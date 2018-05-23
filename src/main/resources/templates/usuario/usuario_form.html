@@ -10,33 +10,44 @@
 			 <form th:action="@{/usuario/accion}" th:object="${usuario}" method="post" 
     role="form" id="form-usuario"> 
     <input type="hidden" th:field="*{id}" />
-        <div class="box-body"> 
-          <div class="form-group reg-charac-number"> 
-            <label for="inputNombre">Nombre o razón social:</label>  
-            <input th:field="*{nombreRazonSocial}" type="text" class="form-control" id="nombreRazonSocial" onKeyUp="this.value = this.value.toUpperCase();"
-              placeholder="Ingrese Nombre"
-			  data-validation="required"
-			  data-validation-error-msg-required="Debe ingresar el nombre del usuario">
-          </div> 
-          <div class="form-group reg-charac-number"> 
-            <label for="exampleInputFile">Apellido:</label> 
-            <input th:field="*{apellido}" type="text" class="form-control" id="apellido" onKeyUp="this.value = this.value.toUpperCase();"
-              placeholder="Ingrese apellido"> 
-          </div> 
-          <div class="form-group reg-charac-number"> 
-            <label >R.U.C./ C.I.:</label> 
-            <input th:field="*{cedulaRuc}" type="text" class="form-control" id="cedulaRuc" 
-              placeholder="Ingrese su RUC o CI"							
-              data-validation="required"
-              data-validation-error-msg-required="Debe ingresar su CI o RUC">
-          </div> 
-          <div class="form-group reg-charac-number"> 
-            <label for="exampleInputFile">Password:</label> 
-            <input th:field="*{password}" type="text" class="form-control" id="password" 
-              placeholder="Ingrese password"							
-              data-validation="required"
-              data-validation-error-msg-required="Debe ingresar nueva contraseña">
-          </div> 
+        <div class="box-body">
+			<div class="col-lg-6"> 
+          		<div class="form-group reg-charac-number"> 
+            		<label for="inputNombre">Nombre:</label>  
+            		<input th:field="*{nombreRazonSocial}" type="text" class="form-control" id="nombreRazonSocial" onKeyUp="this.value = this.value.toUpperCase();"
+             		 	placeholder="Ingrese Nombre"
+			  			data-validation="required"
+			  			data-validation-error-msg-required="Debe ingresar el nombre del usuario">
+          		</div> 
+          	</div>
+          	
+          	<div class="col-lg-6"> 
+          		<div class="form-group reg-charac-number"> 
+            		<label for="exampleInputFile">Apellido:</label> 
+            		<input th:field="*{apellido}" type="text" class="form-control" id="apellido" onKeyUp="this.value = this.value.toUpperCase();"
+             			placeholder="Ingrese apellido"> 
+          		</div> 
+          	</div>
+          		
+          	<div class="col-lg-6">	
+          		<div class="form-group reg-charac-number"> 
+            		<label >R.U.C./ C.I.:</label> 
+            		<input th:field="*{cedulaRuc}" type="text" class="form-control" id="cedulaRuc" 
+              			placeholder="Ingrese su RUC o CI"							
+              			data-validation="required"
+              			data-validation-error-msg-required="Debe ingresar su CI o RUC">
+          		</div> 
+          	</div>
+          		
+          	<div class="col-lg-6">
+          		<div class="form-group reg-charac-number"> 
+            		<label for="exampleInputFile">Password:</label> 
+            		<input th:field="*{password}" type="text" class="form-control" id="password" 
+              			placeholder="Ingrese password"							
+              			data-validation="required"
+              			data-validation-error-msg-required="Debe ingresar nueva contraseña">
+          		</div> 
+          	</div>
  		<div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
             <div class="checkbox">

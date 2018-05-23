@@ -19,7 +19,7 @@ public class UsuarioListController extends ListController<Usuario> {
 
 	@Override
 	public String[] getColumnas() {
-		return new String[] { "id", "nombreRazonSocial", "cedulaRuc", "apellido","estado" };
+		return new String[] { "id","cedulaRuc", "nombreRazonSocial", "apellido","estado" };
 	}
 
 	@Override
