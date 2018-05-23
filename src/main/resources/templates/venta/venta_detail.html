@@ -26,10 +26,12 @@
 				  var total = [[${ventaCabecera.montoTotal}]];
 				  var subTotal = [[${ventaCabecera.subTotal}]];
 				  var cantStock = [[${cantProducto}]];
-			/*	$("#montoTotal").val(formatMontoDecimal(total));
-				$("#subTotal").val(formatMontoDecimal(subTotal));*/
-				$("#montoTotal").val(total);
-				$("#subTotal").val(subTotal);
+				$("#montoTotal").val(formatMontoDecimal(total));
+// 				$("#montoTotal").val(total);
+				$("#subTotal").val(formatMontoDecimal(subTotal));
+// 				$("#subTotal").val(subTotal);
+// 				$("#montoTotal").val(total);
+// 				$("#subTotal").val(subTotal);
 				$("#stockActual").val(cantStock);
 		/*]]>*/
 		</script>

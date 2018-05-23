@@ -123,11 +123,24 @@ public class VentaCabecera extends GenericEntity{
 	}
 
 
-	public void setMontoTotal(BigDecimal montoTotal) {
-		/*String monto = montoTotal.toPlainString().replace(".", ""); //primero reemplazamos todos puntos por nada, por vacio
-		monto = monto.replace(",", ".");//segundo reemplazamos todas las comas por puntos
-		this.montoTotal = new BigDecimal(monto);*/
-		this.montoTotal = montoTotal;
+	public void setMontoTotal(String montoTotal) {
+		if( montoTotal.contains(".")){
+			String monto = montoTotal.replace(".", ""); //primero reemplazamos todos puntos por nada, por vacio
+			//monto = monto.replace(",", ".");//segundo reemplazamos todas las comas por puntos
+			this.montoTotal = new BigDecimal(monto);
+		}else{
+			this.montoTotal = new BigDecimal(montoTotal);
+		}
+		
+//		this.montoTotal = montoTotal;
+	}
+	
+	public void setMontoTotalBigDecimal(BigDecimal montoTotal) {
+		
+			this.montoTotal = montoTotal;
+		
+		
+//		this.montoTotal = montoTotal;
 	}
 
 
@@ -136,11 +149,24 @@ public class VentaCabecera extends GenericEntity{
 	}
 
 
-	public void setSubTotal(BigDecimal subTotal) {
-		/*String monto = subTotal.toPlainString().replace(".", ""); //primero reemplazamos todos puntos por nada, por vacio
-		monto = monto.replace(",", ".");//segundo reemplazamos todas las comas por puntos
-		this.subTotal = new BigDecimal(monto);*/
-		this.subTotal = subTotal;
+	public void setSubTotal(String subTotal) {
+		if(subTotal.contains(".")){
+			String monto = subTotal.replace(".", ""); //primero reemplazamos todos puntos por nada, por vacio
+			monto = monto.replace(",", ".");//segundo reemplazamos todas las comas por puntos
+			this.subTotal = new BigDecimal(monto);
+		}else{
+			this.subTotal = new BigDecimal(subTotal);
+		}
+		
+//		this.subTotal = subTotal;
+	}
+	
+	public void setSubTotalBigDecimal(BigDecimal subTotal) {
+		
+			this.subTotal = subTotal;
+		
+		
+//		this.subTotal = subTotal;
 	}
 
 

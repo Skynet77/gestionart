@@ -156,7 +156,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 			//sumamos el monto total que teniamos por 
 			montoTotal = montoTotal.add(montoVenta);
 			//volvemos a guardar el monto total
-			ventaCab.setMontoTotal(montoTotal);
+			ventaCab.setMontoTotalBigDecimal(montoTotal);
 			
 			
 			//calculo de subTotal
@@ -168,7 +168,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 				subTotal = new BigDecimal(0);
 			}
 			subTotal = ventaCab.getMontoTotal().divide(IVA_10,2,BigDecimal.ROUND_HALF_UP);
-			ventaCab.setSubTotal(subTotal);
+			ventaCab.setSubTotalBigDecimal(subTotal);
 			IVA = subTotal.multiply(new BigDecimal(0.1));
 			ventaCab.setIva(IVA);
 			
@@ -225,7 +225,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		if(uuid!=null){
 			mapVentaDetail = (Map<String, VentaDetalle>) session.getAttribute(MAP_DETALLE);
 			ventaDet = mapVentaDetail.get(uuid);
-			ventaCab.setMontoTotal(ventaCab.getMontoTotal().subtract(ventaDet.getPrecioTotal()));
+			ventaCab.setMontoTotalBigDecimal(ventaCab.getMontoTotal().subtract(ventaDet.getPrecioTotal()));
 			
 			//producto para disminuir el stok
 			Producto productoDisminuir = null;
@@ -239,7 +239,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 			BigDecimal subTotal;
 			BigDecimal IVA;
 			subTotal = ventaCab.getMontoTotal().divide(IVA_10,2,BigDecimal.ROUND_HALF_UP);
-			ventaCab.setSubTotal(subTotal);
+			ventaCab.setSubTotalBigDecimal(subTotal);
 			IVA = subTotal.multiply(new BigDecimal(0.1));
 			ventaCab.setIva(IVA);
 			
