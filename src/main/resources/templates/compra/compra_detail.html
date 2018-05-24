@@ -1,0 +1,38 @@
+<html xmlns:th="http://www.thymeleaf.org" th:remove="tag">
+<div id="idTableDetail">
+<table class="table table-hover" id="tabla-detalle">
+                <tbody><tr>
+                  <th>Código</th>
+                  <th>Nombre</th>
+                  <th>Cant.</th>
+                  <th>Precio Unit.</th>
+                  <th>Precio Total</th>
+                  <th>Acción</th>
+                </tr>
+                <tr th:each="mapDetail : ${mapDetalleCompra}"  th:with="compraDetalle=${mapDetail.value}" th:id="${mapDetail.key}">
+					<td th:text="${compraDetalle.producto.codigo} ">183</td>
+					<td th:text="${compraDetalle.producto.descripcion}">Cocal Cola de ejemplo</td>
+					<td th:text="${compraDetalle.cantidad}">2</td>
+					<td th:text="${@generalUtils.formatMontoMonedaToString(compraDetalle.producto.precioVenta, 'GS','S')}">5.000</td>
+					<td th:text="${@generalUtils.formatMontoMonedaToString(compraDetalle.precioTotal, 'GS','S')}">10.000</td>
+					<td><button type="button" class="btn btn-danger"
+							th:onclick="'removerDetalle(\'' + ${mapDetail.key} + '\');'">
+							<span class="glyphicon glyphicon-remove"></span>
+						</button></td>
+				</tr>
+              </tbody></table>
+		<script th:inline="javascript">
+		/*<![CDATA[*/
+				  var total = [[${compraCabecera.total}]];
+				  var subTotal = [[${compraCabecera.subTotal}]];
+				  var cantStock = [[${cantProducto}]];
+				$("#montoTotal").val(formatMontoDecimal(total));
+// 				$("#montoTotal").val(total);
+				$("#subTotal").val(formatMontoDecimal(subTotal));
+// 				$("#subTotal").val(subTotal);
+// 				$("#montoTotal").val(total);
+// 				$("#subTotal").val(subTotal);
+				$("#stockActual").val(cantStock);
+		/*]]>*/
+		</script>
+</div>

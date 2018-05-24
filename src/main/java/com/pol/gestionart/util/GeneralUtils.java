@@ -15,7 +15,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Component;
 
+import com.pol.gestionart.controller.form.CompraFormController;
 import com.pol.gestionart.controller.form.VentaFormController;
+import com.pol.gestionart.entity.CompraDetalle;
 import com.pol.gestionart.entity.VentaDetalle;
 
 @Component
@@ -85,6 +87,22 @@ public class GeneralUtils {
 			mapSerializeCdas = (Map<String, VentaDetalle>) session.getAttribute(VentaFormController.MAP_DETALLE);
 				String keyMap = UUID.randomUUID().toString();
 				mapSerializeCdas.put(keyMap, ventaDet);
+			return mapSerializeCdas;
+		}
+	}
+	
+	public static Map<String, CompraDetalle> mapSerializeCompraDetalleOrUpdate(HttpSession session, 	
+			CompraDetalle compraDet){
+		Map<String, CompraDetalle> mapSerializeCdas = new HashMap<>();
+		if(session.getAttribute(VentaFormController.MAP_DETALLE) == null){
+				String keyMap = UUID.randomUUID().toString();
+				mapSerializeCdas.put(keyMap, compraDet);
+
+			return mapSerializeCdas;
+		}else{
+			mapSerializeCdas = (Map<String, CompraDetalle>) session.getAttribute(CompraFormController.MAP_DETALLE_COMPRA);
+				String keyMap = UUID.randomUUID().toString();
+				mapSerializeCdas.put(keyMap, compraDet);
 			return mapSerializeCdas;
 		}
 	}

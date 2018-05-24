@@ -56,26 +56,25 @@ public class CompraCabecera extends GenericEntity{
 	private BigDecimal subTotal;
 	
 	@NotNull
+	private BigDecimal total;
+	
+	@NotNull
 	private BigDecimal iva;
 	
-	@Size(max = 10)
-	@NotNull(message = "compraCabecera.estado.notNull")
-	private String estado;
+	private String nroComprobante;
 	
-	/*@OneToMany
-	private List<CompraDetalle> compraDetalle;*/
+	
 
 	public CompraCabecera() {
 		super();
 	}
-	
+
 	public CompraCabecera(Long id, @NotNull(message = "compraCabecera.proveedor.notNull") Proveedor proveedor,
 			@Size(max = 20) @NotNull(message = "compraCabecera.nroFactura.notNull") String nroFactura,
 			@Size(max = 20) @NotNull(message = "compraCabecera.timbrado.notNull") String timbrado,
 			@Size(max = 20) @NotNull(message = "compraCabecera.fechaCompra.notNull") String fechaCompra,
 			@NotNull(message = "compraCabecera.monto.notNull") BigDecimal monto, @NotNull BigDecimal subTotal,
-			@NotNull BigDecimal iva,
-			@Size(max = 10) @NotNull(message = "compraCabecera.estado.notNull") String estado) {
+			@NotNull BigDecimal total, @NotNull BigDecimal iva) {
 		super();
 		this.id = id;
 		this.proveedor = proveedor;
@@ -84,9 +83,32 @@ public class CompraCabecera extends GenericEntity{
 		this.fechaCompra = fechaCompra;
 		this.monto = monto;
 		this.subTotal = subTotal;
+		this.total = total;
 		this.iva = iva;
-		this.estado = estado;
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+
+	public Proveedor getProveedor() {
+		return proveedor;
+	}
+
+
+
+	public void setProveedor(Proveedor proveedor) {
+		this.proveedor = proveedor;
+	}
+
 
 
 	public String getNroFactura() {
@@ -94,10 +116,10 @@ public class CompraCabecera extends GenericEntity{
 	}
 
 
+
 	public void setNroFactura(String nroFactura) {
 		this.nroFactura = nroFactura;
 	}
-
 
 
 
@@ -107,11 +129,9 @@ public class CompraCabecera extends GenericEntity{
 
 
 
-
 	public void setTimbrado(String timbrado) {
 		this.timbrado = timbrado;
 	}
-
 
 
 
@@ -121,11 +141,9 @@ public class CompraCabecera extends GenericEntity{
 
 
 
-
 	public void setFechaCompra(String fechaCompra) {
 		this.fechaCompra = fechaCompra;
 	}
-
 
 
 
@@ -135,53 +153,74 @@ public class CompraCabecera extends GenericEntity{
 
 
 
-
 	public void setMonto(BigDecimal monto) {
 		this.monto = monto;
 	}
+
+
+
+	public BigDecimal getSubTotal() {
+		return subTotal;
+	}
+
+
+
+	public void setSubTotalBigDecimal(BigDecimal subTotal) {
+		this.subTotal = subTotal;
+	}
 	
-
-	public String getEstado() {
-		return estado;
+	public void setSubTotal(String subTotal) {
+		if(subTotal.contains(".")){
+			String monto = subTotal.replace(".", ""); //primero reemplazamos todos puntos por nada, por vacio
+			monto = monto.replace(",", ".");//segundo reemplazamos todas las comas por puntos
+			this.subTotal = new BigDecimal(monto);
+		}else{
+			this.subTotal = new BigDecimal(subTotal);
+		}
 	}
 
 
 
-
-	public void setEstado(String estado) {
-		this.estado = estado;
+	public BigDecimal getTotal() {
+		return total;
 	}
 
 
 
-
-	@Override
-	public Long getId() {
-		return this.id;
+	public void setTotalBigDecimal(BigDecimal total) {
+		this.total = total;
 	}
 
-	@Override
-	public void setId(Long id) {
-		this.id = id;
+	public String getNroComprobante() {
+		return nroComprobante;
+	}
+
+	public void setNroComprobante(String nroComprobante) {
+		this.nroComprobante = nroComprobante;
+	}
+
+	public void setTotal(String montoTotal) {
+		if( montoTotal.contains(".")){
+			String monto = montoTotal.replace(".", ""); //primero reemplazamos todos puntos por nada, por vacio
+			//monto = monto.replace(",", ".");//segundo reemplazamos todas las comas por puntos
+			this.total = new BigDecimal(monto);
+		}else{
+			this.total = new BigDecimal(montoTotal);
+		}
 		
+//		this.montoTotal = montoTotal;
 	}
 
-	/*public List<CompraDetalle> getCompraDetalle() {
-		return compraDetalle;
+
+	public BigDecimal getIva() {
+		return iva;
 	}
 
-	public void setCompraDetalle(List<CompraDetalle> compraDetalle) {
-		this.compraDetalle = compraDetalle;
-	}*/
 
-	@Override
-	public String toString() {
-		return "CompraCabecera [id=" + id + ", proveedor=" + proveedor + ", nroFactura=" + nroFactura + ", timbrado="
-				+ timbrado + ", fechaCompra=" + fechaCompra + ", monto=" + monto + ", subTotal=" + subTotal + ", iva="
-				+ iva + ", estado=" + estado + "]";
+
+	public void setIva(BigDecimal iva) {
+		this.iva = iva;
 	}
-
-	
 	
 	
 
