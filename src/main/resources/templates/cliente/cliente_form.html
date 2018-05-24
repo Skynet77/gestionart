@@ -1,94 +1,102 @@
 <html xmlns:th="http://www.thymeleaf.org" th:fragment="formulario">
 <div class="col-md-6"  th:fragment="form">
-		<!-- general form elements -->
-		<div class="box box-primary">
-			<div class="box-header with-border">
-				<h3 class="box-title" th:text="${tituloFormulario}"></h3>
-			</div>
-			<!-- /.box-header -->
-			<!-- form start -->
-			<form th:action="@{/cliente/accion}" th:object="${cliente}" method="post"
-		role="form" id="form-usuario">
-		<input type="hidden" th:field="*{id}" />
+	<!-- general form elements -->
+	<div class="box box-primary">
+		<div class="box-header with-border">
+			<h3 class="box-title" th:text="${tituloFormulario}"></h3>
+		</div>
+		<!-- /.box-header -->
+		<!-- form start -->
+		<form th:action="@{/cliente/accion}" th:object="${cliente}" method="post"
+			role="form" id="form-usuario">
+			<input type="hidden" th:field="*{id}" />
 				<div class="box-body">
-					<div class="col-lg-6">
-						<div class="form-group">
-							<label for="exampleInputFile">Nombre:</label> 
-							<input th:field="*{nombre}" type="text" class="form-control" id="nombre" maxlength="30" onkeypress="return soloLetras(event);" onKeyUp="this.value = this.value.toUpperCase();"
-								placeholder="Ingrese su/s nombre/s Ej: Luis Alberto"
-								data-validation="required"
-			 					data-validation-error-msg-required="Debe ingresar el nombre del cliente">
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label for="exampleInputFile">Nombre:</label> 
+								<input th:field="*{nombre}" type="text" class="form-control" id="nombre" maxlength="30" onkeypress="return soloLetras(event);" onKeyUp="this.value = this.value.toUpperCase();"
+									placeholder="Ingrese su/s nombre/s Ej: Luis Alberto"
+									data-validation="required"
+				 					data-validation-error-msg-required="Debe ingresar el nombre del cliente">
+							</div>
 						</div>
-					</div>
-					
-					<div class="col-lg-6">
-						<div class="form-group">
-							<label for="exampleInputFile">Apellido:</label> 
-							<input th:field="*{apellido}" type="text" class="form-control" id="apellido" maxlength="30" onkeypress="return soloLetras(event);" onKeyUp="this.value = this.value.toUpperCase();"
-								placeholder="Ingrese su/s apellido/s Ej: Lopez Diaz"
-								data-validation="required"
-								data-validation-error-msg-required="Debe ingresar el apellido del cliente">
-						</div>
-					</div>
-					
-					<div class="col-lg-6">
-						<div class="form-group">
-							<label for="exampleInputFile">R.U.C./ C.I.:</label>
-							<input th:field="*{ruc}" type="text" class="form-control" id="ruc" pattern="[0-9_-]{6,20}" title="Por ejemplo CI 123456 y/o RUC 789456-1"
-								placeholder="Ingrese su RUC o CI"
-								data-validation="required"
-			  					data-validation-error-msg-required="Debe ingresar el RUC/CI del cliente">
-						</div>
-					</div>
-				
-					<div class="col-lg-6">
-						<label for="exampleInputFile">Fecha de nacimiento:</label>
-							<div class="input-group date" >
-								<input  th:field="*{fecha_nacimiento}"  type="text" class="form-control datepicker1">
-					    		<div class="input-group-addon">
-					        		<span class="glyphicon glyphicon-th"></span>
-					    	</div>
-						</div>
-					</div>
-					
-					<div class="col-lg-6 text-left">
-						<div class="form-group">
-							<label for="exampleInputFile">Sexo:</label>
-							<select class="form-control" 
-								th:field="*{sexo}"
-								data-validation="required"
-								data-validation-error-msg-required="Debe seleccionar sexo">
-								<option value="F">Femenino</option>
-								<option value="M">Masculino</option>
-							</select>
-						</div>
-					</div>
-				 
-				 	<div class="col-lg-6">
-						<div class="form-group reg-number">
-							<label for="exampleInputFile">Teléfono / Cel.:</label>
-							<input th:field="*{nroTelefono}" type="text" class="form-control" id="telefono"
-								placeholder="Ingrese telefono o cel">		
-						</div>
-					</div>	
-					
-					<div class="col-lg-6">			
-						<div class="form-group">
-							<label for="exampleInputFile">Email:</label>
-							<input th:field="*{correoElectronico}" type="email" class="form-control" id="correoElectronico"
-								placeholder="correo@hotmail.com">
-						</div>
-					</div>	
 						
-					<div class="col-lg-6">
-						<div class="form-group reg-charac-number">
-							<label for="exampleInputFile">Dirección:</label>
-							<input th:field="*{direccion}" type="text" class="form-control" id="direccion" onKeyUp="this.value = this.value.toUpperCase();"
-								placeholder="Ingrese dirección"
-								data-validation="required"
-								data-validation-error-msg-required="Debe ingresar la dirección del cliente">
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label for="exampleInputFile">Apellido:</label> 
+								<input th:field="*{apellido}" type="text" class="form-control" id="apellido" maxlength="30" onkeypress="return soloLetras(event);" onKeyUp="this.value = this.value.toUpperCase();"
+									placeholder="Ingrese su/s apellido/s Ej: Lopez Diaz"
+									data-validation="required"
+									data-validation-error-msg-required="Debe ingresar el apellido del cliente">
+							</div>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label for="exampleInputFile">R.U.C./ C.I.:</label>
+								<input th:field="*{ruc}" type="text" class="form-control" id="ruc" pattern="[0-9_-]{6,20}" title="Por ejemplo CI 123456 y/o RUC 789456-1"
+									placeholder="Ingrese su RUC o CI"
+									data-validation="required"
+				  					data-validation-error-msg-required="Debe ingresar el RUC/CI del cliente">
+							</div>
+						</div>
+					
+						<div class="col-lg-6">
+							<label for="exampleInputFile">Fecha de nacimiento:</label>
+								<div class="input-group date" >
+									<input  th:field="*{fecha_nacimiento}"  type="text" class="form-control datepicker1">
+						    		<div class="input-group-addon">
+						        		<span class="glyphicon glyphicon-th"></span>
+						    	</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-lg-6 text-left">
+							<div class="form-group">
+								<label for="exampleInputFile">Sexo:</label>
+								<select class="form-control" 
+									th:field="*{sexo}"
+									data-validation="required"
+									data-validation-error-msg-required="Debe seleccionar sexo">
+									<option value="F">Femenino</option>
+									<option value="M">Masculino</option>
+								</select>
+							</div>
+						</div>
+					 
+					 	<div class="col-lg-6">
+							<div class="form-group reg-number">
+								<label for="exampleInputFile">Teléfono / Cel.:</label>
+								<input th:field="*{nroTelefono}" type="text" class="form-control" id="telefono"
+									placeholder="Ingrese telefono o cel">		
+							</div>
 						</div>	
-					</div>	
+					</div>
+						
+					<div class="row">	
+						<div class="col-lg-6">			
+							<div class="form-group">
+								<label for="exampleInputFile">Email:</label>
+								<input th:field="*{correoElectronico}" type="email" class="form-control" id="correoElectronico"
+									placeholder="correo@hotmail.com">
+							</div>
+						</div>	
+							
+						<div class="col-lg-6">
+							<div class="form-group reg-charac-number">
+								<label for="exampleInputFile">Dirección:</label>
+								<input th:field="*{direccion}" type="text" class="form-control" id="direccion" onKeyUp="this.value = this.value.toUpperCase();"
+									placeholder="Ingrese dirección"
+									data-validation="required"
+									data-validation-error-msg-required="Debe ingresar la dirección del cliente">
+							</div>	
+						</div>	
+					</div>
 								
 					<div class="form-group">
 	                  <div class="col-sm-offset-2 col-sm-10">
