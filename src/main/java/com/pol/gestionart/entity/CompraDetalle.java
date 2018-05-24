@@ -19,7 +19,6 @@ import com.pol.gestionart.main.GenericEntity;
 
 @Entity
 @Table
-//uniqueConstraints = { @UniqueConstraint(name = "compra_detalle_uk", columnNames = { "id_compra", "id_producto" }) }
 public class CompraDetalle extends GenericEntity {
 private static final String SECUENCIA = "compraDetalle_id_seq";
 	
@@ -33,6 +32,7 @@ private static final String SECUENCIA = "compraDetalle_id_seq";
 	@JoinColumn(foreignKey = @ForeignKey(name = "compraDetalle_compraCabecera_fk"))
 	private CompraCabecera compraCabecera;
 	
+	
 	@ManyToOne
 	@NotNull(message = "compraDetalle.producto.notNull")
 	@JoinColumn(foreignKey = @ForeignKey(name = "compraDetalle_producto_fk"))
@@ -40,10 +40,10 @@ private static final String SECUENCIA = "compraDetalle_id_seq";
 	
 
 	@NotNull(message = "compraDetalle.precioUnitario.notNull")
-	private int precioUnitario;
+	private BigDecimal precioUnitario;
 	
 	@NotNull
-	private int precioTotal;
+	private BigDecimal precioTotal;
 	
 	@NotNull(message = "compraDetalle.cantidad.notNull")
 	private int cantidad;
@@ -56,7 +56,7 @@ private static final String SECUENCIA = "compraDetalle_id_seq";
 	public CompraDetalle(Long id,
 			@NotNull(message = "compraDetalle.compraCabecera.notNull") CompraCabecera compraCabecera,
 			@NotNull(message = "compraDetalle.producto.notNull") Producto producto,
-			@NotNull(message = "compraDetalle.precioUnitario.notNull") int precioUnitario, @NotNull int precioTotal,
+			@NotNull(message = "compraDetalle.precioUnitario.notNull") BigDecimal precioUnitario, @NotNull BigDecimal precioTotal,
 			@NotNull(message = "compraDetalle.cantidad.notNull") int cantidad) {
 		super();
 		this.id = id;
@@ -84,21 +84,21 @@ private static final String SECUENCIA = "compraDetalle_id_seq";
 		this.producto = producto;
 	}
 
-	public int getPrecioUnitario() {
+	public BigDecimal getPrecioUnitario() {
 		return precioUnitario;
 	}
 
-	public void setPrecioUnitario(int precioUnitario) {
+	public void setPrecioUnitario(BigDecimal precioUnitario) {
 		this.precioUnitario = precioUnitario;
 	}
 
 	
-	public int getPrecioTotal() {
+	public BigDecimal getPrecioTotal() {
 		return precioTotal;
 	}
 
 
-	public void setPrecioTotal(int precioTotal) {
+	public void setPrecioTotal(BigDecimal precioTotal) {
 		this.precioTotal = precioTotal;
 	}
 

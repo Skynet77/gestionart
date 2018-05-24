@@ -1,0 +1,354 @@
+package com.pol.gestionart.controller.form;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.pol.gestionart.controller.list.CompraCabeceraListcontroller;
+import com.pol.gestionart.dao.CompraCabeceraDao;
+import com.pol.gestionart.dao.CompraDetalleDao;
+import com.pol.gestionart.dao.Dao;
+import com.pol.gestionart.dao.ProductoDao;
+import com.pol.gestionart.dao.ProveedorDao;
+import com.pol.gestionart.entity.Cliente;
+import com.pol.gestionart.entity.CompraCabecera;
+import com.pol.gestionart.entity.Producto;
+import com.pol.gestionart.entity.CompraCabecera;
+import com.pol.gestionart.entity.CompraDetalle;
+import com.pol.gestionart.exceptions.AjaxException;
+import com.pol.gestionart.util.GeneralUtils;
+
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+
+
+@Controller
+@Scope("request")
+@RequestMapping("compra")
+public class CompraFormController extends FormController<CompraCabecera> {
+	public static final String LISTA_DETALLE = "listaDetalle";
+	public static final String MAP_DETALLE_COMPRA = "mapDetalleCompra";
+	public static final String LISTA_PRODUCTO = "listaProducto";
+	public static final String COMPRA_CABECERA = "compraCabecera";
+	public static final String COMPRA_DETALLE = "compraDetalle";
+	public static final String PRODUCTO_DETALLE = "productoDetalle";
+	public static final BigDecimal IVA_10 = new BigDecimal(1.1);
+	private static final String DATE_FORMAT = "dd/MM/yyyy-HH:mm:ss";
+	
+	@Autowired 
+	private CompraCabeceraDao compraCabeceraDao;
+	
+	@Autowired
+	private CompraCabeceraListcontroller compraCabeceraList;
+	
+	@Autowired 
+	private ProveedorDao proveedorDao;
+	
+	@Autowired
+	private CompraDetalleDao compraDetalleDao;
+	
+	@Autowired 
+	private ProductoDao productoDao;
+
+	@Override
+	public String getTemplatePath() {
+		return "compra/compra_cabecera_index";
+	}
+
+	@Override
+	public String getNombreObjeto() {
+		return "compraCabecera";
+	}
+
+	@Override
+	public CompraCabecera getNuevaInstancia() {
+		return new CompraCabecera();
+	}
+	
+	@Override
+	public void agregarValoresAdicionales(ModelMap map) {
+		map.addAttribute("columnas", compraCabeceraList.getColumnas());
+		map.addAttribute("columnasStr", compraCabeceraList.getColumnasStr(null));
+		map.addAttribute("proveedorList", getDao().getList(0, 100, null));
+		map.addAttribute("productoList", getDao().getList(0, 100, null));
+		map.addAttribute("compraCabecera", new CompraCabecera());
+		map.addAttribute("tituloFormulario", "Registrar Compra");
+		map.addAttribute("accion", "guardar");
+		super.agregarValoresAdicionales(map);
+	}
+	
+	@RequestMapping("buy")
+	public String indexPay(ModelMap map,HttpSession session) {
+		
+		map.addAttribute(getNombreObjeto(), getNuevaInstancia());
+		agregarValoresAdicionales(map);
+		session.setAttribute(MAP_DETALLE_COMPRA,null);
+		session.setAttribute(COMPRA_CABECERA, null);
+		session.setAttribute(COMPRA_DETALLE, null);
+		return "compra/compra_pay"; 
+	}
+	
+		
+		@RequestMapping(value = "agregar-detalle", method = RequestMethod.POST)
+		public String addProducto(ModelMap map,
+				@RequestParam(required = true, value="id_producto") Long idProducto, 
+				@RequestParam(required = true, value="cantidad") int cantidad, HttpSession session) throws AjaxException {
+			
+			List<Producto> listProducto = null;
+			CompraCabecera compraCab = null;
+			CompraDetalle compraDet = null;
+			List<CompraDetalle> listDetalle = null;
+			Producto producto = null;
+			BigDecimal montoTotal;
+			try {
+				if(session.getAttribute(LISTA_PRODUCTO)!=null){
+					listProducto = (List<Producto>) session.getAttribute(LISTA_PRODUCTO);
+				}else{
+					listProducto = new ArrayList<>();
+				}
+				
+				
+				if(session.getAttribute(COMPRA_CABECERA)!=null){
+					compraCab = (CompraCabecera) session.getAttribute(COMPRA_CABECERA);
+				}else{
+					compraCab = new CompraCabecera();
+				}
+				
+				producto = productoDao.find(idProducto);
+				if(producto != null){
+					listProducto.add(producto);
+				}
+				//obtenemos el monto total de la cabecera
+				if(compraCab.getTotal()!=null){
+					montoTotal = compraCab.getTotal();
+				}else{
+					montoTotal = new BigDecimal(0);
+				}
+				
+				//multiplicamos el precio de compra por la cantidad
+				BigDecimal montoCompra = producto.getPrecioVenta().multiply(new BigDecimal(cantidad));
+				//sumamos el monto total que teniamos por 
+				montoTotal = montoTotal.add(montoCompra);
+				//volvemos a guardar el monto total
+				compraCab.setTotalBigDecimal(montoTotal);
+				
+				
+				//calculo de subTotal
+				BigDecimal subTotal;
+				BigDecimal IVA;
+				if(compraCab.getSubTotal()!=null){
+					subTotal = compraCab.getSubTotal();
+				}else{
+					subTotal = new BigDecimal(0);
+				}
+				subTotal = compraCab.getTotal().divide(IVA_10,2,BigDecimal.ROUND_HALF_UP);
+				compraCab.setSubTotalBigDecimal(subTotal);
+				IVA = subTotal.multiply(new BigDecimal(0.1));
+				compraCab.setIva(IVA);
+				
+				//el detalle actual que se esta procesando
+				compraDet = new CompraDetalle();
+				compraDet.setCantidad(cantidad);
+				compraDet.setPrecioTotal(montoCompra);
+				compraDet.setPrecioUnitario(producto.getPrecioVenta());
+				compraDet.setProducto(producto);
+				compraDet.setCompraCabecera(compraCab);
+			} catch (Exception e ) {
+				throw new AjaxException("Ocurrió un error inesperado");
+			}
+				//producto para disminuir el stok
+				Producto productoDisminuir = null;
+				int resta = 0;
+				//disminuimos la cantidad del producto en stock
+				productoDisminuir = producto;
+				resta = productoDisminuir.getCantidad() - compraDet.getCantidad();
+				if(resta<0){
+					throw new AjaxException("La cantidad a vender es mayor al stock de la base de datos");
+				}
+				productoDisminuir.setCantidad(resta);
+				productoDao.createOrUpdate(productoDisminuir);
+			
+			
+			Map<String, CompraDetalle> mapaCompraDetalle = GeneralUtils.mapSerializeCompraDetalleOrUpdate(session,compraDet);
+			session.setAttribute(MAP_DETALLE_COMPRA,mapaCompraDetalle);
+			session.setAttribute(COMPRA_CABECERA, compraCab);
+			session.setAttribute(COMPRA_DETALLE, compraDet);
+			map.addAttribute(MAP_DETALLE_COMPRA,mapaCompraDetalle);
+			map.addAttribute(COMPRA_CABECERA, compraCab);
+			map.addAttribute(COMPRA_DETALLE, compraDet);
+			map.addAttribute(PRODUCTO_DETALLE, producto);
+			
+			
+			return "compra/compra_detail";
+
+		}
+		
+		@RequestMapping(value = "eliminar-detalle", method = RequestMethod.POST)
+		public String deleteProducto(ModelMap map,
+				@RequestParam(required = true, value="id_producto") String uuid,  HttpSession session) {
+			Map<String, CompraDetalle> mapCompraDetail = new HashMap<>();
+			CompraCabecera compraCab = null;
+			CompraDetalle compraDet = null;
+			int suma = 0;
+			if(session.getAttribute(COMPRA_CABECERA)!=null){
+				compraCab = (CompraCabecera) session.getAttribute(COMPRA_CABECERA);
+			}else{
+				compraCab = new CompraCabecera();
+			}
+			
+			if(uuid!=null){
+				mapCompraDetail = (Map<String, CompraDetalle>) session.getAttribute(MAP_DETALLE_COMPRA);
+				compraDet = mapCompraDetail.get(uuid);
+				compraCab.setTotalBigDecimal(compraCab.getTotal().subtract(compraDet.getPrecioTotal()));
+				
+				//producto para disminuir el stok
+				Producto productoDisminuir = null;
+				//sumamos la cantidad del producto en stock, ya que se elimino del detalle
+				productoDisminuir = compraDet.getProducto();
+				suma = productoDisminuir.getCantidad() + compraDet.getCantidad();
+				productoDisminuir.setCantidad(suma);
+				productoDao.createOrUpdate(productoDisminuir);
+				
+				//calculo de subTotal
+				BigDecimal subTotal;
+				BigDecimal IVA;
+				subTotal = compraCab.getTotal().divide(IVA_10,2,BigDecimal.ROUND_HALF_UP);
+				compraCab.setSubTotalBigDecimal(subTotal);
+				IVA = subTotal.multiply(new BigDecimal(0.1));
+				compraCab.setIva(IVA);
+				
+				mapCompraDetail.remove(uuid);
+				session.setAttribute(MAP_DETALLE_COMPRA,mapCompraDetail);
+				map.addAttribute(MAP_DETALLE_COMPRA,mapCompraDetail);
+			}
+			session.setAttribute(COMPRA_CABECERA, compraCab);
+			map.addAttribute(COMPRA_CABECERA, compraCab);
+			map.addAttribute("cantProducto",suma);
+			
+			return "compra/compra_detail";
+		}
+		
+		
+
+		@RequestMapping(value = "confirmar", method = RequestMethod.POST)
+		public String confirmarCompra(ModelMap map, @Valid CompraCabecera compraCabecera,HttpSession session) {
+			
+			CompraCabecera compraCab = null;
+			CompraDetalle compraDet = null;
+			Map<String, CompraDetalle> mapaCompraDetalle = null;
+			
+			if(session.getAttribute(COMPRA_CABECERA)!=null){
+				compraCab = (CompraCabecera) session.getAttribute(COMPRA_CABECERA);
+			}else{
+				compraCab = new CompraCabecera();
+			}
+			
+			if(session.getAttribute(MAP_DETALLE_COMPRA)!=null){
+				mapaCompraDetalle  = (Map<String, CompraDetalle>) session.getAttribute(MAP_DETALLE_COMPRA);
+			}
+			
+			compraCabecera.setIva(compraCab.getIva());
+			compraCabecera.setNroComprobante("1");
+			compraCabeceraDao.create(compraCabecera);
+			
+			String nroComprobante = GeneralUtils.formatoComprobante(compraCabecera.getId());
+			compraCabecera.setNroComprobante(nroComprobante);
+			compraCabeceraDao.createOrUpdate(compraCabecera);
+			
+			
+			for (CompraDetalle vd : mapaCompraDetalle.values()) {
+				vd.setCompraCabecera(compraCabecera);
+				compraDetalleDao.create(vd);
+			}
+			
+			
+			map.addAttribute("msgExitoCompra", true);
+			map.addAttribute("compraCabeceraId", compraCabecera.getId());
+			session.setAttribute("compraCabeceraId", compraCabecera.getId());
+			return indexPay(map, session);
+
+		}
+		
+		@RequestMapping(value = "comprobante", method = RequestMethod.POST)
+		public void comprobanteCompra(ModelMap map,HttpSession session,HttpServletRequest request,HttpServletResponse response,
+				@RequestParam(required = true, value="id_compra_cabecera") Long idCompraCabecera) {
+			String FOLDER = request.getSession().getServletContext().getRealPath("/reportes/");
+			InputStream jasperStream = null;
+			Map<String, Object> params = new HashMap<>();
+			List<CompraDetalle> listdetalle = compraDetalleDao.getListDetalle(idCompraCabecera);
+			CompraCabecera compraCabecera = compraCabeceraDao.find(idCompraCabecera);
+			
+			params.put("LISTA_DETALLE", listdetalle);
+			params.put("nombreProveedor", compraCabecera.getProveedor().getNombre()+", "+compraCabecera.getProveedor().getRuc());
+			params.put("TOTAL_A_PAGAR", compraCabecera.getTotal());
+			params.put("RUC", compraCabecera.getProveedor().getRuc());
+			params.put("nroCompra", compraCabecera.getNroComprobante());
+			Date d = new Date();
+			String fechaActual = GeneralUtils.getStringFromDate(d,DATE_FORMAT);
+			params.put("fechaSys", fechaActual);
+			try {
+				jasperStream = new FileInputStream(FOLDER + "/comprobante_compra.jasper");
+			
+			if (jasperStream != null) {
+				JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
+				JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, new JREmptyDataSource());
+
+				byte[] pdfReport = JasperExportManager.exportReportToPdf(jasperPrint);
+				response.setContentType("application/x-pdf");
+				response.setHeader("Content-disposition", "attachment; filename=compra_detalle.pdf");
+				response.reset();
+				response.setContentType("application/pdf");
+				response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+				response.setHeader("Pragma", "private");
+				response.setContentLength(pdfReport.length);
+				response.getOutputStream().write(pdfReport);
+				response.getOutputStream().flush();
+				//response.getOutputStream().close();
+			}
+			
+			} catch (JRException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+		}
+		
+		@RequestMapping(value = "comprobante", method = RequestMethod.GET)
+		public void comprobanteCompraGET(ModelMap map,HttpSession session,HttpServletRequest request,HttpServletResponse response,
+				@RequestParam(required = true, value="id_compra") Long idCompraCabecera) {
+			comprobanteCompra(map, session, request, response, idCompraCabecera);
+		}
+		
+	@Override
+	public Dao<CompraCabecera> getDao() {
+		return compraCabeceraDao;
+	}
+
+}
