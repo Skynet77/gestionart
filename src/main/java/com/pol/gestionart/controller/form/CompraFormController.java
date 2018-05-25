@@ -152,7 +152,7 @@ public class CompraFormController extends FormController<CompraCabecera> {
 				}
 				
 				//multiplicamos el precio de compra por la cantidad
-				BigDecimal montoCompra = producto.getPrecioVenta().multiply(new BigDecimal(cantidad));
+				BigDecimal montoCompra = producto.getPrecioCompra().multiply(new BigDecimal(cantidad));
 				//sumamos el monto total que teniamos por 
 				montoTotal = montoTotal.add(montoCompra);
 				//volvemos a guardar el monto total
@@ -176,24 +176,14 @@ public class CompraFormController extends FormController<CompraCabecera> {
 				compraDet = new CompraDetalle();
 				compraDet.setCantidad(cantidad);
 				compraDet.setPrecioTotal(montoCompra);
-				compraDet.setPrecioUnitario(producto.getPrecioVenta());
+				compraDet.setPrecioUnitario(producto.getPrecioCompra());
 				compraDet.setProducto(producto);
 				compraDet.setCompraCabecera(compraCab);
+				
+				
 			} catch (Exception e ) {
 				throw new AjaxException("Ocurrió un error inesperado");
 			}
-				//producto para disminuir el stok
-				Producto productoDisminuir = null;
-				int resta = 0;
-				//disminuimos la cantidad del producto en stock
-				productoDisminuir = producto;
-				resta = productoDisminuir.getCantidad() - compraDet.getCantidad();
-				if(resta<0){
-					throw new AjaxException("La cantidad a vender es mayor al stock de la base de datos");
-				}
-				productoDisminuir.setCantidad(resta);
-				productoDao.createOrUpdate(productoDisminuir);
-			
 			
 			Map<String, CompraDetalle> mapaCompraDetalle = GeneralUtils.mapSerializeCompraDetalleOrUpdate(session,compraDet);
 			session.setAttribute(MAP_DETALLE_COMPRA,mapaCompraDetalle);
@@ -215,7 +205,7 @@ public class CompraFormController extends FormController<CompraCabecera> {
 			Map<String, CompraDetalle> mapCompraDetail = new HashMap<>();
 			CompraCabecera compraCab = null;
 			CompraDetalle compraDet = null;
-			int suma = 0;
+			int resta = 0;
 			if(session.getAttribute(COMPRA_CABECERA)!=null){
 				compraCab = (CompraCabecera) session.getAttribute(COMPRA_CABECERA);
 			}else{
@@ -227,13 +217,7 @@ public class CompraFormController extends FormController<CompraCabecera> {
 				compraDet = mapCompraDetail.get(uuid);
 				compraCab.setTotalBigDecimal(compraCab.getTotal().subtract(compraDet.getPrecioTotal()));
 				
-				//producto para disminuir el stok
-				Producto productoDisminuir = null;
-				//sumamos la cantidad del producto en stock, ya que se elimino del detalle
-				productoDisminuir = compraDet.getProducto();
-				suma = productoDisminuir.getCantidad() + compraDet.getCantidad();
-				productoDisminuir.setCantidad(suma);
-				productoDao.createOrUpdate(productoDisminuir);
+				disminuirStock(compraDet,map);
 				
 				//calculo de subTotal
 				BigDecimal subTotal;
@@ -249,13 +233,12 @@ public class CompraFormController extends FormController<CompraCabecera> {
 			}
 			session.setAttribute(COMPRA_CABECERA, compraCab);
 			map.addAttribute(COMPRA_CABECERA, compraCab);
-			map.addAttribute("cantProducto",suma);
 			
 			return "compra/compra_detail";
 		}
 		
 		
-
+		
 		@RequestMapping(value = "confirmar", method = RequestMethod.POST)
 		public String confirmarCompra(ModelMap map, @Valid CompraCabecera compraCabecera,HttpSession session) {
 			
@@ -284,6 +267,7 @@ public class CompraFormController extends FormController<CompraCabecera> {
 			
 			for (CompraDetalle vd : mapaCompraDetalle.values()) {
 				vd.setCompraCabecera(compraCabecera);
+				aumentarStock(vd.getProducto(), vd, map);
 				compraDetalleDao.create(vd);
 			}
 			
@@ -350,5 +334,32 @@ public class CompraFormController extends FormController<CompraCabecera> {
 	public Dao<CompraCabecera> getDao() {
 		return compraCabeceraDao;
 	}
+	
+	
+
+	private void disminuirStock(CompraDetalle compraDet, ModelMap map){
+		int resta = 0;
+		//producto para disminuir el stok
+		Producto productoDisminuir = null;
+		//sumamos la cantidad del producto en stock, ya que se elimino del detalle
+		productoDisminuir = compraDet.getProducto();
+		resta = productoDisminuir.getCantidad() - compraDet.getCantidad();
+		productoDisminuir.setCantidad(resta);
+		productoDao.createOrUpdate(productoDisminuir);
+		map.addAttribute("cantProducto",resta);
+	}
+	
+	private void aumentarStock(Producto producto, CompraDetalle compraDet, ModelMap map){
+		/*AUMENTAMOS EL STOCK*/
+		
+		Producto productoAumentar = null;
+		int sumar = 0;
+		//aumentamos la cantidad del producto en stock
+		productoAumentar = producto;
+		sumar = productoAumentar.getCantidad() + compraDet.getCantidad();
+		productoAumentar.setCantidad(sumar);
+		productoDao.createOrUpdate(productoAumentar);
+	}
+
 
 }

@@ -28,6 +28,7 @@ import com.pol.gestionart.dao.Dao;
 import com.pol.gestionart.dao.ProductoDao;
 import com.pol.gestionart.dao.VentaCabeceraDao;
 import com.pol.gestionart.dao.VentaDetalleDao;
+import com.pol.gestionart.entity.CompraDetalle;
 import com.pol.gestionart.entity.Producto;
 import com.pol.gestionart.entity.VentaCabecera;
 import com.pol.gestionart.entity.VentaCabecera.Estado;
@@ -352,5 +353,17 @@ public class VentaFormController extends FormController<VentaCabecera> {
 	public Dao<VentaCabecera> getDao() {
 		return ventaCabeceraDao;
 	}
+	
+	/*private void aumentarStock(Producto producto, VentaDetalle ventaDet, ModelMap map){
+		//AUMENTAMOS EL STOCK
+		
+		Producto productoAumentar = null;
+		int sumar = 0;
+		//aumentamos la cantidad del producto en stock
+		productoAumentar = producto;
+		sumar = productoAumentar.getCantidad() + ventaDet.getCantidad();
+		productoAumentar.setCantidad(sumar);
+		productoDao.createOrUpdate(productoAumentar);
+	}*/
 
 }
