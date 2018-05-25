@@ -78,7 +78,7 @@ public class CompraFormController extends FormController<CompraCabecera> {
 
 	@Override
 	public String getTemplatePath() {
-		return "compra/compra_cabecera_index";
+		return "compra/compra_index";
 	}
 
 	@Override

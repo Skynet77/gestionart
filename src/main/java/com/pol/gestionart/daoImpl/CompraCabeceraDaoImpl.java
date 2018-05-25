@@ -2,11 +2,11 @@ package com.pol.gestionart.daoImpl;
 
 import org.springframework.stereotype.Repository;
 
-import com.pol.gestionart.dao.VentaCabeceraDao;
-import com.pol.gestionart.entity.VentaCabecera;
+import com.pol.gestionart.dao.CompraCabeceraDao;
+import com.pol.gestionart.entity.CompraCabecera;
 
 @Repository
-public class CompraCabeceraDaoImpl extends DaoImpl<VentaCabecera> implements VentaCabeceraDao{
+public class CompraCabeceraDaoImpl extends DaoImpl<CompraCabecera> implements CompraCabeceraDao{
 
 	@Override
 	public String getCamposFiltrables() {
