@@ -7,7 +7,7 @@
 	<div class="col-md-6">
 		<div class="box box-default">
 			<div class="box-header with-border">
-				<h3 class="box-title">Productos</h3>
+				<h3 class="box-title">VENTA</h3>
 
 				<div class="box-tools pull-right">
 					<button type="button" class="btn btn-box-tool"
@@ -23,30 +23,38 @@
 			<div class="box-body">
 				<div class="row">
 					<div class="col-md-12">
-						<div class="form-group">
-							<label>Busqueda</label>
-							<div class="box-body">
+					
+						<div class="form-group col-lg-12">
+							<label>Cliente:</label>
+								<div id="magicsuggestCliente"></div>
+							<!-- /.box-body -->
+						</div>
+						<div class="form-group col-lg-2">
+							<label for="inputNombre">RUC:</label> 
+							<input name="ruc" type="text" class="form-control" id="ruc"
+							data-validation="required" disabled>
+						</div>
+					
+						<div class="form-group col-lg-12">
+							<label>Busqueda de productos</label>
 								<div id="magicsuggest"></div>
-							</div>
 							<!-- /.box-body -->
 						</div>
 						<!-- /.form-group -->
-						<div class="form-group">
+						<div class="form-group col-lg-2">
 							<label for="inputNombre">Código:</label> 
 							<input name="codigo" type="text" class="form-control" id="codigo"
-							data-validation="required">
+							data-validation="required" disabled>
 							<input name="id" type="hidden" id="id">
 						</div>
-						<div class="form-group">
+						<div class="form-group col-lg-10">
 							<label for="inputNombre">Nombre:</label> 
 							<input type="text" class="form-control" id="nombre" name="nombre"
-							placeholder="Ingrese Nombre"
-							data-validation="required"
-			 				data-validation-error-msg-required="Debe ingresar el nombre del cliente">	
+							placeholder="Ingrese Nombre" disabled>	
 						</div>
-					</div>
+					
 					<!-- /.col -->
-					<div class="col-md-6">
+					<div class="form-group col-md-6">
 						<div class="form-group">
 							<label>Precio Venta:</label>
 							<div class="input-group">
@@ -54,16 +62,14 @@
 									<i class="fa fa-usd"></i>
 								</div>
 								<input type="text" class="form-control" id="precioVenta" name="precioVenta"
-							placeholder="Ingrese Precio de Venta"
-							data-validation="required"
-			 				data-validation-error-msg-required="Debe ingresar el precio de venta">
+							placeholder="Precio de Venta" disabled>
 
 							</div>
 							<!-- /.input group -->
 						</div>
 					</div>
 
-					<div class="col-md-6">
+					<div class="form-group col-md-6">
 						<div class="form-group">
 							<label>Stock Actual:</label>
 
@@ -71,13 +77,13 @@
 								<div class="input-group-addon">
 									<i class="fa fa-hashtag"></i>
 								</div>
-								<input type="text" class="form-control" id="stockActual" name="stockActual">
+								<input type="text" class="form-control" id="stockActual" name="stockActual" disabled>
 							</div>
 							<!-- /.input group -->
 						</div>
 					</div>
 
-					<div class="col-md-6">
+					<div class="form-group col-md-6">
 						<div class="form-group">
 							<label>Cantidad:</label>
 							<div class="input-group">
@@ -85,14 +91,13 @@
 									<i class="fa fa-usd"></i>
 								</div>
 								<input type="text" class="form-control" id="cantidad" name="cantidad"
-							placeholder="Ingrese cantidad"
-							data-validation="required"
-			 				data-validation-error-msg-required="Debe ingresar la cantidad">
+							placeholder="Cantidad" disabled>
 							</div>
 							<!-- /.input group -->
 						</div>
 					</div>
 					<!-- /.col -->
+					</div>
 				</div>
 				<!-- /.row -->
 			</div>
@@ -115,7 +120,7 @@
 	<div class="col-md-6">
 		<div class="box box-default">
 			<div class="box-header with-border">
-				<h3 class="box-title">Venta</h3>
+				<h3 class="box-title">Totales</h3>
 
 				<div class="box-tools pull-right">
 					<button type="button" class="btn btn-box-tool"
@@ -134,14 +139,15 @@
 				    <form th:action="@{/venta/confirmar}" th:object="${ventaCabecera}" method="post" role="form" id="form-cabecera">
 						<!-- total a pagar  -->
 						<div class="col-md-12">
-							<div class="form-group">
+							<!-- <div class="form-group">
 								<label>Cliente:</label>
 								<div class="box-body">
 									<div id="magicsuggestCliente"></div>
 									<input type="hidden" th:field="*{cliente}">
 								</div>
-								<!-- /.box-body -->
-							</div>
+								/.box-body
+							</div> -->
+							<input type="hidden" th:field="*{cliente}">
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Sub-Total:</label>
@@ -151,9 +157,7 @@
 										<i class="fa fa-usd"></i>
 									</div>
 									<input type="text" class="form-control"  id="subTotal" name="subTotal"
-							placeholder="Ingrese sub-total"
-							data-validation="required"
-			 				data-validation-error-msg-required="Debe ingresar monto sin iva">
+							placeholder="Sub Total" disabled>
 								</div>
 								<!-- /.input group -->
 							</div>
@@ -180,7 +184,7 @@
 									<div class="input-group-addon">
 										<i class="fa fa-usd"></i>
 									</div>
-									<input type="text" class="form-control input-money" value="0.0" name="montoTotal" id="montoTotal">
+									<input type="text" class="form-control input-money" value="0.0" name="montoTotal" id="montoTotal" disabled>
 								</div>
 								<!-- /.input group -->
 							</div>
@@ -280,6 +284,7 @@
 					$(suggestCliente).on('selectionchange', function(a,b,c){
 						var cliente = c[0];
 						$("#cliente").val(cliente.id);
+						$("#ruc").val(cliente.ruc)
 					});
 					var fechaInicio = new Date();
 					var fecha=new Date();

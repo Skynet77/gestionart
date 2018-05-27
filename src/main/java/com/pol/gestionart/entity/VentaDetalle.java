@@ -11,10 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 
 import com.pol.gestionart.main.GenericEntity;
 
@@ -42,7 +39,7 @@ public class VentaDetalle extends GenericEntity{
 	private Producto producto;
 
 	@NotNull
-	private BigDecimal cantidad;
+	private int cantidad;
 
 
 	@NotNull
@@ -58,7 +55,7 @@ public class VentaDetalle extends GenericEntity{
 	}
 	
 	public VentaDetalle(Long id, @NotNull(message = "ventaDetalle.ventaCabecera.notNull") VentaCabecera ventaCabecera,
-			@NotNull(message = "ventaDetalle.producto.notNull") Producto producto, @NotNull BigDecimal cantidad,
+			@NotNull(message = "ventaDetalle.producto.notNull") Producto producto, @NotNull int cantidad,
 			@NotNull BigDecimal precioUnitario, @NotNull BigDecimal precioTotal) {
 		super();
 		this.id = id;
@@ -70,11 +67,13 @@ public class VentaDetalle extends GenericEntity{
 	}
 
 
+	@Override
 	public Long getId() {
 		return id;
 	}
 
 
+	@Override
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -100,12 +99,12 @@ public class VentaDetalle extends GenericEntity{
 	}
 
 
-	public BigDecimal getCantidad() {
+	public int getCantidad() {
 		return cantidad;
 	}
 
 
-	public void setCantidad(BigDecimal cantidad) {
+	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
 

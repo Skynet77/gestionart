@@ -28,7 +28,6 @@ import com.pol.gestionart.dao.Dao;
 import com.pol.gestionart.dao.ProductoDao;
 import com.pol.gestionart.dao.VentaCabeceraDao;
 import com.pol.gestionart.dao.VentaDetalleDao;
-import com.pol.gestionart.entity.CompraDetalle;
 import com.pol.gestionart.entity.Producto;
 import com.pol.gestionart.entity.VentaCabecera;
 import com.pol.gestionart.entity.VentaCabecera.Estado;
@@ -119,7 +118,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 	@RequestMapping(value = "agregar-detalle", method = RequestMethod.POST)
 	public String addProducto(ModelMap map,
 			@RequestParam(required = true, value="id_producto") Long idProducto, 
-			@RequestParam(required = true, value="cantidad") BigDecimal cantidad, HttpSession session) throws AjaxException {
+			@RequestParam(required = true, value="cantidad") int cantidad, HttpSession session) throws AjaxException {
 		
 		List<Producto> listProducto = null;
 		VentaCabecera ventaCab = null;
@@ -153,7 +152,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 			}
 			
 			//multiplicamos el precio de venta por la cantidad
-			BigDecimal montoVenta = producto.getPrecioVenta().multiply(cantidad);
+			BigDecimal montoVenta = producto.getPrecioVenta().multiply(new BigDecimal(cantidad));
 			//sumamos el monto total que teniamos por 
 			montoTotal = montoTotal.add(montoVenta);
 			//volvemos a guardar el monto total
@@ -184,16 +183,16 @@ public class VentaFormController extends FormController<VentaCabecera> {
 			throw new AjaxException("Ocurrió un error inesperado");
 		}
 			//producto para disminuir el stok
-			Producto productoDisminuir = null;
+		/*	Producto productoDisminuir = null;
 			int resta = 0;
 			//disminuimos la cantidad del producto en stock
 			productoDisminuir = producto;
-			resta = productoDisminuir.getCantidad() - ventaDet.getCantidad().intValue();
+			resta = productoDisminuir.getCantidad() - ventaDet.getCantidad();
 			if(resta<0){
 				throw new AjaxException("La cantidad a vender es mayor al stock de la base de datos");
 			}
 			productoDisminuir.setCantidad(resta);
-			productoDao.createOrUpdate(productoDisminuir);
+			productoDao.createOrUpdate(productoDisminuir);*/
 		
 		
 		Map<String, VentaDetalle> mapaVentaDetalle = GeneralUtils.mapSerializeVentaDetalleOrUpdate(session,ventaDet);
@@ -232,7 +231,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 			Producto productoDisminuir = null;
 			//sumamos la cantidad del producto en stock, ya que se elimino del detalle
 			productoDisminuir = ventaDet.getProducto();
-			suma = productoDisminuir.getCantidad() + ventaDet.getCantidad().intValue();
+			suma = productoDisminuir.getCantidad() + ventaDet.getCantidad();
 			productoDisminuir.setCantidad(suma);
 			productoDao.createOrUpdate(productoDisminuir);
 			
@@ -287,6 +286,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		for (VentaDetalle vd : mapaVentaDetalle.values()) {
 			vd.setVentaCabecera(ventaCabecera);
 			ventaDetalleDao.create(vd);
+			disminuirStock(vd, map);
 		}
 		
 		
@@ -354,7 +354,19 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		return ventaCabeceraDao;
 	}
 	
-	/*private void aumentarStock(Producto producto, VentaDetalle ventaDet, ModelMap map){
+	private void disminuirStock(VentaDetalle ventaDet, ModelMap map){
+		int resta = 0;
+		//producto para disminuir el stok
+		Producto productoDisminuir = null;
+		//sumamos la cantidad del producto en stock, ya que se elimino del detalle
+		productoDisminuir = productoDao.find(ventaDet.getProducto().getId());
+		resta = productoDisminuir.getCantidad() - ventaDet.getCantidad();
+		productoDisminuir.setCantidad(resta);
+		productoDao.createOrUpdate(productoDisminuir);
+		map.addAttribute("cantProducto",resta);
+	}
+	
+	private void aumentarStock(Producto producto, VentaDetalle ventaDet, ModelMap map){
 		//AUMENTAMOS EL STOCK
 		
 		Producto productoAumentar = null;
@@ -364,6 +376,6 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		sumar = productoAumentar.getCantidad() + ventaDet.getCantidad();
 		productoAumentar.setCantidad(sumar);
 		productoDao.createOrUpdate(productoAumentar);
-	}*/
+	}
 
 }
