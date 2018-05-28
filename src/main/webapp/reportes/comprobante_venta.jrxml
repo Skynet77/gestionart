@@ -2,11 +2,11 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="comprobante_venta" pageWidth="300" pageHeight="500" columnWidth="260" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2ac4f9ad-2413-4855-861b-c80bcb949f0e">
 	<property name="ireport.zoom" value="3.4522712143931042"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="480"/>
 	<subDataset name="dataset1" uuid="13010b2c-776b-42bd-be3d-0b5aacdb70c3">
 		<field name="producto.descripcion" class="java.lang.String"/>
 		<field name="precioTotal" class="java.math.BigDecimal"/>
-		<field name="cantidad" class="java.math.BigDecimal"/>
+		<field name="cantidad" class="java.lang.Integer"/>
 	</subDataset>
 	<parameter name="LISTA_DETALLE" class="java.util.List"/>
 	<parameter name="nombreCliente" class="java.lang.String"/>
@@ -138,7 +138,7 @@
 							</textElement>
 							<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
 						</textField>
-						<textField>
+						<textField pattern="#,##0 Gs">
 							<reportElement x="137" y="0" width="100" height="20" uuid="ade252ef-d594-4b14-94a9-ee131059e6d2"/>
 							<textElement textAlignment="Center">
 								<font size="8"/>
@@ -160,7 +160,7 @@
 				<reportElement positionType="Float" x="13" y="88" width="100" height="19" forecolor="#229BD5" uuid="e644077a-e378-4633-a8f2-9f181e05aee4"/>
 				<text><![CDATA[Total a Pagar: ]]></text>
 			</staticText>
-			<textField>
+			<textField pattern="#,##0 Gs" isBlankWhenNull="true">
 				<reportElement positionType="Float" x="150" y="88" width="100" height="19" uuid="5a75ab22-6f00-4d6f-ba2d-83acbcec887c"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{TOTAL_A_PAGAR}]]></textFieldExpression>

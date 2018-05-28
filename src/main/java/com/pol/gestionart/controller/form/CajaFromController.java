@@ -1,6 +1,11 @@
 package com.pol.gestionart.controller.form;
 
 
+import java.math.BigDecimal;
+import java.util.Date;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -13,12 +18,13 @@ import com.pol.gestionart.dao.CajaDao;
 import com.pol.gestionart.dao.Dao;
 import com.pol.gestionart.entity.Caja;
 import com.pol.gestionart.entity.Cliente;
+import com.pol.gestionart.util.GeneralUtils;
 
 
 
 @Controller
 @Scope("request")
-@RequestMapping("movimiento")
+@RequestMapping("caja")
 public class CajaFromController extends FormController<Caja> {
 
 	@Autowired
@@ -57,6 +63,35 @@ public class CajaFromController extends FormController<Caja> {
 		map.addAttribute("tituloFormulario", "Registrar Caja");
 		map.addAttribute("accion", "guardar");
 		super.agregarValoresAdicionales(map);
+	}
+	
+	@RequestMapping("registro")
+	public String ingreso(ModelMap map,HttpSession session, Caja caja) {
+		Date d = new Date();
+		String fechaActual = GeneralUtils.getStringFromDate(d,GeneralUtils.DATE_FORMAT_CAJA);
+		Caja addCaja = new Caja();
+		Caja cajaActual = cajaDao.findCajaByDate(fechaActual);
+		BigDecimal  saldoActual = BigDecimal.ZERO; 
+		
+		if(!(caja.getEntrada()==null)){
+			addCaja.setDescripcion(caja.getDescripcion());
+			addCaja.setEntrada(caja.getEntrada());
+			addCaja.setFecha(fechaActual);
+			
+			saldoActual  = cajaActual.getSaldoActual().add(caja.getEntrada());
+			addCaja.setSaldoActual(saldoActual);
+			addCaja.setSalida(BigDecimal.ZERO);
+		}else if(!(caja.getSalida()==null)){
+			addCaja.setDescripcion(caja.getDescripcion());
+			addCaja.setEntrada(caja.getEntrada());
+			addCaja.setFecha(fechaActual);
+			
+			saldoActual  = cajaActual.getSaldoActual().subtract(caja.getEntrada());
+			addCaja.setSaldoActual(saldoActual);
+			addCaja.setSalida(BigDecimal.ZERO);
+		}
+		
+		return getTemplatePath(); 
 	}
 	
 }

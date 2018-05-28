@@ -182,18 +182,6 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		} catch (Exception e ) {
 			throw new AjaxException("Ocurrió un error inesperado");
 		}
-			//producto para disminuir el stok
-		/*	Producto productoDisminuir = null;
-			int resta = 0;
-			//disminuimos la cantidad del producto en stock
-			productoDisminuir = producto;
-			resta = productoDisminuir.getCantidad() - ventaDet.getCantidad();
-			if(resta<0){
-				throw new AjaxException("La cantidad a vender es mayor al stock de la base de datos");
-			}
-			productoDisminuir.setCantidad(resta);
-			productoDao.createOrUpdate(productoDisminuir);*/
-		
 		
 		Map<String, VentaDetalle> mapaVentaDetalle = GeneralUtils.mapSerializeVentaDetalleOrUpdate(session,ventaDet);
 		session.setAttribute(MAP_DETALLE,mapaVentaDetalle);

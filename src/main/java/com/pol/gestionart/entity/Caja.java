@@ -1,7 +1,6 @@
 package com.pol.gestionart.entity;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -35,7 +34,7 @@ public class Caja extends GenericEntity{
 	/*@Size(max = 10)
 	private String tipoCaja;*/
 	
-	private Date fecha;
+	private String fecha;
 	
 	@Size(max = 50)
 	private String descripcion;
@@ -44,18 +43,18 @@ public class Caja extends GenericEntity{
 	
 	private BigDecimal salida;
 	
-	private BigDecimal saldo_actual;
+	private BigDecimal saldoActual;
 	
-	@ManyToOne
+	/*@ManyToOne
 	@NotNull(message = "caja.usuario.notNull")
 	@JoinColumn(foreignKey = @ForeignKey(name = "caja_usuario_fk"))
-	private Usuario usuario;
+	private Usuario usuario;*/
 	
 	public Caja() {
 		super();
 	}
 
-	public Caja(Long id, Date fecha, @Size(max = 50) String descripcion, BigDecimal entrada, BigDecimal salida,
+	public Caja(Long id, String fecha, @Size(max = 50) String descripcion, BigDecimal entrada, BigDecimal salida,
 			BigDecimal saldo_actual, @NotNull(message = "caja.usuario.notNull") Usuario usuario) {
 		super();
 		this.id = id;
@@ -63,8 +62,8 @@ public class Caja extends GenericEntity{
 		this.descripcion = descripcion;
 		this.entrada = entrada;
 		this.salida = salida;
-		this.saldo_actual = saldo_actual;
-		this.usuario = usuario;
+		this.saldoActual = saldo_actual;
+		//this.usuario = usuario;
 	}
 
 	@Override
@@ -77,11 +76,11 @@ public class Caja extends GenericEntity{
 		this.id = id;
 	}
 
-	public Date getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
+	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
 
@@ -109,21 +108,21 @@ public class Caja extends GenericEntity{
 		this.salida = salida;
 	}
 
-	public BigDecimal getSaldo_actual() {
-		return saldo_actual;
+	public BigDecimal getSaldoActual() {
+		return saldoActual;
 	}
 
-	public void setSaldo_actual(BigDecimal saldo_actual) {
-		this.saldo_actual = saldo_actual;
+	public void setSaldoActual(BigDecimal saldoActual) {
+		this.saldoActual = saldoActual;
 	}
 
-	public Usuario getUsuario() {
+	/*public Usuario getUsuario() {
 		return usuario;
 	}
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
-	}
+	}*/
 
 	public static String getSecuencia() {
 		return SECUENCIA;
@@ -132,7 +131,7 @@ public class Caja extends GenericEntity{
 	@Override
 	public String toString() {
 		return "Caja [id=" + id + ", fecha=" + fecha + ", descripcion=" + descripcion + ", entrada=" + entrada
-				+ ", salida=" + salida + ", saldo_actual=" + saldo_actual + ", usuario=" + usuario + "]";
+				+ ", salida=" + salida + ", saldo_actual=" + saldoActual +  "]";
 	}
 
 

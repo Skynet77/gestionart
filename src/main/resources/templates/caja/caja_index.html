@@ -6,7 +6,8 @@
 			<div class="box-header">
 				<h3 class="box-title">Flujo de dinero</h3>
 			</div>
-			<a type="button" th:href="@{/caja/ingreso}" class="btn btn-primary" >Ingreso</a>
+			<a type="button" class="btn btn-primary" onclick="ingreso()" >Ingreso</a>
+			<a type="button" class="btn btn-primary" onclick="egreso()" >Egreso</a>
 			<!-- /.box-header -->
 			<div class="box-body">
               <table id="cajaDT" class="table table-bordered table-hover">
@@ -26,7 +27,58 @@
 		<!-- /.box -->
 	</div>
 	
-	
+	<!-- Modal de ingreso de caja	 -->
+	<div class="modal fade" id="modal-ingreso">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Ingreso de Dinero</h4>
+            </div>
+            <form th:action="@{/caja/registro}" method="post" role="form" id="form-caja" th:object="${caja}" >
+	            <input type="hidden" name="comprobanteCompra" id="comprobanteCompra">
+	            <div class="modal-body">
+	              <div class="row">
+						<div class="col-lg-6">
+							<div class="form-group reg-number">
+								<label for="exampleInputFile">Importe:</label>
+								<input th:field="*{entrada}" type="text" class="form-control cajaEntrada hidden" id="entrada" onkeyup="format(this)" onchange="format(this)"
+									placeholder="Ingrese el importe"
+									data-validation="required"
+									data-validation-error-msg-required="Debe ingresar el importe">
+									
+								<input th:field="*{salida}" type="text" class="form-control cajaSalida hidden" id="salida"
+									placeholder="Ingrese el importe" 
+									data-validation="required"
+									data-validation-error-msg-required="Debe ingresar el importe">
+							</div>
+						</div>
+						
+						
+						
+						<div class="col-lg-12">					
+							<div class="form-group reg-charac-number">
+								<label for="exampleInputPassword1">Descripción:</label> 
+								<input th:field="*{descripcion}" type="text" class="form-control" id="descripcion" onKeyUp="this.value = this.value.toUpperCase();"
+									placeholder="Ingrese descripcion"
+									data-validation="required"
+									data-validation-error-msg-required="Debe ingresar la descripcion">
+							</div>
+						</div>
+					</div>
+	            </div>
+	            <div class="modal-footer">
+	              <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+	              <button type="submit" class="btn btn-primary" name="accion" value="comprobante">Guardar</button>
+	            </div>
+            </form>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
         
         
 	<script th:inline="javascript">
@@ -35,8 +87,21 @@
 		$(document).ready(function() {
 			crearDataTableSinAccion("cajaDT", [[@{/caja/json}]], [[${columnasStr}]], [[@{/caja/edit/}]]);
 			
-			
 		});
+					
+		function ingreso(){
+			$(".cajaEntrada").removeClass("hidden");
+			$(".cajaSalida").addClass("hidden");
+			$("#modal-ingreso").modal('show');
+			
+		}
+		
+		function egreso(){
+			$(".cajaSalida").removeClass("hidden");
+			$(".cajaEntrada").addClass("hidden");
+			$("#modal-ingreso").modal('show');
+			
+		}
 	
 	</script>
 </div>

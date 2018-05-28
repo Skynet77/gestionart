@@ -24,6 +24,8 @@ import com.pol.gestionart.entity.VentaDetalle;
 public class GeneralUtils {
 	
 	public static String COMPROBANTE_PATTERN = "00000";
+	public static final String DATE_FORMAT = "dd/MM/yyyy-HH:mm:ss";
+	public static final String DATE_FORMAT_CAJA = "dd-MM-yyyy";
 	
 	public enum CodigoMoneda {
 		GUARANIES("1", "GS","Gs"), 
