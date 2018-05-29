@@ -65,7 +65,11 @@
 						<div class="col-lg-6">
 							<div class="form-group reg-number">
 								<label for="exampleInputFile">Precio de Compra:</label>
+<<<<<<< Updated upstream
 								<input th:field="*{precioCompra}" type="text" class="form-control importe" id="precioCompra" 
+=======
+								<input th:field="*{precioCompra}" type="text" class="form-control importe" id="precioCompra" onkeyup="format(this)" onchange="format(this)"
+>>>>>>> Stashed changes
 									placeholder="Ingrese Precio de Compra"
 									data-validation="required"
 									data-validation-error-msg-required="Debe ingresar el precio de compra">
