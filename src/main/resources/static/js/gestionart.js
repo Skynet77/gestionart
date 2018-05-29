@@ -237,18 +237,7 @@ function editarProveedor(id){
     });
 }
     
-function editarProducto(idProducto){
-	
-	$.ajax({
-        type: "POST",
-        url: "/gestionart/producto/buscar",
-        data: { 
-            id_producto:idProducto
-        }
-    }).done(function(data){
-        $("#formularioProducto").html(data);
-    });
-}
+
 
 function eliminarProveedor(id){
 	$("#eliminarProveedor").val(id);
