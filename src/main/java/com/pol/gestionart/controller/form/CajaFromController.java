@@ -1,11 +1,17 @@
 package com.pol.gestionart.controller.form;
 
 
+import javax.validation.Valid;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pol.gestionart.controller.list.CajaListController;
 import com.pol.gestionart.controller.list.ClienteListController;
@@ -18,7 +24,7 @@ import com.pol.gestionart.entity.Cliente;
 
 @Controller
 @Scope("request")
-@RequestMapping("movimiento")
+@RequestMapping("caja")
 public class CajaFromController extends FormController<Caja> {
 
 	@Autowired
@@ -57,6 +63,18 @@ public class CajaFromController extends FormController<Caja> {
 		map.addAttribute("tituloFormulario", "Registrar Caja");
 		map.addAttribute("accion", "guardar");
 		super.agregarValoresAdicionales(map);
+	}
+	
+	@RequestMapping("caja/movimiento")
+	public String accion2(ModelMap map, @Valid Caja obj,
+			BindingResult bindingResult,
+			@RequestParam(required = false) String accion,
+			@RequestParam(value = "id_objeto", required = false) Long id_objeto) {
+		if (StringUtils.equals(accion, "save")) {
+			return guardar(map, obj, bindingResult);
+		}
+		return getTemplatePath();
+
 	}
 	
 }
