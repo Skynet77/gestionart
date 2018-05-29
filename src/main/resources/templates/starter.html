@@ -234,7 +234,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="starter
 					/*<![CDATA[*/
 			
 					$(document).ready(function() {
-						console.log("entro aca");
+						formatInput();
 						if(/*[[${error}]]*/){
 							console.log("entro en error");
 							$("#alerta").removeClass("alert-success");

@@ -389,7 +389,7 @@ function formatInput(){
 		
 
 		
-		var codMoneda=$("#codigo-moneda-local").val();
+		var codMoneda="GS"
 		codMoneda = $.trim(codMoneda);
 		var moneda=getMonedaDetails(codMoneda);
 		var inputPattern=moneda.inputPattern;

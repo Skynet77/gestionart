@@ -91,7 +91,7 @@
 									<i class="fa fa-usd"></i>
 								</div>
 								<input type="text" class="form-control" id="cantidad" name="cantidad"
-							placeholder="Cantidad" disabled>
+							placeholder="Cantidad" >
 							</div>
 							<!-- /.input group -->
 						</div>
@@ -157,7 +157,7 @@
 										<i class="fa fa-usd"></i>
 									</div>
 									<input type="text" class="form-control"  id="subTotal" name="subTotal"
-							placeholder="Sub Total" disabled>
+							placeholder="Sub Total" readonly="readonly">
 								</div>
 								<!-- /.input group -->
 							</div>
@@ -184,7 +184,7 @@
 									<div class="input-group-addon">
 										<i class="fa fa-usd"></i>
 									</div>
-									<input type="text" class="form-control input-money" value="0.0" name="montoTotal" id="montoTotal" disabled>
+									<input type="text" class="form-control input-money" value="0.0" name="montoTotal" id="montoTotal" readonly="readonly">
 								</div>
 								<!-- /.input group -->
 							</div>
@@ -244,7 +244,7 @@
                 <span aria-hidden="true">&times;</span></button>
               <h4 class="modal-title">Esta Seguro?</h4>
             </div>
-            <form th:action="@{/venta/comprobante}" method="post" role="form" id="form-comprobante">
+<!--             <form th:action="@{/venta/comprobante}" method="post" role="form" id="form-comprobante"> -->
             <input type="hidden" name="comprobanteVenta" id="comprobanteVenta">
             <div class="modal-body">
               <p><b>Venta Realizada con Éxito!!</b></p>
@@ -252,9 +252,9 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Realizar Otra Venta</button>
-              <button type="submit" class="btn btn-primary" name="accion" value="comprobante">Imprimir Comprobante</button>
+              <a  th:href="@{'/venta/comprobante?id_venta=' + ${ventaCabeceraId}}" target="_blank" class="btn btn-primary" onclick="cerrarModal()">Imprimir Comprobante</a>
             </div>
-            </form>
+<!--             </form> -->
           </div>
           <!-- /.modal-content -->
         </div>
@@ -410,6 +410,10 @@
 				$("#errorDivC").addClass("hidden");
 				$("#form-cabecera").submit();
 			}
+		}
+		
+		function cerrarModal(){
+			$("#modal-default").modal('hide');
 		}
 	</script>
 </div>
