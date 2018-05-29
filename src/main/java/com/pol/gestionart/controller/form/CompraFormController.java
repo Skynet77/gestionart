@@ -54,7 +54,7 @@ import net.sf.jasperreports.engine.util.JRLoader;
 public class CompraFormController extends FormController<CompraCabecera> {
 	public static final String LISTA_DETALLE = "listaDetalle";
 	public static final String MAP_DETALLE_COMPRA = "mapDetalleCompra";
-	public static final String LISTA_PRODUCTO = "listaProducto";
+	public static final String LISTA_PRODUCTO_COMPRA = "listaProductoCompra";
 	public static final String COMPRA_CABECERA = "compraCabecera";
 	public static final String COMPRA_DETALLE = "compraDetalle";
 	public static final String PRODUCTO_DETALLE = "productoDetalle";
@@ -127,8 +127,8 @@ public class CompraFormController extends FormController<CompraCabecera> {
 			Producto producto = null;
 			BigDecimal montoTotal;
 			try {
-				if(session.getAttribute(LISTA_PRODUCTO)!=null){
-					listProducto = (List<Producto>) session.getAttribute(LISTA_PRODUCTO);
+				if(session.getAttribute(LISTA_PRODUCTO_COMPRA)!=null){
+					listProducto = (List<Producto>) session.getAttribute(LISTA_PRODUCTO_COMPRA);
 				}else{
 					listProducto = new ArrayList<>();
 				}

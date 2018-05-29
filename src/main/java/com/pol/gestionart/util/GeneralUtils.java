@@ -96,7 +96,7 @@ public class GeneralUtils {
 	public static Map<String, CompraDetalle> mapSerializeCompraDetalleOrUpdate(HttpSession session, 	
 			CompraDetalle compraDet){
 		Map<String, CompraDetalle> mapSerializeCdas = new HashMap<>();
-		if(session.getAttribute(VentaFormController.MAP_DETALLE) == null){
+		if(session.getAttribute(CompraFormController.MAP_DETALLE_COMPRA) == null){
 				String keyMap = UUID.randomUUID().toString();
 				mapSerializeCdas.put(keyMap, compraDet);
 
