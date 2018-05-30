@@ -2,7 +2,7 @@ spring:
   datasource: 
     url: jdbc:postgresql://localhost:5432/gestionart
     username: postgres
-    password: postgre
+    password: postgres
   messages:
     basename: Messages
     encoding: UTF-8
@@ -29,3 +29,4 @@ server:
     context-path: /gestionart
   tomcat:
     uri-encoding: UTF-8
+  port: 8090

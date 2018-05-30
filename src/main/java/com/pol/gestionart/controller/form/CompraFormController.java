@@ -170,7 +170,7 @@ public class CompraFormController extends FormController<CompraCabecera> {
 				subTotal = compraCab.getTotal().divide(IVA_10,2,BigDecimal.ROUND_HALF_UP);
 				compraCab.setSubTotalBigDecimal(subTotal);
 				IVA = subTotal.multiply(new BigDecimal(0.1));
-				compraCab.setIva(IVA);
+			//	compraCab.setIva(IVA);
 				
 				//el detalle actual que se esta procesando
 				compraDet = new CompraDetalle();
@@ -225,7 +225,7 @@ public class CompraFormController extends FormController<CompraCabecera> {
 				subTotal = compraCab.getTotal().divide(IVA_10,2,BigDecimal.ROUND_HALF_UP);
 				compraCab.setSubTotalBigDecimal(subTotal);
 				IVA = subTotal.multiply(new BigDecimal(0.1));
-				compraCab.setIva(IVA);
+				//compraCab.setIva(IVA);
 				
 				mapCompraDetail.remove(uuid);
 				session.setAttribute(MAP_DETALLE_COMPRA,mapCompraDetail);
@@ -240,7 +240,7 @@ public class CompraFormController extends FormController<CompraCabecera> {
 		
 		
 		@RequestMapping(value = "confirmar", method = RequestMethod.POST)
-		public String confirmarCompra(ModelMap map, @Valid CompraCabecera compraCabecera,HttpSession session) {
+		public String confirmarCompra(ModelMap map, CompraCabecera compraCabecera,HttpSession session) {
 			
 			CompraCabecera compraCab = null;
 			CompraDetalle compraDet = null;
@@ -256,7 +256,7 @@ public class CompraFormController extends FormController<CompraCabecera> {
 				mapaCompraDetalle  = (Map<String, CompraDetalle>) session.getAttribute(MAP_DETALLE_COMPRA);
 			}
 			
-			compraCabecera.setIva(compraCab.getIva());
+			//compraCabecera.setIva(compraCab.getIva());
 			compraCabecera.setNroComprobante("1");
 			compraCabeceraDao.create(compraCabecera);
 			

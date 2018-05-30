@@ -13,6 +13,7 @@ import com.pol.gestionart.converters.ClienteConverter;
 import com.pol.gestionart.converters.CompraCabeceraConverter;
 import com.pol.gestionart.converters.FamiliaConverter;
 import com.pol.gestionart.converters.ProductoConverter;
+import com.pol.gestionart.converters.ProveedorConverter;
 import com.pol.gestionart.converters.VentaCabeceraConverter;
 
 @Configuration
@@ -35,6 +36,7 @@ public class ConversionConfiguration {
         converters.add(new VentaCabeceraConverter());
         converters.add(new ClienteConverter());
         converters.add(new CompraCabeceraConverter());
+        converters.add(new ProveedorConverter());
 
         return converters;
     }
