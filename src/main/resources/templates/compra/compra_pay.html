@@ -256,7 +256,7 @@
 
 					var idCompra = '[[${compraCabeceraId}]]';
 					$("#id_compra_cabecera").val(idCompra);
-					if(/*[[${msgExitocompra}]]*/){
+					if(/*[[${msgExitoCompra}]]*/){
 						$("#modal-default").modal('show');
 					}
 					
@@ -271,6 +271,7 @@
 					$(suggestProveedor).on('selectionchange', function(a,b,c){
 						var proveedor = c[0];
 						$("#proveedor").val(proveedor.id);
+						$("#ruc").val(proveedor.ruc);
 					});
 					var fechaInicio = new Date();
 					var fecha=new Date();
