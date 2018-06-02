@@ -140,7 +140,7 @@
        			$("#precioVenta").on('focusout', function(){
            			var venta = $("#precioVenta").val();
            			var compra =$("#precioCompra").val(); 
-           			if(venta.replace(".","") <= compra.replace(".","")){
+           			if(parseInt(venta.replace(".","")) <= parseInt(compra.replace(".",""))){
 	           			alert('El precio de venta no puede ser menor o igual al precio de compra');
 	           			$("#msgError").html("El precio de venta no puede ser menor o igual al precio de compra");
 	           			$(this).val('');
