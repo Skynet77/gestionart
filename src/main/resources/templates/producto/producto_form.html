@@ -94,7 +94,7 @@
 	                  </div>
                 	</div>	
                 	
-                	<!-- <div> <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="limpiarFormulario()" >Limpiar campos</button> </div> -->
+ 
 				</div>
 				<!-- /.box-body -->
 
@@ -151,7 +151,10 @@
        		});
        		
        	  function limpiarFormulario() {
-       	    document.getElementById("form-usuario").reset();
+        	 $("#codigo").val("");
+         	 $("#descripcion").val("");
+       		 $("#precioCompra").val("");
+       		 $("#precioVenta").val("");
        	  };
        	  
 				$.validate({

@@ -66,7 +66,7 @@
  
         <div class="box-footer">
 			<div class="form-group col-xs-12 col-sm-12 modal-footer" th:fragment="footerModal">
-				<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="limpiarFormulario()" >Cancelar</button>
 				<button th:if="${accion=='guardar'}" type="submit" class="btn btn-primary" name="accion" value="save" >Guardar</button>
 				<button th:if="${accion=='editar'}"type="submit" class="btn btn-primary" name="accion" id="edit"
 					value="edit">Confirmar</button>
@@ -116,6 +116,13 @@
 	        	}
 	        })
 	
+       	  function limpiarFormulario() {
+        	 $("#nombreRazonSocial").val("");
+         	 $("#apellido").val("");
+       		 $("#cedulaRuc").val("");
+       		 $("#password").val("");
+       	  };
+	        
 			var REGEX_LETTERS = "^[a-zA-Z0-9]+$";
 			$(".reg-charac-number").on('keypress', function(event){
 					var key= String.fromCharCode(!event.charCode ? event.witch : event.charCode);
