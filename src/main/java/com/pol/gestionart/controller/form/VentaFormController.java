@@ -25,9 +25,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pol.gestionart.controller.list.VentaCabeceraListController;
 import com.pol.gestionart.dao.Dao;
+import com.pol.gestionart.dao.CajaDao;
 import com.pol.gestionart.dao.ProductoDao;
 import com.pol.gestionart.dao.VentaCabeceraDao;
 import com.pol.gestionart.dao.VentaDetalleDao;
+import com.pol.gestionart.entity.Caja;
 import com.pol.gestionart.entity.Producto;
 import com.pol.gestionart.entity.VentaCabecera;
 import com.pol.gestionart.entity.VentaCabecera.Estado;
@@ -64,6 +66,9 @@ public class VentaFormController extends FormController<VentaCabecera> {
 	
 	@Autowired 
 	private ProductoDao productoDao;
+	
+	@Autowired 
+	private CajaDao cajaDao;
 	
 	@Autowired
 	private VentaCabeceraDao ventaCabeceraDao;
@@ -249,6 +254,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		
 		VentaCabecera ventaCab = null;
 		VentaDetalle ventaDet = null;
+		Caja caja = null;
 		Map<String, VentaDetalle> mapaVentaDetalle = null;
 		
 		if(session.getAttribute(VENTA_CABECERA)!=null){
@@ -277,6 +283,12 @@ public class VentaFormController extends FormController<VentaCabecera> {
 			disminuirStock(vd, map);
 		}
 		
+		caja = new Caja();
+		caja.setFecha(ventaCab.getFechaEmision());
+		caja.setDescripcion("VENTA");
+		caja.setEntrada(ventaCab.getMontoTotal());
+		//caja.setSaldoActual(caja.getSaldoActual() + ventaCab.getMontoTotal());
+		cajaDao.create(caja);
 		
 		map.addAttribute("msgExitoVenta", true);
 		map.addAttribute("ventaCabeceraId", ventaCabecera.getIdVenta());
