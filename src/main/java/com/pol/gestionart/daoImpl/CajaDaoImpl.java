@@ -27,7 +27,7 @@ public class CajaDaoImpl extends DaoImpl<Caja> implements CajaDao{
 	@Override
 	@Transactional
 	@SuppressWarnings(UNCHECKED)
-	public Caja findCajaByDate(String fecha) {
+	public Caja findCajaByDate() {
 		Caja caja =  null;
 		EntityManager em = entityManager;
 		String sql = "select object(ENTITY) from ENTITY as ENTITY";

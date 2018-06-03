@@ -421,6 +421,8 @@ function formatInputEdit(monto){
 		var moneda=getMonedaDetails(codMoneda);
 		var inputPattern=moneda.inputPattern;
 		var formatPattern=moneda.formatPattern;
+		if(num == null || num == undefined)
+			num = '0';
 		num = num.toString();
 		var numCleaned=num.replace(inputPattern, "");
 		if(codMoneda==="GS"){

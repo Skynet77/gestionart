@@ -72,7 +72,7 @@ public class CajaFromController extends FormController<Caja> {
 		String fechaActual = GeneralUtils.getStringFromDate(d,GeneralUtils.DATE_FORMAT_CAJA);
 		Caja addCaja = new Caja();
 		addCaja.setFechaActual(d);
-		Caja cajaActual = cajaDao.findCajaByDate(fechaActual);
+		Caja cajaActual = cajaDao.findCajaByDate();
 		BigDecimal saldoActual = BigDecimal.ZERO; 
 		
 		if(!(caja.getEntrada()==null)){

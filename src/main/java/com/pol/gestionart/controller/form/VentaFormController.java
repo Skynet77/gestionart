@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pol.gestionart.controller.list.VentaCabeceraListController;
-import com.pol.gestionart.dao.Dao;
 import com.pol.gestionart.dao.CajaDao;
+import com.pol.gestionart.dao.Dao;
 import com.pol.gestionart.dao.ProductoDao;
 import com.pol.gestionart.dao.VentaCabeceraDao;
 import com.pol.gestionart.dao.VentaDetalleDao;
@@ -35,6 +35,7 @@ import com.pol.gestionart.entity.VentaCabecera;
 import com.pol.gestionart.entity.VentaCabecera.Estado;
 import com.pol.gestionart.entity.VentaDetalle;
 import com.pol.gestionart.exceptions.AjaxException;
+import com.pol.gestionart.exceptions.WebAppException;
 import com.pol.gestionart.util.GeneralUtils;
 
 import net.sf.jasperreports.engine.JREmptyDataSource;
@@ -250,7 +251,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 	
 
 	@RequestMapping(value = "confirmar", method = RequestMethod.POST)
-	public String confirmarVenta(ModelMap map, @Valid VentaCabecera ventaCabecera,HttpSession session) {
+	public String confirmarVenta(ModelMap map, @Valid VentaCabecera ventaCabecera,HttpSession session) throws WebAppException {
 		
 		VentaCabecera ventaCab = null;
 		VentaDetalle ventaDet = null;
@@ -285,12 +286,19 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		
 		caja = new Caja();
 		caja.setFecha(ventaCab.getFechaEmision());
-		caja.setDescripcion("VENTA");
+		caja.setDescripcion("COMPRA producto");
 		caja.setEntrada(ventaCab.getMontoTotal());
-		//caja.setSaldoActual(caja.getSaldoActual() + ventaCab.getMontoTotal());
+		Caja cajaActual = cajaDao.findCajaByDate();
+		
+		if(cajaActual ==  null){
+			throw new WebAppException("Debe abrir una caja antes de realizar una compra");
+		}else{
+			caja.setSaldoActual(cajaActual.getSaldoActual().subtract(ventaCab.getMontoTotal()));
+		}
 		cajaDao.create(caja);
 		
 		map.addAttribute("msgExitoVenta", true);
+		map.addAttribute("msgExito", "Venta creada con éxito");
 		map.addAttribute("ventaCabeceraId", ventaCabecera.getIdVenta());
 		session.setAttribute("ventaCabeceraId", ventaCabecera.getIdVenta());
 		return indexPay(map, session);

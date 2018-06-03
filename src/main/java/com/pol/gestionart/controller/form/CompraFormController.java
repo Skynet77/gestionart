@@ -13,30 +13,28 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pol.gestionart.controller.list.CompraCabeceraListcontroller;
+import com.pol.gestionart.dao.CajaDao;
 import com.pol.gestionart.dao.CompraCabeceraDao;
 import com.pol.gestionart.dao.CompraDetalleDao;
 import com.pol.gestionart.dao.Dao;
 import com.pol.gestionart.dao.ProductoDao;
 import com.pol.gestionart.dao.ProveedorDao;
-import com.pol.gestionart.entity.Cliente;
-import com.pol.gestionart.entity.CompraCabecera;
-import com.pol.gestionart.entity.Producto;
+import com.pol.gestionart.entity.Caja;
 import com.pol.gestionart.entity.CompraCabecera;
 import com.pol.gestionart.entity.CompraDetalle;
+import com.pol.gestionart.entity.Producto;
 import com.pol.gestionart.exceptions.AjaxException;
+import com.pol.gestionart.exceptions.WebAppException;
 import com.pol.gestionart.util.GeneralUtils;
 
 import net.sf.jasperreports.engine.JREmptyDataSource;
@@ -76,6 +74,9 @@ public class CompraFormController extends FormController<CompraCabecera> {
 	@Autowired 
 	private ProductoDao productoDao;
 
+	@Autowired 
+	private CajaDao cajaDao;
+	
 	@Override
 	public String getTemplatePath() {
 		return "compra/compra_index";
@@ -271,7 +272,18 @@ public class CompraFormController extends FormController<CompraCabecera> {
 				compraDetalleDao.create(vd);
 			}
 			
+			caja = new Caja();
+			caja.setFecha(compraCabecera.getFechaEmision());
+			caja.setDescripcion("VENTA");
+			caja.setEntrada(compraCabecera.getMontoTotal());
+			Caja cajaActual = cajaDao.findCajaByDate();
 			
+			if(cajaActual ==  null){
+				throw new WebAppException("Debe abrir una caja antes de realizar una venta");
+			}else{
+				caja.setSaldoActual(cajaActual.getSaldoActual().add(ventaCab.getMontoTotal()));
+			}
+			cajaDao.create(caja);
 			map.addAttribute("msgExitoCompra", true);
 			map.addAttribute("compraCabeceraId", compraCabecera.getId());
 			session.setAttribute("compraCabeceraId", compraCabecera.getId());

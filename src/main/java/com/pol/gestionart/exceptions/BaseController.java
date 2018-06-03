@@ -44,8 +44,12 @@ public class BaseController {
 			session.invalidate();
 			return AuthenticationController.GO_TO_SESSION_INVALID;
 		}*/
-		
-			model.addAttribute("errorGeneric","Ocurrió un error inesperado");
+		ErrorData errorData = new ErrorData();
+		errorData.setType("WEB");
+		errorData.setCode("200518");
+		errorData.setDescription(pe.getMessage());
+		response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			model.addAttribute("error",pe.getMessage());
 		
 		return ERROR_PAGE_URL;
 	}
