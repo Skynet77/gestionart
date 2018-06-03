@@ -1,8 +1,5 @@
 package com.pol.gestionart.daoImpl;
 
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 import java.util.List;
@@ -13,6 +10,8 @@ import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.pol.gestionart.dao.Dao;
 import com.pol.gestionart.main.GenericEntity;
@@ -79,6 +78,21 @@ public abstract class DaoImpl<T extends GenericEntity> implements Dao<T>{
 		//sSearch = "A"; // Solo traerá con estados activos
 		if (sSearch== null || "".equals(sSearch)) {
 			query = entityManager.createQuery(sql);
+		} else if(sSearch.contains(",")){
+			String[] param = sSearch.split(",");
+			//Ej: A,Coca [A,Coca]
+			if(param.length >= 2){
+				sql = sql + "WHERE estado = ?1 and lower(" + getCamposFiltrables() + ")LIKE lower (?2)";
+				query = entityManager.createQuery(sql);
+				query.setParameter(1, param[0]);
+				query.setParameter(2, "%" + param[1].replace(" ", "%") + "%");
+			}else{
+				sql = sql + "WHERE estado = ?1 and lower(" + getCamposFiltrables() + ")LIKE lower (?2)";
+				query = entityManager.createQuery(sql);
+				query.setParameter(1, param[0]);
+				query.setParameter(2, "%" + param[0].replace(" ", "%") + "%");
+			}
+			
 		} else {
 			sql = sql + "WHERE lower(" + getCamposFiltrables() + ")LIKE lower (?1)";
 			query = entityManager.createQuery(sql);

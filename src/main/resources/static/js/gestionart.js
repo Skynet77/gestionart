@@ -16,12 +16,14 @@ function crearDataTable(dataTableId, ajaxSource, columnas, editUrl){
 		        'columns' : getColumnasArray(columnas),
 		        //'paging'      : true,
 		        //'lengthChange': false,
-		        'searching'   : false,
+		        'searching'   : true,
 		        'info'        : true,
 		        'autoWidth'   : false,
 		        "pagingType": "simple_numbers",
 		        "bSort": false,
                 'language' : {
+                	"decimal": ",",
+                    "thousands": ".",
                     "sProcessing": "Procesando...",
                     "sLengthMenu": "Mostrar _MENU_ registros",
                     "sZeroRecords": "No se encontraron resultados",
@@ -30,7 +32,7 @@ function crearDataTable(dataTableId, ajaxSource, columnas, editUrl){
                     "sInfoEmpty": "Mostrando _MAX_ registros",
                     "sInfoFiltered": " ",
                     "sInfoPostFix": "",
-                    //"sSearch": "Buscar:",
+                    "sSearch": "Buscar:",
                     "sUrl": "",
                     "sInfoThousands": ",",
                     "sLoadingRecords": "Cargando...",
@@ -111,6 +113,15 @@ function getColumnasArray(colsStr){
 					}else if(val == false){
 						val="No";
 						
+					}else if(val=="precioCompra" || val=="precioVenta"){
+						columnsArray.push( 
+								{"data" : val,
+								 "render": function ( data, type, row ) {
+								        console.log(formatInputEdit(data));
+								        var monto = formatInputEdit(data);
+								        return monto;
+								    }
+								} );
 					}else{
 						columnsArray.push( {"data" : val} );
 					}
@@ -391,6 +402,26 @@ function formatInput(){
 		}
 	    $(this).val(numFormated);
 	});
+}
+
+function formatInputEdit(monto){
+		var num = monto;
+		
+
+		
+		var codMoneda="GS"
+		codMoneda = $.trim(codMoneda);
+		var moneda=getMonedaDetails(codMoneda);
+		var inputPattern=moneda.inputPattern;
+		var formatPattern=moneda.formatPattern;
+		num = num.toString();
+		var numCleaned=num.replace(inputPattern, "");
+		if(codMoneda==="GS"){
+			var numFormated=formatMontoDecimal(numCleaned);
+		}else{
+			var numFormated=formatMontoDecimalCotizacion(numCleaned);
+		}
+	    return numFormated;
 }
 
 

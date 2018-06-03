@@ -152,7 +152,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 			}
 			
 			//multiplicamos el precio de venta por la cantidad
-			BigDecimal montoVenta = producto.getPrecioVenta().multiply(new BigDecimal(cantidad));
+			BigDecimal montoVenta = producto.getPrecioVentaBigDecimal().multiply(new BigDecimal(cantidad));
 			//sumamos el monto total que teniamos por 
 			montoTotal = montoTotal.add(montoVenta);
 			//volvemos a guardar el monto total
@@ -176,7 +176,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 			ventaDet = new VentaDetalle();
 			ventaDet.setCantidad(cantidad);
 			ventaDet.setPrecioTotal(montoVenta);
-			ventaDet.setPrecioUnitario(producto.getPrecioVenta());
+			ventaDet.setPrecioUnitario(producto.getPrecioVentaBigDecimal());
 			ventaDet.setProducto(producto);
 			ventaDet.setVentaCabecera(ventaCab);
 		} catch (Exception e ) {
