@@ -1,8 +1,7 @@
 package com.pol.gestionart.daoImpl;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
@@ -29,19 +28,25 @@ public class CajaDaoImpl extends DaoImpl<Caja> implements CajaDao{
 	@Transactional
 	@SuppressWarnings(UNCHECKED)
 	public Caja findCajaByDate(String fecha) {
-
+		Caja caja =  null;
 		EntityManager em = entityManager;
 		String sql = "select object(ENTITY) from ENTITY as ENTITY";
 		sql = sql.replace("ENTITY", getEntityName());
 		logger.debug("Realizando consulta: {}", sql);
 
 		Query query = em.createQuery(sql);
-		sql = sql + "WHERE fecha = (?1)";
+		sql = sql + " WHERE fechaactual = (select MAX(fechaActual) from Caja )";
 		query = entityManager.createQuery(sql);
-		query.setParameter(1,fecha);
-		Caja caja = (Caja) query.getSingleResult();
+	//	query.setParameter(1,fecha);
+		try {
+		
+		caja = (Caja) query.getSingleResult();
 		logger.info("Registros encontrados: {}", caja);
 		return caja;
+		} catch (NoResultException e) {
+			return caja;
+		}
+		
 	}
 	
 	

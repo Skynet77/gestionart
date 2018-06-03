@@ -117,7 +117,6 @@ function getColumnasArray(colsStr){
 						columnsArray.push( 
 								{"data" : val,
 								 "render": function ( data, type, row ) {
-								        console.log(formatInputEdit(data));
 								        var monto = formatInputEdit(data);
 								        return monto;
 								    }
@@ -328,6 +327,14 @@ function getColumnasArraySinAccion(colsStr){
 					}else if(val == false){
 						val="No";
 						
+					}else if(val=="entrada" || val=="salida" || val=="saldoActual"){
+						columnsArray.push( 
+								{"data" : val,
+								 "render": function ( data, type, row ) {
+								        var monto = formatInputEdit(data);
+								        return monto;
+								    }
+								} );
 					}else{
 						columnsArray.push( {"data" : val} );
 					}
@@ -432,7 +439,7 @@ function getMonedaDetails(codMoneda){
 		moneda.descripcion='Guaraníes';
 		moneda.formato="0,0";
 		moneda.formatPattern=/\D/g;
-		moneda.inputPattern=/\D/g;
+		moneda.inputPattern=/-\D/g;
 		break;
 	case 'USD':
 		moneda.descripcion='Dólares';
