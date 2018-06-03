@@ -16,12 +16,14 @@ function crearDataTable(dataTableId, ajaxSource, columnas, editUrl){
 		        'columns' : getColumnasArray(columnas),
 		        //'paging'      : true,
 		        //'lengthChange': false,
-		        'searching'   : false,
+		        'searching'   : true,
 		        'info'        : true,
 		        'autoWidth'   : false,
 		        "pagingType": "simple_numbers",
 		        "bSort": false,
                 'language' : {
+                	"decimal": ",",
+                    "thousands": ".",
                     "sProcessing": "Procesando...",
                     "sLengthMenu": "Mostrar _MENU_ registros",
                     "sZeroRecords": "No se encontraron resultados",
@@ -30,7 +32,7 @@ function crearDataTable(dataTableId, ajaxSource, columnas, editUrl){
                     "sInfoEmpty": "Mostrando _MAX_ registros",
                     "sInfoFiltered": " ",
                     "sInfoPostFix": "",
-                    //"sSearch": "Buscar:",
+                    "sSearch": "Buscar:",
                     "sUrl": "",
                     "sInfoThousands": ",",
                     "sLoadingRecords": "Cargando...",
@@ -111,6 +113,14 @@ function getColumnasArray(colsStr){
 					}else if(val == false){
 						val="No";
 						
+					}else if(val=="precioCompra" || val=="precioVenta"){
+						columnsArray.push( 
+								{"data" : val,
+								 "render": function ( data, type, row ) {
+								        var monto = formatInputEdit(data);
+								        return monto;
+								    }
+								} );
 					}else{
 						columnsArray.push( {"data" : val} );
 					}
@@ -317,6 +327,14 @@ function getColumnasArraySinAccion(colsStr){
 					}else if(val == false){
 						val="No";
 						
+					}else if(val=="entrada" || val=="salida" || val=="saldoActual"){
+						columnsArray.push( 
+								{"data" : val,
+								 "render": function ( data, type, row ) {
+								        var monto = formatInputEdit(data);
+								        return monto;
+								    }
+								} );
 					}else{
 						columnsArray.push( {"data" : val} );
 					}
@@ -393,6 +411,26 @@ function formatInput(){
 	});
 }
 
+function formatInputEdit(monto){
+		var num = monto;
+		
+
+		
+		var codMoneda="GS"
+		codMoneda = $.trim(codMoneda);
+		var moneda=getMonedaDetails(codMoneda);
+		var inputPattern=moneda.inputPattern;
+		var formatPattern=moneda.formatPattern;
+		num = num.toString();
+		var numCleaned=num.replace(inputPattern, "");
+		if(codMoneda==="GS"){
+			var numFormated=formatMontoDecimal(numCleaned);
+		}else{
+			var numFormated=formatMontoDecimalCotizacion(numCleaned);
+		}
+	    return numFormated;
+}
+
 
 function getMonedaDetails(codMoneda){
 	var moneda= new Object();
@@ -401,7 +439,7 @@ function getMonedaDetails(codMoneda){
 		moneda.descripcion='Guaraníes';
 		moneda.formato="0,0";
 		moneda.formatPattern=/\D/g;
-		moneda.inputPattern=/\D/g;
+		moneda.inputPattern=/-\D/g;
 		break;
 	case 'USD':
 		moneda.descripcion='Dólares';

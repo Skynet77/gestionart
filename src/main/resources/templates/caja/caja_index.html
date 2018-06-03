@@ -43,7 +43,7 @@
 						<div class="col-lg-6">
 							<div class="form-group reg-number">
 								<label for="exampleInputFile">Importe:</label>
-								<input th:field="*{entrada}" type="text" class="form-control cajaEntrada hidden" id="entrada" onkeyup="format(this)" onchange="format(this)"
+								<input th:field="*{entrada}" type="text" class="form-control cajaEntrada hidden importe" id="entrada"
 									placeholder="Ingrese el importe"
 									data-validation="required"
 									data-validation-error-msg-required="Debe ingresar el importe">
@@ -93,7 +93,7 @@
 						<div class="col-lg-6">
 							<div class="form-group reg-number">
 								<label for="exampleInputFile">Importe:</label>			
-								<input th:field="*{salida}" type="text" class="form-control cajaSalida hidden" id="salida" onkeyup="format(this)" onchange="format(this)"
+								<input th:field="*{salida}" type="text" class="form-control cajaSalida hidden importe" id="salida"
 									placeholder="Ingrese el importe" 
 									data-validation="required"
 									data-validation-error-msg-required="Debe ingresar el importe">

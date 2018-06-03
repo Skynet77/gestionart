@@ -2,6 +2,7 @@ package com.pol.gestionart.controller.form;
 
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.servlet.http.HttpSession;
@@ -10,17 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pol.gestionart.controller.list.CajaListController;
-import com.pol.gestionart.controller.list.ClienteListController;
 import com.pol.gestionart.dao.CajaDao;
 import com.pol.gestionart.dao.Dao;
 import com.pol.gestionart.entity.Caja;
-import com.pol.gestionart.entity.Cliente;
 import com.pol.gestionart.util.GeneralUtils;
 
 
@@ -70,30 +66,47 @@ public class CajaFromController extends FormController<Caja> {
 	
 	@RequestMapping("registro")
 	public String ingreso(ModelMap map,HttpSession session, Caja caja) {
-		Date d = new Date();
+		Calendar calendar = Calendar.getInstance();
+		//calendar.set(Calendar.DATE, 1);
+		Date d = new Date(calendar.getTimeInMillis());
 		String fechaActual = GeneralUtils.getStringFromDate(d,GeneralUtils.DATE_FORMAT_CAJA);
 		Caja addCaja = new Caja();
+		addCaja.setFechaActual(d);
 		Caja cajaActual = cajaDao.findCajaByDate(fechaActual);
-		BigDecimal  saldoActual = BigDecimal.ZERO; 
+		BigDecimal saldoActual = BigDecimal.ZERO; 
 		
 		if(!(caja.getEntrada()==null)){
 			addCaja.setDescripcion(caja.getDescripcion());
 			addCaja.setEntrada(caja.getEntrada());
 			addCaja.setFecha(fechaActual);
 			
-			saldoActual  = cajaActual.getSaldoActual().add(caja.getEntrada());
+			if(cajaActual!=null){
+				saldoActual  = cajaActual.getSaldoActual().add(caja.getEntrada());
+			}else{
+				saldoActual = caja.getEntrada();
+			}
+			
 			addCaja.setSaldoActual(saldoActual);
 			addCaja.setSalida(BigDecimal.ZERO);
+			map.addAttribute("msgExito", "Ingreso registrado correctamente");
 		}else if(!(caja.getSalida()==null)){
 			addCaja.setDescripcion(caja.getDescripcion());
-			addCaja.setEntrada(caja.getEntrada());
+			addCaja.setSalida(caja.getSalida());
 			addCaja.setFecha(fechaActual);
 			
-			saldoActual  = cajaActual.getSaldoActual().subtract(caja.getEntrada());
+			if(cajaActual!=null){
+				saldoActual  = cajaActual.getSaldoActual().subtract(caja.getSalida());
+			}else{
+				saldoActual  = caja.getSalida();
+			}
+			
 			addCaja.setSaldoActual(saldoActual);
-			addCaja.setSalida(BigDecimal.ZERO);
+			addCaja.setEntrada(BigDecimal.ZERO);
+			map.addAttribute("msgExito", "Egreso registrado correctamente");
 		}
+		agregarValoresAdicionales(map);
 		
+		cajaDao.create(addCaja);
 		return getTemplatePath(); 
 	}
 	

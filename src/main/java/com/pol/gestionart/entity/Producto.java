@@ -101,19 +101,36 @@ public class Producto extends GenericEntity {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	public BigDecimal getPrecioCompra() {
-		return precioCompra;
-	}
+
 	public void setPrecioCompra(BigDecimal precioCompra) {
 		String monto = precioCompra.toPlainString().replace(".", "");
 		this.precioCompra = new BigDecimal(monto);
 	}
 	public BigDecimal getPrecioVenta() {
+		if(precioVenta != null)
+			return precioVenta.setScale(0, BigDecimal.ROUND_CEILING);
+		else
+			return precioVenta;
+	}
+	
+	public BigDecimal getPrecioVentaBigDecimal() {
 		return precioVenta;
 	}
+	
 	public void setPrecioVenta(BigDecimal precioVenta) {
 		String monto = precioVenta.toPlainString().replace(".", "");
 		this.precioVenta = new BigDecimal(monto);
+	}
+	
+	public BigDecimal getPrecioCompraBigDecimal() {
+		return precioCompra;
+	}
+	
+	public BigDecimal getPrecioCompra() {
+		if(precioCompra != null)
+			return precioCompra.setScale(0, BigDecimal.ROUND_CEILING);
+		else
+			return precioCompra;
 	}
 
 	public BigDecimal getIva() {

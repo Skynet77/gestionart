@@ -1,17 +1,14 @@
 package com.pol.gestionart.entity;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -45,6 +42,9 @@ public class Caja extends GenericEntity{
 	
 	private BigDecimal saldoActual;
 	
+	//@Temporal(TemporalType.DATE)
+	private Date fechaActual;
+	
 	/*@ManyToOne
 	@NotNull(message = "caja.usuario.notNull")
 	@JoinColumn(foreignKey = @ForeignKey(name = "caja_usuario_fk"))
@@ -64,6 +64,14 @@ public class Caja extends GenericEntity{
 		this.salida = salida;
 		this.saldoActual = saldo_actual;
 		//this.usuario = usuario;
+	}
+
+	public Date getFechaActual() {
+		return fechaActual;
+	}
+
+	public void setFechaActual(Date fechaActual) {
+		this.fechaActual = fechaActual;
 	}
 
 	@Override
@@ -97,7 +105,14 @@ public class Caja extends GenericEntity{
 	}
 
 	public void setEntrada(BigDecimal entrada) {
-		this.entrada = entrada;
+		if(entrada != null){
+			String monto = entrada.toPlainString().replace(".", "");
+			this.entrada = new BigDecimal(monto);
+		}else{
+			this.entrada = entrada;
+		}
+				
+		
 	}
 
 	public BigDecimal getSalida() {
@@ -105,7 +120,13 @@ public class Caja extends GenericEntity{
 	}
 
 	public void setSalida(BigDecimal salida) {
-		this.salida = salida;
+		if(salida != null){
+			String monto = salida.toPlainString().replace(".", "");
+			this.salida = new BigDecimal(monto);
+		}else{
+			this.salida = salida;
+		}
+		
 	}
 
 	public BigDecimal getSaldoActual() {
@@ -113,7 +134,7 @@ public class Caja extends GenericEntity{
 	}
 
 	public void setSaldoActual(BigDecimal saldoActual) {
-		this.saldoActual = saldoActual;
+		this.saldoActual =saldoActual;
 	}
 
 	/*public Usuario getUsuario() {

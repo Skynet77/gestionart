@@ -65,7 +65,7 @@
 						<div class="col-lg-6">
 							<div class="form-group reg-number">
 								<label for="exampleInputFile">Precio de Compra:</label>
-								<input th:field="*{precioCompra}" type="text" class="form-control importe" id="precioCompra" onkeyup="format(this)" onchange="format(this)"
+								<input th:field="*{precioCompra}" type="text" class="form-control importe" id="precioCompra" oninput="formatInput()"
 
 									placeholder="Ingrese Precio de Compra"
 									data-validation="required"
@@ -76,7 +76,7 @@
 						<div class="col-lg-6">	
 							<div class="form-group reg-number">
 								<label for="exampleInputFile">Precio de Venta:</label>
-								<input th:field="*{precioVenta}" type="text" class="form-control importe" id="precioVenta" onchange="format(this)"
+								<input th:field="*{precioVenta}" type="text" class="form-control importe" id="precioVenta"  oninput="formatInput()"
 									placeholder="Ingrese Precio de Venta"
 									data-validation="required"
 									data-validation-error-msg-required="Debe ingresar el precio de venta">
@@ -94,7 +94,7 @@
 	                  </div>
                 	</div>	
                 	
-                	<!-- <div> <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="limpiarFormulario()" >Limpiar campos</button> </div> -->
+ 
 				</div>
 				<!-- /.box-body -->
 
@@ -137,10 +137,24 @@
         <!-- /.modal -->
         <script>
        		$(document).ready(function(){
+       			formatInput();
+       			var precioVenta = $("#precioVenta").val();
+       			var precioCompra = $("#precioCompra").val();
+       			
+       			if(precioVenta !="" && precioVenta!=null && precioVenta !=undefined ){
+       				$("#precioVenta").val(formatInputEdit(precioVenta));
+       				
+       			}
+       			
+       			if(precioCompra !="" && precioCompra!=null && precioCompra !=undefined ){
+       				$("#precioCompra").val(formatInputEdit(precioCompra));
+       				
+       			}
+       			
        			$("#precioVenta").on('focusout', function(){
            			var venta = $("#precioVenta").val();
            			var compra =$("#precioCompra").val(); 
-           			if(venta.replace(".","") <= compra.replace(".","")){
+           			if(parseInt(venta.replace(".","")) <= parseInt(compra.replace(".",""))){
 	           			alert('El precio de venta no puede ser menor o igual al precio de compra');
 	           			$("#msgError").html("El precio de venta no puede ser menor o igual al precio de compra");
 	           			$(this).val('');
@@ -151,7 +165,10 @@
        		});
        		
        	  function limpiarFormulario() {
-       	    document.getElementById("form-usuario").reset();
+        	 $("#codigo").val("");
+         	 $("#descripcion").val("");
+       		 $("#precioCompra").val("");
+       		 $("#precioVenta").val("");
        	  };
        	  
 				$.validate({
