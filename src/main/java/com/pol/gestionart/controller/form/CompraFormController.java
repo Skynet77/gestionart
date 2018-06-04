@@ -241,7 +241,7 @@ public class CompraFormController extends FormController<CompraCabecera> {
 		
 		
 		@RequestMapping(value = "confirmar", method = RequestMethod.POST)
-		public String confirmarCompra(ModelMap map, CompraCabecera compraCabecera,HttpSession session) {
+		public String confirmarCompra(ModelMap map, CompraCabecera compraCabecera,HttpSession session) throws WebAppException {
 			
 			CompraCabecera compraCab = null;
 			CompraDetalle compraDet = null;
@@ -272,16 +272,16 @@ public class CompraFormController extends FormController<CompraCabecera> {
 				compraDetalleDao.create(vd);
 			}
 			
-			caja = new Caja();
-			caja.setFecha(compraCabecera.getFechaEmision());
+			Caja caja = new Caja();
+			caja.setFecha(compraCabecera.getFechaCompra());
 			caja.setDescripcion("VENTA");
-			caja.setEntrada(compraCabecera.getMontoTotal());
+			caja.setEntrada(compraCabecera.getTotal());
 			Caja cajaActual = cajaDao.findCajaByDate();
 			
 			if(cajaActual ==  null){
 				throw new WebAppException("Debe abrir una caja antes de realizar una venta");
 			}else{
-				caja.setSaldoActual(cajaActual.getSaldoActual().add(ventaCab.getMontoTotal()));
+				caja.setSaldoActual(cajaActual.getSaldoActual().add(compraCabecera.getTotal()));
 			}
 			cajaDao.create(caja);
 			map.addAttribute("msgExitoCompra", true);

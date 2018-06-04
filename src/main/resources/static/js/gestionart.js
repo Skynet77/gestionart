@@ -418,7 +418,7 @@ function formatInputEdit(monto){
 		
 		var codMoneda="GS"
 		codMoneda = $.trim(codMoneda);
-		var moneda=getMonedaDetails(codMoneda);
+		var moneda=getMonedaDetailsTable(codMoneda);
 		var inputPattern=moneda.inputPattern;
 		var formatPattern=moneda.formatPattern;
 		if(num == null || num == undefined)
@@ -478,6 +478,49 @@ function getMonedaDetails(codMoneda){
 	return moneda;
 }
 
+function getMonedaDetailsTable(codMoneda){
+	var moneda= new Object();
+	switch (codMoneda) {
+	case 'GS':
+		moneda.descripcion='Guaraníes';
+		moneda.formato="0,0";
+		moneda.formatPattern=/\D/g;
+		moneda.inputPattern=/-\D/g;
+//		moneda.inputPattern=/\D/g;
+		break;
+	case 'USD':
+		moneda.descripcion='Dólares';
+		moneda.formato="0,0.00";
+		moneda.formatPattern=/^[0-9]+([,][0-9]+)?$/g;
+		moneda.inputPattern=/[^0-9,]/g;
+		break;
+	case 'EUR':
+		moneda.descripcion='Euros';
+		moneda.formato="0,0.00";
+		moneda.formatPattern=/^[0-9]+([,][0-9]+)?$/g;
+		moneda.inputPattern=/[^0-9,]/g;
+		break;
+	case 'BRL':
+		moneda.descripcion='REALES';
+		moneda.formato="0,0.00";
+		moneda.formatPattern=/^[0-9]+([,][0-9]+)?$/g;
+		moneda.inputPattern=/[^0-9,]/g;
+		break;
+	case 'ARS':
+		moneda.descripcion='PESO ARGENTINO';
+		moneda.formato="0,0.00";
+		moneda.formatPattern=/^[0-9]+([,][0-9]+)?$/g;
+		moneda.inputPattern=/[^0-9,]/g;
+		break;
+	default:
+		moneda.descripcion='Moneda no registrada';
+		moneda.formato="0,0.00";
+		moneda.formatPattern=/^[0-9]+([,][0-9]+)?$/g;
+		moneda.inputPattern=/[^0-9,]/g;
+		break;
+	}
+	return moneda;
+}
 function format(input)
 {
 	var num = input.replace(/\./g,'');
