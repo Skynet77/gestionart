@@ -12,7 +12,7 @@ public class ProveedorDaoImpl extends DaoImpl<Proveedor> implements ProveedorDao
 
 	@Override
 	public String getCamposFiltrables() {
-		return "estado";
+		return "estado||ruc||nombre||nombre_contacto";
 	}
 
 	@Override

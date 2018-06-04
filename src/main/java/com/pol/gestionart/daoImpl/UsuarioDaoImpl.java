@@ -12,7 +12,7 @@ public class UsuarioDaoImpl extends DaoImpl<Usuario> implements UsuarioDao{
 
 	@Override
 	public String getCamposFiltrables() {
-		return "estado";
+		return "estado||cedulaRuc||nombreRazonSocial||apellido";
 	}
 
 	@Override

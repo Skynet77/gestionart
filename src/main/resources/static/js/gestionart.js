@@ -441,7 +441,8 @@ function getMonedaDetails(codMoneda){
 		moneda.descripcion='Guaraníes';
 		moneda.formato="0,0";
 		moneda.formatPattern=/\D/g;
-		moneda.inputPattern=/-\D/g;
+//		moneda.inputPattern=/-\D/g;
+		moneda.inputPattern=/\D/g;
 		break;
 	case 'USD':
 		moneda.descripcion='Dólares';
