@@ -257,7 +257,7 @@ function eliminarProveedor(id){
 
 
 ///////// datatable sin acciones
-function crearDataTableSinAccion(dataTableId, ajaxSource, columnas, editUrl){
+function crearDataTableSinAccion(dataTableId, ajaxSource, columnas, viewComprobante){
 	console.log("creando DT:", dataTableId, ajaxSource, columnas, editUrl)
 	
 	
@@ -267,7 +267,7 @@ function crearDataTableSinAccion(dataTableId, ajaxSource, columnas, editUrl){
 //        'responsive': true,
         'sAjaxSource' : ajaxSource,
         'serverSide' : true,
-        'columns' : getColumnasArraySinAccion(columnas),
+        'columns' : getColumnasArraySinAccion(columnas,viewComprobante),
         //'paging'      : true,
         //'lengthChange': false,
         'searching'   : false,
@@ -309,7 +309,7 @@ function crearDataTableSinAccion(dataTableId, ajaxSource, columnas, editUrl){
 	});
 }
 
-function getColumnasArraySinAccion(colsStr){
+function getColumnasArraySinAccion(colsStr,view){
 	/*
 	1. declarar un array para retornar
 	2. separar colsStr teniendo en cuenta ';''
@@ -341,9 +341,12 @@ function getColumnasArraySinAccion(colsStr){
 					
 					
 		});
-		columnsArray.push(
-                {'defaultContent': "<button type='button' class='imprimirComprobante btn btn-success btn-xs'><span class='glyphicon glyphicon-print'></span></button>"}
-                );
+		if(view){
+			columnsArray.push(
+	                {'defaultContent': "<button type='button' class='imprimirComprobante btn btn-success btn-xs'><span class='glyphicon glyphicon-print'></span></button>"}
+	                );
+		}
+		
 		
 		return columnsArray;
 }

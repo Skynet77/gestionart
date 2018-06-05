@@ -12,8 +12,8 @@
               <table id="compraDT" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-					<th th:each="col : ${columnas}" th:text="#{'venta.' + ${col} + '.header'}">CÓDIGO</th>
-					<th></th>
+					<th th:each="col : ${columnas}" th:text="#{'compra.' + ${col} + '.header'}">CÓDIGO</th>
+<!-- 					<th></th> -->
 				</tr>
                 </thead>
               </table>
@@ -33,7 +33,7 @@
 					/*<![CDATA[*/
 		
 		$(document).ready(function() {
-			crearDataTableSinAccion("compraDT", [[@{/compra/json}]], [[${columnasStr}]], [[@{/compra/edit/}]]);
+			crearDataTableSinAccion("compraDT", [[@{/compra/json}]], [[${columnasStr}]], false);
 			
 			
 		});
