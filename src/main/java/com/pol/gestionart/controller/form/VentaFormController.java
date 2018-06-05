@@ -297,6 +297,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		}
 		caja.setFechaActual(new Date());
 		caja.setFecha(ventaCabecera.getFechaEmision());
+		caja.setSalidaBigDecimal(BigDecimal.ZERO);
 		cajaDao.create(caja);
 		
 		map.addAttribute("msgExitoVenta", true);

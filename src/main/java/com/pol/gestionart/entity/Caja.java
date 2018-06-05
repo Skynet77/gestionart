@@ -120,14 +120,18 @@ public class Caja extends GenericEntity{
 		return salida;
 	}
 
-	public void setSalida(BigDecimal salida) {
+	public void setSalida(String salida) {
 		if(salida != null){
-			String monto = salida.toPlainString().replace(".", "");
+			String monto = salida.replace(".", "");
 			this.salida = new BigDecimal(monto);
 		}else{
-			this.salida = salida;
+			this.salida = new BigDecimal(salida);
 		}
 		
+	}
+	
+	public void setSalidaBigDecimal(BigDecimal salida) {
+			this.salida = salida;
 	}
 
 	public BigDecimal getSaldoActual() {
