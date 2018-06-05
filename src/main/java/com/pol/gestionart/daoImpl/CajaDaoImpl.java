@@ -41,8 +41,13 @@ public class CajaDaoImpl extends DaoImpl<Caja> implements CajaDao{
 		try {
 		
 		caja = (Caja) query.getSingleResult();
-		logger.info("Registros encontrados: {}", caja);
-		return caja;
+//		if(caja.getFechaActual().compareTo(new Date())>1 ){
+			logger.info("Registros encontrados: {}", caja);
+			return caja;
+//		}else{
+//			return null;
+//		}
+		
 		} catch (NoResultException e) {
 			return caja;
 		}
