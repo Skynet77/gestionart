@@ -77,7 +77,7 @@ public class CajaFromController extends FormController<Caja> {
 		
 		if(!(caja.getEntrada()==null)){
 			addCaja.setDescripcion(caja.getDescripcion());
-			addCaja.setEntrada(caja.getEntrada());
+			addCaja.setEntradaBigDecimal(caja.getEntrada());
 			addCaja.setFecha(fechaActual);
 			
 			if(cajaActual!=null){
@@ -101,7 +101,7 @@ public class CajaFromController extends FormController<Caja> {
 			}
 			
 			addCaja.setSaldoActual(saldoActual);
-			addCaja.setEntrada(BigDecimal.ZERO);
+			addCaja.setEntradaBigDecimal(BigDecimal.ZERO);
 			map.addAttribute("msgExito", "Egreso registrado correctamente");
 		}
 		agregarValoresAdicionales(map);

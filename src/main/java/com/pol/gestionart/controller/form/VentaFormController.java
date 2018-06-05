@@ -287,7 +287,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		caja = new Caja();
 		caja.setFecha(ventaCab.getFechaEmision());
 		caja.setDescripcion("COMPRA producto");
-		caja.setEntrada(ventaCab.getMontoTotal());
+		caja.setEntradaBigDecimal(ventaCab.getMontoTotal());
 		Caja cajaActual = cajaDao.findCajaByDate();
 		
 		if(cajaActual ==  null){
