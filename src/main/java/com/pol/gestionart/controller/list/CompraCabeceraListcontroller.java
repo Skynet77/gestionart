@@ -24,7 +24,7 @@ public class CompraCabeceraListcontroller extends ListController<CompraCabecera>
 
 	@Override
 	public String[] getColumnas() {
-		return new String[] { "id", "idUsuario", "idProveedor", "nroFactura", "fechaCompra", "monto", "tipoCompra" };
+		return new String[] { "id", "proveedor.id", "nroFactura", "fechaCompra", "total", "nroComprobante" };
 	}
 
 }
