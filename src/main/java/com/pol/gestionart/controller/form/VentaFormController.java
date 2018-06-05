@@ -285,16 +285,18 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		}
 		
 		caja = new Caja();
-		caja.setFecha(ventaCab.getFechaEmision());
-		caja.setDescripcion("COMPRA producto");
-		caja.setEntradaBigDecimal(ventaCab.getMontoTotal());
+		caja.setFecha(ventaCabecera.getFechaEmision());
+		caja.setDescripcion("VENTA producto");
+		caja.setEntradaBigDecimal(ventaCabecera.getMontoTotal());
 		Caja cajaActual = cajaDao.findCajaByDate();
 		
 		if(cajaActual ==  null){
 			throw new WebAppException("Debe abrir una caja antes de realizar una compra");
 		}else{
-			caja.setSaldoActual(cajaActual.getSaldoActual().subtract(ventaCab.getMontoTotal()));
+			caja.setSaldoActual(cajaActual.getSaldoActual().add(ventaCabecera.getMontoTotal()));
 		}
+		caja.setFechaActual(new Date());
+		caja.setFecha(ventaCabecera.getFechaEmision());
 		cajaDao.create(caja);
 		
 		map.addAttribute("msgExitoVenta", true);
