@@ -258,7 +258,7 @@ function eliminarProveedor(id){
 
 ///////// datatable sin acciones
 function crearDataTableSinAccion(dataTableId, ajaxSource, columnas, viewComprobante){
-	console.log("creando DT:", dataTableId, ajaxSource, columnas, editUrl)
+	console.log("creando DT:", dataTableId, ajaxSource, columnas, viewComprobante)
 	
 	
 	 //var dataTable = $('#'+ dataTableId).dataTable(config);
