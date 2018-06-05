@@ -87,11 +87,11 @@ public class CajaFromController extends FormController<Caja> {
 			}
 			
 			addCaja.setSaldoActual(saldoActual);
-			addCaja.setSalida(BigDecimal.ZERO);
+			addCaja.setSalidaBigDecimal(BigDecimal.ZERO);
 			map.addAttribute("msgExito", "Ingreso registrado correctamente");
 		}else if(!(caja.getSalida()==null)){
 			addCaja.setDescripcion(caja.getDescripcion());
-			addCaja.setSalida(caja.getSalida());
+			addCaja.setSalidaBigDecimal(caja.getSalida());
 			addCaja.setFecha(fechaActual);
 			
 			if(cajaActual!=null){

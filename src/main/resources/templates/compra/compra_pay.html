@@ -54,12 +54,12 @@
 					<!-- /.col -->
 					<div class="col-md-6">
 						<div class="form-group">
-							<label>Precio Venta:</label>
+							<label>Precio Compra:</label>
 							<div class="input-group">
 								<div class="input-group-addon">
 									<i class="fa">Gs.</i>
 								</div>
-								<input type="text" class="form-control" id="precioVenta" name="precioVenta"
+								<input type="text" class="form-control" id="precioCompra" name="precioCompra"
 							placeholder="Ingrese Precio de Venta" disabled>
 
 							</div>
@@ -285,7 +285,7 @@
 						if (c.length == 0){
 							$("#codigo").val("");
 							$("#nombre").val("");
-							$("#precioVenta").val("");
+							$("#precioCompra").val("");
 							$("#cantidad").val("");
 							$("#stockActual").val("");
 							$("#id").val("");
@@ -293,7 +293,7 @@
 							var producto = c[0];
 							$("#codigo").val(producto.codigo);
 							$("#nombre").val(producto.descripcion);
-							$("#precioVenta").val(formatMontoDecimal(producto.precioVenta));
+							$("#precioCompra").val(formatMontoDecimal(producto.precioCompra));
 // 							$("#precioVenta").val(producto.precioVenta);
 							$("#cantidad").val(1);
 							$("#stockActual").val(producto.cantidad);
@@ -349,7 +349,7 @@
 		    	suggestProducto.clear();
 		    	$("#codigo").val("");
 				$("#nombre").val("");
-				$("#precioVenta").val("");
+				$("#precioCompra").val("");
 				$("#cantidad").val("");
 				$("#stockActual").val("");
 				$("#id").val("");
