@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.pol.gestionart.main.GenericEntity;
@@ -55,7 +54,7 @@ public class Caja extends GenericEntity{
 	}
 
 	public Caja(Long id, String fecha, @Size(max = 50) String descripcion, BigDecimal entrada, BigDecimal salida,
-			BigDecimal saldo_actual, @NotNull(message = "caja.usuario.notNull") Usuario usuario) {
+			BigDecimal saldo_actual) {
 		super();
 		this.id = id;
 		this.fecha = fecha;
@@ -104,17 +103,19 @@ public class Caja extends GenericEntity{
 		return entrada;
 	}
 
-	public void setEntrada(BigDecimal entrada) {
+	public void setEntrada(String entrada) {
 		if(entrada != null){
-			String monto = entrada.toPlainString().replace(".", "");
+			String monto = entrada.replace(".", "");
 			this.entrada = new BigDecimal(monto);
 		}else{
-			this.entrada = entrada;
+			this.entrada = new BigDecimal(entrada);
 		}
-				
-		
 	}
 
+	public void setEntradaBigDecimal(BigDecimal entrada){
+		this.entrada = entrada;
+	}
+	
 	public BigDecimal getSalida() {
 		return salida;
 	}
@@ -144,10 +145,6 @@ public class Caja extends GenericEntity{
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}*/
-
-	public static String getSecuencia() {
-		return SECUENCIA;
-	}
 
 	@Override
 	public String toString() {
