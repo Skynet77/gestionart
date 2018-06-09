@@ -104,6 +104,7 @@ public abstract class DaoImpl<T extends GenericEntity> implements Dao<T>{
 		logger.info("Cantidad de registros encontrados: {}",list);
 		return list;		
 	}
+
 	
 	@SuppressWarnings("unchecked")
 	@Override

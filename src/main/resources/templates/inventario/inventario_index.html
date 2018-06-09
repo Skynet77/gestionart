@@ -1,0 +1,56 @@
+<html xmlns:th="http://www.thymeleaf.org" th:replace="starter">
+<meta charset="utf-8"/>
+<div class="row" th:fragment="contenido">
+	<div class="col-md-12">
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title">Inventario</h3>
+			</div>
+			<div class="col-lg-6" style="margin-bottom: 20px;">
+				<div class="form-group">
+					<p class="text-bold">Fecha de inventario</p>
+				</div>
+				<div class="input-group date">
+					<input id="input-search" type="text"
+						class="form-control datepicker1">
+					<div class="input-group-addon">
+						<span class="glyphicon glyphicon-th"></span>
+					</div>
+				</div>
+			</div>
+			<br>
+			
+			<!-- /.box-header -->
+			<div class="box-body">
+              <table id="inventarioDT" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+					<th th:each="col : ${columnas}" th:text="#{'inven.' + ${col} + '.header'}">CÓDIGO</th>
+				</tr>
+                </thead>
+              </table>
+            </div>
+			<!-- /.box-body -->
+		</div>
+		<!-- /.box -->
+
+
+		<!-- /.box -->
+	</div>
+	
+        
+        
+	<script th:inline="javascript">
+					/*<![CDATA[*/
+		$('.datepicker1').datepicker({language:'es', format: 'dd-mm-yyyy', autoclose:true});
+		$(document).ready(function() {
+			crearDataTableSinAccionInventario("inventarioDT", [[@{/inventario/jsonf}]], [[${columnasStr}]], false);
+			suggestProducto = crearMagicSuggest('magicsuggest',
+					[[@{/producto/suggest}]], 'id', 'descripcion');
+			
+		});
+					
+	
+	</script>
+</div>
+</html>

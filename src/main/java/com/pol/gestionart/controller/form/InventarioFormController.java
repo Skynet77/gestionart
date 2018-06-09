@@ -3,6 +3,7 @@ package com.pol.gestionart.controller.form;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.pol.gestionart.controller.list.InventarioListController;
@@ -17,7 +18,6 @@ public class InventarioFormController extends FormController<Inventario> {
 
 	@Autowired
 	private InventarioDao inventarioDao;
-	
 
 	@Autowired
 	private InventarioListController inventarioList;
@@ -41,6 +41,13 @@ public class InventarioFormController extends FormController<Inventario> {
 	@Override
 	public Dao<Inventario> getDao() {
 		return inventarioDao;
+	}
+	
+	@Override
+	public void agregarValoresAdicionales(ModelMap map) {
+		map.addAttribute("columnas", inventarioList.getColumnas());
+		map.addAttribute("columnasStr", inventarioList.getColumnasStr(null));
+		super.agregarValoresAdicionales(map);
 	}
 	
 }
