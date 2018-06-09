@@ -2,7 +2,6 @@ spring:
   datasource: 
     url: jdbc:postgresql://localhost:5432/gestionart
     username: postgres
-    password: luis1994
     password: postgre
   messages:
     basename: Messages

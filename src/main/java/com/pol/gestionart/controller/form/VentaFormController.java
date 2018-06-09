@@ -291,7 +291,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		Caja cajaActual = cajaDao.findCajaByDate();
 		
 		if(cajaActual ==  null){
-			throw new WebAppException("Debe abrir una caja antes de realizar una compra");
+			throw new WebAppException("Debe abrir una caja antes de realizar una venta");
 		}else{
 			caja.setSaldoActual(cajaActual.getSaldoActual().add(ventaCabecera.getMontoTotal()));
 		}
