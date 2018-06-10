@@ -114,11 +114,43 @@
 		</div>
 	</div>
 
-	<!-- #### SECCION DE VENTA -->
+	<!-- Lista de productos-->
 
 
 	<div class="col-md-6">
-		<div class="box box-default">
+
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Productos Agregados</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding" id="tableDetail">
+            	<div id="idTableDetail">
+	              <table class="table table-hover" id="tabla-detalle">
+	                <tbody><tr>
+	                  <th>Código</th>
+	                  <th>Nombre</th>
+	                  <th>Cant.</th>
+	                  <th>Precio Unit.</th>
+	                  <th>Precio Total</th>
+	                  <th>Acción</th>
+	                </tr>
+	                <tr id="sin">
+	                  <td colspan="6">sin datos..</td>
+	                </tr>
+	              </tbody></table>
+              </div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+	
+	
+	</div>
+	
+	
+    <div class="col-xs-12">
+		
+				<div class="box box-default">
 			<div class="box-header with-border">
 				<h3 class="box-title">Totales</h3>
 
@@ -206,36 +238,11 @@
 			<!-- /.box-body -->
 			
 		</div>
-	</div>
-	
-        <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Productos Agregados</h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body table-responsive no-padding" id="tableDetail">
-            	<div id="idTableDetail">
-	              <table class="table table-hover" id="tabla-detalle">
-	                <tbody><tr>
-	                  <th>Código</th>
-	                  <th>Nombre</th>
-	                  <th>Cant.</th>
-	                  <th>Precio Unit.</th>
-	                  <th>Precio Total</th>
-	                  <th>Acción</th>
-	                </tr>
-	                <tr id="sin">
-	                  <td colspan="6">sin datos..</td>
-	                </tr>
-	              </tbody></table>
-              </div>
-            </div>
-            <!-- /.box-body -->
-          </div>
+
+
           <!-- /.box -->
-        </div>
-<!-- Modal de confirmación de venta	 -->
+    </div>
+<!-- Modal de confirmación de venta  -->
 	<div class="modal fade" id="modal-default">
         <div class="modal-dialog">
           <div class="modal-content">
