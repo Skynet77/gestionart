@@ -13,7 +13,7 @@
                 <thead>
                 <tr>
 					<th th:each="col : ${columnas}" th:text="#{'compra.' + ${col} + '.header'}">CÓDIGO</th>
-<!-- 					<th></th> -->
+ 					<th></th>
 				</tr>
                 </thead>
               </table>
@@ -33,7 +33,7 @@
 					/*<![CDATA[*/
 		
 		$(document).ready(function() {
-			crearDataTableSinAccion("compraDT", [[@{/compra/json}]], [[${columnasStr}]], false);
+			crearDataTableSinAccionCompra("compraDT", [[@{/compra/json}]], [[${columnasStr}]], true);
 			
 			
 		});

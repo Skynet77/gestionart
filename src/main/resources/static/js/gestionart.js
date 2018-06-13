@@ -311,6 +311,61 @@ function crearDataTableSinAccion(dataTableId, ajaxSource, columnas, viewComproba
 	});
 }
 
+function crearDataTableSinAccionCompra(dataTableId, ajaxSource, columnas, viewComprobante){
+	console.log("creando DT:", dataTableId, ajaxSource, columnas, viewComprobante)
+	
+	
+	 //var dataTable = $('#'+ dataTableId).dataTable(config);
+	 var dataTable = $('#'+ dataTableId).DataTable({
+        'processing' : true,
+//        'responsive': true,
+        'sAjaxSource' : ajaxSource,
+        'serverSide' : true,
+        'columns' : getColumnasArraySinAccion(columnas,viewComprobante),
+        //'paging'      : true,
+        //'lengthChange': false,
+        'searching'   : false,
+        'info'        : true,
+        'autoWidth'   : false,
+        "pagingType": "simple_numbers",
+        "bSort": false,
+        'language' : {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "No hay datos disponibles en esta tabla",
+            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando _MAX_ registros",
+            "sInfoFiltered": " ",
+            "sInfoPostFix": "",
+            //"sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            }
+        }
+	 });
+	
+	dataTable.column(0).visible(false);
+	
+	$('#'+ dataTableId + ' tbody').on('click','button.imprimirComprobante', function(){
+		var ob = dataTable.row( $(this).parents('tr') ).data();
+		var params = 'id_compra_cabecera=' + ob.id;
+		
+		var link = document.createElement('a');
+        link.href = "/gestionart/compra/comprobante?id_compra="+ob.id;
+        link.target = '_blank';
+        document.body.appendChild(link);
+        link.click();
+	});
+
+}
+
 function crearDataTableSinAccionInventario(dataTableId, ajaxSource, columnas, viewComprobante){
 	console.log("creando DT:", dataTableId, ajaxSource, columnas, viewComprobante)
 	
