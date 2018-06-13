@@ -1,5 +1,7 @@
 package com.pol.gestionart.controller.form;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -260,7 +262,6 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		
 		VentaCabecera ventaCab = null;
 		VentaDetalle ventaDet = null;
-		Caja caja = null;
 		Map<String, VentaDetalle> mapaVentaDetalle = null;
 		
 		if(session.getAttribute(VENTA_CABECERA)!=null){
@@ -286,13 +287,11 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		for (VentaDetalle vd : mapaVentaDetalle.values()) {
 			vd.setVentaCabecera(ventaCabecera);
 			ventaDetalleDao.create(vd);
-			//disminuirStock(vd, map);
+			disminuirStock(vd, map);
 		}
 		
-		
-		
 		map.addAttribute("msgExitoVenta", true);
-		map.addAttribute("msgExito", "Venta creada con éxito");
+		map.addAttribute("msgExito", "Venta registrada con éxito");
 		map.addAttribute("ventaCabeceraId", ventaCabecera.getIdVenta());
 		session.setAttribute("ventaCabeceraId", ventaCabecera.getIdVenta());
 		return indexPay(map, session);
@@ -351,18 +350,20 @@ public class VentaFormController extends FormController<VentaCabecera> {
 	}
 	
 	
-	@Override
 	public Dao<VentaCabecera> getDao() {
 		return ventaCabeceraDao;
 	}
 	
-	private void disminuirStock(VentaDetalle ventaDet, ModelMap map){
+	private void disminuirStock(VentaDetalle ventaDet, ModelMap map) throws WebAppException{
 		int resta = 0;
 		//producto para disminuir el stok
 		Producto productoDisminuir = null;
 		//sumamos la cantidad del producto en stock, ya que se elimino del detalle
 		productoDisminuir = productoDao.find(ventaDet.getProducto().getId());
 		resta = productoDisminuir.getCantidad() - ventaDet.getCantidad();
+		if(resta < 0 ) {
+			throw new WebAppException("Quedan sólo "+productoDisminuir.getCantidad().toString()+" "+productoDisminuir.getDescripcion());
+		}
 		productoDisminuir.setCantidad(resta);
 		productoDao.createOrUpdate(productoDisminuir);
 		map.addAttribute("cantProducto",resta);
