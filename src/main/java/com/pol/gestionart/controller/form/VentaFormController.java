@@ -252,6 +252,11 @@ public class VentaFormController extends FormController<VentaCabecera> {
 
 	@RequestMapping(value = "confirmar", method = RequestMethod.POST)
 	public String confirmarVenta(ModelMap map, @Valid VentaCabecera ventaCabecera,HttpSession session) throws WebAppException {
+		Caja cajaActual = cajaDao.findCajaByDate();
+		
+		if(cajaActual ==  null){
+			throw new WebAppException("Debe abrir una caja antes de realizar una compra");
+		}
 		
 		VentaCabecera ventaCab = null;
 		VentaDetalle ventaDet = null;
@@ -270,7 +275,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		
 		ventaCabecera.setIva(ventaCab.getIva());
 		ventaCabecera.setNroComprobante("1");
-		ventaCabecera.setEstado(Estado.CONFIRMADO.name());
+		ventaCabecera.setEstado(Estado.PENDIENTE.name());
 		ventaCabeceraDao.create(ventaCabecera);
 		
 		String nroComprobante = GeneralUtils.formatoComprobante(ventaCabecera.getId());
@@ -281,24 +286,10 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		for (VentaDetalle vd : mapaVentaDetalle.values()) {
 			vd.setVentaCabecera(ventaCabecera);
 			ventaDetalleDao.create(vd);
-			disminuirStock(vd, map);
+			//disminuirStock(vd, map);
 		}
 		
-		caja = new Caja();
-		caja.setFecha(ventaCabecera.getFechaEmision());
-		caja.setDescripcion("VENTA producto");
-		caja.setEntradaBigDecimal(ventaCabecera.getMontoTotal());
-		Caja cajaActual = cajaDao.findCajaByDate();
 		
-		if(cajaActual ==  null){
-			throw new WebAppException("Debe abrir una caja antes de realizar una compra");
-		}else{
-			caja.setSaldoActual(cajaActual.getSaldoActual().add(ventaCabecera.getMontoTotal()));
-		}
-		caja.setFechaActual(new Date());
-		caja.setFecha(ventaCabecera.getFechaEmision());
-		caja.setSalidaBigDecimal(BigDecimal.ZERO);
-		cajaDao.create(caja);
 		
 		map.addAttribute("msgExitoVenta", true);
 		map.addAttribute("msgExito", "Venta creada con éxito");

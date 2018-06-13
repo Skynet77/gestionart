@@ -13,11 +13,15 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.ModelMap;
 
 import com.pol.gestionart.controller.form.CompraFormController;
 import com.pol.gestionart.controller.form.VentaFormController;
+import com.pol.gestionart.dao.ProductoDao;
 import com.pol.gestionart.entity.CompraDetalle;
+import com.pol.gestionart.entity.Producto;
 import com.pol.gestionart.entity.VentaDetalle;
 
 @Component
@@ -26,6 +30,9 @@ public class GeneralUtils {
 	public static String COMPROBANTE_PATTERN = "00000";
 	public static final String DATE_FORMAT = "dd/MM/yyyy-HH:mm:ss";
 	public static final String DATE_FORMAT_CAJA = "dd-MM-yyyy";
+	
+	@Autowired
+	ProductoDao productoDao;
 	
 	public enum CodigoMoneda {
 		GUARANIES("1", "GS","Gs"), 
@@ -178,4 +185,26 @@ public class GeneralUtils {
         return v_digit;
     }
 	
+	public void disminuirStock(VentaDetalle ventaDet, ModelMap map){
+		int resta = 0;
+		//producto para disminuir el stok
+		Producto productoDisminuir = null;
+		//sumamos la cantidad del producto en stock, ya que se elimino del detalle
+		productoDisminuir = productoDao.find(ventaDet.getProducto().getId());
+		resta = productoDisminuir.getCantidad() - ventaDet.getCantidad();
+		productoDisminuir.setCantidad(resta);
+		productoDao.createOrUpdate(productoDisminuir);
+		map.addAttribute("cantProducto",resta);
+	}
+	public void aumentarStock(Producto producto, VentaDetalle ventaDet, ModelMap map){
+		//AUMENTAMOS EL STOCK
+		
+		Producto productoAumentar = null;
+		int sumar = 0;
+		//aumentamos la cantidad del producto en stock
+		productoAumentar = producto;
+		sumar = productoAumentar.getCantidad() + ventaDet.getCantidad();
+		productoAumentar.setCantidad(sumar);
+		productoDao.createOrUpdate(productoAumentar);
+	}
 }

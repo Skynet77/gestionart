@@ -12,11 +12,16 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pol.gestionart.controller.list.CajaListController;
+import com.pol.gestionart.controller.list.VentaCabeceraListController;
 import com.pol.gestionart.dao.CajaDao;
 import com.pol.gestionart.dao.Dao;
+import com.pol.gestionart.dao.VentaCabeceraDao;
 import com.pol.gestionart.entity.Caja;
+import com.pol.gestionart.entity.VentaCabecera;
+import com.pol.gestionart.entity.VentaCabecera.Estado;
 import com.pol.gestionart.util.GeneralUtils;
 
 
@@ -30,7 +35,13 @@ public class CajaFromController extends FormController<Caja> {
 	private CajaDao cajaDao;
 	
 	@Autowired
+	private VentaCabeceraDao ventaCabeceraDao;
+	
+	@Autowired
 	private CajaListController cajaList;
+	
+	@Autowired
+	private VentaCabeceraListController productoList;
 
 	
 	@Override
@@ -55,6 +66,7 @@ public class CajaFromController extends FormController<Caja> {
 	
 	@Override
 	public void agregarValoresAdicionales(ModelMap map) {
+		map.addAttribute("columnasVenta", productoList.getColumnas());
 		map.addAttribute("columnas", cajaList.getColumnas());
 		map.addAttribute("columnasStr", cajaList.getColumnasStr(null));
 		map.addAttribute("cajaList", getDao().getList(0, 100, null));
@@ -108,6 +120,28 @@ public class CajaFromController extends FormController<Caja> {
 		
 		cajaDao.create(addCaja);
 		return getTemplatePath(); 
+	}
+	
+	@RequestMapping("confirmar-venta")
+	public String confirmarVenta(ModelMap map,HttpSession session, 
+			@RequestParam(name="id_venta")Long idVentaCab) {
+		
+		VentaCabecera ventaCabecera = ventaCabeceraDao.find(idVentaCab);
+		
+		if(ventaCabecera != null){
+			ventaCabecera.setEstado(Estado.CONFIRMADO.name());
+			Caja caja = new Caja();
+			caja.setFecha(ventaCabecera.getFechaEmision());
+			caja.setDescripcion("VENTA producto");
+			caja.setEntradaBigDecimal(ventaCabecera.getMontoTotal());
+			
+			caja.setFechaActual(new Date());
+			caja.setFecha(ventaCabecera.getFechaEmision());
+			caja.setSalidaBigDecimal(BigDecimal.ZERO);
+			cajaDao.create(caja);
+		}
+		
+		return "";
 	}
 	
 }
