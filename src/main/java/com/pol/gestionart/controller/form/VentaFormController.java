@@ -183,18 +183,15 @@ public class VentaFormController extends FormController<VentaCabecera> {
 			IVA = subTotal.multiply(new BigDecimal(0.1));
 			ventaCab.setIva(IVA);
 			
-			VentaCabeceraVentaDetalle vCabDet = new VentaCabeceraVentaDetalle();
+			
 			//el detalle actual que se esta procesando
 			ventaDet = new VentaDetalle();
 			ventaDet.setCantidad(cantidad);
 			ventaDet.setPrecioTotal(montoVenta);
 			ventaDet.setPrecioUnitario(producto.getPrecioVentaBigDecimal());
 			ventaDet.setProducto(producto);
-			vCabDet.setVentaCabecera(ventaCab);
-			vCabDet.setVentaDetalle(ventaDet);
-			ventaCabDetDao.create(vCabDet);
-			ventaDet.setVentaCabeceraVentaDetalle(vCabDet);
-			ventaCab.setVentaCabeceraVentaDetalle(vCabDet);
+			ventaDet.setVentaCabecera(ventaCab);
+			
 		} catch (Exception e ) {
 			throw new AjaxException("Ocurrió un error inesperado");
 		}
@@ -290,11 +287,14 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		String nroComprobante = GeneralUtils.formatoComprobante(ventaCabecera.getId());
 		ventaCabecera.setNroComprobante(nroComprobante);
 		ventaCabeceraDao.createOrUpdate(ventaCabecera);
-		
-		
+
 		for (VentaDetalle vd : mapaVentaDetalle.values()) {
+			VentaCabeceraVentaDetalle vCabDet = new VentaCabeceraVentaDetalle();	
+			vCabDet.setVentaCabecera(ventaCabecera);
 			vd.setVentaCabecera(ventaCabecera);
 			ventaDetalleDao.create(vd);
+			vCabDet.setVentaDetalle(vd);
+			ventaCabDetDao.create(vCabDet);
 			disminuirStock(vd, map);
 		}
 		
@@ -358,6 +358,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 	}
 	
 	
+	@Override
 	public Dao<VentaCabecera> getDao() {
 		return ventaCabeceraDao;
 	}

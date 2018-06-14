@@ -30,8 +30,8 @@ public class VentaDetalle extends GenericEntity{
 	
 	@ManyToOne
 	@NotNull(message = "ventaDetalle.ventaCabecera.notNull")
-	@JoinColumn(foreignKey = @ForeignKey(name = "ventaCabecera_ventaDetalle_fk"))
-	private VentaCabeceraVentaDetalle ventaCabeceraVentaDetalle;
+	@JoinColumn(foreignKey = @ForeignKey(name = "ventaDetalle_ventaCabecera_fk"))
+	private VentaCabecera ventaCabecera; 
 	
 	@ManyToOne
 	@NotNull(message = "ventaDetalle.producto.notNull")
@@ -54,18 +54,19 @@ public class VentaDetalle extends GenericEntity{
 		super();
 	}
 
-	public VentaDetalle(Long id,
-			@NotNull(message = "ventaDetalle.ventaCabecera.notNull") VentaCabeceraVentaDetalle ventaCabeceraVentaDetalle,
+	public VentaDetalle(Long id, @NotNull(message = "ventaDetalle.ventaCabecera.notNull") VentaCabecera ventaCabecera,
 			@NotNull(message = "ventaDetalle.producto.notNull") Producto producto, @NotNull int cantidad,
 			@NotNull BigDecimal precioUnitario, @NotNull BigDecimal precioTotal) {
 		super();
 		this.id = id;
-		this.ventaCabeceraVentaDetalle = ventaCabeceraVentaDetalle;
+		this.ventaCabecera = ventaCabecera;
 		this.producto = producto;
 		this.cantidad = cantidad;
 		this.precioUnitario = precioUnitario;
 		this.precioTotal = precioTotal;
 	}
+
+
 
 	@Override
 	public Long getId() {
@@ -117,19 +118,18 @@ public class VentaDetalle extends GenericEntity{
 		this.precioTotal = precioTotal;
 	}
 
-	public VentaCabeceraVentaDetalle getVentaCabeceraVentaDetalle() {
-		return ventaCabeceraVentaDetalle;
+	public VentaCabecera getVentaCabecera() {
+		return ventaCabecera;
 	}
 
-	public void setVentaCabeceraVentaDetalle(VentaCabeceraVentaDetalle ventaCabeceraVentaDetalle) {
-		this.ventaCabeceraVentaDetalle = ventaCabeceraVentaDetalle;
+	public void setVentaCabecera(VentaCabecera ventaCabecera) {
+		this.ventaCabecera = ventaCabecera;
 	}
 
 	@Override
 	public String toString() {
-		return "VentaDetalle [id=" + id + ", ventaCabeceraVentaDetalle=" + ventaCabeceraVentaDetalle + ", producto="
-				+ producto + ", cantidad=" + cantidad + ", precioUnitario=" + precioUnitario + ", precioTotal="
-				+ precioTotal + "]";
+		return "VentaDetalle [id=" + id + ", ventaCabecera=" + ventaCabecera + ", producto=" + producto + ", cantidad="
+				+ cantidad + ", precioUnitario=" + precioUnitario + ", precioTotal=" + precioTotal + "]";
 	}
 
 	
