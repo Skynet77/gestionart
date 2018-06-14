@@ -2,6 +2,7 @@ package com.pol.gestionart.entity;
 
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
@@ -11,9 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import com.pol.gestionart.main.GenericEntity;
 
@@ -27,9 +26,10 @@ private static final String SECUENCIA = "compraDetalle_id_seq";
 	@SequenceGenerator(name = SECUENCIA, sequenceName = SECUENCIA)
 	private Long id;
 	
-	@ManyToOne
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE,CascadeType.ALL, CascadeType.REFRESH, CascadeType.DETACH })
 	@NotNull(message = "compraDetalle.compraCabecera.notNull")
 	@JoinColumn(foreignKey = @ForeignKey(name = "compraDetalle_compraCabecera_fk"))
+	
 	private CompraCabecera compraCabecera;
 	
 	

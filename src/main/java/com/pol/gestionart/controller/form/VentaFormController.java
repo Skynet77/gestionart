@@ -1,5 +1,7 @@
 package com.pol.gestionart.controller.form;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -252,10 +254,14 @@ public class VentaFormController extends FormController<VentaCabecera> {
 
 	@RequestMapping(value = "confirmar", method = RequestMethod.POST)
 	public String confirmarVenta(ModelMap map, @Valid VentaCabecera ventaCabecera,HttpSession session) throws WebAppException {
+		Caja cajaActual = cajaDao.findCajaByDate();
+		
+		if(cajaActual ==  null){
+			throw new WebAppException("Debe abrir una caja antes de realizar una compra");
+		}
 		
 		VentaCabecera ventaCab = null;
 		VentaDetalle ventaDet = null;
-		Caja caja = null;
 		Map<String, VentaDetalle> mapaVentaDetalle = null;
 		
 		if(session.getAttribute(VENTA_CABECERA)!=null){
@@ -270,7 +276,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		
 		ventaCabecera.setIva(ventaCab.getIva());
 		ventaCabecera.setNroComprobante("1");
-		ventaCabecera.setEstado(Estado.CONFIRMADO.name());
+		ventaCabecera.setEstado(Estado.PENDIENTE.name());
 		ventaCabeceraDao.create(ventaCabecera);
 		
 		String nroComprobante = GeneralUtils.formatoComprobante(ventaCabecera.getId());
@@ -284,24 +290,8 @@ public class VentaFormController extends FormController<VentaCabecera> {
 			disminuirStock(vd, map);
 		}
 		
-		caja = new Caja();
-		caja.setFecha(ventaCabecera.getFechaEmision());
-		caja.setDescripcion("VENTA producto");
-		caja.setEntradaBigDecimal(ventaCabecera.getMontoTotal());
-		Caja cajaActual = cajaDao.findCajaByDate();
-		
-		if(cajaActual ==  null){
-			throw new WebAppException("Debe abrir una caja antes de realizar una venta");
-		}else{
-			caja.setSaldoActual(cajaActual.getSaldoActual().add(ventaCabecera.getMontoTotal()));
-		}
-		caja.setFechaActual(new Date());
-		caja.setFecha(ventaCabecera.getFechaEmision());
-		caja.setSalidaBigDecimal(BigDecimal.ZERO);
-		cajaDao.create(caja);
-		
 		map.addAttribute("msgExitoVenta", true);
-		map.addAttribute("msgExito", "Venta creada con éxito");
+		map.addAttribute("msgExito", "Venta registrada con éxito");
 		map.addAttribute("ventaCabeceraId", ventaCabecera.getIdVenta());
 		session.setAttribute("ventaCabeceraId", ventaCabecera.getIdVenta());
 		return indexPay(map, session);
@@ -360,18 +350,20 @@ public class VentaFormController extends FormController<VentaCabecera> {
 	}
 	
 	
-	@Override
 	public Dao<VentaCabecera> getDao() {
 		return ventaCabeceraDao;
 	}
 	
-	private void disminuirStock(VentaDetalle ventaDet, ModelMap map){
+	private void disminuirStock(VentaDetalle ventaDet, ModelMap map) throws WebAppException{
 		int resta = 0;
 		//producto para disminuir el stok
 		Producto productoDisminuir = null;
 		//sumamos la cantidad del producto en stock, ya que se elimino del detalle
 		productoDisminuir = productoDao.find(ventaDet.getProducto().getId());
 		resta = productoDisminuir.getCantidad() - ventaDet.getCantidad();
+		if(resta < 0 ) {
+			throw new WebAppException("Quedan sólo "+productoDisminuir.getCantidad().toString()+" "+productoDisminuir.getDescripcion());
+		}
 		productoDisminuir.setCantidad(resta);
 		productoDao.createOrUpdate(productoDisminuir);
 		map.addAttribute("cantProducto",resta);
