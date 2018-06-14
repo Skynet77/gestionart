@@ -19,6 +19,7 @@ import com.pol.gestionart.controller.list.VentaCabeceraListController;
 import com.pol.gestionart.dao.CajaDao;
 import com.pol.gestionart.dao.Dao;
 import com.pol.gestionart.dao.VentaCabeceraDao;
+import com.pol.gestionart.dao.VentaCabeceraVentaDetalleDao;
 import com.pol.gestionart.entity.Caja;
 import com.pol.gestionart.entity.VentaCabecera;
 import com.pol.gestionart.entity.VentaCabecera.Estado;
@@ -43,6 +44,8 @@ public class CajaFromController extends FormController<Caja> {
 	@Autowired
 	private VentaCabeceraListController productoList;
 
+	@Autowired
+	private VentaCabeceraVentaDetalleDao ventaCabDetDao;
 	
 	@Override
 	public String getTemplatePath() {
@@ -144,4 +147,13 @@ public class CajaFromController extends FormController<Caja> {
 		return "";
 	}
 	
+	@RequestMapping("caja-venta")
+	public String getCajaVenta(ModelMap map,HttpSession session,
+				@RequestParam(name="id_venta")Long idVentaCab) {
+	//	ventaCabDetDao.find(id)
+		
+		
+		return "";
+		
+	}
 }

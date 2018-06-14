@@ -702,7 +702,7 @@ function crearDataTableCaja(dataTableId, ajaxSource, columnas, viewComprobante){
 //        'responsive': true,
         'sAjaxSource' : ajaxSource,
         'serverSide' : true,
-        'columns' : getColumnasArraySinAccion(columnas,viewComprobante),
+        'columns' : getColumnasArrayCaja(columnas),
         //'paging'      : true,
         //'lengthChange': false,
         'searching'   : false,
@@ -733,8 +733,20 @@ function crearDataTableCaja(dataTableId, ajaxSource, columnas, viewComprobante){
 	 });
 	
 	dataTable.column(0).visible(false);
+	
+	$('#'+ dataTableId + ' tbody').on('click','button.ver', function(){
+		/*Con esto tenemos un objeto de tipo {id: 1, codigo: "ejc", descripcion: "Ejecutivo", materia: Object}
+		 teniendo en cuenta que ejecutamos http://localhost:8090/sigj/proceso/ 
+		 entonces para obtener el id de este objeto accedemos por su llave "id"*/
+//		console.log($('#'+dataTableId+ ' tbody tr'));
+		var ob = dataTable.row( $(this).parents('tr') ).data();
+		console.log(ob);
+		console.log( ob["id"] );
+		verDetalle(ob.id, "VER");
 
-	$('#'+ dataTableId + ' tbody').on('click','button.imprimirComprobante', function(){
+		}); 
+
+	$('#'+ dataTableId + ' tbody').on('click','button.ver', function(){
 		var ob = dataTable.row( $(this).parents('tr') ).data();
 		var params = 'id_venta_cabecera=' + ob.id;
 		
@@ -780,10 +792,20 @@ function getColumnasArrayCaja(colsStr){
 					
 		});
 		columnsArray.push(
-                {'defaultContent': "<button type='button' class='ver btn btn-primary btn-xs'><i class='fa fa-edit'></i></button>"+
-			                    "<button type='button' class='confirmar btn btn-success btn-xs' data-toggle='modal'><i class='fa fa-check-o' aria-hidden='true'></i></button>"+
+                {'defaultContent': "<button type='button' class='ver btn btn-primary btn-xs'><i class='fa fa-newspaper-o'></i></button>"+
+			                    "<button type='button' class='confirmar btn btn-success btn-xs' data-toggle='modal'><i class='fa fa-check' aria-hidden='true'></i></button>"+
 			                    "<button type='button' class='cancelar btn btn-danger btn-xs' data-toggle='modal'><i class='fa fa-trash-o' aria-hidden='true'></i></button>"}
                 );
 		
 		return columnsArray;
+}
+
+function verDetalle(id){
+	
+	var link = document.createElement('a');
+    link.href = "/gestionart/caja/caja-venta?id_caja="+id;
+    link.target = '_blank';
+    document.body.appendChild(link);
+    link.click();
+	
 }

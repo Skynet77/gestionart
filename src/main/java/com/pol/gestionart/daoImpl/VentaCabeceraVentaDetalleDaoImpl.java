@@ -1,5 +1,7 @@
 package com.pol.gestionart.daoImpl;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -14,7 +16,6 @@ import com.pol.gestionart.entity.VentaCabeceraVentaDetalle;
 
 @Repository
 public class VentaCabeceraVentaDetalleDaoImpl extends DaoImpl<VentaCabeceraVentaDetalle> implements VentaCabeceraVentaDetalleDao{
-	private static final String UNCHECKED = "unchecked";
 	
 	@Override
 	public String getCamposFiltrables() {
@@ -24,6 +25,24 @@ public class VentaCabeceraVentaDetalleDaoImpl extends DaoImpl<VentaCabeceraVenta
 	@Override
 	public void destroy(String id) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public VentaCabeceraVentaDetalle getCajaVentaByIdCaja(Long idCaja) {
+		
+			String sql = "SELECT object(#ENTITY#) FROM #ENTITY# AS #ENTITY# ";
+			sql = sql.replace("#ENTITY#", getEntityName());
+			Query query = null;
+			sql = sql + "WHERE ventacabecera_idventa = ?1";
+			query.setParameter(1, idCaja);
+			VentaCabeceraVentaDetalle vCabDet = (VentaCabeceraVentaDetalle) query.getSingleResult();
+			
+		
+			logger.info("Registros encontrados: {}",vCabDet);
+			return vCabDet;		
 		
 	}
 	

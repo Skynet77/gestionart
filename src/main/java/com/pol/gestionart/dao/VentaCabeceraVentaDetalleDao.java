@@ -5,5 +5,5 @@ import com.pol.gestionart.entity.VentaCabeceraVentaDetalle;
 
 
 public interface VentaCabeceraVentaDetalleDao extends Dao<VentaCabeceraVentaDetalle>{
-	
+	public VentaCabeceraVentaDetalle getCajaVentaByIdCaja(Long idCaja);
 }

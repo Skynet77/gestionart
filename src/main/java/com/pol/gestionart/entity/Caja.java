@@ -4,9 +4,12 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
@@ -44,10 +47,9 @@ public class Caja extends GenericEntity{
 	//@Temporal(TemporalType.DATE)
 	private Date fechaActual;
 	
-	/*@ManyToOne
-	@NotNull(message = "caja.usuario.notNull")
-	@JoinColumn(foreignKey = @ForeignKey(name = "caja_usuario_fk"))
-	private Usuario usuario;*/
+	@ManyToOne
+	@JoinColumn(foreignKey = @ForeignKey(name = "cabecera_detalle_fk"))
+	private VentaCabecera ventaCabecera;
 	
 	public Caja() {
 		super();
