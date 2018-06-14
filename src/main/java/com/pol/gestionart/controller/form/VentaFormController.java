@@ -1,7 +1,5 @@
 package com.pol.gestionart.controller.form;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,11 +28,13 @@ import com.pol.gestionart.dao.CajaDao;
 import com.pol.gestionart.dao.Dao;
 import com.pol.gestionart.dao.ProductoDao;
 import com.pol.gestionart.dao.VentaCabeceraDao;
+import com.pol.gestionart.dao.VentaCabeceraVentaDetalleDao;
 import com.pol.gestionart.dao.VentaDetalleDao;
 import com.pol.gestionart.entity.Caja;
 import com.pol.gestionart.entity.Producto;
 import com.pol.gestionart.entity.VentaCabecera;
 import com.pol.gestionart.entity.VentaCabecera.Estado;
+import com.pol.gestionart.entity.VentaCabeceraVentaDetalle;
 import com.pol.gestionart.entity.VentaDetalle;
 import com.pol.gestionart.exceptions.AjaxException;
 import com.pol.gestionart.exceptions.WebAppException;
@@ -78,6 +78,9 @@ public class VentaFormController extends FormController<VentaCabecera> {
 	
 	@Autowired
 	private VentaDetalleDao ventaDetalleDao;
+	
+	@Autowired
+	private VentaCabeceraVentaDetalleDao ventaCabDetDao;
 	
 	@Override
 	public String getTemplatePath() {
@@ -180,13 +183,18 @@ public class VentaFormController extends FormController<VentaCabecera> {
 			IVA = subTotal.multiply(new BigDecimal(0.1));
 			ventaCab.setIva(IVA);
 			
+			VentaCabeceraVentaDetalle vCabDet = new VentaCabeceraVentaDetalle();
 			//el detalle actual que se esta procesando
 			ventaDet = new VentaDetalle();
 			ventaDet.setCantidad(cantidad);
 			ventaDet.setPrecioTotal(montoVenta);
 			ventaDet.setPrecioUnitario(producto.getPrecioVentaBigDecimal());
 			ventaDet.setProducto(producto);
-			ventaDet.setVentaCabecera(ventaCab);
+			vCabDet.setVentaCabecera(ventaCab);
+			vCabDet.setVentaDetalle(ventaDet);
+			ventaCabDetDao.create(vCabDet);
+			ventaDet.setVentaCabeceraVentaDetalle(vCabDet);
+			ventaCab.setVentaCabeceraVentaDetalle(vCabDet);
 		} catch (Exception e ) {
 			throw new AjaxException("Ocurrió un error inesperado");
 		}

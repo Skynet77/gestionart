@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -53,6 +54,11 @@ public class VentaCabecera extends GenericEntity{
 
 	private String estado;
 
+	@ManyToOne
+	@NotNull(message = "ventaDetalle.ventaCabecera.notNull")
+	@JoinColumn(foreignKey = @ForeignKey(name = "ventaCabecera_ventaDetalle_fk"))
+	private VentaCabeceraVentaDetalle ventaCabeceraVentaDetalle;
+	
 	public VentaCabecera(Long idVenta, @NotNull String nroComprobante, @NotNull String ruc,
 			@NotNull(message = "ventaCabecera.cliente.notNull") Cliente cliente,
 			@NotNull @Size(max = 20) String fechaEmision, @NotNull BigDecimal montoTotal, @NotNull BigDecimal subTotal,
@@ -200,6 +206,17 @@ public class VentaCabecera extends GenericEntity{
 		this.idVenta = id;
 
 	}
+	
+
+	public VentaCabeceraVentaDetalle getVentaCabeceraVentaDetalle() {
+		return ventaCabeceraVentaDetalle;
+	}
+
+
+	public void setVentaCabeceraVentaDetalle(VentaCabeceraVentaDetalle ventaCabeceraVentaDetalle) {
+		this.ventaCabeceraVentaDetalle = ventaCabeceraVentaDetalle;
+	}
+
 
 	@Override
 	public String toString() {
