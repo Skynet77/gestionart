@@ -34,7 +34,6 @@ import com.pol.gestionart.entity.Caja;
 import com.pol.gestionart.entity.Producto;
 import com.pol.gestionart.entity.VentaCabecera;
 import com.pol.gestionart.entity.VentaCabecera.Estado;
-import com.pol.gestionart.entity.VentaCabeceraVentaDetalle;
 import com.pol.gestionart.entity.VentaDetalle;
 import com.pol.gestionart.exceptions.AjaxException;
 import com.pol.gestionart.exceptions.WebAppException;
@@ -289,12 +288,12 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		ventaCabeceraDao.createOrUpdate(ventaCabecera);
 
 		for (VentaDetalle vd : mapaVentaDetalle.values()) {
-			VentaCabeceraVentaDetalle vCabDet = new VentaCabeceraVentaDetalle();	
-			vCabDet.setVentaCabecera(ventaCabecera);
+			//VentaCabeceraVentaDetalle vCabDet = new VentaCabeceraVentaDetalle();	
+			//vCabDet.setVentaCabecera(ventaCabecera);
 			vd.setVentaCabecera(ventaCabecera);
 			ventaDetalleDao.create(vd);
-			vCabDet.setVentaDetalle(vd);
-			ventaCabDetDao.create(vCabDet);
+			//vCabDet.setVentaDetalle(vd);
+			//ventaCabDetDao.create(vCabDet);
 			disminuirStock(vd, map);
 		}
 		

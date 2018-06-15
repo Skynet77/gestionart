@@ -4,6 +4,7 @@ package com.pol.gestionart.controller.form;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -18,11 +19,16 @@ import com.pol.gestionart.controller.list.CajaListController;
 import com.pol.gestionart.controller.list.VentaCabeceraListController;
 import com.pol.gestionart.dao.CajaDao;
 import com.pol.gestionart.dao.Dao;
+import com.pol.gestionart.dao.InventarioDao;
+import com.pol.gestionart.dao.ProductoDao;
 import com.pol.gestionart.dao.VentaCabeceraDao;
-import com.pol.gestionart.dao.VentaCabeceraVentaDetalleDao;
+import com.pol.gestionart.dao.VentaDetalleDao;
 import com.pol.gestionart.entity.Caja;
+import com.pol.gestionart.entity.Producto;
 import com.pol.gestionart.entity.VentaCabecera;
 import com.pol.gestionart.entity.VentaCabecera.Estado;
+import com.pol.gestionart.entity.VentaDetalle;
+import com.pol.gestionart.exceptions.WebAppException;
 import com.pol.gestionart.util.GeneralUtils;
 
 
@@ -45,7 +51,13 @@ public class CajaFromController extends FormController<Caja> {
 	private VentaCabeceraListController productoList;
 
 	@Autowired
-	private VentaCabeceraVentaDetalleDao ventaCabDetDao;
+	private VentaDetalleDao ventaDetalleDao;
+	
+	@Autowired
+	private ProductoDao productoDao;
+	
+	@Autowired
+	private InventarioDao inventarioDao;
 	
 	@Override
 	public String getTemplatePath() {
@@ -127,25 +139,63 @@ public class CajaFromController extends FormController<Caja> {
 	
 	@RequestMapping("confirmar-venta")
 	public String confirmarVenta(ModelMap map,HttpSession session, 
-			@RequestParam(name="id_venta")Long idVentaCab) {
+			@RequestParam(name="id_cabecera")Long idVentaCab,
+			@RequestParam(name="conf")String accion) throws WebAppException {
 		
+		Caja cajaActual = cajaDao.findCajaByDate();
+		
+		if(cajaActual ==  null){
+			throw new WebAppException("Debe abrir una caja antes de realizar una VENTA");
+		}
 		VentaCabecera ventaCabecera = ventaCabeceraDao.find(idVentaCab);
-		
-		if(ventaCabecera != null){
-			ventaCabecera.setEstado(Estado.CONFIRMADO.name());
-			Caja caja = new Caja();
-			caja.setFecha(ventaCabecera.getFechaEmision());
-			caja.setDescripcion("VENTA producto");
-			caja.setEntradaBigDecimal(ventaCabecera.getMontoTotal());
+		if("confirmar".equals(accion)){
+			if(ventaCabecera != null){
+				ventaCabecera.setEstado(Estado.CONFIRMADO.name());
+				
+				Caja caja = new Caja();
+				caja.setFecha(ventaCabecera.getFechaEmision());
+				caja.setDescripcion("VENTA PODUCTO");
+				caja.setEntradaBigDecimal(ventaCabecera.getMontoTotal());
+				if(cajaActual== null){
+					caja.setSaldoActual(caja.getEntrada());
+				}else{
+					//si ya habia una caja abiert este dia entonces el saldoactual 
+					//es la suma deloque ya existe mas la entrada
+					caja.setSaldoActual(cajaActual.getSaldoActual().add(caja.getEntrada()));
+				}
+				caja.setFechaActual(new Date());
+				caja.setFecha(ventaCabecera.getFechaEmision());
+				caja.setSalidaBigDecimal(BigDecimal.ZERO);
+				cajaDao.create(caja);
+				
+			}
+		}else if("anular".equals(accion)){
 			
-			caja.setFechaActual(new Date());
-			caja.setFecha(ventaCabecera.getFechaEmision());
-			caja.setSalidaBigDecimal(BigDecimal.ZERO);
-			cajaDao.create(caja);
+			List<VentaDetalle>listDetalle = ventaCabeceraDao.getDetalleByIdCab(idVentaCab);
+			for (VentaDetalle vd : listDetalle) {
+				aumentarStock(vd.getProducto(), vd, map);
+			}
+			for (VentaDetalle ventaDetalle : listDetalle) {
+				ventaDetalleDao.destroy(ventaDetalle);
+			}
+			ventaCabeceraDao.destroy(ventaCabecera);
 		}
 		
-		return "";
+		return "venta/venta_a_confirmar";
 	}
+	
+	private void aumentarStock(Producto producto, VentaDetalle ventaDet, ModelMap map){
+		//AUMENTAMOS EL STOCK
+		
+		Producto productoAumentar = null;
+		int sumar = 0;
+		//aumentamos la cantidad del producto en stock
+		productoAumentar = producto;
+		sumar = productoAumentar.getCantidad() + ventaDet.getCantidad();
+		productoAumentar.setCantidad(sumar);
+		productoDao.createOrUpdate(productoAumentar);
+	}
+	
 	
 	@RequestMapping("caja-venta")
 	public String getCajaVenta(ModelMap map,HttpSession session,

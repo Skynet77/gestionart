@@ -9,7 +9,7 @@
               <h4 class="modal-title">Detalle de Venta</h4>
             </div>
             <form th:action="@{/caja/confirmar}" method="post" role="form" id="form-comprobante">
-            <input type="hidden" name="comprobanteCompra" id="comprobanteCompra">
+            <input type="hidden" name="id_cabecera" id="id_cabecera">
             <div class="modal-body">
              	<table id="ventaDT" class="table table-bordered table-hover">
 	                <thead>
@@ -29,9 +29,9 @@
 	              </table>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-success pull-left" data-dismiss="modal">Confirmar</button>
-              <button type="button" class="btn btn-success pull-left" data-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-success pull-left" data-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-primary pull-left" name="conf" value="confirmar">Confirmar</button>
+              <button type="button" class="btn btn-danger pull-left "name="conf" value="anular" data-dismiss="modal">Anular</button>
+              <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
             </div>
             </form>
           </div>
