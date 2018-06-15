@@ -379,6 +379,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		map.addAttribute("cabeceraDetalle", cabecera);
 		map.addAttribute("columnas", ventaList.getColumnas());
 		map.addAttribute("columnasStr", ventaList.getColumnasStr(null));
+		map.addAttribute("idCab", idCab);
 		
 		return "venta/modal_confirmacion";
 	}	

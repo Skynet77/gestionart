@@ -24,6 +24,7 @@ import com.pol.gestionart.dao.ProductoDao;
 import com.pol.gestionart.dao.VentaCabeceraDao;
 import com.pol.gestionart.dao.VentaDetalleDao;
 import com.pol.gestionart.entity.Caja;
+import com.pol.gestionart.entity.Inventario;
 import com.pol.gestionart.entity.Producto;
 import com.pol.gestionart.entity.VentaCabecera;
 import com.pol.gestionart.entity.VentaCabecera.Estado;
@@ -137,16 +138,24 @@ public class CajaFromController extends FormController<Caja> {
 		return getTemplatePath(); 
 	}
 	
-	@RequestMapping("confirmar-venta")
+	@RequestMapping("confirmar")
 	public String confirmarVenta(ModelMap map,HttpSession session, 
 			@RequestParam(name="id_cabecera")Long idVentaCab,
 			@RequestParam(name="conf")String accion) throws WebAppException {
 		
 		Caja cajaActual = cajaDao.findCajaByDate();
-		
 		if(cajaActual ==  null){
 			throw new WebAppException("Debe abrir una caja antes de realizar una VENTA");
 		}
+		Calendar calendar = Calendar.getInstance();
+		int anho = 0, mes = 0, dia = 0;
+		Date d = new Date();
+		anho = d.getYear();
+		mes = d.getMonth();
+		dia = d.getDay();
+		
+		logger.info("sSearchFecha :", anho,mes,dia);
+		calendar.set(anho,mes-1,dia);
 		VentaCabecera ventaCabecera = ventaCabeceraDao.find(idVentaCab);
 		if("confirmar".equals(accion)){
 			if(ventaCabecera != null){
@@ -173,6 +182,7 @@ public class CajaFromController extends FormController<Caja> {
 			
 			List<VentaDetalle>listDetalle = ventaCabeceraDao.getDetalleByIdCab(idVentaCab);
 			for (VentaDetalle vd : listDetalle) {
+				List<Inventario> list = inventarioDao.getList(0,  10, Long.toString(vd.getProducto().getId()), calendar);
 				aumentarStock(vd.getProducto(), vd, map);
 			}
 			for (VentaDetalle ventaDetalle : listDetalle) {
@@ -181,7 +191,9 @@ public class CajaFromController extends FormController<Caja> {
 			ventaCabeceraDao.destroy(ventaCabecera);
 		}
 		
-		return "venta/venta_a_confirmar";
+		
+		
+		return "redirect:/venta/a-confirmar";
 	}
 	
 	private void aumentarStock(Producto producto, VentaDetalle ventaDet, ModelMap map){
