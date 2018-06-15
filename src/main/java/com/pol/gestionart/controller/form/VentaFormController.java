@@ -65,9 +65,9 @@ public class VentaFormController extends FormController<VentaCabecera> {
 	private static final String DATE_FORMAT = "dd/MM/yyyy-HH:mm:ss";
 
 	@Autowired
-	private VentaCabeceraListController productoList;
+	private VentaCabeceraListController ventaList;
 	
-	@Autowired 
+	@Autowired
 	private ProductoDao productoDao;
 	
 	@Autowired 
@@ -99,8 +99,8 @@ public class VentaFormController extends FormController<VentaCabecera> {
 
 	@Override
 	public void agregarValoresAdicionales(ModelMap map) {
-		map.addAttribute("columnas", productoList.getColumnas());
-		map.addAttribute("columnasStr", productoList.getColumnasStr(null));
+		map.addAttribute("columnas", ventaList.getColumnas());
+		map.addAttribute("columnasStr", ventaList.getColumnasStr(null));
 		map.addAttribute("productoList", getDao().getList(0, 100, null));
 		map.addAttribute("tituloFormulario", "Registrar Venta");
 		map.addAttribute("producto", new VentaCabecera());
@@ -357,6 +357,32 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		comprobanteVenta(map, session, request, response, idVentaCabecera);
 	}
 	
+	
+	@RequestMapping(value="a-confirmar", method = RequestMethod.GET)
+	public String aConfirmar(ModelMap map,HttpSession session) {
+		
+		super.agregarValoresAdicionales(map);
+		
+		map.addAttribute(getNombreObjeto(), getNuevaInstancia());
+		agregarValoresAdicionales(map);
+		session.setAttribute(MAP_DETALLE,null);
+		session.setAttribute(VENTA_CABECERA, null);
+		session.setAttribute(VENTA_DETALLE, null);
+		return "venta/venta_a_confirmar"; 
+	}
+	
+	@RequestMapping(value="cabecera", method = RequestMethod.POST)
+	public String getListDetalle(ModelMap map,HttpSession session,
+			@RequestParam(name="id_cabecera")Long idCab) {
+		List<VentaDetalle>listDetalle = ventaCabeceraDao.getDetalleByIdCab(idCab);
+		VentaCabecera cabecera = ventaCabeceraDao.find(idCab);
+		map.addAttribute("listDetalle", listDetalle);
+		map.addAttribute("cabeceraDetalle", cabecera);
+		map.addAttribute("columnas", ventaList.getColumnas());
+		map.addAttribute("columnasStr", ventaList.getColumnasStr(null));
+		
+		return "venta/modal_confirmacion";
+	}	
 	
 	@Override
 	public Dao<VentaCabecera> getDao() {
