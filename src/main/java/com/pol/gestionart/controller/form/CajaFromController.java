@@ -147,15 +147,7 @@ public class CajaFromController extends FormController<Caja> {
 		if(cajaActual ==  null){
 			throw new WebAppException("Debe abrir una caja antes de realizar una VENTA");
 		}
-		Calendar calendar = Calendar.getInstance();
-		int anho = 0, mes = 0, dia = 0;
-		Date d = new Date();
-		anho = d.getYear();
-		mes = d.getMonth();
-		dia = d.getDay();
 		
-		logger.info("sSearchFecha :", anho,mes,dia);
-		calendar.set(anho,mes-1,dia);
 		VentaCabecera ventaCabecera = ventaCabeceraDao.find(idVentaCab);
 		Inventario inventario = null;
 		if("confirmar".equals(accion)){
@@ -164,7 +156,7 @@ public class CajaFromController extends FormController<Caja> {
 				
 				Caja caja = new Caja();
 				caja.setFecha(ventaCabecera.getFechaEmision());
-				caja.setDescripcion("VENTA PODUCTO");
+				caja.setDescripcion("VENTA PRODUCTO");
 				caja.setEntradaBigDecimal(ventaCabecera.getMontoTotal());
 				if(cajaActual== null){
 					caja.setSaldoActual(caja.getEntrada());

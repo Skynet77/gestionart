@@ -148,7 +148,6 @@ public class VentaFormController extends FormController<VentaCabecera> {
 				listProducto = new ArrayList<>();
 			}
 			
-			
 			if(session.getAttribute(VENTA_CABECERA)!=null){
 				ventaCab = (VentaCabecera) session.getAttribute(VENTA_CABECERA);
 			}else{
@@ -172,7 +171,6 @@ public class VentaFormController extends FormController<VentaCabecera> {
 			montoTotal = montoTotal.add(montoVenta);
 			//volvemos a guardar el monto total
 			ventaCab.setMontoTotalBigDecimal(montoTotal);
-			
 			
 			//calculo de subTotal
 			BigDecimal subTotal;
@@ -301,7 +299,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 				throw new WebAppException("Debe realizar una compra del producto para realizar la venta");
 			}else{
 				inventario.setActual(inventario.getActual()-vd.getCantidad());
-				inventario.setSalida(vd.getCantidad());
+				inventario.setSalida(inventario.getSalida()+vd.getCantidad());
 			}
 			
 			inventarioDao.createOrUpdate(inventario);

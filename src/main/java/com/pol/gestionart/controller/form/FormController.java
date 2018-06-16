@@ -5,7 +5,6 @@ import javax.validation.Valid;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
-
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
@@ -18,16 +17,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.pol.gestionart.bean.Respuesta;
+import com.pol.gestionart.dao.Dao;
+import com.pol.gestionart.exceptions.BaseController;
 import com.pol.gestionart.main.GenericEntity;
 import com.pol.gestionart.main.Message;
 import com.pol.gestionart.main.SesionUsuario;
-import com.pol.gestionart.bean.Respuesta;
-import com.pol.gestionart.dao.Dao;
 import com.pol.gestionart.security.Usuario;
 
 
 
-public abstract class FormController<T extends GenericEntity>{
+public abstract class FormController<T extends GenericEntity> extends BaseController{
 	
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired 

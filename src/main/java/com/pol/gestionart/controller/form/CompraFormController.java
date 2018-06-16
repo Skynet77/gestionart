@@ -27,11 +27,13 @@ import com.pol.gestionart.dao.CajaDao;
 import com.pol.gestionart.dao.CompraCabeceraDao;
 import com.pol.gestionart.dao.CompraDetalleDao;
 import com.pol.gestionart.dao.Dao;
+import com.pol.gestionart.dao.InventarioDao;
 import com.pol.gestionart.dao.ProductoDao;
 import com.pol.gestionart.dao.ProveedorDao;
 import com.pol.gestionart.entity.Caja;
 import com.pol.gestionart.entity.CompraCabecera;
 import com.pol.gestionart.entity.CompraDetalle;
+import com.pol.gestionart.entity.Inventario;
 import com.pol.gestionart.entity.Producto;
 import com.pol.gestionart.exceptions.AjaxException;
 import com.pol.gestionart.exceptions.WebAppException;
@@ -76,6 +78,9 @@ public class CompraFormController extends FormController<CompraCabecera> {
 
 	@Autowired 
 	private CajaDao cajaDao;
+	
+	@Autowired
+	private InventarioDao inventarioDao;
 	
 	@Override
 	public String getTemplatePath() {
@@ -271,8 +276,9 @@ public class CompraFormController extends FormController<CompraCabecera> {
 			compraCabecera.setNroComprobante(nroComprobante);
 			compraCabeceraDao.createOrUpdate(compraCabecera);
 			
-			
+			Inventario inventario = null;
 			for (CompraDetalle vd : mapaCompraDetalle.values()) {
+				inventario = inventarioDao.getInventarioByProductoFecha(vd.getProducto().getId());
 				vd.setCompraCabecera(compraCabecera);
 				aumentarStock(vd.getProducto(), vd, map);
 				compraDetalleDao.create(vd);

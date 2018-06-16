@@ -18,11 +18,11 @@ public class BaseController {
 
 	private static final Log baseLogger = LogFactory.getLog(HomeController.class);
 	//Mapping
-	public static final String ERROR_PAGE_URL = "common/errorPage";
+	public static final String ERROR_PAGE_URL = "errorPage";
 	public static final String REDIRECT_TO = "redirect:";
 	public static final String GO_TO_LOGIN_PAGE = "redirect:/login";
 	//VIEWS
-	public static final String ERROR_AJAX_VIEW = "common/errorPageAjax";
+	public static final String ERROR_AJAX_VIEW = "errorPage";
 
 	public BaseController() {
 
@@ -49,7 +49,7 @@ public class BaseController {
 		errorData.setCode("200518");
 		errorData.setDescription(pe.getMessage());
 		response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-			model.addAttribute("error",pe.getMessage());
+			model.addAttribute("errorPage",pe.getMessage());
 		
 		return ERROR_PAGE_URL;
 	}

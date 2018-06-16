@@ -1,6 +1,8 @@
 package com.pol.gestionart.main;
 
-public abstract class GenericEntity {
+import com.pol.gestionart.exceptions.BaseController;
+
+public abstract class GenericEntity extends BaseController {
 	private static final int RESULT = 1;
 	private static final int PRIME = 31;
 	public static final int ZERO = 0;
