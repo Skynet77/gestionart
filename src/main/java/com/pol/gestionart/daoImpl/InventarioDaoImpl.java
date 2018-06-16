@@ -1,6 +1,7 @@
 package com.pol.gestionart.daoImpl;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -69,6 +70,35 @@ public class InventarioDaoImpl extends DaoImpl<Inventario> implements Inventario
 		List<Inventario> list = query.getResultList();
 		logger.info("Cantidad de registros encontrados: {}",list);
 		return list;		
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public Inventario getInventarioByProductoFecha(Long idProducto){
+		Inventario inve = null;
+		try {
+		
+			String sql = "SELECT object(#ENTITY#) FROM #ENTITY# AS #ENTITY# ";
+			sql = sql.replace("#ENTITY#", getEntityName());
+			Query query = null;
+			Calendar calendar = Calendar.getInstance();
+			//calendar.set(Calendar.DATE, 1);
+			Date d = new Date(calendar.getTimeInMillis());
+			int mes = d.getMonth();
+			mes = mes+1;
+			sql = sql + "WHERE producto_idproducto = ?1 and extract(MONTH from fechames) = ?2";
+			query = entityManager.createQuery(sql);
+			query.setParameter(1, idProducto);
+			query.setParameter(2, mes);
+		
+			inve = (Inventario) query.getSingleResult();
+			logger.info(" registros encontrados: {}",inve);
+		} catch (Exception e) {
+			inve =null;
+		}
+		return inve;
 	}
 
 }

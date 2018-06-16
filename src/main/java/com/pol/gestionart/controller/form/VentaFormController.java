@@ -26,11 +26,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.pol.gestionart.controller.list.VentaCabeceraListController;
 import com.pol.gestionart.dao.CajaDao;
 import com.pol.gestionart.dao.Dao;
+import com.pol.gestionart.dao.InventarioDao;
 import com.pol.gestionart.dao.ProductoDao;
 import com.pol.gestionart.dao.VentaCabeceraDao;
 import com.pol.gestionart.dao.VentaCabeceraVentaDetalleDao;
 import com.pol.gestionart.dao.VentaDetalleDao;
 import com.pol.gestionart.entity.Caja;
+import com.pol.gestionart.entity.Inventario;
 import com.pol.gestionart.entity.Producto;
 import com.pol.gestionart.entity.VentaCabecera;
 import com.pol.gestionart.entity.VentaCabecera.Estado;
@@ -80,6 +82,9 @@ public class VentaFormController extends FormController<VentaCabecera> {
 	
 	@Autowired
 	private VentaCabeceraVentaDetalleDao ventaCabDetDao;
+	
+	@Autowired
+	private InventarioDao inventarioDao;
 	
 	@Override
 	public String getTemplatePath() {
@@ -286,14 +291,20 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		String nroComprobante = GeneralUtils.formatoComprobante(ventaCabecera.getId());
 		ventaCabecera.setNroComprobante(nroComprobante);
 		ventaCabeceraDao.createOrUpdate(ventaCabecera);
-
+		Inventario inventario = null;
 		for (VentaDetalle vd : mapaVentaDetalle.values()) {
-			//VentaCabeceraVentaDetalle vCabDet = new VentaCabeceraVentaDetalle();	
-			//vCabDet.setVentaCabecera(ventaCabecera);
 			vd.setVentaCabecera(ventaCabecera);
 			ventaDetalleDao.create(vd);
-			//vCabDet.setVentaDetalle(vd);
-			//ventaCabDetDao.create(vCabDet);
+			//preguntamos si ya hay un registro de inventario de ese producto en este mes
+			inventario = inventarioDao.getInventarioByProductoFecha(vd.getProducto().getId());
+			if(inventario == null){
+				throw new WebAppException("Debe realizar una compra del producto para realizar la venta");
+			}else{
+				inventario.setActual(inventario.getActual()-vd.getCantidad());
+				inventario.setSalida(vd.getCantidad());
+			}
+			
+			inventarioDao.createOrUpdate(inventario);
 			disminuirStock(vd, map);
 		}
 		

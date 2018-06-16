@@ -157,6 +157,7 @@ public class CajaFromController extends FormController<Caja> {
 		logger.info("sSearchFecha :", anho,mes,dia);
 		calendar.set(anho,mes-1,dia);
 		VentaCabecera ventaCabecera = ventaCabeceraDao.find(idVentaCab);
+		Inventario inventario = null;
 		if("confirmar".equals(accion)){
 			if(ventaCabecera != null){
 				ventaCabecera.setEstado(Estado.CONFIRMADO.name());
@@ -182,7 +183,11 @@ public class CajaFromController extends FormController<Caja> {
 			
 			List<VentaDetalle>listDetalle = ventaCabeceraDao.getDetalleByIdCab(idVentaCab);
 			for (VentaDetalle vd : listDetalle) {
-				List<Inventario> list = inventarioDao.getList(0,  10, Long.toString(vd.getProducto().getId()), calendar);
+				//preguntamos si ya hay un registro de inventario de ese producto en este mes
+				inventario = inventarioDao.getInventarioByProductoFecha(vd.getProducto().getId());
+				inventario.setActual(inventario.getActual()+vd.getCantidad());
+				inventario.setSalida(inventario.getSalida()-vd.getCantidad());
+				inventarioDao.createOrUpdate(inventario);
 				aumentarStock(vd.getProducto(), vd, map);
 			}
 			for (VentaDetalle ventaDetalle : listDetalle) {
