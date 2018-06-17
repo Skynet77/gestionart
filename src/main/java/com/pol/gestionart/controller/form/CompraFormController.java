@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -257,18 +258,16 @@ public class CompraFormController extends FormController<CompraCabecera> {
 				throw new WebAppException("Debe abrir una caja antes de realizar una compra");
 			}
 			
-			
-			if(session.getAttribute(COMPRA_CABECERA)!=null){
+			/*if(session.getAttribute(COMPRA_CABECERA)!=null){
 				compraCab = (CompraCabecera) session.getAttribute(COMPRA_CABECERA);
 			}else{
 				compraCab = new CompraCabecera();
-			}
+			}*/
 			
 			if(session.getAttribute(MAP_DETALLE_COMPRA)!=null){
 				mapaCompraDetalle  = (Map<String, CompraDetalle>) session.getAttribute(MAP_DETALLE_COMPRA);
 			}
-			
-			//compraCabecera.setIva(compraCab.getIva());
+
 			compraCabecera.setNroComprobante("1");
 			compraCabeceraDao.create(compraCabecera);
 			
@@ -277,10 +276,41 @@ public class CompraFormController extends FormController<CompraCabecera> {
 			compraCabeceraDao.createOrUpdate(compraCabecera);
 			
 			Inventario inventario = null;
+			Inventario inventarioMesAnterio = null;
 			for (CompraDetalle vd : mapaCompraDetalle.values()) {
-				inventario = inventarioDao.getInventarioByProductoFecha(vd.getProducto().getId());
+				inventario = inventarioDao.getInventarioByProductoFecha(vd.getProducto().getId(),null);
+				if(inventario == null){
+					Calendar calendar = Calendar.getInstance();
+					Date d = new Date(calendar.getTimeInMillis());
+					int mes = d.getMonth();
+					inventarioMesAnterio = inventarioDao.getInventarioByProductoFecha(vd.getProducto().getId(),mes);
+				}
+				//verificamos si el mes anterior quedo algo en el stock
+				if(inventario == null){
+					inventario = new Inventario();
+					
+					inventario.setEntrada(vd.getCantidad());
+					inventario.setFechaMes(GeneralUtils.getDate(compraCabecera.getFechaCompra()));
+					inventario.setProducto(vd.getProducto());
+					inventario.setSalida(0);
+					if(inventarioMesAnterio!=null){
+						inventario.setStockInicial(inventarioMesAnterio.getActual()+vd.getCantidad());
+						inventario.setActual(inventarioMesAnterio.getActual()+vd.getCantidad());
+					}else{
+						inventario.setStockInicial(vd.getCantidad());
+						inventario.setActual(vd.getCantidad());
+					}
+				}else{
+					inventario.setActual(inventario.getActual()+vd.getCantidad());
+					inventario.setEntrada(inventario.getEntrada()+vd.getCantidad());
+					inventario.setFechaMes(GeneralUtils.getDate(compraCabecera.getFechaCompra()));
+					inventario.setProducto(vd.getProducto());
+					inventario.setSalida(0);
+				}
+				
 				vd.setCompraCabecera(compraCabecera);
 				aumentarStock(vd.getProducto(), vd, map);
+				inventarioDao.createOrUpdate(inventario);
 				compraDetalleDao.create(vd);
 			}
 			
@@ -297,7 +327,6 @@ public class CompraFormController extends FormController<CompraCabecera> {
 			map.addAttribute("compraCabeceraId", compraCabecera.getId());
 			session.setAttribute("compraCabeceraId", compraCabecera.getId());
 			return indexPay(map, session);
-
 		}
 		
 		@RequestMapping(value = "comprobante", method = RequestMethod.POST)

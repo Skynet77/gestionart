@@ -294,7 +294,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 			vd.setVentaCabecera(ventaCabecera);
 			ventaDetalleDao.create(vd);
 			//preguntamos si ya hay un registro de inventario de ese producto en este mes
-			inventario = inventarioDao.getInventarioByProductoFecha(vd.getProducto().getId());
+			inventario = inventarioDao.getInventarioByProductoFecha(vd.getProducto().getId(),null);
 			if(inventario == null){
 				throw new WebAppException("Debe realizar una compra del producto para realizar la venta");
 			}else{

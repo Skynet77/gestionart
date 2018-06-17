@@ -76,7 +76,7 @@ public class InventarioDaoImpl extends DaoImpl<Inventario> implements Inventario
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public Inventario getInventarioByProductoFecha(Long idProducto){
+	public Inventario getInventarioByProductoFecha(Long idProducto,Integer mess){
 		Inventario inve = null;
 		try {
 		
@@ -87,7 +87,10 @@ public class InventarioDaoImpl extends DaoImpl<Inventario> implements Inventario
 			//calendar.set(Calendar.DATE, 1);
 			Date d = new Date(calendar.getTimeInMillis());
 			int mes = d.getMonth();
-			mes = mes+1;
+			if(mess==null){
+				mes = mes+1;
+			}
+			
 			sql = sql + "WHERE producto_idproducto = ?1 and extract(MONTH from fechames) = ?2";
 			query = entityManager.createQuery(sql);
 			query.setParameter(1, idProducto);

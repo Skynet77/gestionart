@@ -9,5 +9,5 @@ import com.pol.gestionart.entity.Inventario;
 public interface InventarioDao extends Dao<Inventario>{
 
 	List<Inventario> getList(Integer filaInicio, Integer filaFin, String sSearch, Calendar sSearch2);
-	public Inventario getInventarioByProductoFecha(Long idProducto);
+	public Inventario getInventarioByProductoFecha(Long idProducto, Integer mess);
 }

@@ -176,7 +176,7 @@ public class CajaFromController extends FormController<Caja> {
 			List<VentaDetalle>listDetalle = ventaCabeceraDao.getDetalleByIdCab(idVentaCab);
 			for (VentaDetalle vd : listDetalle) {
 				//preguntamos si ya hay un registro de inventario de ese producto en este mes
-				inventario = inventarioDao.getInventarioByProductoFecha(vd.getProducto().getId());
+				inventario = inventarioDao.getInventarioByProductoFecha(vd.getProducto().getId(),null);
 				inventario.setActual(inventario.getActual()+vd.getCantidad());
 				inventario.setSalida(inventario.getSalida()-vd.getCantidad());
 				inventarioDao.createOrUpdate(inventario);

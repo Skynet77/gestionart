@@ -280,7 +280,7 @@
 					var year = fecha.getFullYear();
 					var mes = fecha.getMonth()
 					var dia = fecha.getDate();
-					$('.datepicker1').datepicker({endDate:fechaInicio, language:'es', format: 'dd/mm/yyyy'});
+					$('.datepicker1').datepicker({endDate:fechaInicio, language:'es', format: 'dd-mm-yyyy'});
 					$('.datepicker1').datepicker('update', new Date(year, mes, dia));
 					//buscar producto
 					$(suggestProducto).on('selectionchange', function(a,b,c){
@@ -310,7 +310,7 @@
 					dd=addZero(dd);
 					mm=addZero(mm);
 					fechaActual = fecha.getFullYear()+"-"+mm+"-"+dd;
-					$("#fechaCompra").val(fechaActual);
+					//$("#fechaCompra").val(fechaActual);
 					
 					function addZero(i) {
 					    if (i < 10) {
