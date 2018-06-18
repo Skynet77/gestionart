@@ -102,7 +102,7 @@ public class Producto extends GenericEntity {
 		this.descripcion = descripcion;
 	}
 
-	public void KCompra(BigDecimal precioCompra) {
+	public void setPrecioCompra(BigDecimal precioCompra) {
 		String monto = precioCompra.toPlainString().replace(".", "");
 		this.precioCompra = new BigDecimal(monto);
 	}
@@ -122,11 +122,9 @@ public class Producto extends GenericEntity {
 	}
 	
 	public void setPrecioVenta(String precioVenta) {
-		if(precioVenta != null){
+		if(precioVenta != null && !"".equals(precioVenta)){
 			String monto = precioVenta.replace(".", "");
 			this.precioVenta = new BigDecimal(monto);
-		}else{
-			this.precioVenta = new BigDecimal(precioVenta);
 		}
 		
 	}
