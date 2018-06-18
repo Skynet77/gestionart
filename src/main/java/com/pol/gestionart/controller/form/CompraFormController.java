@@ -148,11 +148,7 @@ public class CompraFormController extends FormController<CompraCabecera> {
 				}
 				
 				producto = productoDao.find(idProducto);
-				double porcentaje= 0.4;
-		        BigDecimal b = new BigDecimal(porcentaje);
-				BigDecimal recargo;
-				recargo = producto.getPrecioCompra().multiply(b);
-				producto.setPrecioVenta(producto.getPrecioCompra().add(recargo));
+				
 				if(producto != null){
 					listProducto.add(producto);
 				}
@@ -263,12 +259,6 @@ public class CompraFormController extends FormController<CompraCabecera> {
 				throw new WebAppException("Debe abrir una caja antes de realizar una compra");
 			}
 			
-			/*if(session.getAttribute(COMPRA_CABECERA)!=null){
-				compraCab = (CompraCabecera) session.getAttribute(COMPRA_CABECERA);
-			}else{
-				compraCab = new CompraCabecera();
-			}*/
-			
 			if(session.getAttribute(MAP_DETALLE_COMPRA)!=null){
 				mapaCompraDetalle  = (Map<String, CompraDetalle>) session.getAttribute(MAP_DETALLE_COMPRA);
 			}
@@ -279,6 +269,13 @@ public class CompraFormController extends FormController<CompraCabecera> {
 			String nroComprobante = GeneralUtils.formatoComprobante(compraCabecera.getId());
 			compraCabecera.setNroComprobante(nroComprobante);
 			compraCabeceraDao.createOrUpdate(compraCabecera);
+			
+			
+			double porcentaje= 0.4;
+	        BigDecimal b = BigDecimal.valueOf(porcentaje); 
+	        		//new BigDecimal(porcentaje, MathContext.DECIMAL64);
+			BigDecimal recargo;
+			
 			
 			Inventario inventario = null;
 			Inventario inventarioMesAnterio = null;
@@ -312,7 +309,10 @@ public class CompraFormController extends FormController<CompraCabecera> {
 					inventario.setProducto(vd.getProducto());
 					inventario.setSalida(0);
 				}
-				
+				Producto producto = vd.getProducto();
+				recargo = producto.getPrecioCompra().multiply(b);
+				producto.setPrecioVentaBigDecimal(producto.getPrecioCompra().add(recargo));
+				productoDao.createOrUpdate(producto);
 				vd.setCompraCabecera(compraCabecera);
 				aumentarStock(vd.getProducto(), vd, map);
 				inventarioDao.createOrUpdate(inventario);

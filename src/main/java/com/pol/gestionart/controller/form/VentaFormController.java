@@ -280,6 +280,10 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		if(session.getAttribute(MAP_DETALLE)!=null){
 			mapaVentaDetalle  = (Map<String, VentaDetalle>) session.getAttribute(MAP_DETALLE);
 		}
+		//verifiamos si hay en stock para realizar la venta
+		for (VentaDetalle vd : mapaVentaDetalle.values()) {
+			verificarStock(vd, map);
+		}
 		
 		ventaCabecera.setIva(ventaCab.getIva());
 		ventaCabecera.setNroComprobante("1");
@@ -423,6 +427,18 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		sumar = productoAumentar.getCantidad() + ventaDet.getCantidad();
 		productoAumentar.setCantidad(sumar);
 		productoDao.createOrUpdate(productoAumentar);
+	}
+	
+	private void verificarStock(VentaDetalle ventaDet, ModelMap map) throws WebAppException{
+		int resta = 0;
+		//producto para disminuir el stok
+		Producto productoDisminuir = null;
+		//sumamos la cantidad del producto en stock, ya que se elimino del detalle
+		productoDisminuir = productoDao.find(ventaDet.getProducto().getId());
+		resta = productoDisminuir.getCantidad() - ventaDet.getCantidad();
+		if(resta < 0 ) {
+			throw new WebAppException("Quedan sólo "+productoDisminuir.getCantidad().toString()+" de "+productoDisminuir.getDescripcion());
+		}
 	}
 
 }
