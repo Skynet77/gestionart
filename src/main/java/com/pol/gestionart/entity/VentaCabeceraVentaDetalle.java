@@ -19,7 +19,7 @@ import com.pol.gestionart.main.GenericEntity;
 
 
 @Entity
-@Table//(uniqueConstraints = { @UniqueConstraint(name = "ventaCabecera_id_uk", columnNames = { "venta_cab_id" }) })
+//@Table//(uniqueConstraints = { @UniqueConstraint(name = "ventaCabecera_id_uk", columnNames = { "venta_cab_id" }) })
 public class VentaCabeceraVentaDetalle extends GenericEntity{
 
 	private static final String SECUENCIA = "ventaCab_ventaDet_id_seq";

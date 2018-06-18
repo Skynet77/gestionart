@@ -148,6 +148,11 @@ public class CompraFormController extends FormController<CompraCabecera> {
 				}
 				
 				producto = productoDao.find(idProducto);
+				double porcentaje= 0.4;
+		        BigDecimal b = new BigDecimal(porcentaje);
+				BigDecimal recargo;
+				recargo = producto.getPrecioCompra().multiply(b);
+				producto.setPrecioVenta(producto.getPrecioCompra().add(recargo));
 				if(producto != null){
 					listProducto.add(producto);
 				}

@@ -40,7 +40,6 @@ public class Producto extends GenericEntity {
 	private String descripcion;
 	@NotNull
 	private BigDecimal precioCompra;
-	@NotNull
 	private BigDecimal precioVenta;
 
 	private BigDecimal iva;
