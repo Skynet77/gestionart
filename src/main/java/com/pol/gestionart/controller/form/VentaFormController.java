@@ -375,6 +375,11 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		
 		super.agregarValoresAdicionales(map);
 		
+		if(session.getAttribute("msgExito") !=null){
+			map.addAttribute("msgExito", session.getAttribute("msgExito") );
+			session.setAttribute("msgExito",null); 
+		}
+		
 		map.addAttribute(getNombreObjeto(), getNuevaInstancia());
 		agregarValoresAdicionales(map);
 		session.setAttribute(MAP_DETALLE,null);

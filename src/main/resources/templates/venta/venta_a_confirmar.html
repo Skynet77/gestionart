@@ -28,7 +28,31 @@
 		<div id="ventaConfirmar">
 		</div>
 	
-        
+        <div class="modal fade" id="estaSeguro">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Esta Seguro que desea anular la venta?</h4>
+              </div>
+              <form th:action="@{/caja/confirmar}" method="post" role="form" id="form">
+              <input type="hidden" name="id_cabecera" id="id_cabecera" >
+              <div class="modal-body">
+                <p><b>Aceptar:</b> Para anular la venta</p>
+                <p><b>Cancelar:</b> Para cancelar la oeración</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary" name="conf" value="anular">Aceptar</button>
+              </div>
+              </form>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
         
 	<script th:inline="javascript">
 					/*<![CDATA[*/

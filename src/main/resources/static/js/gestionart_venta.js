@@ -53,6 +53,34 @@ function crearDataTableVenta(dataTableId, ajaxSource, columnas, viewComprobante)
 		verDetalle(ob.id, "VER");
 
 		}); 
+	
+	$('#'+ dataTableId + ' tbody').on('click','button.confirmar', function(){
+		/*Con esto tenemos un objeto de tipo {id: 1, codigo: "ejc", descripcion: "Ejecutivo", materia: Object}
+		 teniendo en cuenta que ejecutamos http://localhost:8090/sigj/proceso/ 
+		 entonces para obtener el id de este objeto accedemos por su llave "id"*/
+//		console.log($('#'+dataTableId+ ' tbody tr'));
+		var ob = dataTable.row( $(this).parents('tr') ).data();
+		console.log(ob);
+		console.log( ob["id"] );
+		var link = document.createElement('a');
+	    link.href = "/gestionart/caja/confirmar/"+ob.id;
+	    //link.target = '_blank';
+	    document.body.appendChild(link);
+	    link.click();
+	});
+	
+	
+	$('#'+ dataTableId + ' tbody').on('click','button.cancelar', function(){
+		/*Con esto tenemos un objeto de tipo {id: 1, codigo: "ejc", descripcion: "Ejecutivo", materia: Object}
+		 teniendo en cuenta que ejecutamos http://localhost:8090/sigj/proceso/ 
+		 entonces para obtener el id de este objeto accedemos por su llave "id"*/
+//		console.log($('#'+dataTableId+ ' tbody tr'));
+		var ob = dataTable.row( $(this).parents('tr') ).data();
+		console.log(ob);
+		console.log( ob["id"] );
+	    $("#estaSeguro").modal('show');
+	    $("#id_cabecera").val(ob.id);
+	});
 
 	
 }

@@ -225,8 +225,6 @@ public class CompraFormController extends FormController<CompraCabecera> {
 				compraDet = mapCompraDetail.get(uuid);
 				compraCab.setTotalBigDecimal(compraCab.getTotal().subtract(compraDet.getPrecioTotal()));
 				
-				disminuirStock(compraDet,map);
-				
 				//calculo de subTotal
 				BigDecimal subTotal;
 				BigDecimal IVA;

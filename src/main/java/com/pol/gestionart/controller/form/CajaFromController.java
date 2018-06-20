@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -138,6 +139,12 @@ public class CajaFromController extends FormController<Caja> {
 		return getTemplatePath(); 
 	}
 	
+	@RequestMapping("confirmar/{id_cabecera}")
+	public String confirmarVentaGET(ModelMap map,HttpSession session, 
+			@PathVariable(name="id_cabecera") Long idVentaCab) throws WebAppException {
+		return confirmarVenta(map, session, idVentaCab, "confirmar");
+	}
+	
 	@RequestMapping("confirmar")
 	public String confirmarVenta(ModelMap map,HttpSession session, 
 			@RequestParam(name="id_cabecera")Long idVentaCab,
@@ -169,6 +176,7 @@ public class CajaFromController extends FormController<Caja> {
 				caja.setFecha(ventaCabecera.getFechaEmision());
 				caja.setSalidaBigDecimal(BigDecimal.ZERO);
 				cajaDao.create(caja);
+				session.setAttribute("msgExito", "Venta confirmado con exito");
 				
 			}
 		}else if("anular".equals(accion)){
@@ -186,6 +194,7 @@ public class CajaFromController extends FormController<Caja> {
 				ventaDetalleDao.destroy(ventaDetalle);
 			}
 			ventaCabeceraDao.destroy(ventaCabecera);
+			session.setAttribute("msgExito", "Venta anulado con exito");
 		}
 		
 		
