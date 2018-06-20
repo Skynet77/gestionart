@@ -13,7 +13,7 @@ import com.pol.gestionart.main.GenericEntity;
 
 @Entity
 @Table
-public class Descripcion_caja extends GenericEntity {
+public class DescripcionCaja extends GenericEntity {
 private static final String SECUENCIA = "Descripcion_caja_id_seq";
 	
 	@Id
@@ -21,27 +21,29 @@ private static final String SECUENCIA = "Descripcion_caja_id_seq";
 	@SequenceGenerator(name = SECUENCIA, sequenceName = SECUENCIA)
 	private Long id;
 	
-	@Size(max=6)
+	@Size(max=20)
 	private String codigo;
 	
 	@Size(max=30)
 	private String descripcion;
 	
-	public Descripcion_caja() {
+	public DescripcionCaja() {
 		super();
 	}
 
-	public Descripcion_caja(Long id, @Size(max = 6) String codigo, @Size(max = 30) String descripcion) {
+	public DescripcionCaja(Long id, @Size(max = 6) String codigo, @Size(max = 30) String descripcion) {
 		super();
 		this.id = id;
 		this.codigo = codigo;
 		this.descripcion = descripcion;
 	}
 
+	@Override
 	public Long getId() {
 		return id;
 	}
 
+	@Override
 	public void setId(Long id) {
 		this.id = id;
 	}

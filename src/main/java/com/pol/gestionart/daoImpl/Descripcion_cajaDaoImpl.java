@@ -3,9 +3,9 @@ package com.pol.gestionart.daoImpl;
 import org.springframework.stereotype.Repository;
 
 import com.pol.gestionart.dao.Descripcion_cajaDao;
-import com.pol.gestionart.entity.Descripcion_caja;
+import com.pol.gestionart.entity.DescripcionCaja;
 @Repository
-public class Descripcion_cajaDaoImpl extends DaoImpl<Descripcion_caja> implements Descripcion_cajaDao {
+public class Descripcion_cajaDaoImpl extends DaoImpl<DescripcionCaja> implements Descripcion_cajaDao {
 
 	@Override
 	public String getCamposFiltrables() {

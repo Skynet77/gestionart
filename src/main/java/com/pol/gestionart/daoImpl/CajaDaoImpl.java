@@ -2,6 +2,7 @@ package com.pol.gestionart.daoImpl;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -40,29 +41,55 @@ public class CajaDaoImpl extends DaoImpl<Caja> implements CajaDao{
 		int anho = 0, mes = 0, dia = 0;
 		
 		Calendar calendar = Calendar.getInstance();
-		//calendar.set(Calendar.DATE, 1);
 		Date d = new Date(calendar.getTimeInMillis());
 		String fechaActual = GeneralUtils.getStringFromDate(d,GeneralUtils.DATE_FORMAT_CAJA);
 		Query query = em.createQuery(sql);
 		sql = sql + " WHERE fechaactual = (select MAX(fechaActual) from Caja ) and fecha = ?1";
 		query = entityManager.createQuery(sql);
 		query.setParameter(1, fechaActual);
-	//	query.setParameter(1,fecha);
 		try {
 		
 		caja = (Caja) query.getSingleResult();
-//		if(caja.getFechaActual().compareTo(new Date())>1 ){
 			logger.info("Registros encontrados: {}", caja);
 			return caja;
-//		}else{
-//			return null;
-//		}
 		
 		} catch (NoResultException e) {
 			return caja;
 		}
 		
 	}
+	
+	@Override
+	@Transactional
+	@SuppressWarnings(UNCHECKED)
+	public List<Caja> findCajaForCierre() {
+		List<Caja> cajaList =  null;
+		EntityManager em = entityManager;
+		String sql = "select object(ENTITY) from ENTITY as ENTITY";
+		sql = sql.replace("ENTITY", getEntityName());
+		logger.debug("Realizando consulta: {}", sql);
+		int anho = 0, mes = 0, dia = 0;
+		
+		Calendar calendar = Calendar.getInstance();
+		Date d = new Date(calendar.getTimeInMillis());
+		String fechaActual = GeneralUtils.getStringFromDate(d,GeneralUtils.DATE_FORMAT_CAJA);
+		Query query = em.createQuery(sql);
+		sql = sql + " WHERE and fecha = ?1";
+		query = entityManager.createQuery(sql);
+		query.setParameter(1, fechaActual);
+		try {
+		
+		cajaList = query.getResultList();
+			logger.info("Registros encontrados: {}", cajaList);
+			return cajaList;
+		
+		} catch (NoResultException e) {
+			return cajaList;
+		}
+		
+	}
+	
+	
 	
 	
 

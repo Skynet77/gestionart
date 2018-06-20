@@ -2,7 +2,6 @@ package com.pol.gestionart.controller.form;
 
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -17,16 +16,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.pol.gestionart.bean.ReporteCaja;
 import com.pol.gestionart.controller.list.CajaListController;
 import com.pol.gestionart.controller.list.VentaCabeceraListController;
 import com.pol.gestionart.dao.CajaDao;
 import com.pol.gestionart.dao.Dao;
+import com.pol.gestionart.dao.Descripcion_cajaDao;
 import com.pol.gestionart.dao.InventarioDao;
 import com.pol.gestionart.dao.ProductoDao;
 import com.pol.gestionart.dao.VentaCabeceraDao;
 import com.pol.gestionart.dao.VentaDetalleDao;
 import com.pol.gestionart.entity.Caja;
-import com.pol.gestionart.entity.Caja.DescripcionCaja;
+import com.pol.gestionart.entity.DescripcionCaja;
 import com.pol.gestionart.entity.Inventario;
 import com.pol.gestionart.entity.Producto;
 import com.pol.gestionart.entity.VentaCabecera;
@@ -63,6 +64,9 @@ public class CajaFromController extends FormController<Caja> {
 	@Autowired
 	private InventarioDao inventarioDao;
 	
+	@Autowired
+	private Descripcion_cajaDao descCajaDao;
+	
 	@Override
 	public String getTemplatePath() {
 		return "caja/caja_index";
@@ -92,8 +96,8 @@ public class CajaFromController extends FormController<Caja> {
 		map.addAttribute("caja", new Caja());
 		map.addAttribute("tituloFormulario", "Registrar Caja");
 		map.addAttribute("accion", "guardar");
-		List<DescripcionCaja> listTipoCaja = Arrays.asList(DescripcionCaja.values());
-		map.addAttribute("acciones", listTipoCaja);		
+		List<DescripcionCaja> descCaja = descCajaDao.findEntities(true,-1,-1, "DescripcionCaja");
+		map.addAttribute("acciones", descCaja);
 		super.agregarValoresAdicionales(map);
 	}
 	
@@ -219,13 +223,24 @@ public class CajaFromController extends FormController<Caja> {
 	}
 	
 	
-	@RequestMapping("caja-venta")
-	public String getCajaVenta(ModelMap map,HttpSession session,
-				@RequestParam(name="id_venta")Long idVentaCab) {
-	//	ventaCabDetDao.find(id)
+	@RequestMapping("cierre")
+	public String cierreCaja(ModelMap map,HttpSession session) {
 		
+		BigDecimal aperturaCaja = null;
+		List<Caja> listCaja = cajaDao.findCajaForCierre();
+		ReporteCaja reporte = new ReporteCaja();
+
+		for (Caja caja : listCaja) {
+			reporte.setTotalIngreso(reporte.getTotalIngreso().add(caja.getEntrada()));
+			reporte.setTotalEgreso(reporte.getTotalEgreso().add(caja.getSalida()));
+			if("APERTURA DE CAJA".equalsIgnoreCase(caja.getDescripcion())){
+				aperturaCaja = caja.getEntrada(); 
+			}
+			reporte.setFecha(caja.getFecha());
+		}
+		reporte.setTotalActual(reporte.getTotalIngreso().subtract(aperturaCaja));
 		
-		return "";
+		return "caja/modal_reporte";
 		
 	}
 }
