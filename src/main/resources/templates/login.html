@@ -87,7 +87,7 @@
 			<div class="login-logo">
 				<img src="../images/logo.png" alt="logo"
 					th:src="@{/img/sigj/logo.png}" style="max-width: 105px" /> <b
-					style="color: #3d80df;font-size: 49px;">SIGJ </b>
+					style="color: #3d80df;font-size: 49px;"> GESTIONART </b>
 			</div>
 			<form role="form" name="login" th:action="@{/login}" method="post">
 				<fieldset>
@@ -96,14 +96,14 @@
 					<div th:if="${param.logout}" class="alert alert-success"
 						th:text="#{login.sesion_cerrada}">Usted cerró sesión.</div>
 					<div class="form-group has-feedback">
-						<label th:text="#{login.cedula.lbl}"> Cédula</label> <input
+						<label th:text="#{login.cedula.lbl}"> Cedula </label> <input
 							class="form-control" th:placeholder="#{login.username}"
 							name="username" id="username" autofocus="autofocus" /><span
 							class="glyphicon glyphicon-user form-control-feedback"
 							style="color: #ef5350;"></span>
 					</div>
 					<div class="form-group has-feedback">
-						<label th:text="#{login.password.lbl}"> PIN</label> <input
+						<label th:text="#{login.password.lbl}"> ContraseÃ±a </label> <input
 							class="form-control" th:placeholder="#{login.password}"
 							name="password" id="password" type="password" value="" /> <span
 							class="glyphicon glyphicon-lock form-control-feedback"
