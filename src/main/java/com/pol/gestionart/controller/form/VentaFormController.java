@@ -336,7 +336,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		String fechaActual = GeneralUtils.getStringFromDate(d,DATE_FORMAT);
 		params.put("fechaSys", fechaActual);
 		try {
-			jasperStream = new FileInputStream(FOLDER + "/comprobante_venta.jasper");
+			jasperStream = new FileInputStream(FOLDER + "/factura.jasper");
 		
 		if (jasperStream != null) {
 			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);

@@ -55,6 +55,12 @@
 						<div class="col-lg-12">					
 							<div class="form-group reg-charac-number">
 								<label for="exampleInputPassword1">Descripción:</label> 
+								<select
+										th:field="*{descripcion}" class="form-control col-xs-6 col-sm-6 rol" id="descripcion">
+										<option th:each="acc: ${acciones}" th:value="0"
+											th:text="${acc}">Administrador</option>
+						
+									</select>
 								<input th:field="*{descripcion}" type="text" class="form-control" id="descripcion" onKeyUp="this.value = this.value.toUpperCase();"
 									placeholder="Ingrese descripcion"
 									data-validation="required"

@@ -2,6 +2,7 @@ package com.pol.gestionart.controller.form;
 
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -25,6 +26,7 @@ import com.pol.gestionart.dao.ProductoDao;
 import com.pol.gestionart.dao.VentaCabeceraDao;
 import com.pol.gestionart.dao.VentaDetalleDao;
 import com.pol.gestionart.entity.Caja;
+import com.pol.gestionart.entity.Caja.DescripcionCaja;
 import com.pol.gestionart.entity.Inventario;
 import com.pol.gestionart.entity.Producto;
 import com.pol.gestionart.entity.VentaCabecera;
@@ -90,6 +92,8 @@ public class CajaFromController extends FormController<Caja> {
 		map.addAttribute("caja", new Caja());
 		map.addAttribute("tituloFormulario", "Registrar Caja");
 		map.addAttribute("accion", "guardar");
+		List<DescripcionCaja> listTipoCaja = Arrays.asList(DescripcionCaja.values());
+		map.addAttribute("acciones", listTipoCaja);		
 		super.agregarValoresAdicionales(map);
 	}
 	
