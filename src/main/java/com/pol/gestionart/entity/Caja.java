@@ -51,6 +51,24 @@ public class Caja extends GenericEntity{
 	@JoinColumn(foreignKey = @ForeignKey(name = "cabecera_detalle_fk"))
 	private VentaCabecera ventaCabecera;
 	
+	public enum DescripcionCaja{
+		APERTURA("APERTURA DE CAJA"),
+		GASTOS_VARIOS("GASTOS VARIOS LUZ, AGUA, ALQUILER, ETC."),
+		GASTOS_CONSUMICION("GASTOS POR CONSUMICION"),
+		INGRESOS_VARIOS("INGRESOS VARIOS");
+		
+		private String descripcion;
+		
+		DescripcionCaja(String desc){
+			this.descripcion = desc;
+		}
+		
+		public String getDescipcion() {
+			return this.descripcion;
+		}
+		
+	}
+	
 	public Caja() {
 		super();
 	}
