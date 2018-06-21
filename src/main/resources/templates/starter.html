@@ -157,13 +157,13 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="starter
 					</a>
 						<ul class="treeview-menu">
 							<li><a th:href="@{/cliente}"><i class="fa fa-folder"
-									style="color: blue"></i>Cliente</a></li>
+									></i>Cliente</a></li>
 							<li><a th:href="@{/producto}"><i class="fa fa-folder"
-									style="color: blue"></i>Producto</a></li>							
+									></i>Producto</a></li>							
 							<li><a th:href="@{/proveedor}"><i class="fa fa-folder"
-									style="color: blue"></i>Proveedor</a></li>
+									></i>Proveedor</a></li>
 							<li><a th:href="@{/usuario}"><i class="fa fa-folder"
-									style="color: blue"></i>Usuario</a></li>				
+									></i>Usuario</a></li>				
 						</ul></li>
 
 					<!-- Menú de Venta -->
@@ -175,9 +175,9 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="starter
 					</a>
 						<ul class="treeview-menu">
 							<li><a th:href="@{/venta/pay}"><i
-									class="fa fa-files-o" style="color: blue"></i>Registrar Venta</a></li>
+									class="fa fa-files-o" ></i>Registrar Venta</a></li>
 							<li><a th:href="@{/venta}"><i
-									class="fa fa-calculator" style="color: blue"></i>Consultar Ventas</a></li>
+									class="fa fa-calculator" ></i>Consultar Ventas</a></li>
 						</ul></li>
 
 					<!-- Menú de Compra  -->
@@ -189,9 +189,9 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="starter
 					</a>
 						<ul class="treeview-menu">
 							<li><a th:href="@{/compra/buy}">
-							<i class="fa fa-pie-chart" style="color: blue"></i>Registrar Compra</a></li>
+							<i class="fa fa-pie-chart" ></i>Registrar Compra</a></li>
 							<li><a th:href="@{/compra}">
-							<i class="fa fa-pie-chart" style="color: blue"></i>Consultar Compras</a></li>
+							<i class="fa fa-pie-chart" ></i>Consultar Compras</a></li>
 						</ul></li>		
 							
 					<!-- Menú de Caja  -->
@@ -203,12 +203,24 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="starter
 					</a>
 						<ul class="treeview-menu">
 							<li><a th:href="@{/caja}">
-							<i class="fa fa-pie-chart" style="color: blue"></i>Flujo de dinero</a></li>
+							<i class="fa fa-pie-chart" ></i>Flujo de dinero</a></li>
 							<li><a th:href="@{/venta/a-confirmar}">
-							<i class="fa fa-pie-chart" style="color: blue"></i>A confirmar</a></li>
+							<i class="fa fa-pie-chart" ></i>A confirmar</a></li>
+						</ul></li>
+					<!-- Menú de Inventario  -->
+					<li class="treeview menu-rrhh"><a href="#"> <i
+							class="fa fa-sitemap"></i> <span>Inventario</span> <span
+							class="pull-right-container"> <i
+								class="fa fa-angle-left pull-right"></i>
+						</span>
+					</a>
+						<ul class="treeview-menu">
 							<li><a th:href="@{/inventario}">
-							<i class="fa fa-pie-chart" style="color: blue"></i>Inventario</a></li>
-						</ul></li>			
+							<i class="fa fa-pie-chart" ></i>Inventario</a></li>
+							<li><a th:href="@{/venta/a-confirmar}">
+							<i class="fa fa-pie-chart" ></i>Ajuste De Inventario</a></li>
+							
+						</ul></li>				
 				</ul>
 			</section>
 			<!-- /.sidebar -->
