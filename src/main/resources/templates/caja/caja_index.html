@@ -8,7 +8,7 @@
 			</div>
 			<a type="button" class="btn btn-primary" onclick="ingreso()" style="margin-left: 10px;" >Ingreso</a>
 			<a type="button" class="btn btn-primary" onclick="egreso()" >Egreso</a>
-			<a type="button" class="btn btn-primary" href="@{/caja/cierre}" >Cierre de Caja</a>
+			<a type="button" class="btn btn-primary"  onclick="cierre()" >Cierre de Caja</a>
 			<!-- /.box-header -->
 			<div class="box-body"> 
               <table id="cajaDT" class="table table-bordered table-hover">
@@ -176,7 +176,8 @@
         <!-- /.modal-dialog -->
       </div>
       <!-- /.modal -->
-        
+        <div id="modalCie">
+        </div>
         <!-- / MODAL DE CIERR DE CAJA  -->
 	<script th:inline="javascript">
 					/*<![CDATA[*/
@@ -198,6 +199,22 @@
 			$(".cajaEntrada").addClass("hidden");
 			$("#modal-egreso").modal('show');
 			
+		}
+		
+		function cierre(){
+			$.ajax({
+		        type: "POST",
+		        url: "/gestionart/caja/cierre",
+		        data: { 
+		        	
+		        }
+		    }).done(function(data){
+		    	$("#modalcie").html(data);
+		        $("#modalReporte").modal("show");
+		        
+		    }).fail(function (request, status, error) {
+	   	        var errorData = request.responseJSON;
+		    });
 		}
 	
 	</script>

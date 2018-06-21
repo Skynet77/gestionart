@@ -238,7 +238,9 @@ public class CajaFromController extends FormController<Caja> {
 			}
 			reporte.setFecha(caja.getFecha());
 		}
-		reporte.setTotalActual(reporte.getTotalIngreso().subtract(aperturaCaja));
+		BigDecimal totalParcial = reporte.getTotalIngreso().subtract(aperturaCaja);
+		
+		reporte.setTotalActual(totalParcial.subtract(reporte.getTotalEgreso()));
 		
 		return "caja/modal_reporte";
 		
