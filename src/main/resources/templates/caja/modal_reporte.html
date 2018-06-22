@@ -8,37 +8,36 @@
                 <span aria-hidden="true">&times;</span></button>
               <h4 class="modal-title">Cierre de Caja</h4>
             </div>
-            <form th:action="@{/caja/confirmar}" method="post" role="form" id="form-comprobante">
             <input type="hidden" name="id_cabecera" id="id_cabecera" th:value="${idCab}">
             <div class="modal-body">
 					<div class="row">
 						<div class="col-lg-12">
-							<div class="form-group">
-								<label  for="label">Fecha:</label> <label for="label not-bold" class="not-bold" th:text="${cabeceraDetalle.cliente.nombre +', '+cabeceraDetalle.cliente.apellido}">
+							<div class="form-group box-header with-borderC">
+								<label  for="label">Fecha:</label> <label for="label not-bold" class="not-bold" th:text="${fecha}">
 								Nombre</label>
 
 							</div>
-							<div class="form-group">
-								<label for="label">Apertura:</label> <label for="label not-bold" class="not-bold" th:text="${cabeceraDetalle.fechaEmision}">
+							<div class="form-group box-header with-borderC">
+								<label for="label">Apertura:</label> <label for="label not-bold" class="not-bold" th:text="${@generalUtils.formatMontoMonedaToString(apertura, 'GS','N')}">
 								Nombre</label>
 
 							</div>
 						</div>
 						<div class="col-lg-12">
-							<div class="form-group">
-								<label  for="label">Total Ingreso:</label> <label for="label not-bold" class="not-bold" th:text="${cabeceraDetalle.nroComprobante}">
+							<div class="form-group box-header with-borderC">
+								<label  for="label">Total Ingreso:</label> <label for="label not-bold" class="not-bold" th:text="${@generalUtils.formatMontoMonedaToString(totalIngreso, 'GS','S')}">
 								Nombre</label>
 
 							</div>
-							<div class="form-group">
-								<label for="label">Total Egreso:</label> <label for="label not-bold" class="not-bold" th:text="${cabeceraDetalle.iva}">
+							<div class="form-group box-header with-borderC">
+								<label for="label">Total Egreso:</label> <label for="label not-bold" class="not-bold" th:text="${@generalUtils.formatMontoMonedaToString(totalEgreso, 'GS','S')}">
 								Nombre</label>
 
 							</div>
 						</div>
 						<div class="col-lg-12 float-rigth">
-							<div class="form-group">
-								<label  for="label">Total:</label> <label for="label not-bold" class="not-bold" th:text="${cabeceraDetalle.montoTotal}">
+							<div class="form-group box-header with-borderC">
+								<label  for="label">Total:</label> <label for="label not-bold" class="not-bold" th:text="${@generalUtils.formatMontoMonedaToString(total, 'GS','S')}">
 								Nombre</label>
 
 							</div>
@@ -48,10 +47,9 @@
 					<hr/>
             </div>
             <div class="modal-footer border-none">
-              <button type="submit" class="btn btn-primary pull-left" name="conf" value="confirmar">Imprimir</button>
+              <a th:href="@{'/caja/comprobante/' + ${idReporte}}" target="_blank" class="btn btn-primary pull-left" >Imprimir</a>
               <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
             </div>
-            </form>
           </div>
           <!-- /.modal-content -->
         </div>

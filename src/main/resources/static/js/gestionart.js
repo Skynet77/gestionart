@@ -501,9 +501,13 @@ function printFile(blob, fileName, type){
 ///ERRORES
 function ajaxErrorHandler(errorData, status, error, idError, idTitleError, idDescError) {
     $('html, body').animate({scrollTop: 0}, 800);
-    $("#errorMensaje").html(errorData.message);
+    if(errorData.message == undefined){
+    	$("#errorMensaje").html(errorData.description);
+    }else{
+    	$("#errorMensaje").html(errorData.message);
+    }
 	$("#alerta3").fadeIn(8000);
-	$("#alerta3").fadeOut(2000);
+	$("#alerta3").fadeOut(1000);
 }
 
 

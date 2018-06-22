@@ -61,6 +61,7 @@ public class BaseController {
 		errorData.setType("WEB");
 		errorData.setCode("200518");
 		errorData.setDescription(pe.getMessage());
+		errorData.setUserMessage(pe.getMessage());
 		response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		baseLogger.error(errorData);
 		return errorData;

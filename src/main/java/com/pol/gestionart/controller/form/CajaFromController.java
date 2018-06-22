@@ -1,11 +1,18 @@
 package com.pol.gestionart.controller.form;
 
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +21,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.pol.gestionart.bean.ReporteCaja;
 import com.pol.gestionart.controller.list.CajaListController;
 import com.pol.gestionart.controller.list.VentaCabeceraListController;
 import com.pol.gestionart.dao.CajaDao;
+import com.pol.gestionart.dao.CajaReporteDao;
 import com.pol.gestionart.dao.Dao;
 import com.pol.gestionart.dao.Descripcion_cajaDao;
 import com.pol.gestionart.dao.InventarioDao;
@@ -30,11 +38,21 @@ import com.pol.gestionart.entity.Caja;
 import com.pol.gestionart.entity.DescripcionCaja;
 import com.pol.gestionart.entity.Inventario;
 import com.pol.gestionart.entity.Producto;
+import com.pol.gestionart.entity.ReporteCaja;
 import com.pol.gestionart.entity.VentaCabecera;
 import com.pol.gestionart.entity.VentaCabecera.Estado;
 import com.pol.gestionart.entity.VentaDetalle;
+import com.pol.gestionart.exceptions.AjaxException;
 import com.pol.gestionart.exceptions.WebAppException;
 import com.pol.gestionart.util.GeneralUtils;
+
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 
 
@@ -66,6 +84,9 @@ public class CajaFromController extends FormController<Caja> {
 	
 	@Autowired
 	private Descripcion_cajaDao descCajaDao;
+	
+	@Autowired
+	private CajaReporteDao reporteCajaDao;
 	
 	@Override
 	public String getTemplatePath() {
@@ -224,25 +245,81 @@ public class CajaFromController extends FormController<Caja> {
 	
 	
 	@RequestMapping("cierre")
-	public String cierreCaja(ModelMap map,HttpSession session) {
+	public String cierreCaja(ModelMap map,HttpSession session) throws AjaxException {
 		
 		BigDecimal aperturaCaja = null;
 		List<Caja> listCaja = cajaDao.findCajaForCierre();
 		ReporteCaja reporte = new ReporteCaja();
+		reporte.setTotalActual(BigDecimal.ZERO);
+		reporte.setTotalEgreso(BigDecimal.ZERO);
+		reporte.setTotalIngreso(BigDecimal.ZERO);
 
+		if(listCaja.isEmpty()){
+			throw new AjaxException("No hay movimientos en el día.");
+		}
 		for (Caja caja : listCaja) {
-			reporte.setTotalIngreso(reporte.getTotalIngreso().add(caja.getEntrada()));
-			reporte.setTotalEgreso(reporte.getTotalEgreso().add(caja.getSalida()));
+			reporte.setTotalIngreso(reporte.getTotalIngresoBigDecimal().add(caja.getEntrada()));
+			reporte.setTotalEgreso(reporte.getTotalEgresoBigDecimal().add(caja.getSalida()));
 			if("APERTURA DE CAJA".equalsIgnoreCase(caja.getDescripcion())){
 				aperturaCaja = caja.getEntrada(); 
 			}
 			reporte.setFecha(caja.getFecha());
 		}
-		BigDecimal totalParcial = reporte.getTotalIngreso().subtract(aperturaCaja);
+		reporte.setApertura(aperturaCaja);
+		BigDecimal totalParcial = reporte.getTotalIngresoBigDecimal().subtract(aperturaCaja);
 		
-		reporte.setTotalActual(totalParcial.subtract(reporte.getTotalEgreso()));
+		reporte.setTotalActual(totalParcial.subtract(reporte.getTotalEgresoBigDecimal()));
+		reporteCajaDao.create(reporte);
+		map.addAttribute("fecha",listCaja.get(0).getFecha());
+		map.addAttribute("apertura",aperturaCaja);
+		map.addAttribute("totalIngreso",reporte.getTotalIngreso());
+		map.addAttribute("totalEgreso",reporte.getTotalEgreso());
+		map.addAttribute("total",reporte.getTotalActual());
+		map.addAttribute("idReporte",reporte.getId());
 		
 		return "caja/modal_reporte";
+		
+	}
+	
+	@RequestMapping(value = "comprobante/{id_reporte}", method = RequestMethod.GET)
+	public void comprobanteVenta(ModelMap map,HttpSession session,HttpServletRequest request,HttpServletResponse response,
+			@PathVariable(name="id_reporte") Long idReporte) {
+		String FOLDER = request.getSession().getServletContext().getRealPath("/reportes/");
+		InputStream jasperStream = null;
+		Map<String, Object> params = new HashMap<>();
+		ReporteCaja reporteCaja = reporteCajaDao.find(idReporte);
+		
+		
+		params.put("totalEgreso", reporteCaja.getTotalEgreso());
+		params.put("totalIngreso", reporteCaja.getTotalIngreso());
+		params.put("totalActual", reporteCaja.getTotalActual());
+		params.put("apertura", reporteCaja.getApertura());
+		params.put("fecha", reporteCaja.getFecha());
+		try {
+			jasperStream = new FileInputStream(FOLDER + "/reporte_caja.jasper");
+		
+		if (jasperStream != null) {
+			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, new JREmptyDataSource());
+
+			byte[] pdfReport = JasperExportManager.exportReportToPdf(jasperPrint);
+			response.setContentType("application/x-pdf");
+			response.setHeader("Content-disposition", "attachment; filename=venta_detalle.pdf");
+			response.reset();
+			response.setContentType("application/pdf");
+			response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+			response.setHeader("Pragma", "private");
+			response.setContentLength(pdfReport.length);
+			response.getOutputStream().write(pdfReport);
+			response.getOutputStream().flush();
+			//response.getOutputStream().close();
+		}
+		
+		} catch (JRException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 	}
 }
