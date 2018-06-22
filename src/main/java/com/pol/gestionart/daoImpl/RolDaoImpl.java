@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.pol.gestionart.dao.RolDao;
 import com.pol.gestionart.security.Rol;
-import com.pol.gestionart.entity.Usuario;
+import com.pol.gestionart.security.Usuario;
 
 @Repository
 @Scope("session")

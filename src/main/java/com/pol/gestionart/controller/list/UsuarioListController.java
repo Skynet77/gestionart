@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.pol.gestionart.dao.Dao;
 import com.pol.gestionart.dao.UsuarioDao;
-import com.pol.gestionart.entity.Usuario;
+import com.pol.gestionart.security.Usuario;
 
 @Controller
 @Scope("session")
@@ -19,7 +19,7 @@ public class UsuarioListController extends ListController<Usuario> {
 
 	@Override
 	public String[] getColumnas() {
-		return new String[] { "id","cedulaRuc", "nombreRazonSocial", "apellido","estado" };
+		return new String[] { "id","cedulaRuc", "nombreRazonSocial", "apellido", "rol.descripcion" };
 	}
 
 	@Override
