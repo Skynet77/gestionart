@@ -230,13 +230,13 @@ public class VentaFormController extends FormController<VentaCabecera> {
 			ventaDet = mapVentaDetail.get(uuid);
 			ventaCab.setMontoTotalBigDecimal(ventaCab.getMontoTotal().subtract(ventaDet.getPrecioTotal()));
 			
-			//producto para disminuir el stok
+			/*//producto para disminuir el stok
 			Producto productoDisminuir = null;
 			//sumamos la cantidad del producto en stock, ya que se elimino del detalle
 			productoDisminuir = ventaDet.getProducto();
 			suma = productoDisminuir.getCantidad() + ventaDet.getCantidad();
 			productoDisminuir.setCantidad(suma);
-			productoDao.createOrUpdate(productoDisminuir);
+			productoDao.createOrUpdate(productoDisminuir);*/
 			
 			//calculo de subTotal
 			BigDecimal subTotal;
