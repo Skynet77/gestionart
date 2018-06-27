@@ -1,11 +1,18 @@
 package com.pol.gestionart.controller.form;
 
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.pol.gestionart.bean.InventarioDetalle;
 import com.pol.gestionart.controller.list.InventarioListController;
 import com.pol.gestionart.dao.Dao;
 import com.pol.gestionart.dao.InventarioDao;
@@ -48,6 +55,16 @@ public class InventarioFormController extends FormController<Inventario> {
 		map.addAttribute("columnas", inventarioList.getColumnas());
 		map.addAttribute("columnasStr", inventarioList.getColumnasStr(null));
 		super.agregarValoresAdicionales(map);
+	}
+	
+	@RequestMapping(value = "inventario_detalle",  method = RequestMethod.POST)
+	public String inventarioDetalle(ModelMap map,HttpSession session,
+			@RequestParam(value= "id_prod") Long idProd, 
+			@RequestParam(value="mes") int mesFe) {
+		agregarValoresAdicionales(map);
+		List<InventarioDetalle> inventarioDetalle = inventarioDao.joinInventario(idProd, mesFe);
+		map.addAttribute("listDetalle", inventarioDetalle);
+		return"inventario/modal_inventario";
 	}
 	
 }

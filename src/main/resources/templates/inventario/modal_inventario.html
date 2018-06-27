@@ -1,0 +1,44 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- Modal de confirmación de Compra	 -->
+	<div class="modal fade" id="modalInventario">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Detalle de Inventario</h4>
+            </div>
+            <div class="modal-body">
+					<div class="col-lg-12 ">
+						<table id="ventaDT" class="table table-bordered table-hover">
+		                <thead>
+		                <tr>
+							<th>Fecha</th>
+							<th>Nro.Comprobante</th>
+							<th>Proveedor/Cliente</th>
+							<th>Cantidad</th>
+							<th>Operacion</th>
+						</tr>
+		                </thead>
+		                <tbody>
+		                	<tr th:each="det : ${listDetalle}">
+		                		<td th:text="${det.fecha}"></td>
+		                		<td th:text="${det.comprobante}"></td>
+		                		<td th:text="${det.proveedorCliente}"></td>
+		                		<td th:text="${det.cantidad}"></td>
+		                		<td th:text="${det.operacion}"></td>
+		                	</tr>
+		                </tbody>
+		              </table>
+	              </div>
+            </div>
+            <div class="modal-footer border-none">
+              <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+</html>

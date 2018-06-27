@@ -430,6 +430,23 @@ function crearDataTableSinAccionInventario(dataTableId, ajaxSource, columnas, vi
         document.body.appendChild(link);
         link.click();
 	});
+	
+	$('#inventarioDT' + ' tbody').on('click', 'tr', function() {
+   	    //Obtenemos el valor de la columna id
+		var ob = dataTable.row($(this)).data();
+		var id = ob.producto.id;
+		var fe = ob.fechaMes.substr(5,2);
+		
+		$.ajax({
+	        type: "POST",
+	        url: "/gestionart/inventario/inventario_detalle",
+	        data: { id_prod : id, mes:fe}
+	    }).done(function(data){
+	        $("#vid-modal-inve").html(data);
+	        $("#modalInventario").modal("show");
+	        
+	    });
+    });
 }
 
 function getColumnasArraySinAccion(colsStr,view){

@@ -1,0 +1,15 @@
+﻿select * from inventario as f where f.producto_idproducto = 602 and extract(MONTH from f.fechames) = 6
+
+select * from ventadetalle as vd join inventario as i on vd.producto_idproducto = i.producto_idproducto where extract(MONTH from i.fechames) = 6 and i.producto_idproducto = 602
+
+
+select vc.fechaEmision, vd.cantidad, vc.nroComprobante, c.nombre || ' ' ||c.apellido FROM VentaDetalle as vd "+ 
+	"join VentaCabecera as vc on vd.ventaCabecera.idVenta = vc.idVenta "+
+	"join Cliente as c on c.id = vc.cliente.id "+
+	"join Inventario as i on i.producto.id = vd.producto.id where extract(MONTH from i.fechaMes) = ?1 and i.producto.id = ?2
+
+
+select vc.fechacompra, vd.cantidad, vc.nrocomprobante, c.nombre FROM compradetalle as vd
+	join compracabecera as vc on vd.compracabecera_id = vc.id
+	join proveedor as c on c.id = vc.proveedor_id
+	join inventario as i on i.producto_idproducto = vd.producto_idproducto where extract(MONTH from i.fechames) = 6 and i.producto_idproducto= 602

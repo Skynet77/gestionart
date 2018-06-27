@@ -29,7 +29,6 @@ import com.pol.gestionart.dao.Dao;
 import com.pol.gestionart.dao.InventarioDao;
 import com.pol.gestionart.dao.ProductoDao;
 import com.pol.gestionart.dao.VentaCabeceraDao;
-import com.pol.gestionart.dao.VentaCabeceraVentaDetalleDao;
 import com.pol.gestionart.dao.VentaDetalleDao;
 import com.pol.gestionart.entity.Caja;
 import com.pol.gestionart.entity.Inventario;
@@ -79,9 +78,6 @@ public class VentaFormController extends FormController<VentaCabecera> {
 	
 	@Autowired
 	private VentaDetalleDao ventaDetalleDao;
-	
-	@Autowired
-	private VentaCabeceraVentaDetalleDao ventaCabDetDao;
 	
 	@Autowired
 	private InventarioDao inventarioDao;

@@ -1,5 +1,6 @@
 package com.pol.gestionart.daoImpl;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +11,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
+import com.pol.gestionart.bean.InventarioDetalle;
 import com.pol.gestionart.dao.InventarioDao;
 import com.pol.gestionart.entity.Inventario;
 @Repository
@@ -102,6 +104,65 @@ public class InventarioDaoImpl extends DaoImpl<Inventario> implements Inventario
 			inve =null;
 		}
 		return inve;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<InventarioDetalle> joinInventario(Long idProducto,Integer mess){
+		InventarioDetalle inve = null;
+		List<InventarioDetalle> inventarioList = new ArrayList<InventarioDetalle>();
+		try {
+		
+			
+			Query results = entityManager.createQuery(
+					"select vc.fechaEmision, vd.cantidad, vc.nroComprobante, c.nombre || ' ' ||c.apellido FROM VentaDetalle as vd "+ 
+	"join VentaCabecera as vc on vd.ventaCabecera.idVenta = vc.idVenta "+
+	"join Cliente as c on c.id = vc.cliente.id "+
+	"join Inventario as i on i.producto.id = vd.producto.id where extract(MONTH from i.fechaMes) = ?1 and i.producto.id = ?2"+
+	" order by i.fechames desc");
+			results.setParameter(1, mess);
+			results.setParameter(2, idProducto);
+			
+					//.getResultList();
+			List<Object[]> t = results.getResultList();
+			for (Object[] objects : t) {
+				InventarioDetalle iv = new InventarioDetalle();
+				iv.setFecha((String) objects[0]);
+				iv.setCantidad((Integer) objects[1]);
+				iv.setComprobante((String) objects[2]);
+				iv.setProveedorCliente((String) objects[3]);
+				iv.setOperacion("VENTA");
+				inventarioList.add(iv);
+			}
+			
+			Query resultsCompra = entityManager.createQuery(
+					"select vc.fechaCompra, vd.cantidad, vc.nroComprobante, c.nombre FROM CompraDetalle as vd"+
+					" join CompraCabecera as vc on vd.compraCabecera.id = vc.id"+
+					" join Proveedor as c on c.id = vc.proveedor.id"+
+					" join Inventario as i on i.producto.id = vd.producto.id where extract(MONTH from i.fechaMes) = ?1 and i.producto.id= ?2"+
+					" order by i.fechames desc");
+			resultsCompra.setParameter(1, mess);
+			resultsCompra.setParameter(2, idProducto);
+			
+			t = resultsCompra.getResultList();
+			
+			for (Object[] objects : t) {
+				InventarioDetalle iv = new InventarioDetalle();
+				iv.setFecha((String) objects[0]);
+				iv.setCantidad((Integer) objects[1]);
+				iv.setComprobante((String) objects[2]);
+				iv.setProveedorCliente((String) objects[3]);
+				iv.setOperacion("COMPRA");
+				inventarioList.add(iv);
+			}
+			
+			logger.info(" registros encontrados: {}",t);
+		} catch (Exception e) {
+			inve =null;
+		}
+		
+		return inventarioList;
 	}
 
 }
