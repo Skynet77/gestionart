@@ -29,7 +29,6 @@ public class InventarioFormController extends FormController<Inventario> {
 	@Autowired
 	private InventarioListController inventarioList;
 
-	
 	@Override
 	public String getTemplatePath() {
 		return "inventario/inventario_index";
@@ -44,45 +43,42 @@ public class InventarioFormController extends FormController<Inventario> {
 	public Inventario getNuevaInstancia() {
 		return new Inventario();
 	}
-	
+
 	@Override
 	public Dao<Inventario> getDao() {
 		return inventarioDao;
 	}
-	
+
 	@Override
 	public void agregarValoresAdicionales(ModelMap map) {
 		map.addAttribute("columnas", inventarioList.getColumnas());
 		map.addAttribute("columnasStr", inventarioList.getColumnasStr(null));
 		super.agregarValoresAdicionales(map);
 	}
-	
-	@RequestMapping(value = "inventario_detalle",  method = RequestMethod.POST)
-	public String inventarioDetalle(ModelMap map,HttpSession session,
-			@RequestParam(value= "id_prod") Long idProd, 
-			@RequestParam(value="mes") int mesFe) {
+
+	@RequestMapping(value = "inventario_detalle", method = RequestMethod.POST)
+	public String inventarioDetalle(ModelMap map, HttpSession session, @RequestParam(value = "id_prod") Long idProd,
+			@RequestParam(value = "mes") int mesFe) {
 		agregarValoresAdicionales(map);
 		List<InventarioDetalle> inventarioDetalle = inventarioDao.joinInventario(idProd, mesFe);
 		map.addAttribute("listDetalle", inventarioDetalle);
-		return"inventario/modal_inventario";
+		return "inventario/modal_inventario";
 	}
-	
-	@RequestMapping(value = "ajuste_inventario",  method = RequestMethod.GET)
-	public String ajusteInventario(ModelMap map,HttpSession session) {
+
+	@RequestMapping(value = "ajuste_inventario", method = RequestMethod.GET)
+	public String ajusteInventario(ModelMap map, HttpSession session) {
 		agregarValoresAdicionales(map);
-		
-		return"inventario/ajuste_inventario";
+
+		return "inventario/ajuste_inventario";
 	}
-	
-	@RequestMapping(value = "ajuste_inventario",  method = RequestMethod.POST)
-	public String ajusteInventario(ModelMap map,HttpSession session, 
-			@RequestParam(value= "id_prod") Long idProd,
-			@RequestParam(value= "fecha_mes") String fechaMes,
-			@RequestParam(value= "cantidad") int cantidad) {
-		
-		//cargar en inventarioDetalleTable
-		
-		return"inventario/ajuste_inventario";
+
+	@RequestMapping(value = "ajuste_inventario", method = RequestMethod.POST)
+	public String ajusteInventario(ModelMap map, HttpSession session, @RequestParam(value = "id_prod") Long idProd,
+			@RequestParam(value = "fecha_mes") String fechaMes, @RequestParam(value = "cantidad") int cantidad) {
+
+		// cargar en inventarioDetalleTable
+
+		return "inventario/ajuste_inventario";
 	}
-	
+
 }
