@@ -140,7 +140,6 @@ public class CompraFormController extends FormController<CompraCabecera> {
 					listProducto = new ArrayList<>();
 				}
 				
-				
 				if(session.getAttribute(COMPRA_CABECERA)!=null){
 					compraCab = (CompraCabecera) session.getAttribute(COMPRA_CABECERA);
 				}else{

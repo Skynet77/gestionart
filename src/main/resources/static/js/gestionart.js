@@ -159,7 +159,7 @@ function crearMagicSuggest(magicSuggestId, urlData, pValueField, pNameDisplay) {
 		requerid : true,
 		maxSelection : 1,
 		resultAsString: true,
-		placeholder : 'Ingrese texto para buscar'
+		placeholder : 'Ingrese texto a buscar'
 	});
 
 	/*$(suggest).on('selectionchange', function(a,b,c){

@@ -1,0 +1,166 @@
+<html xmlns:th="http://www.thymeleaf.org" th:replace="starter">
+<meta charset="utf-8"/>
+<div class="row" th:fragment="contenido">
+	<div class="col-md-12">
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title">Inventario</h3>
+			</div>
+			<div class="col-lg-2" style="margin-bottom: 20px;">
+				<div class="form-group col-lg-12">
+					<p class="text-bold">Fecha de inventario</p>
+				</div>
+				<div class="input-group date">
+					<input id="input-month" type="text"
+						class="form-control datepicker1">
+					<div class="input-group-addon">
+						<span class="glyphicon glyphicon-th"></span>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-lg-2" style="margin-bottom: 20px;">
+				<div class="form-group col-lg-12">
+					<p class="text-bold">Fecha de inventario</p>
+				</div>
+				<div class="form-group col-lg-12">
+						<div id="magicsuggest"></div>
+				</div>
+			</div>
+			<div class="col-lg-2" style="margin-bottom: 20px;">
+				<div class="form-group col-lg-12">
+					<p class="text-bold">Fecha de inventario</p>
+				</div>
+				<div class="form-group col-lg-8">
+					
+					<div class="input-group">
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-danger btn-number"
+								data-type="minus" data-field="quant[2]">
+								<span class="glyphicon glyphicon-minus"></span>
+							</button>
+						</span> <input type="text" name="quant[2]"
+							class="form-control input-number" value="10" min="-100" max="100">
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-success btn-number"
+								data-type="plus" data-field="quant[2]">
+								<span class="glyphicon glyphicon-plus"></span>
+							</button>
+						</span>
+					</div>
+				</div>
+				<button type="submit" class="btn btn-primary" name="accion" value="comprobante">Guardar</button>
+			</div>
+			<br>
+			
+			<!-- /.box-header -->
+			<div class="box-body">
+              <table id="inventarioDT" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+					<th th:each="col : ${columnas}" th:text="#{'inven.' + ${col} + '.header'}">CÓDIGO</th>
+				</tr>
+                </thead>
+              </table>
+            </div>
+			<!-- /.box-body -->
+		</div>
+		<!-- /.box -->
+
+
+		<!-- /.box -->
+	</div>
+	<div id="vid-modal-inve">
+	</div>
+        
+        
+	<script th:inline="javascript">
+					/*<![CDATA[*/
+		$('.datepicker1').datepicker({language:'es', format: "mm-yyyy",
+		    viewMode: "months", 
+		    minViewMode: "months", autoclose:true});
+		$(document).ready(function() {
+			crearDataTableSinAccionInventario("inventarioDT", [[@{/inventario/jsonf}]], [[${columnasStr}]], false);
+			suggestProducto = crearMagicSuggest('magicsuggest',
+					[[@{/producto/suggest}]], 'id', 'descripcion');
+		});
+		
+		/* botonera de mas y menos */
+		
+		$('.btn-number').click(function(e){
+		    e.preventDefault();
+		    
+		    fieldName = $(this).attr('data-field');
+		    type      = $(this).attr('data-type');
+		    var input = $("input[name='"+fieldName+"']");
+		    var currentVal = parseInt(input.val());
+		    if (!isNaN(currentVal)) {
+		        if(type == 'minus') {
+		            
+		            if(currentVal > input.attr('min')) {
+		                input.val(currentVal - 1).change();
+		            } 
+		            if(parseInt(input.val()) == input.attr('min')) {
+		                $(this).attr('disabled', true);
+		            }
+		
+		        } else if(type == 'plus') {
+		
+		            if(currentVal < input.attr('max')) {
+		                input.val(currentVal + 1).change();
+		            }
+		            if(parseInt(input.val()) == input.attr('max')) {
+		                $(this).attr('disabled', true);
+		            }
+		
+		        }
+		    } else {
+		        input.val(0);
+		    }
+		});
+		$('.input-number').focusin(function(){
+		   $(this).data('oldValue', $(this).val());
+		});
+		$('.input-number').change(function() {
+		    
+		    minValue =  parseInt($(this).attr('min'));
+		    maxValue =  parseInt($(this).attr('max'));
+		    valueCurrent = parseInt($(this).val());
+		    
+		    name = $(this).attr('name');
+		    if(valueCurrent >= minValue) {
+		        $(".btn-number[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
+		    } else {
+		        alert('Sorry, the minimum value was reached');
+		        $(this).val($(this).data('oldValue'));
+		    }
+		    if(valueCurrent <= maxValue) {
+		        $(".btn-number[data-type='plus'][data-field='"+name+"']").removeAttr('disabled')
+		    } else {
+		        alert('Sorry, the maximum value was reached');
+		        $(this).val($(this).data('oldValue'));
+		    }
+		    
+		    
+		});
+		$(".input-number").keydown(function (e) {
+		        // Allow: backspace, delete, tab, escape, enter and .
+		        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+		             // Allow: Ctrl+A
+		            (e.keyCode == 65 && e.ctrlKey === true) || 
+		             // Allow: home, end, left, right
+		            (e.keyCode >= 35 && e.keyCode <= 39)) {
+		                 // let it happen, don't do anything
+		                 return;
+		        }
+		        // Ensure that it is a number and stop the keypress
+		        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+		            e.preventDefault();
+		        }
+		    });
+		/* ./ fin botonera */
+					
+	
+	</script>
+</div>
+</html>

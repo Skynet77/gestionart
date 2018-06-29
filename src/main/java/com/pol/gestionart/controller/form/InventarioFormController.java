@@ -67,4 +67,22 @@ public class InventarioFormController extends FormController<Inventario> {
 		return"inventario/modal_inventario";
 	}
 	
+	@RequestMapping(value = "ajuste_inventario",  method = RequestMethod.GET)
+	public String ajusteInventario(ModelMap map,HttpSession session) {
+		agregarValoresAdicionales(map);
+		
+		return"inventario/ajuste_inventario";
+	}
+	
+	@RequestMapping(value = "ajuste_inventario",  method = RequestMethod.POST)
+	public String ajusteInventario(ModelMap map,HttpSession session, 
+			@RequestParam(value= "id_prod") Long idProd,
+			@RequestParam(value= "fecha_mes") String fechaMes,
+			@RequestParam(value= "cantidad") int cantidad) {
+		
+		//cargar en inventarioDetalleTable
+		
+		return"inventario/ajuste_inventario";
+	}
+	
 }
