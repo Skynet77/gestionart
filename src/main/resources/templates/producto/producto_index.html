@@ -33,7 +33,7 @@
 		
 		$(document).ready(function() {
 			//mandamos sSearch A. Para mostrar solo los activos
-		  crearDataTable("productoDT", "[[@{/producto/json?sSearch=A}]]", "[[${columnasStr}]]", "[[@{/producto/edit/}]]");
+		  crearDataTable("productoDT", "[[@{/producto/json}]]", "[[${columnasStr}]]", "[[@{/producto/edit/}]]");
 		});
 		
 		function accion(idProducto, accion){
