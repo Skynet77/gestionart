@@ -16,7 +16,9 @@ import com.pol.gestionart.bean.InventarioDetalle;
 import com.pol.gestionart.controller.list.InventarioListController;
 import com.pol.gestionart.dao.Dao;
 import com.pol.gestionart.dao.InventarioDao;
+import com.pol.gestionart.dao.InventarioDetalleDao;
 import com.pol.gestionart.entity.Inventario;
+import com.pol.gestionart.entity.InventarioDetalleTable;
 
 @Controller
 @Scope("request")
@@ -25,6 +27,9 @@ public class InventarioFormController extends FormController<Inventario> {
 
 	@Autowired
 	private InventarioDao inventarioDao;
+	
+	@Autowired
+	private InventarioDetalleDao inventarioDetalleDao;
 
 	@Autowired
 	private InventarioListController inventarioList;
@@ -72,11 +77,20 @@ public class InventarioFormController extends FormController<Inventario> {
 		return "inventario/ajuste_inventario";
 	}
 
-	@RequestMapping(value = "ajuste_inventario", method = RequestMethod.POST)
+	@RequestMapping(value = "registrar", method = RequestMethod.POST)
 	public String ajusteInventario(ModelMap map, HttpSession session, @RequestParam(value = "id_prod") Long idProd,
 			@RequestParam(value = "fecha_mes") String fechaMes, @RequestParam(value = "cantidad") int cantidad) {
 
-		// cargar en inventarioDetalleTable
+		InventarioDetalleTable inv = new InventarioDetalleTable();
+		inv.setCantidad(cantidad);
+		inv.setFecha(fechaMes);
+		inv.setIdProducto(idProd);
+		inv.setMes(Integer.parseInt(fechaMes.substring(0, 2)));
+		inv.setComprobante("00000");
+		inv.setOperacion("AJUSTE INVENTARIO");
+		inv.setProveedorCliente("SIN NOMBRE");
+		
+		inventarioDetalleDao.create(inv);
 
 		return "inventario/ajuste_inventario";
 	}

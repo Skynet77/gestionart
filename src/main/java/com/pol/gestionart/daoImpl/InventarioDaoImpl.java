@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.pol.gestionart.bean.InventarioDetalle;
 import com.pol.gestionart.dao.InventarioDao;
 import com.pol.gestionart.entity.Inventario;
+import com.pol.gestionart.entity.InventarioDetalleTable;
 @Repository
 public class InventarioDaoImpl extends DaoImpl<Inventario> implements InventarioDao {
 
@@ -154,6 +155,23 @@ public class InventarioDaoImpl extends DaoImpl<Inventario> implements Inventario
 				iv.setComprobante((String) objects[2]);
 				iv.setProveedorCliente((String) objects[3]);
 				iv.setOperacion("COMPRA");
+				inventarioList.add(iv);
+			}
+			
+			Query resultsDetalle = entityManager.createQuery("SELECT object(InventarioDetalleTable) FROM InventarioDetalleTable AS InventarioDetalleTable"+
+			" where idProducto = ?1 and mes = ?2");
+			resultsDetalle.setParameter(1, idProducto);
+			resultsDetalle.setParameter(2, mess);
+			
+			List<InventarioDetalleTable> t1 = resultsDetalle.getResultList();
+			
+			for (InventarioDetalleTable objects : t1) {
+				InventarioDetalle iv = new InventarioDetalle();
+				iv.setCantidad(objects.getCantidad());
+				iv.setComprobante(objects.getComprobante());
+				iv.setFecha(objects.getFecha());
+				iv.setOperacion(objects.getOperacion());
+				iv.setProveedorCliente(objects.getProveedorCliente());
 				inventarioList.add(iv);
 			}
 			

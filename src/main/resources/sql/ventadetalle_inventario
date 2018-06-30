@@ -19,11 +19,11 @@ select vc.fechacompra, vd.cantidad, vc.nrocomprobante, c.nombre FROM compradetal
 	pruebas
 	#############
 	
-	select vc.fechacompra, vd.cantidad, vc.nrocomprobante, c.nombre FROM compradetalle as vd
-	join compracabecera as vc on vd.compracabecera_id = vc.id
-	join proveedor as c on c.id = vc.proveedor_id
-	join inventario as i on i.producto_idproducto = vd.producto_idproducto 
-	where extract(MONTH from i.fechames) = 6 and i.producto_idproducto= 52
+		select vc.fechacompra, vd.cantidad, vc.nrocomprobante, c.nombre FROM compradetalle as vd
+		join compracabecera as vc on vd.compracabecera_id = vc.id
+		join proveedor as c on c.id = vc.proveedor_id
+		join inventario as i on i.producto_idproducto = vd.producto_idproducto 
+		where extract(MONTH from i.fechames) = 6 and i.producto_idproducto= 52
 
 
 

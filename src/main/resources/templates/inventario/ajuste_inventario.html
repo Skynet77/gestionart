@@ -19,9 +19,9 @@
 				</div>
 			</div>
 			
-			<div class="col-lg-2" style="margin-bottom: 20px;">
+			<div class="col-lg-4" style="margin-bottom: 20px;">
 				<div class="form-group col-lg-12">
-					<p class="text-bold">Fecha de inventario</p>
+					<p class="text-bold">Producto</p>
 				</div>
 				<div class="form-group col-lg-12">
 						<div id="magicsuggest"></div>
@@ -29,27 +29,27 @@
 			</div>
 			<div class="col-lg-2" style="margin-bottom: 20px;">
 				<div class="form-group col-lg-12">
-					<p class="text-bold">Fecha de inventario</p>
+					<p class="text-bold">Ajuste</p>
 				</div>
-				<div class="form-group col-lg-8">
+				<div class="form-group col-lg-11 col-sm-11 col-md-11">
 					
 					<div class="input-group">
 						<span class="input-group-btn">
-							<button type="button" class="btn btn-danger btn-number"
+							<button type="button" class="btn btn-info btn-number"
 								data-type="minus" data-field="quant[2]">
 								<span class="glyphicon glyphicon-minus"></span>
 							</button>
-						</span> <input type="text" name="quant[2]"
-							class="form-control input-number" value="10" min="-100" max="100">
+						</span> <input type="text" name="quant[2]" id="ajuste"
+							class="form-control input-number" value="1" min="-100" max="100">
 						<span class="input-group-btn">
-							<button type="button" class="btn btn-success btn-number"
+							<button type="button" class="btn btn-info btn-number"
 								data-type="plus" data-field="quant[2]">
 								<span class="glyphicon glyphicon-plus"></span>
 							</button>
 						</span>
 					</div>
 				</div>
-				<button type="submit" class="btn btn-primary" name="accion" value="comprobante">Guardar</button>
+				<button type="submit" class="btn btn-primary" name="accion" onclick="registrarAjuste()">Guardar</button>
 			</div>
 			<br>
 			
@@ -160,6 +160,32 @@
 		    });
 		/* ./ fin botonera */
 					
+		function registrarAjuste(){
+			var fechaMes = $("#input-month").val();
+			var idProducto= suggestProducto.getValue()[0]; 
+			var cantAjuste = $("#ajuste").val();
+			
+			$.ajax({
+	           type: "POST",
+	           url: "/gestionart/inventario/registrar",
+	           data: { 
+	        	   fecha_mes:fechaMes,
+	        	   id_prod:idProducto,
+	        	   cantidad:cantAjuste,
+	           }
+		       }).done(function(data){
+		           console.log("entro en el ajax");
+		           $("#planilla_body").load();
+		           $("#planilla_body").html(data);
+		           if($("#error-vacio").val() == "no"){
+		        	   $("#btn-informe").removeClass("hidden"); 
+		           }else{
+		        	   $("#btn-informe").addClass("hidden");
+		           }
+		           
+		       });
+			
+		}
 	
 	</script>
 </div>

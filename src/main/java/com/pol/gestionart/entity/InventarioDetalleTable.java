@@ -6,7 +6,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 import com.pol.gestionart.main.GenericEntity;
 
@@ -24,6 +23,8 @@ private static final String SECUENCIA = "inventario_id_seq";
 	private String operacion;
 	private String proveedorCliente;
 	private Integer cantidad;
+	private Long idProducto;
+	private int mes;
 	public InventarioDetalleTable(String fecha, String comprobante, String operacion, String proveedorCliente, String nombre,
 			String apellido) {
 		super();
@@ -70,6 +71,23 @@ private static final String SECUENCIA = "inventario_id_seq";
 	public void setProveedorCliente(String proveedorCliente) {
 		this.proveedorCliente = proveedorCliente;
 	}
+	
+	public Long getIdProducto() {
+		return idProducto;
+	}
+
+	public void setIdProducto(Long idProducto) {
+		this.idProducto = idProducto;
+	}
+
+	public int getMes() {
+		return mes;
+	}
+
+	public void setMes(int mes) {
+		this.mes = mes;
+	}
+
 	@Override
 	public String toString() {
 		return "InventarioDetalle [fecha=" + fecha + ", comprobante=" + comprobante + ", operacion=" + operacion
