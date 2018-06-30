@@ -48,6 +48,9 @@ public class Usuario extends GenericEntity {
 	@NotNull(message = "usuario.rol.notNull")
 	private Rol rol;
 	
+	@Size(max = 1)
+	private String estado;
+	
 	public Usuario() {
 		super();
 	}
@@ -102,6 +105,18 @@ public class Usuario extends GenericEntity {
 	public void setId(Long id) {
 		this.id = id;
 
+	}
+	
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		if(estado == null){
+			this.estado = "I";
+		}else{
+			this.estado = estado;
+		}
 	}
 
 	@Override

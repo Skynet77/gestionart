@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.pol.gestionart.controller.list.UsuarioListController;
 import com.pol.gestionart.dao.Dao;
 import com.pol.gestionart.dao.UsuarioDao;
-import com.pol.gestionart.entity.Cliente;
-import com.pol.gestionart.entity.Usuario;
+import com.pol.gestionart.security.Usuario;
+
+import com.pol.gestionart.dao.RolDao;
 
 @Controller
 @Scope("request")
@@ -26,7 +27,10 @@ public class UsuarioFormController extends FormController<Usuario> {
 	@Autowired
 	private UsuarioDao usuarioDao;
 	
-
+	@Autowired
+	private RolDao rolDao;
+	
+	
 	@Autowired
 	private UsuarioListController usuarioList;
 

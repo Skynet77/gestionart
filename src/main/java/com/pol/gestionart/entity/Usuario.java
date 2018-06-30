@@ -1,12 +1,9 @@
 package com.pol.gestionart.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -16,7 +13,6 @@ import javax.validation.constraints.Size;
 
 import com.pol.gestionart.main.GenericEntity;
 //import com.pol.gestionart.security.Rol;
-import com.pol.gestionart.security.Rol;
 
 
 
@@ -42,11 +38,6 @@ public class Usuario extends GenericEntity {
 	@NotNull
 	@Size(max = 20)
 	private String password;
-	
-	@ManyToOne
-	@JoinColumn(foreignKey = @ForeignKey(name = "usuario_rol_fk"))
-	@NotNull(message = "usuario.rol.notNull")
-	private Rol rol;
 
 	@Size(max = 1)
 	private String estado;
@@ -102,13 +93,6 @@ public class Usuario extends GenericEntity {
 		this.password = password;
 	}
 
-	public Rol getRol() {
-		return rol;
-	}
-
-	public void setRol(Rol rol) {
-		this.rol = rol;
-	}
 	
 	@Override
 	public Long getId() {
@@ -137,7 +121,7 @@ public class Usuario extends GenericEntity {
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", cedulaRuc=" + cedulaRuc + ", nombreRazonSocial=" + nombreRazonSocial
-				+ ", apellido=" + apellido + ", password=" + password + ", rol=" + rol + ", estado=" + estado + "]";
+				+ ", apellido=" + apellido + ", password=" + password + ", estado=" + estado + "]";
 	}
 	
 }

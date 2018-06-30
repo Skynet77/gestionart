@@ -25,7 +25,7 @@ public class RolPermisoDaoImpl extends DaoImpl<RolPermiso> implements RolPermiso
 		String sql = "SELECT object(#ENTITY#) FROM #ENTITY# AS #ENTITY# ";
 		sql = sql.replace("#ENTITY#", "RolPermiso");
 		Query query = null;
-		// Usuario no envió ningún filtro
+		// Usuario no enviï¿½ ningï¿½n filtro
 
 	
 			
@@ -42,7 +42,7 @@ public class RolPermisoDaoImpl extends DaoImpl<RolPermiso> implements RolPermiso
 		String sql = "SELECT object(#ENTITY#) FROM #ENTITY# AS #ENTITY# ";
 		sql = sql.replace("#ENTITY#", "RolPermiso");
 		Query query = null;
-		// Usuario no envió ningún filtro
+		// Usuario no enviï¿½ ningï¿½n filtro
 
 	
 			
@@ -53,6 +53,12 @@ public class RolPermisoDaoImpl extends DaoImpl<RolPermiso> implements RolPermiso
 			int aux = query.getMaxResults();
 		List<RolPermiso> rp = query.getResultList();
 		return rp;
+	}
+
+	@Override
+	public void destroy(String id) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 
