@@ -91,7 +91,7 @@ public class ProductoFormController extends FormController<Producto> {
 					obj.setEstado("I");
 					getDao().createOrUpdate(obj);
 					map.addAttribute(getNombreObjeto(), obj);
-					map.addAttribute("msgExito", "Registro eliminado correctamente");
+					map.addAttribute("msgExito", "Registro desactivado correctamente");
 					logger.info("registro eliminado");
 				}
 			} catch (Exception ex){

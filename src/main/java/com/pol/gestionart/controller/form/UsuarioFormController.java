@@ -90,7 +90,7 @@ public class UsuarioFormController extends FormController<Usuario> {
 					obj.setEstado("I");
 					getDao().createOrUpdate(obj);
 					map.addAttribute(getNombreObjeto(), obj);
-					map.addAttribute("msgExito", "Registro eliminado correctamente");
+					map.addAttribute("msgExito", "Registro desactivado correctamente");
 					logger.info("registro eliminado");
 				}
 			} catch (Exception ex){
@@ -142,7 +142,7 @@ public class UsuarioFormController extends FormController<Usuario> {
 				usuarioDao.edit(usuario);
 				usuarioDao.destroy(usuario);
 				logger.info("Usuario eliminado {}", usuario);
-				map.addAttribute("msgExito", msg.get("Registro Eliminado"));
+				map.addAttribute("msgExito", msg.get("Registro desactivado correctamente"));
 			}
 		} catch (Exception ex) {
 

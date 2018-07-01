@@ -89,7 +89,7 @@ public class ProveedorFormController extends FormController<Proveedor> {
 					obj.setEstado("I");
 					getDao().createOrUpdate(obj);
 					map.addAttribute(getNombreObjeto(), obj);
-					map.addAttribute("msgExito", "Registro eliminado correctamente");
+					map.addAttribute("msgExito", "Registro desactivado correctamente");
 					logger.info("registro eliminado");
 				}
 			} catch (Exception ex){
@@ -140,7 +140,7 @@ public class ProveedorFormController extends FormController<Proveedor> {
 				proveedorDao.edit(proveedor);
 				proveedorDao.destroy(proveedor);
 				logger.info("Proveedor eliminado {}", proveedor);
-				map.addAttribute("msgExito", msg.get("Registro Eliminado"));
+				map.addAttribute("msgExito", msg.get("Registro desactivado"));
 			}
 		} catch (Exception ex) {
 
