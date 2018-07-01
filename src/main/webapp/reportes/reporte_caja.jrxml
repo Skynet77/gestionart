@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="comprobante_venta" pageWidth="300" pageHeight="400" columnWidth="260" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2ac4f9ad-2413-4855-861b-c80bcb949f0e">
-	<property name="ireport.zoom" value="2.8531167061100033"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte_caja" pageWidth="300" pageHeight="400" columnWidth="260" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2ac4f9ad-2413-4855-861b-c80bcb949f0e">
+	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<subDataset name="dataset1" uuid="13010b2c-776b-42bd-be3d-0b5aacdb70c3">
@@ -19,35 +19,21 @@
 	<title>
 		<band height="75" splitType="Stretch">
 			<staticText>
-				<reportElement x="75" y="0" width="100" height="20" forecolor="#229BD5" uuid="cbbc7001-4888-4efe-a244-f3b78bd1084f"/>
+				<reportElement x="77" y="15" width="100" height="20" forecolor="#000000" uuid="cbbc7001-4888-4efe-a244-f3b78bd1084f"/>
 				<textElement textAlignment="Center">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CIERRE DE CAJA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="24" y="20" width="216" height="18" forecolor="#229BD5" uuid="8c71358e-18b6-41ab-845f-ab1c8d2c732e"/>
-				<textElement>
-					<font size="7"/>
-				</textElement>
-				<text><![CDATA[MARCELINA INSFRAN C/ 10 DE AGOSTO]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="24" y="38" width="100" height="13" forecolor="#229BD5" uuid="52135e1e-adc9-41ae-996b-c33c7b72bb2d"/>
-				<textElement>
-					<font size="7"/>
-				</textElement>
-				<text><![CDATA[Tel: 021-751-063]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="24" y="53" width="43" height="15" forecolor="#229BD5" uuid="8be96c52-a80b-4b5b-9b20-f62a0783ccf6"/>
+				<reportElement x="24" y="53" width="43" height="15" forecolor="#000000" uuid="8be96c52-a80b-4b5b-9b20-f62a0783ccf6"/>
 				<textElement>
 					<font size="7" isBold="true" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[Fecha:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="122" y="53" width="83" height="15" forecolor="#229BD5" uuid="69cdb18e-6481-401f-97b0-a22a63067550"/>
+				<reportElement x="122" y="53" width="83" height="15" forecolor="#000000" uuid="69cdb18e-6481-401f-97b0-a22a63067550"/>
 				<textElement>
 					<font size="7"/>
 				</textElement>
@@ -58,69 +44,64 @@
 	<detail>
 		<band height="111">
 			<staticText>
-				<reportElement x="24" y="34" width="98" height="20" forecolor="#229BD5" uuid="fe24cfe0-8f55-482b-a0ad-853c1fb9c919"/>
+				<reportElement x="24" y="34" width="98" height="20" forecolor="#000000" uuid="fe24cfe0-8f55-482b-a0ad-853c1fb9c919"/>
 				<textElement>
 					<font size="7" isBold="true" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[Total Ingreso:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="24" y="5" width="98" height="20" forecolor="#229BD5" uuid="fab0546d-cf15-4bf5-961f-ce239e8e41b2"/>
+				<reportElement x="24" y="5" width="98" height="20" forecolor="#000000" uuid="fab0546d-cf15-4bf5-961f-ce239e8e41b2"/>
 				<textElement>
 					<font size="7" isBold="true" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[Apertura:]]></text>
 			</staticText>
 			<textField pattern="#,##0 Gs">
-				<reportElement x="122" y="5" width="83" height="20" forecolor="#229BD5" uuid="c5eb5621-1e34-4379-b6c6-1af9be3b5372"/>
+				<reportElement x="122" y="5" width="83" height="20" forecolor="#000000" uuid="c5eb5621-1e34-4379-b6c6-1af9be3b5372"/>
 				<textElement>
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{apertura}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0 Gs">
-				<reportElement x="122" y="34" width="83" height="20" forecolor="#229BD5" uuid="6fe737d1-f1ca-4e7c-9766-ce9c40239db5"/>
+				<reportElement x="122" y="34" width="83" height="20" forecolor="#000000" uuid="6fe737d1-f1ca-4e7c-9766-ce9c40239db5"/>
 				<textElement>
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{totalIngreso}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="24" y="65" width="98" height="16" forecolor="#229BD5" uuid="dfcc65ec-8352-4d3d-aeeb-d3bd8c5fbfd5"/>
+				<reportElement x="24" y="65" width="98" height="16" forecolor="#000000" uuid="dfcc65ec-8352-4d3d-aeeb-d3bd8c5fbfd5"/>
 				<textElement>
 					<font size="7" isBold="true" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[Total Egreso:]]></text>
 			</staticText>
 			<textField pattern="#,##0 Gs">
-				<reportElement x="122" y="65" width="83" height="16" forecolor="#229BD5" uuid="0fa8f3eb-cd31-49dc-9bf1-761b48b230c9"/>
+				<reportElement x="122" y="65" width="83" height="16" forecolor="#000000" uuid="0fa8f3eb-cd31-49dc-9bf1-761b48b230c9"/>
 				<textElement>
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{totalEgreso}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0 Gs">
-				<reportElement x="122" y="89" width="83" height="16" forecolor="#229BD5" uuid="d11ac3ec-a308-4f4e-bbde-d9f8fe7b0d32"/>
+				<reportElement x="122" y="89" width="83" height="16" forecolor="#000000" uuid="d11ac3ec-a308-4f4e-bbde-d9f8fe7b0d32"/>
 				<textElement>
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{totalActual}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="24" y="89" width="98" height="16" forecolor="#229BD5" uuid="7d720433-d14e-44de-a129-b3d798895140"/>
+				<reportElement x="24" y="89" width="98" height="16" forecolor="#000000" uuid="7d720433-d14e-44de-a129-b3d798895140"/>
 				<textElement>
 					<font size="7" isBold="true" isUnderline="false"/>
 				</textElement>
-				<text><![CDATA[Total:]]></text>
+				<text><![CDATA[Monto Total:]]></text>
 			</staticText>
 		</band>
 	</detail>
 	<lastPageFooter>
-		<band height="50">
-			<staticText>
-				<reportElement x="13" y="11" width="227" height="20" forecolor="#229BD5" uuid="0b324532-b9bb-41fe-8c81-19f73062141b"/>
-				<text><![CDATA[FLIPPER]]></text>
-			</staticText>
-		</band>
+		<band height="50"/>
 	</lastPageFooter>
 </jasperReport>
