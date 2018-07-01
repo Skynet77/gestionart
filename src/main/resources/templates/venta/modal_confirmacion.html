@@ -31,14 +31,16 @@
 
 							</div>
 							<div class="form-group">
-								<label for="label">IVA:</label> <label for="label not-bold" class="not-bold" th:text="${cabeceraDetalle.iva}">
+								<label for="label">IVA:</label> <label for="label not-bold" class="not-bold" 
+								th:text="${@generalUtils.formatMontoMonedaToString(cabeceraDetalle.iva, 'GS','N')}">
 								Nombre</label>
 
 							</div>
 						</div>
 						<div class="col-lg-6 float-rigth">
 							<div class="form-group">
-								<label  for="label">Total:</label> <label for="label not-bold" class="not-bold" th:text="${cabeceraDetalle.montoTotal}">
+								<label  for="label">Total:</label> <label for="label not-bold" class="not-bold"
+								 th:text="${@generalUtils.formatMontoMonedaToString(cabeceraDetalle.montoTotal, 'GS','N')}">
 								Nombre</label>
 
 							</div>
@@ -59,7 +61,7 @@
 		                	<tr th:each="det : ${listDetalle}">
 		                		<td th:text="${det.producto.descripcion}"></td>
 		                		<td th:text="${det.cantidad}"></td>
-		                		<td th:text="${det.precioTotal}"></td>
+		                		<td th:text="${@generalUtils.formatMontoMonedaToString(det.precioTotal, 'GS','N')}"></td>
 		                	</tr>
 		                </tbody>
 		              </table>

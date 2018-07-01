@@ -59,7 +59,7 @@ import net.sf.jasperreports.engine.util.JRLoader;
 @Controller
 @Scope("request")
 @RequestMapping("caja")
-public class CajaFromController extends FormController<Caja> {
+public class CajaFormController extends FormController<Caja> {
 
 	@Autowired
 	private CajaDao cajaDao;
@@ -260,7 +260,7 @@ public class CajaFromController extends FormController<Caja> {
 		for (Caja caja : listCaja) {
 			reporte.setTotalIngreso(reporte.getTotalIngresoBigDecimal().add(caja.getEntrada()));
 			reporte.setTotalEgreso(reporte.getTotalEgresoBigDecimal().add(caja.getSalida()));
-			if("APERTURA DE CAJA".equalsIgnoreCase(caja.getDescripcion())){
+			if("APERTURA".equalsIgnoreCase(caja.getDescripcion())){
 				aperturaCaja = caja.getEntrada(); 
 			}
 			reporte.setFecha(caja.getFecha());
@@ -319,6 +319,8 @@ public class CajaFromController extends FormController<Caja> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
 		
 		
 	}

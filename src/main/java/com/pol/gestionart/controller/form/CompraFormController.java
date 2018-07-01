@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -251,7 +252,17 @@ public class CompraFormController extends FormController<CompraCabecera> {
 			CompraDetalle compraDet = null;
 			Map<String, CompraDetalle> mapaCompraDetalle = null;
 			Caja cajaActual = cajaDao.findCajaByDate();
-			
+			String fechaHora = "";
+			try {
+				fechaHora = GeneralUtils.getDateHours();
+			} catch (RuntimeException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			compraCabecera.setFechaCompra(fechaHora);
 			if(cajaActual ==  null){
 				throw new WebAppException("Debe abrir una caja antes de realizar una compra");
 			}
@@ -302,7 +313,7 @@ public class CompraFormController extends FormController<CompraCabecera> {
 				}else{
 					inventario.setActual(inventario.getActual()+vd.getCantidad());
 					inventario.setEntrada(inventario.getEntrada()+vd.getCantidad());
-					inventario.setFechaMes(GeneralUtils.getDate(compraCabecera.getFechaCompra()));
+					inventario.setFechaMes(GeneralUtils.getDateHours(compraCabecera.getFechaCompra()));
 					inventario.setProducto(vd.getProducto());
 					inventario.setSalida(0);
 				}
@@ -316,8 +327,10 @@ public class CompraFormController extends FormController<CompraCabecera> {
 				compraDetalleDao.create(vd);
 			}
 			
-			Caja caja = new Caja();
-			caja.setFecha(compraCabecera.getFechaCompra());
+			Caja caja = new Caja();	
+			Date d1 = GeneralUtils.getDateHours(compraCabecera.getFechaCompra());
+			String d2 = GeneralUtils.getStringFromDate(d1, GeneralUtils.DATE_FORMAT_CAJA);
+			caja.setFecha(d2);
 			caja.setDescripcion("COMPRA PRODUCTO");
 			caja.setSalidaBigDecimal(compraCabecera.getTotal());
 			caja.setSaldoActual(cajaActual.getSaldoActual().subtract(compraCabecera.getTotal()));
