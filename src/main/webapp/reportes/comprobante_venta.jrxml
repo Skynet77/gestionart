@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="comprobante_venta" pageWidth="300" pageHeight="500" columnWidth="260" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2ac4f9ad-2413-4855-861b-c80bcb949f0e">
-	<property name="ireport.zoom" value="3.4522712143931042"/>
+	<property name="ireport.zoom" value="4.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="480"/>
+	<property name="ireport.y" value="432"/>
 	<subDataset name="dataset1" uuid="13010b2c-776b-42bd-be3d-0b5aacdb70c3">
 		<field name="producto.descripcion" class="java.lang.String"/>
 		<field name="precioTotal" class="java.math.BigDecimal"/>
