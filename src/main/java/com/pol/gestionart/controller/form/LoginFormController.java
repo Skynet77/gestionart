@@ -1,7 +1,9 @@
 package com.pol.gestionart.controller.form;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 import com.pol.gestionart.bean.LoginBean;
+import com.pol.gestionart.dao.UsuarioDao;
+import com.pol.gestionart.entity.Usuario;
 
 
 
@@ -21,20 +25,27 @@ import com.pol.gestionart.bean.LoginBean;
 //@Scope("request")
 //@RequestMapping("login")
 public class LoginFormController {
+	@Autowired
+	private UsuarioDao usuariodao;
+	
 	  @RequestMapping(value = "/login", method = RequestMethod.GET)
 	  public String init(Model model) {
 	    model.addAttribute("msg", "Please Enter Your Login Details");
+	    model.addAttribute("loginBean", new LoginBean());
 	    return "login";
 	  }
 	  @RequestMapping(value = "/login", method = RequestMethod.POST)
-	  public String submit(Model model, @ModelAttribute("loginBean") LoginBean loginBean) {
-	    if (loginBean != null && loginBean.getUserName() != null & loginBean.getPassword() != null) {
-	      if (loginBean.getUserName().equals("chandra") && loginBean.getPassword().equals("chandra123")) {
-	        model.addAttribute("msg", loginBean.getUserName());
-	        return "success";
+	  public String submit(Model model, HttpSession sesion, @ModelAttribute("loginBean") LoginBean loginBean) {
+	    if (loginBean != null && loginBean.getCedula() != null & loginBean.getPassword() != null) {
+	      Usuario usuario = usuariodao.getUsuarioByUserName(loginBean.getCedula());
+	      if ( usuario != null && loginBean.getPassword().equals(usuario.getPassword())) {
+	        model.addAttribute("msg", loginBean.getCedula());
+	        sesion.setAttribute("usuariologin",  usuario);
+	        return "redirect:/";
 	      } else {
-	        model.addAttribute("error", "Invalid Details");
-	        return "login";
+	        model.addAttribute("errorMsg", "Datos Incorrectos");
+	        model.addAttribute("loginBean", new LoginBean());
+	        return "/login";
 	      }
 	    } else {
 	      model.addAttribute("error", "Please enter Details");

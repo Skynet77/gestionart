@@ -1,13 +1,13 @@
 package com.pol.gestionart.bean;
 
 public class LoginBean {
-  private String userName;
+  private String cedula;
   private String password;
-  public String getUserName() {
-    return userName;
+  public String getCedula() {
+    return cedula;
   }
-  public void setUserName(String userName) {
-    this.userName = userName;
+  public void setCedula(String cedula) {
+    this.cedula = cedula;
   }
   public String getPassword() {
     return password;
