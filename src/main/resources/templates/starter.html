@@ -150,25 +150,25 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="starter
 
 					<!-- Menu de Administracion ABM -->
 					<li class="treeview menu-expedientes"  ><a href="#"> <i
-							class="fa fa-book"></i> <span>Administración - ABM</span><span
+							class="fa fa-book"></i> <span>Administración</span><span
 							class="pull-right-container"> <i
 								class="fa fa-angle-left pull-right"></i>
 						</span>
 					</a>
 						<ul class="treeview-menu">
-							<li><a th:href="@{/cliente}"><i class="fa fa-folder"
+							<li><a th:href="@{/cliente}"><i class="fa fa-users"
 									></i>Cliente</a></li>
-							<li><a th:href="@{/producto}"><i class="fa fa-folder"
+							<li><a th:href="@{/producto}"><i class="fa fa-cubes"
 									></i>Producto</a></li>							
-							<li><a th:href="@{/proveedor}"><i class="fa fa-folder"
+							<li><a th:href="@{/proveedor}"><i class="fa fa-users"
 									></i>Proveedor</a></li>
-							<li><a th:href="@{/usuario}"><i class="fa fa-folder"
+							<li><a th:href="@{/usuario}"><i class="fa fa-user"
 									></i>Usuario</a></li>				
 						</ul></li>
 
 					<!-- Menú de Venta -->
 					<li class="treeview menu-gastos"><a href="#"> <i
-							class="fa fa-briefcase"></i> <span>Venta</span> <span
+							class="fa fa-shopping-cart"></i> <span>Venta</span> <span
 							class="pull-right-container"> <i
 								class="fa fa-angle-left pull-right"></i>
 						</span>
@@ -182,43 +182,43 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="starter
 
 					<!-- Menú de Compra  -->
 					<li class="treeview menu-rrhh"><a href="#"> <i
-							class="fa fa-sitemap"></i> <span>Compra</span> <span
+							class="fa fa-credit-card-alt"></i> <span>Compra</span> <span
 							class="pull-right-container"> <i
 								class="fa fa-angle-left pull-right"></i>
 						</span>
 					</a>
 						<ul class="treeview-menu">
 							<li><a th:href="@{/compra/buy}">
-							<i class="fa fa-pie-chart" ></i>Registrar Compra</a></li>
+							<i class="fa fa-files-o" ></i>Registrar Compra</a></li>
 							<li><a th:href="@{/compra}">
-							<i class="fa fa-pie-chart" ></i>Consultar Compras</a></li>
+							<i class="fa fa-calculator"  ></i>Consultar Compras</a></li>
 						</ul></li>		
 							
 					<!-- Menú de Caja  -->
 					<li class="treeview menu-rrhh"><a href="#"> <i
-							class="fa fa-sitemap"></i> <span>Caja</span> <span
+							class="fa fa-laptop"></i> <span>Caja</span> <span
 							class="pull-right-container"> <i
 								class="fa fa-angle-left pull-right"></i>
 						</span>
 					</a>
 						<ul class="treeview-menu">
 							<li><a th:href="@{/caja}">
-							<i class="fa fa-pie-chart" ></i>Flujo de dinero</a></li>
+							<i class="fa fa-money" ></i>Flujo de dinero</a></li>
 							<li><a th:href="@{/venta/a-confirmar}">
-							<i class="fa fa-pie-chart" ></i>A confirmar</a></li>
+							<i class="fa fa-check-circle-o" ></i>A confirmar</a></li>
 						</ul></li>
 					<!-- Menú de Inventario  -->
 					<li class="treeview menu-rrhh"><a href="#"> <i
-							class="fa fa-sitemap"></i> <span>Inventario</span> <span
+							class="fa fa-list-alt"></i> <span>Inventario</span> <span
 							class="pull-right-container"> <i
 								class="fa fa-angle-left pull-right"></i>
 						</span>
 					</a>
 						<ul class="treeview-menu">
 							<li><a th:href="@{/inventario}">
-							<i class="fa fa-pie-chart" ></i>Inventario</a></li>
+							<i class="fa fa-file-text" ></i>Inventario</a></li>
 							<li><a th:href="@{/inventario/ajuste_inventario}">
-							<i class="fa fa-pie-chart" ></i>Ajuste De Inventario</a></li>
+							<i class="fa fa-cog" ></i>Ajuste De Inventario</a></li>
 							
 						</ul></li>				
 				</ul>
