@@ -18,15 +18,15 @@ import com.pol.gestionart.bean.LoginBean;
 
 
 @Controller
-@Scope("request")
-@RequestMapping("login")
+//@Scope("request")
+//@RequestMapping("login")
 public class LoginFormController {
 	  @RequestMapping(value = "/login", method = RequestMethod.GET)
 	  public String init(Model model) {
 	    model.addAttribute("msg", "Please Enter Your Login Details");
 	    return "login";
 	  }
-	  @RequestMapping(method = RequestMethod.POST)
+	  @RequestMapping(value = "/login", method = RequestMethod.POST)
 	  public String submit(Model model, @ModelAttribute("loginBean") LoginBean loginBean) {
 	    if (loginBean != null && loginBean.getUserName() != null & loginBean.getPassword() != null) {
 	      if (loginBean.getUserName().equals("chandra") && loginBean.getPassword().equals("chandra123")) {
