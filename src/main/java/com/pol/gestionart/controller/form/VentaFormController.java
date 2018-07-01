@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -226,14 +227,6 @@ public class VentaFormController extends FormController<VentaCabecera> {
 			ventaDet = mapVentaDetail.get(uuid);
 			ventaCab.setMontoTotalBigDecimal(ventaCab.getMontoTotal().subtract(ventaDet.getPrecioTotal()));
 			
-			/*//producto para disminuir el stok
-			Producto productoDisminuir = null;
-			//sumamos la cantidad del producto en stock, ya que se elimino del detalle
-			productoDisminuir = ventaDet.getProducto();
-			suma = productoDisminuir.getCantidad() + ventaDet.getCantidad();
-			productoDisminuir.setCantidad(suma);
-			productoDao.createOrUpdate(productoDisminuir);*/
-			
 			//calculo de subTotal
 			BigDecimal subTotal;
 			BigDecimal IVA;
@@ -284,6 +277,17 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		ventaCabecera.setIva(ventaCab.getIva());
 		ventaCabecera.setNroComprobante("1");
 		ventaCabecera.setEstado(Estado.PENDIENTE.name());
+		String fechaHora = "";
+		try {
+			fechaHora = GeneralUtils.getDateHours();
+		} catch (RuntimeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ventaCabecera.setFechaEmision(fechaHora);
 		ventaCabeceraDao.create(ventaCabecera);
 		
 		String nroComprobante = GeneralUtils.formatoComprobante(ventaCabecera.getId());

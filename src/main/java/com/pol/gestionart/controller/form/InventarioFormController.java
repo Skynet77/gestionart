@@ -1,5 +1,6 @@
 package com.pol.gestionart.controller.form;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -23,6 +24,7 @@ import com.pol.gestionart.entity.Inventario;
 import com.pol.gestionart.entity.InventarioDetalleTable;
 import com.pol.gestionart.entity.Producto;
 import com.pol.gestionart.exceptions.AjaxException;
+import com.pol.gestionart.util.GeneralUtils;
 
 @Controller
 @Scope("request")
@@ -105,14 +107,27 @@ public class InventarioFormController extends FormController<Inventario> {
 		}
 		
 		inv.setCantidad(cantidad);
-		inv.setFecha(fechaMes);
+		inv.setFecha(GeneralUtils.getStringFromDate(new Date(), GeneralUtils.DATE_FORMAT_GUION));
 		inv.setIdProducto(idProd);
 		inv.setMes(Integer.parseInt(fechaMes.substring(0, 2)));
 		inv.setComprobante("00000");
 		inv.setOperacion("AJUSTE INVENTARIO");
 		inv.setProveedorCliente("SIN NOMBRE");
-		
+		inv.setFechaMes(GeneralUtils.getDateHours(GeneralUtils.getStringFromDate(new Date(), GeneralUtils.DATE_FORMAT_GUION)));
 		inventarioDetalleDao.create(inv);
+		
+		Inventario inventario = inventarioDao.getInventarioByProductoFecha(idProd,null);
+		Inventario inventarioMesAnterio = null;
+		inventarioMesAnterio = inventarioDao.getInventarioByProductoFecha(idProd,Integer.parseInt(fechaMes.substring(0, 2)));
+		if(inventarioMesAnterio != null){
+			inventarioMesAnterio = inventarioDao.getInventarioByProductoFecha(idProd,Integer.parseInt(fechaMes.substring(0, 2)));
+			inventarioMesAnterio.setActual(inventarioMesAnterio.getActual()+cantidad);
+			if(cantidad >0){
+			inventarioMesAnterio.setEntrada(inventarioMesAnterio.getEntrada()+cantidad);
+			}else if(cantidad < 0){
+				inventarioMesAnterio.setEntrada(inventarioMesAnterio.getEntrada()-cantidad);	
+			}
+		}		
 		session.setAttribute("msgAjuste", "Ajuste realizado con éxito!");
 		} catch (Exception e) {
 			throw new AjaxException("Ocurrió un error al intentar realizar el ajuste");

@@ -1,11 +1,15 @@
 package com.pol.gestionart.entity;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.pol.gestionart.main.GenericEntity;
 
@@ -25,6 +29,8 @@ private static final String SECUENCIA = "inventario_id_seq";
 	private Integer cantidad;
 	private Long idProducto;
 	private int mes;
+	@Temporal(TemporalType.DATE)
+	private Date fechaMes;
 	public InventarioDetalleTable(String fecha, String comprobante, String operacion, String proveedorCliente, String nombre,
 			String apellido) {
 		super();
@@ -39,6 +45,14 @@ private static final String SECUENCIA = "inventario_id_seq";
 	}
 	
 	
+	public Date getFechaMes() {
+		return fechaMes;
+	}
+
+	public void setFechaMes(Date fechaMes) {
+		this.fechaMes = fechaMes;
+	}
+
 	public Integer getCantidad() {
 		return cantidad;
 	}

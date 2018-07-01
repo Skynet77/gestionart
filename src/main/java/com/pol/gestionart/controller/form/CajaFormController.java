@@ -277,6 +277,19 @@ public class CajaFormController extends FormController<Caja> {
 		map.addAttribute("total",reporte.getTotalActual());
 		map.addAttribute("idReporte",reporte.getId());
 		
+		//cerramos caja 
+		Caja cerrarCaja = new Caja();
+		cerrarCaja.setDescripcion("CIERRE");
+		cerrarCaja.setEntradaBigDecimal(BigDecimal.ZERO);
+		cerrarCaja.setFechaActual(new Date());
+		cerrarCaja.setFecha(GeneralUtils.getStringFromDate(new Date(), GeneralUtils.DATE_FORMAT_CAJA));
+		cerrarCaja.setSaldoActual(BigDecimal.ZERO);
+		Caja cajaActual = cajaDao.findCajaByDate();
+		cerrarCaja.setSalidaBigDecimal(cajaActual.getSaldoActual());
+		cajaDao.create(cerrarCaja);
+		
+			
+		
 		return "caja/modal_reporte";
 		
 	}

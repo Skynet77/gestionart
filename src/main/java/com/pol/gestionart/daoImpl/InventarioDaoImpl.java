@@ -121,7 +121,7 @@ public class InventarioDaoImpl extends DaoImpl<Inventario> implements Inventario
 	"join VentaCabecera as vc on vd.ventaCabecera.idVenta = vc.idVenta "+
 	"join Cliente as c on c.id = vc.cliente.id "+
 	"join Inventario as i on i.producto.id = vd.producto.id where extract(MONTH from i.fechaMes) = ?1 and i.producto.id = ?2"+
-	" order by i.fechaMes desc");
+	" order by i.fechaMes asc");
 			results.setParameter(1, mess);
 			results.setParameter(2, idProducto);
 			
@@ -142,7 +142,7 @@ public class InventarioDaoImpl extends DaoImpl<Inventario> implements Inventario
 					" join CompraCabecera as vc on vd.compraCabecera.id = vc.id"+
 					" join Proveedor as c on c.id = vc.proveedor.id"+
 					" join Inventario as i on i.producto.id = vd.producto.id where extract(MONTH from i.fechaMes) = ?1 and i.producto.id= ?2"+
-					" order by i.fechaMes desc");
+					" order by i.fechaMes asc");
 			resultsCompra.setParameter(1, mess);
 			resultsCompra.setParameter(2, idProducto);
 			
@@ -159,7 +159,7 @@ public class InventarioDaoImpl extends DaoImpl<Inventario> implements Inventario
 			}
 			
 			Query resultsDetalle = entityManager.createQuery("SELECT object(InventarioDetalleTable) FROM InventarioDetalleTable AS InventarioDetalleTable"+
-			" where idProducto = ?1 and mes = ?2");
+			" where idProducto = ?1 and mes = ?2 order by fechaMes asc");
 			resultsDetalle.setParameter(1, idProducto);
 			resultsDetalle.setParameter(2, mess);
 			
