@@ -14,13 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 import com.pol.gestionart.bean.LoginBean;
-//import com.pol.gestionart.entity.Producto;
 
 
 
 @Controller
 @Scope("request")
-//@RequestMapping("login")
+@RequestMapping("login")
 public class LoginFormController {
 	  @RequestMapping(value = "/login", method = RequestMethod.GET)
 	  public String init(Model model) {
