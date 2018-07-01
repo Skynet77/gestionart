@@ -174,16 +174,11 @@
 	        	   cantidad:cantAjuste,
 	           }
 		       }).done(function(data){
-		           console.log("entro en el ajax");
-		           $("#planilla_body").load();
-		           $("#planilla_body").html(data);
-		           if($("#error-vacio").val() == "no"){
-		        	   $("#btn-informe").removeClass("hidden"); 
-		           }else{
-		        	   $("#btn-informe").addClass("hidden");
-		           }
-		           
+		    	   window.location.reload();
+		       }).fail(function (request, status, error) {
+		    	   ajaxErrorHandler(errorData, status, request.status, "alert-error","msgTitleError","msgDescripcionError");
 		       });
+		       
 			
 		}
 	

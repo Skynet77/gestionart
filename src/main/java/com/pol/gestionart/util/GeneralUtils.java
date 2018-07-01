@@ -28,6 +28,7 @@ public class GeneralUtils {
 	
 	public static String COMPROBANTE_PATTERN = "00000000";
 	public static final String DATE_FORMAT = "dd/MM/yyyy-HH:mm:ss";
+	public static final String DATE_FORMAT_GUION = "dd-MM-yyyy-HH:mm:ss";
 	public static final String DATE_FORMAT_CAJA = "dd-MM-yyyy";
 	
 	@Autowired
@@ -195,5 +196,24 @@ public class GeneralUtils {
 		} catch (ParseException e) {
 			throw new RuntimeException(e);
 		}
+	}
+	
+	public static Date getDateHours(String fecha) throws RuntimeException{
+		if(fecha == null)
+			throw new RuntimeException();
+		try {
+			Date date = new SimpleDateFormat(DATE_FORMAT_GUION).parse(fecha);
+			return date;
+			
+		} catch (ParseException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public static String getDateHours() throws RuntimeException, ParseException{
+		
+		Date date = new Date();
+		String hora = getStringFromDate(date, DATE_FORMAT_GUION);
+		return hora;
 	}
 }
