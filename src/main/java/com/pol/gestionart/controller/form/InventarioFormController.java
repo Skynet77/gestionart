@@ -101,7 +101,7 @@ public class InventarioFormController extends FormController<Inventario> {
 			produc.setCantidad(nuevaCantidad);
 			productoDao.createOrUpdate(produc);
 		}else if(cantidad < 0){
-			int nuevaCantidad = produc.getCantidad()-cantidad;
+			int nuevaCantidad = produc.getCantidad()+cantidad;
 			produc.setCantidad(nuevaCantidad);
 			productoDao.createOrUpdate(produc);
 		}
@@ -113,21 +113,21 @@ public class InventarioFormController extends FormController<Inventario> {
 		inv.setComprobante("00000");
 		inv.setOperacion("AJUSTE INVENTARIO");
 		inv.setProveedorCliente("SIN NOMBRE");
-		inv.setFechaMes(GeneralUtils.getDateHours(GeneralUtils.getStringFromDate(new Date(), GeneralUtils.DATE_FORMAT_GUION)));
+		inv.setFechaMes(new Date());
 		inventarioDetalleDao.create(inv);
 		
-		Inventario inventario = inventarioDao.getInventarioByProductoFecha(idProd,null);
 		Inventario inventarioMesAnterio = null;
 		inventarioMesAnterio = inventarioDao.getInventarioByProductoFecha(idProd,Integer.parseInt(fechaMes.substring(0, 2)));
 		if(inventarioMesAnterio != null){
-			inventarioMesAnterio = inventarioDao.getInventarioByProductoFecha(idProd,Integer.parseInt(fechaMes.substring(0, 2)));
 			inventarioMesAnterio.setActual(inventarioMesAnterio.getActual()+cantidad);
 			if(cantidad >0){
 			inventarioMesAnterio.setEntrada(inventarioMesAnterio.getEntrada()+cantidad);
 			}else if(cantidad < 0){
-				inventarioMesAnterio.setEntrada(inventarioMesAnterio.getEntrada()-cantidad);	
+				//+ por que es negativo
+				inventarioMesAnterio.setSalida(inventarioMesAnterio.getSalida()+cantidad);	
 			}
-		}		
+		}	
+		inventarioDao.createOrUpdate(inventarioMesAnterio);
 		session.setAttribute("msgAjuste", "Ajuste realizado con éxito!");
 		} catch (Exception e) {
 			throw new AjaxException("Ocurrió un error al intentar realizar el ajuste");

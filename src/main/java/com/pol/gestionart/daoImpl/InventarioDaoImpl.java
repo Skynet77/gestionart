@@ -92,6 +92,8 @@ public class InventarioDaoImpl extends DaoImpl<Inventario> implements Inventario
 			int mes = d.getMonth();
 			if(mess==null){
 				mes = mes+1;
+			}else{
+				mes = mess;
 			}
 			
 			sql = sql + "WHERE producto_idproducto = ?1 and extract(MONTH from fechames) = ?2";

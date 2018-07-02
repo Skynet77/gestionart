@@ -8,8 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import com.pol.gestionart.main.GenericEntity;
 
@@ -29,7 +27,7 @@ private static final String SECUENCIA = "inventario_id_seq";
 	private Integer cantidad;
 	private Long idProducto;
 	private int mes;
-	@Temporal(TemporalType.DATE)
+	//@Temporal(TemporalType.DATE)
 	private Date fechaMes;
 	public InventarioDetalleTable(String fecha, String comprobante, String operacion, String proveedorCliente, String nombre,
 			String apellido) {
