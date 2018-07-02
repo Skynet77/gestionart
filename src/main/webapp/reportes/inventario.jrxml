@@ -3,11 +3,16 @@
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<subDataset name="dataset1" uuid="63aad820-91db-43a0-9582-77752b4a5e34"/>
+	<subDataset name="dataset2" uuid="40ba7ee2-5cf9-44ef-91b4-ca41b45d7fe0"/>
+	<subDataset name="dataset3" uuid="9b286774-e278-4504-8c3b-a357a98ebae6"/>
+	<subDataset name="dataset4" uuid="eea3512f-ca2d-4cb0-b037-51c97842a126"/>
 	<parameter name="fechaMes" class="java.util.Date"/>
+	<parameter name="nombreProducto" class="java.lang.String"/>
 	<parameter name="stockInicial" class="java.lang.Integer"/>
 	<parameter name="entrada" class="java.lang.Integer"/>
 	<parameter name="salida" class="java.lang.Integer"/>
-	<parameter name="actual" class="java.lang.Integer"/>
+	<parameter name="stockActual" class="java.lang.String"/>
 	<field name="field1" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
@@ -39,10 +44,14 @@
 				<reportElement x="104" y="20" width="100" height="20" uuid="8bbebc0d-68c7-41c3-acd0-565703255b92"/>
 				<textFieldExpression><![CDATA[$P{fechaMes}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="65" y="40" width="139" height="20" uuid="506edecf-9627-4d13-86c9-75583140b9a3"/>
+				<textFieldExpression><![CDATA[$P{nombreProducto}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch">
+		<band height="41" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="89" height="20" uuid="c78ebc5f-2951-4077-b297-9a947425d293"/>
 				<textElement>
@@ -51,41 +60,41 @@
 				<text><![CDATA[STOCK INICIAL:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="151" y="0" width="54" height="20" uuid="346d04f9-28a0-4944-9367-327059a5c056"/>
+				<reportElement x="161" y="0" width="65" height="20" uuid="346d04f9-28a0-4944-9367-327059a5c056"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[ENTRADA:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="292" y="0" width="39" height="20" uuid="0ec0a9c6-b2a5-4eeb-a6a1-e293d376370a"/>
-				<textElement>
+				<reportElement x="281" y="0" width="52" height="20" uuid="0ec0a9c6-b2a5-4eeb-a6a1-e293d376370a"/>
+				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[SALIDA:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="409" y="0" width="87" height="20" uuid="ab306f9e-d07d-46ae-ae86-105a70f9f397"/>
+				<reportElement x="408" y="0" width="89" height="20" uuid="ab306f9e-d07d-46ae-ae86-105a70f9f397"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[STOCK ACTUAL:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="89" y="0" width="62" height="20" uuid="cebb1623-06f2-4caf-83be-3a8ca462ea0e"/>
+				<reportElement x="89" y="0" width="72" height="20" uuid="196b4fd8-dc71-4b1a-8c7e-c0ce6c5e403f"/>
 				<textFieldExpression><![CDATA[$P{stockInicial}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="206" y="0" width="86" height="20" uuid="e21f2180-b1b4-4875-a6fc-0975fc8e4b46"/>
+				<reportElement x="226" y="0" width="55" height="20" uuid="ba1deb86-7aca-4926-85a9-4798d9796457"/>
 				<textFieldExpression><![CDATA[$P{entrada}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="331" y="0" width="78" height="20" uuid="9fe2d582-ba15-498e-8c70-fa0c06511e0b"/>
+				<reportElement x="333" y="0" width="75" height="20" uuid="b80024d2-599a-4c92-bbf0-cd4653a395fd"/>
 				<textFieldExpression><![CDATA[$P{salida}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="496" y="0" width="59" height="20" uuid="2f97f1e6-f328-41b6-9ded-b23ba287404c"/>
-				<textFieldExpression><![CDATA[$P{actual}]]></textFieldExpression>
+				<reportElement x="497" y="0" width="58" height="20" uuid="b3a2233a-bf93-4556-aafc-db7fe2e6c303"/>
+				<textFieldExpression><![CDATA[$P{stockActual}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -160,6 +169,36 @@
 			<line>
 				<reportElement x="65" y="0" width="1" height="171" uuid="fcf337ec-6b34-4c61-90a1-aae54ffa9fe5"/>
 			</line>
+			<componentElement>
+				<reportElement x="0" y="0" width="555" height="50" uuid="effffdc3-4a34-42d3-9f5e-963b7ba97137"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataset4" uuid="3aaa5459-7602-4965-9a42-10ee7672b9e8">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.JREmptyDataSource(1)]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="50" width="555">
+						<textField>
+							<reportElement x="0" y="0" width="66" height="20" uuid="75b2cf2a-fef1-46ee-9aec-f12ab867d84b"/>
+							<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="66" y="0" width="108" height="20" uuid="9c7c9dc8-73ce-4b6f-a503-bda4ce5b765e"/>
+							<textFieldExpression><![CDATA[$F{comprobante}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="174" y="0" width="181" height="20" uuid="71c436fb-3589-4127-b326-ae33d6bb09bc"/>
+							<textFieldExpression><![CDATA[$F{proveedorCliente}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="356" y="0" width="98" height="20" uuid="64f6c183-ddf8-4035-ac7f-ea10f25c4dc9"/>
+							<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="455" y="0" width="100" height="20" uuid="c98bf3e0-e43d-42c3-a87d-2df527af852b"/>
+							<textFieldExpression><![CDATA[$F{operacion}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
 		</band>
 	</detail>
 	<columnFooter>
