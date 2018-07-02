@@ -88,7 +88,7 @@ public class ClienteFormController extends FormController<Cliente> {
 				obj.setEstado("I");
 				getDao().createOrUpdate(obj);
 				map.addAttribute(getNombreObjeto(), obj);
-				map.addAttribute("msgExito", "Registro eliminado correctamente");
+				map.addAttribute("msgExito", "Registro desactivado correctamente");
 				logger.info("registro eliminado");
 			}
 		} catch (Exception ex){
@@ -147,7 +147,7 @@ public class ClienteFormController extends FormController<Cliente> {
 				clienteDao.edit(cliente);
 				clienteDao.destroy(cliente);
 				logger.info("Cliente eliminado {}", cliente);
-				map.addAttribute("msgExito", msg.get("Registro Eliminado"));
+				map.addAttribute("msgExito", msg.get("Registro desactivado"));
 			}
 		} catch (Exception ex) {
 
