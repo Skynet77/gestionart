@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report3" pageWidth="612" pageHeight="556" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="80291bb6-d060-4be4-9752-0b7128ffdb40">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="132"/>
+	<property name="ireport.y" value="0"/>
 	<subDataset name="Table Dataset 1" uuid="f8c73f35-41de-46b5-ba9d-d6f54955d671"/>
 	<subDataset name="dataset1" uuid="5255d0a6-b663-4f90-b8cd-cf6e4a054abf">
 		<field name="producto.codigo" class="java.lang.String"/>
@@ -57,23 +57,23 @@
 				<text><![CDATA[TEL.: (021) 751-063]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="383" y="2" width="72" height="16" uuid="5afb2749-ca11-4e8a-8acc-4e2e2579c83e"/>
+				<reportElement x="385" y="2" width="70" height="16" uuid="5afb2749-ca11-4e8a-8acc-4e2e2579c83e"/>
 				<textElement textAlignment="Justified">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[TIMBRADO N°:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="383" y="18" width="110" height="20" uuid="1bbfcad2-8b15-4742-a1ae-d3f9af085a49"/>
+				<reportElement x="385" y="18" width="108" height="20" uuid="1bbfcad2-8b15-4742-a1ae-d3f9af085a49"/>
 				<textElement textAlignment="Justified"/>
 				<text><![CDATA[Fecha Inicio Vigencia:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="383" y="36" width="110" height="20" uuid="92ed56af-2f84-40b0-aab6-7a233e087d43"/>
+				<reportElement x="385" y="36" width="108" height="20" uuid="92ed56af-2f84-40b0-aab6-7a233e087d43"/>
 				<text><![CDATA[Fecha Fin Vigencia:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="383" y="56" width="39" height="20" uuid="7793e847-b5a1-4664-a9c7-c14d50ec60d9"/>
+				<reportElement x="385" y="56" width="37" height="20" uuid="7793e847-b5a1-4664-a9c7-c14d50ec60d9"/>
 				<textElement>
 					<font isBold="false"/>
 				</textElement>
@@ -273,18 +273,18 @@
 				<text><![CDATA[DESCRIPCION]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="200" width="88" height="20" uuid="8ce46a92-a960-4837-bcd2-d8fd1e5e3d0b"/>
+				<reportElement x="3" y="200" width="85" height="20" uuid="8ce46a92-a960-4837-bcd2-d8fd1e5e3d0b"/>
 				<text><![CDATA[SUB-TOTAL]]></text>
 			</staticText>
-			<textField pattern="#,##0 Gs">
+			<textField pattern="#,##0">
 				<reportElement x="471" y="200" width="100" height="17" uuid="0c0e75be-2831-4713-b4c8-f1f84f984400"/>
 				<textFieldExpression><![CDATA[$P{subTotal}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="220" width="88" height="25" uuid="ddbd38fd-c718-4711-a1cb-d150fa49285b"/>
-				<text><![CDATA[TOTAL]]></text>
+				<reportElement x="3" y="220" width="85" height="25" uuid="ddbd38fd-c718-4711-a1cb-d150fa49285b"/>
+				<text><![CDATA[TOTAL (Gs.)]]></text>
 			</staticText>
-			<textField pattern="#,##0 Gs">
+			<textField pattern="#,##0">
 				<reportElement x="471" y="217" width="100" height="28" uuid="20d0ca03-3a53-46fe-b920-9b0850e3e9d4"/>
 				<textFieldExpression><![CDATA[$P{montoTotal}]]></textFieldExpression>
 			</textField>
@@ -292,7 +292,7 @@
 				<reportElement x="0" y="245" width="150" height="20" uuid="3bf5126f-4bd4-49d8-b2cb-e977e8abbf8d"/>
 				<text><![CDATA[ LIQUIDACIÓN DEL IVA (10%):]]></text>
 			</staticText>
-			<textField>
+			<textField pattern="#,##0">
 				<reportElement x="150" y="245" width="103" height="20" uuid="e709f9b5-da85-4a32-b374-0aeea6c73521"/>
 				<textFieldExpression><![CDATA[$P{totalIva}]]></textFieldExpression>
 			</textField>
@@ -300,7 +300,7 @@
 				<reportElement x="253" y="245" width="69" height="20" uuid="b203efe1-0136-4737-87df-740e2493904f"/>
 				<text><![CDATA[TOTAL IVA: ]]></text>
 			</staticText>
-			<textField>
+			<textField pattern="#,##0">
 				<reportElement x="479" y="245" width="92" height="20" uuid="02d3b490-bc5b-4115-84e2-a66fc1dbb03f"/>
 				<textFieldExpression><![CDATA[$P{totalIva}]]></textFieldExpression>
 			</textField>

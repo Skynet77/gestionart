@@ -24,7 +24,7 @@
 				<textElement textAlignment="Center">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Comprobante de Compra]]></text>
+				<text><![CDATA[Detalle de Compra]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="24" y="50" width="43" height="15" forecolor="#000000" uuid="8be96c52-a80b-4b5b-9b20-f62a0783ccf6"/>
@@ -144,7 +144,7 @@
 			<staticText>
 				<reportElement x="49" y="2" width="146" height="20" forecolor="#000000" uuid="2419faa6-693f-41e9-ab6d-8e3830835799"/>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[DETALLE DE COMPRA]]></text>
+				<text><![CDATA[DETALLE]]></text>
 			</staticText>
 			<line>
 				<reportElement positionType="Float" x="13" y="87" width="237" height="1" uuid="a17b21e9-0909-4ba6-a1d0-efa0e0da06ec"/>
