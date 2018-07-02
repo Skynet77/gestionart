@@ -436,11 +436,12 @@ function crearDataTableSinAccionInventario(dataTableId, ajaxSource, columnas, vi
 		var ob = dataTable.row($(this)).data();
 		var id = ob.producto.id;
 		var fe = ob.fechaMes.substr(5,2);
+		var idInventario = ob.id
 		
 		$.ajax({
 	        type: "POST",
 	        url: "/gestionart/inventario/inventario_detalle",
-	        data: { id_prod : id, mes:fe}
+	        data: { id_prod : id, mes:fe, id_inv: idInventario}
 	    }).done(function(data){
 	        $("#vid-modal-inve").html(data);
 	        $("#modalInventario").modal("show");
