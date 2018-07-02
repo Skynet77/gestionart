@@ -1,7 +1,9 @@
 package com.pol.gestionart.daoImpl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -181,7 +183,7 @@ public class InventarioDaoImpl extends DaoImpl<Inventario> implements Inventario
 		} catch (Exception e) {
 			inve =null;
 		}
-		
+		Collections.sort(inventarioList);
 		return inventarioList;
 	}
 

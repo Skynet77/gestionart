@@ -1,6 +1,10 @@
 package com.pol.gestionart.bean;
 
-public class InventarioDetalle {
+import java.util.Date;
+
+import com.pol.gestionart.util.GeneralUtils;
+
+public class InventarioDetalle implements Comparable<InventarioDetalle> {
 
 	private String fecha;
 	private String comprobante;
@@ -57,6 +61,18 @@ public class InventarioDetalle {
 	public String toString() {
 		return "InventarioDetalle [fecha=" + fecha + ", comprobante=" + comprobante + ", operacion=" + operacion
 				+ ", proveedorCliente=" + proveedorCliente + "]";
+	}
+
+	@Override
+	public int compareTo(InventarioDetalle inventario) {
+		Date d1 = GeneralUtils.getDateHours(fecha);
+		Date d2 = GeneralUtils.getDateHours(inventario.getFecha());
+		if(d1.before(d2)) {
+			return -1;
+		}else if(d1.after(d2)) {
+			return 1;
+		}
+		return 0;
 	}
 	
 	
