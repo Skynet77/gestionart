@@ -338,6 +338,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 		params.put("fecha", ventaCabecera.getFechaEmision());
 		params.put("direccion", ventaCabecera.getCliente().getDireccion());
 		params.put("telefono", ventaCabecera.getCliente().getNroTelefono());
+		params.put("nroComprobante", ventaCabecera.getNroComprobante());
 		Date d = new Date();
 		String fechaActual = GeneralUtils.getStringFromDate(d,DATE_FORMAT);
 		params.put("fechaSys", fechaActual);
