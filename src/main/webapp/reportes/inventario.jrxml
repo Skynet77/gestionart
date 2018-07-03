@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inventario" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2559df5a-67a1-4473-8b33-a63862cc05ed">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inventario" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2559df5a-67a1-4473-8b33-a63862cc05ed">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<subDataset name="dataset1" uuid="63aad820-91db-43a0-9582-77752b4a5e34"/>
-	<subDataset name="dataset2" uuid="40ba7ee2-5cf9-44ef-91b4-ca41b45d7fe0"/>
-	<subDataset name="dataset3" uuid="9b286774-e278-4504-8c3b-a357a98ebae6"/>
-	<subDataset name="dataset4" uuid="eea3512f-ca2d-4cb0-b037-51c97842a126"/>
+	<subDataset name="dataset1" uuid="63aad820-91db-43a0-9582-77752b4a5e34">
+		<field name="fecha" class="java.lang.String"/>
+		<field name="comprobante" class="java.lang.String"/>
+		<field name="operacion" class="java.lang.String"/>
+		<field name="proveedorCliente" class="java.lang.String"/>
+		<field name="cantidad" class="java.lang.Integer"/>
+	</subDataset>
 	<parameter name="fechaMes" class="java.util.Date"/>
 	<parameter name="nombreProducto" class="java.lang.String"/>
 	<parameter name="stockInicial" class="java.lang.Integer"/>
 	<parameter name="entrada" class="java.lang.Integer"/>
 	<parameter name="salida" class="java.lang.Integer"/>
-	<parameter name="stockActual" class="java.lang.String"/>
+	<parameter name="stockActual" class="java.lang.Integer"/>
+	<parameter name="LISTA_DETALLE" class="java.util.List"/>
 	<field name="field1" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
@@ -27,7 +31,7 @@
 				<text><![CDATA[DETALLE DE INVENTARIO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="20" width="104" height="20" uuid="69c46d61-8559-4399-bef5-f90773afa020"/>
+				<reportElement x="0" y="20" width="134" height="20" uuid="69c46d61-8559-4399-bef5-f90773afa020"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
@@ -41,7 +45,7 @@
 				<text><![CDATA[PRODUCTO:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="104" y="20" width="100" height="20" uuid="8bbebc0d-68c7-41c3-acd0-565703255b92"/>
+				<reportElement x="134" y="20" width="100" height="20" uuid="8bbebc0d-68c7-41c3-acd0-565703255b92"/>
 				<textFieldExpression><![CDATA[$P{fechaMes}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -171,29 +175,29 @@
 			</line>
 			<componentElement>
 				<reportElement x="0" y="0" width="555" height="50" uuid="effffdc3-4a34-42d3-9f5e-963b7ba97137"/>
-				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="dataset4" uuid="3aaa5459-7602-4965-9a42-10ee7672b9e8">
-						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.JREmptyDataSource(1)]]></dataSourceExpression>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="dataset1" uuid="5efcf019-eda2-41d3-88e2-3fd1aca5e9d5">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{LISTA_DETALLE})]]></dataSourceExpression>
 					</datasetRun>
 					<jr:listContents height="50" width="555">
 						<textField>
-							<reportElement x="0" y="0" width="66" height="20" uuid="75b2cf2a-fef1-46ee-9aec-f12ab867d84b"/>
+							<reportElement x="0" y="0" width="66" height="20" uuid="3ff870fd-980a-485c-86bc-5af3537b707c"/>
 							<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="66" y="0" width="108" height="20" uuid="9c7c9dc8-73ce-4b6f-a503-bda4ce5b765e"/>
+							<reportElement x="66" y="0" width="108" height="20" uuid="75293ff9-88cf-4ff9-aa2f-6b57409ce532"/>
 							<textFieldExpression><![CDATA[$F{comprobante}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="174" y="0" width="181" height="20" uuid="71c436fb-3589-4127-b326-ae33d6bb09bc"/>
+							<reportElement x="175" y="0" width="181" height="20" uuid="b258bf5c-ea99-4204-97d9-98fd139f998b"/>
 							<textFieldExpression><![CDATA[$F{proveedorCliente}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="356" y="0" width="98" height="20" uuid="64f6c183-ddf8-4035-ac7f-ea10f25c4dc9"/>
+							<reportElement x="356" y="0" width="98" height="20" uuid="51f662e2-ef39-4ca2-bff5-6eb6296ef7e6"/>
 							<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement x="455" y="0" width="100" height="20" uuid="c98bf3e0-e43d-42c3-a87d-2df527af852b"/>
+							<reportElement x="455" y="0" width="100" height="20" uuid="0480550c-8b88-49f6-a15f-c37821d6ba7d"/>
 							<textFieldExpression><![CDATA[$F{operacion}]]></textFieldExpression>
 						</textField>
 					</jr:listContents>
