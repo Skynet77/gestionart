@@ -75,7 +75,7 @@ public class CajaDaoImpl extends DaoImpl<Caja> implements CajaDao{
 		Date d = new Date(calendar.getTimeInMillis());
 		String fechaActual = GeneralUtils.getStringFromDate(d,GeneralUtils.DATE_FORMAT_CAJA);
 		Query query = em.createQuery(sql);
-		sql = sql + " WHERE fecha = ?1";
+		sql = sql + " WHERE fecha = ?1 order by fechaactual asc";
 		query = entityManager.createQuery(sql);
 		query.setParameter(1, fechaActual);
 		try {

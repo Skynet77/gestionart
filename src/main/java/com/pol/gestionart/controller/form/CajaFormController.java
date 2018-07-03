@@ -302,8 +302,9 @@ public class CajaFormController extends FormController<Caja> {
 		InputStream jasperStream = null;
 		Map<String, Object> params = new HashMap<>();
 		ReporteCaja reporteCaja = reporteCajaDao.find(idReporte);
+		List<Caja> listCaja = cajaDao.findCajaForCierre();
 		
-		
+		params.put("LISTA_DETALLE", listCaja);
 		params.put("totalEgreso", reporteCaja.getTotalEgreso());
 		params.put("totalIngreso", reporteCaja.getTotalIngreso());
 		params.put("totalActual", reporteCaja.getTotalActual());
