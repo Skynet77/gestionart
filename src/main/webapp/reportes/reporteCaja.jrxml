@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteCaja" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ce7737b0-9e06-46d3-95e7-9cc072d9113c">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="dataset1" uuid="9b77957e-e26e-4ee1-b57f-175a9ec6a4d5">
+		<field name="fecha" class="java.lang.String"/>
+		<field name="descripcion" class="java.lang.String"/>
+		<field name="entrada" class="java.math.BigDecimal"/>
+		<field name="salida" class="java.math.BigDecimal"/>
+		<field name="saldoActual" class="java.math.BigDecimal"/>
+	</subDataset>
+	<parameter name="LISTA_DETALLE" class="java.util.List"/>
+	<parameter name="fecha" class="java.lang.String"/>
+	<parameter name="apertura" class="java.math.BigDecimal"/>
+	<parameter name="totalngreso" class="java.math.BigDecimal"/>
+	<parameter name="totalEgreso" class="java.math.BigDecimal"/>
+	<parameter name="montoTotal" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="56" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="20" uuid="c23b96c8-5835-46a4-8e0f-087e46b2035f"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE CAJA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="40" height="20" uuid="9d24d68b-90ed-4d34-aca2-ba10003f3ccb"/>
+				<text><![CDATA[FECHA:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="40" y="20" width="515" height="20" uuid="ba15d3d1-c3fd-4177-a74b-e130c8486f4e"/>
+				<textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="78" height="20" uuid="a68ca319-dc96-470d-8e93-0902edcdd311"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="255" y="0" width="100" height="20" uuid="4c3293b4-0ae5-4e23-bb17-de1608b2dd83"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[ENTRADA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="355" y="0" width="100" height="20" uuid="03814458-8b0a-44af-8d8e-c9a5f321507c"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[SALIDA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="0" width="100" height="20" uuid="b826ea14-0b00-4546-80f7-36c654f7aba2"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[SALDO ACTUAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="78" y="0" width="177" height="20" uuid="23176a78-18e3-4854-92e3-2c4089b96da1"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[DESCRIPCION]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="180">
+			<componentElement>
+				<reportElement x="0" y="0" width="555" height="50" uuid="822e563d-0509-46c5-a0d8-9e4c4dbba489"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataset1" uuid="f8fc2b9a-0dc4-42e5-99f5-d684227bc66d">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{LISTA_DETALLE})]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="50" width="555">
+						<textField>
+							<reportElement x="0" y="0" width="78" height="20" uuid="e2298f6c-6327-4a33-ab9b-dafb47f9cf0b"/>
+							<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="78" y="0" width="177" height="20" uuid="428f19f9-e30f-4871-9602-97d9c3bc036a"/>
+							<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="255" y="0" width="100" height="20" uuid="76b725b1-0a5e-4808-963b-72e37db5ef13"/>
+							<textFieldExpression><![CDATA[$F{entrada}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="355" y="0" width="100" height="20" uuid="a9c79319-1825-456c-b1c8-0ed0b47c1d12"/>
+							<textFieldExpression><![CDATA[$F{salida}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="455" y="0" width="100" height="20" uuid="2609c12d-e75b-40cb-bbb9-31ed67558822"/>
+							<textFieldExpression><![CDATA[$F{saldoActual}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="77" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="7a652f4a-dcf7-4a41-8e17-eabf3ce466f8"/>
+				<text><![CDATA[APERTURA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="100" height="20" uuid="57d2e010-e3be-4811-a475-4715a47b13d4"/>
+				<text><![CDATA[TOTAL INGRESO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="100" height="20" uuid="9142129d-94d5-46a6-924b-2767bae04920"/>
+				<text><![CDATA[TOTAL EGRESO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="60" width="100" height="17" uuid="00c1fd34-99d3-46cd-8630-f89d8e1fee3c"/>
+				<text><![CDATA[MONTO TOTAL:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="0" width="100" height="20" uuid="f466dd90-e62c-401f-b125-571eafe243b4"/>
+				<textFieldExpression><![CDATA[$P{apertura}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="20" width="100" height="20" uuid="2a786f80-898e-4d95-9556-dd8894bdb650"/>
+				<textFieldExpression><![CDATA[$P{totalngreso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="40" width="100" height="20" uuid="77165252-599b-426c-be84-c7d0074897dd"/>
+				<textFieldExpression><![CDATA[$P{totalEgreso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="60" width="100" height="17" uuid="d0647ddb-6b0b-4711-a49b-e4988642c646"/>
+				<textFieldExpression><![CDATA[$P{montoTotal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
