@@ -55,7 +55,7 @@
 				<text><![CDATA[Proveedor:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="95" y="64" width="165" height="20" forecolor="#000000" uuid="c5eb5621-1e34-4379-b6c6-1af9be3b5372"/>
+				<reportElement x="95" y="64" width="100" height="20" forecolor="#000000" uuid="c5eb5621-1e34-4379-b6c6-1af9be3b5372"/>
 				<textElement>
 					<font size="7"/>
 				</textElement>
