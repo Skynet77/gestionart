@@ -177,7 +177,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 			}else{
 				subTotal = new BigDecimal(0);
 			}
-			subTotal = ventaCab.getMontoTotal().divide(IVA_10,2,BigDecimal.ROUND_HALF_UP);
+			subTotal = ventaCab.getMontoTotal().divide(IVA_10,0,BigDecimal.ROUND_HALF_UP);
 			ventaCab.setSubTotalBigDecimal(subTotal);
 			IVA = subTotal.multiply(new BigDecimal(0.1));
 			ventaCab.setIva(IVA);
