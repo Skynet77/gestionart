@@ -175,7 +175,7 @@ public class CompraFormController extends FormController<CompraCabecera> {
 				}else{
 					subTotal = new BigDecimal(0);
 				}
-				subTotal = compraCab.getTotal().divide(IVA_10,2,BigDecimal.ROUND_HALF_UP);
+				subTotal = compraCab.getTotal().divide(IVA_10,0,BigDecimal.ROUND_HALF_UP);
 				compraCab.setSubTotalBigDecimal(subTotal);
 				IVA = subTotal.multiply(new BigDecimal(0.1));
 			//	compraCab.setIva(IVA);
@@ -228,7 +228,7 @@ public class CompraFormController extends FormController<CompraCabecera> {
 				//calculo de subTotal
 				BigDecimal subTotal;
 				BigDecimal IVA;
-				subTotal = compraCab.getTotal().divide(IVA_10,2,BigDecimal.ROUND_HALF_UP);
+				subTotal = compraCab.getTotal().divide(IVA_10,0,BigDecimal.ROUND_HALF_UP);
 				compraCab.setSubTotalBigDecimal(subTotal);
 				IVA = subTotal.multiply(new BigDecimal(0.1));
 				//compraCab.setIva(IVA);
