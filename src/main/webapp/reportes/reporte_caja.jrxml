@@ -44,14 +44,14 @@
 	<detail>
 		<band height="111">
 			<staticText>
-				<reportElement x="24" y="34" width="98" height="20" forecolor="#000000" uuid="fe24cfe0-8f55-482b-a0ad-853c1fb9c919"/>
+				<reportElement x="24" y="34" width="83" height="20" forecolor="#000000" uuid="fe24cfe0-8f55-482b-a0ad-853c1fb9c919"/>
 				<textElement>
 					<font size="7" isBold="true" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[Total Ingreso:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="24" y="5" width="98" height="20" forecolor="#000000" uuid="fab0546d-cf15-4bf5-961f-ce239e8e41b2"/>
+				<reportElement x="24" y="5" width="83" height="20" forecolor="#000000" uuid="fab0546d-cf15-4bf5-961f-ce239e8e41b2"/>
 				<textElement>
 					<font size="7" isBold="true" isUnderline="false"/>
 				</textElement>
@@ -72,7 +72,7 @@
 				<textFieldExpression><![CDATA[$P{totalIngreso}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="24" y="65" width="98" height="16" forecolor="#000000" uuid="dfcc65ec-8352-4d3d-aeeb-d3bd8c5fbfd5"/>
+				<reportElement x="24" y="65" width="83" height="16" forecolor="#000000" uuid="dfcc65ec-8352-4d3d-aeeb-d3bd8c5fbfd5"/>
 				<textElement>
 					<font size="7" isBold="true" isUnderline="false"/>
 				</textElement>
@@ -86,14 +86,14 @@
 				<textFieldExpression><![CDATA[$P{totalEgreso}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0 Gs">
-				<reportElement x="122" y="89" width="83" height="16" forecolor="#000000" uuid="d11ac3ec-a308-4f4e-bbde-d9f8fe7b0d32"/>
+				<reportElement x="122" y="95" width="83" height="16" forecolor="#000000" uuid="d11ac3ec-a308-4f4e-bbde-d9f8fe7b0d32"/>
 				<textElement>
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{totalActual}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="24" y="89" width="98" height="16" forecolor="#000000" uuid="7d720433-d14e-44de-a129-b3d798895140"/>
+				<reportElement x="24" y="95" width="83" height="16" forecolor="#000000" uuid="7d720433-d14e-44de-a129-b3d798895140"/>
 				<textElement>
 					<font size="7" isBold="true" isUnderline="false"/>
 				</textElement>

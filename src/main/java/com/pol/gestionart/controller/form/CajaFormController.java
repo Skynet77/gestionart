@@ -191,7 +191,9 @@ public class CajaFormController extends FormController<Caja> {
 				ventaCabecera.setEstado(Estado.CONFIRMADO.name());
 				
 				Caja caja = new Caja();
-				caja.setFecha(ventaCabecera.getFechaEmision());
+				Date fechaEmision = GeneralUtils.getDateHours(ventaCabecera.getFechaEmision());
+				String fec = GeneralUtils.getStringFromDate(fechaEmision, GeneralUtils.DATE_FORMAT_CAJA);
+				caja.setFecha(fec);
 				caja.setDescripcion("VENTA PRODUCTO");
 				caja.setEntradaBigDecimal(ventaCabecera.getMontoTotal());
 				if(cajaActual== null){
@@ -202,7 +204,6 @@ public class CajaFormController extends FormController<Caja> {
 					caja.setSaldoActual(cajaActual.getSaldoActual().add(caja.getEntrada()));
 				}
 				caja.setFechaActual(new Date());
-				caja.setFecha(ventaCabecera.getFechaEmision());
 				caja.setSalidaBigDecimal(BigDecimal.ZERO);
 				cajaDao.create(caja);
 				session.setAttribute("msgExito", "Venta confirmado con exito");
@@ -276,6 +277,19 @@ public class CajaFormController extends FormController<Caja> {
 		map.addAttribute("totalEgreso",reporte.getTotalEgreso());
 		map.addAttribute("total",reporte.getTotalActual());
 		map.addAttribute("idReporte",reporte.getId());
+		
+		//cerramos caja 
+		Caja cerrarCaja = new Caja();
+		cerrarCaja.setDescripcion("CIERRE");
+		cerrarCaja.setEntradaBigDecimal(BigDecimal.ZERO);
+		cerrarCaja.setFechaActual(new Date());
+		cerrarCaja.setFecha(GeneralUtils.getStringFromDate(new Date(), GeneralUtils.DATE_FORMAT_CAJA));
+		cerrarCaja.setSaldoActual(BigDecimal.ZERO);
+		Caja cajaActual = cajaDao.findCajaByDate();
+		cerrarCaja.setSalidaBigDecimal(cajaActual.getSaldoActual());
+		cajaDao.create(cerrarCaja);
+		
+			
 		
 		return "caja/modal_reporte";
 		

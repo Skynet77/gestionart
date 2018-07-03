@@ -57,23 +57,23 @@
 				<text><![CDATA[TEL.: (021) 751-063]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="383" y="2" width="72" height="16" uuid="5afb2749-ca11-4e8a-8acc-4e2e2579c83e"/>
+				<reportElement x="385" y="2" width="70" height="16" uuid="5afb2749-ca11-4e8a-8acc-4e2e2579c83e"/>
 				<textElement textAlignment="Justified">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[TIMBRADO N°:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="383" y="18" width="110" height="20" uuid="1bbfcad2-8b15-4742-a1ae-d3f9af085a49"/>
+				<reportElement x="385" y="18" width="108" height="20" uuid="1bbfcad2-8b15-4742-a1ae-d3f9af085a49"/>
 				<textElement textAlignment="Justified"/>
 				<text><![CDATA[Fecha Inicio Vigencia:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="383" y="36" width="110" height="20" uuid="92ed56af-2f84-40b0-aab6-7a233e087d43"/>
+				<reportElement x="385" y="36" width="108" height="20" uuid="92ed56af-2f84-40b0-aab6-7a233e087d43"/>
 				<text><![CDATA[Fecha Fin Vigencia:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="383" y="56" width="39" height="20" uuid="7793e847-b5a1-4664-a9c7-c14d50ec60d9"/>
+				<reportElement x="385" y="56" width="37" height="20" uuid="7793e847-b5a1-4664-a9c7-c14d50ec60d9"/>
 				<textElement>
 					<font isBold="false"/>
 				</textElement>
@@ -217,6 +217,7 @@
 					<jr:listContents height="22" width="572">
 						<textField>
 							<reportElement x="0" y="2" width="88" height="20" uuid="915a3136-d64f-406a-be69-58874d7b9efa"/>
+							<textElement textAlignment="Center"/>
 							<textFieldExpression><![CDATA[$F{producto.codigo}]]></textFieldExpression>
 						</textField>
 						<textField>
@@ -225,10 +226,12 @@
 						</textField>
 						<textField>
 							<reportElement x="314" y="2" width="52" height="20" uuid="d808c7f0-5e9f-4e80-a149-b8b9d96d80c3"/>
+							<textElement textAlignment="Center"/>
 							<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
 						</textField>
 						<textField pattern="#,##0">
 							<reportElement x="367" y="2" width="103" height="20" uuid="6e6b50a0-649b-4e46-b86e-0a4d94c293e4"/>
+							<textElement textAlignment="Center"/>
 							<textFieldExpression><![CDATA[$F{precioUnitario}]]></textFieldExpression>
 						</textField>
 						<textField pattern="#,##0">
@@ -273,19 +276,21 @@
 				<text><![CDATA[DESCRIPCION]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="200" width="88" height="20" uuid="8ce46a92-a960-4837-bcd2-d8fd1e5e3d0b"/>
+				<reportElement x="3" y="200" width="85" height="20" uuid="8ce46a92-a960-4837-bcd2-d8fd1e5e3d0b"/>
 				<text><![CDATA[SUB-TOTAL]]></text>
 			</staticText>
 			<textField pattern="#,##0">
 				<reportElement x="471" y="200" width="100" height="17" uuid="0c0e75be-2831-4713-b4c8-f1f84f984400"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{subTotal}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="220" width="88" height="25" uuid="ddbd38fd-c718-4711-a1cb-d150fa49285b"/>
-				<text><![CDATA[TOTAL]]></text>
+				<reportElement x="3" y="220" width="85" height="25" uuid="ddbd38fd-c718-4711-a1cb-d150fa49285b"/>
+				<text><![CDATA[TOTAL (Gs.)]]></text>
 			</staticText>
 			<textField pattern="#,##0">
 				<reportElement x="471" y="217" width="100" height="28" uuid="20d0ca03-3a53-46fe-b920-9b0850e3e9d4"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{montoTotal}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -294,6 +299,7 @@
 			</staticText>
 			<textField pattern="#,##0">
 				<reportElement x="150" y="245" width="103" height="20" uuid="e709f9b5-da85-4a32-b374-0aeea6c73521"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{totalIva}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -302,6 +308,7 @@
 			</staticText>
 			<textField pattern="#,##0">
 				<reportElement x="479" y="245" width="92" height="20" uuid="02d3b490-bc5b-4115-84e2-a66fc1dbb03f"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$P{totalIva}]]></textFieldExpression>
 			</textField>
 			<line>

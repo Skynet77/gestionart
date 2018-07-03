@@ -2,13 +2,51 @@
 <!-- Modal de confirmación de Compra	 -->
 	<div class="modal fade" id="modalInventario">
         <div class="modal-dialog">
-          <div class="modal-content">
+          <div class="modal-content" style="width: 140%;">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span></button>
               <h4 class="modal-title">Detalle de Inventario</h4>
             </div>
             <div class="modal-body">
+            <div class="row">
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label  for="label">Mes de Inventario:</label> <label for="label not-bold" class="not-bold" th:text="${inventario.fechaMes}">
+								Nombre</label>
+
+							</div>
+							<div class="form-group">
+								<label for="label">Producto:</label> <label for="label not-bold" class="not-bold" th:text="${inventario.producto.descripcion}">
+								Nombre</label>
+
+							</div>
+						</div>
+						<div class="col-lg-12">
+							<div class="form-group col-lg-3">
+								<label  for="label">Stock Inicial:</label> <label for="label not-bold" class="not-bold" th:text="${inventario.stockInicial}">
+								Nombre</label>
+
+							</div>
+							<div class="form-group col-lg-3">
+								<label for="label">Entrada:</label> <label for="label not-bold" class="not-bold" th:text="${inventario.entrada}">
+								Nombre</label>
+
+							</div>
+							<div class="form-group col-lg-2">
+								<label for="label">Salida:</label> <label for="label not-bold" class="not-bold" th:text="${inventario.salida}">
+								Nombre</label>
+
+							</div>
+							<div class="form-group col-lg-3">
+								<label for="label">Stock Actual:</label> <label for="label not-bold" class="not-bold" th:text="${inventario.actual}">
+								Nombre</label>
+
+							</div>
+						</div>
+						
+					</div>
+					<hr/>
 					<div class="col-lg-12 ">
 						<table id="ventaDT" class="table table-bordered table-hover">
 		                <thead>

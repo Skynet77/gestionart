@@ -44,9 +44,10 @@ public class CajaDaoImpl extends DaoImpl<Caja> implements CajaDao{
 		Date d = new Date(calendar.getTimeInMillis());
 		String fechaActual = GeneralUtils.getStringFromDate(d,GeneralUtils.DATE_FORMAT_CAJA);
 		Query query = em.createQuery(sql);
-		sql = sql + " WHERE fechaactual = (select MAX(fechaActual) from Caja ) and fecha = ?1";
+		sql = sql + " WHERE fechaactual = (select MAX(fechaActual) from Caja ) and fecha = ?1 and descripcion != ?2";
 		query = entityManager.createQuery(sql);
 		query.setParameter(1, fechaActual);
+		query.setParameter(2, "CIERRE");
 		try {
 		
 		caja = (Caja) query.getSingleResult();

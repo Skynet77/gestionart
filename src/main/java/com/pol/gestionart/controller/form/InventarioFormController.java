@@ -1,5 +1,6 @@
 package com.pol.gestionart.controller.form;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -23,6 +24,7 @@ import com.pol.gestionart.entity.Inventario;
 import com.pol.gestionart.entity.InventarioDetalleTable;
 import com.pol.gestionart.entity.Producto;
 import com.pol.gestionart.exceptions.AjaxException;
+import com.pol.gestionart.util.GeneralUtils;
 
 @Controller
 @Scope("request")
@@ -70,10 +72,13 @@ public class InventarioFormController extends FormController<Inventario> {
 
 	@RequestMapping(value = "inventario_detalle", method = RequestMethod.POST)
 	public String inventarioDetalle(ModelMap map, HttpSession session, @RequestParam(value = "id_prod") Long idProd,
-			@RequestParam(value = "mes") int mesFe) {
+			@RequestParam(value = "mes") int mesFe,
+			@RequestParam(value = "id_inv") Long idInventario) {
 		agregarValoresAdicionales(map);
 		List<InventarioDetalle> inventarioDetalle = inventarioDao.joinInventario(idProd, mesFe);
+		Inventario inventario = inventarioDao.find(idInventario);
 		map.addAttribute("listDetalle", inventarioDetalle);
+		map.addAttribute("inventario", inventario);
 		return "inventario/modal_inventario";
 	}
 
@@ -99,20 +104,33 @@ public class InventarioFormController extends FormController<Inventario> {
 			produc.setCantidad(nuevaCantidad);
 			productoDao.createOrUpdate(produc);
 		}else if(cantidad < 0){
-			int nuevaCantidad = produc.getCantidad()-cantidad;
+			int nuevaCantidad = produc.getCantidad()+cantidad;
 			produc.setCantidad(nuevaCantidad);
 			productoDao.createOrUpdate(produc);
 		}
 		
 		inv.setCantidad(cantidad);
-		inv.setFecha(fechaMes);
+		inv.setFecha(GeneralUtils.getStringFromDate(new Date(), GeneralUtils.DATE_FORMAT_GUION));
 		inv.setIdProducto(idProd);
 		inv.setMes(Integer.parseInt(fechaMes.substring(0, 2)));
 		inv.setComprobante("00000");
 		inv.setOperacion("AJUSTE INVENTARIO");
 		inv.setProveedorCliente("SIN NOMBRE");
-		
+		inv.setFechaMes(new Date());
 		inventarioDetalleDao.create(inv);
+		
+		Inventario inventarioMesAnterio = null;
+		inventarioMesAnterio = inventarioDao.getInventarioByProductoFecha(idProd,Integer.parseInt(fechaMes.substring(0, 2)));
+		if(inventarioMesAnterio != null){
+			inventarioMesAnterio.setActual(inventarioMesAnterio.getActual()+cantidad);
+			if(cantidad >0){
+			inventarioMesAnterio.setEntrada(inventarioMesAnterio.getEntrada()+cantidad);
+			}else if(cantidad < 0){
+				//+ por que es negativo
+				inventarioMesAnterio.setSalida(inventarioMesAnterio.getSalida()+cantidad);	
+			}
+		}	
+		inventarioDao.createOrUpdate(inventarioMesAnterio);
 		session.setAttribute("msgAjuste", "Ajuste realizado con éxito!");
 		} catch (Exception e) {
 			throw new AjaxException("Ocurrió un error al intentar realizar el ajuste");

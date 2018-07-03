@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="comprobante_venta" pageWidth="300" pageHeight="500" columnWidth="260" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2ac4f9ad-2413-4855-861b-c80bcb949f0e">
-	<property name="ireport.zoom" value="2.5937424601000028"/>
+	<property name="ireport.zoom" value="2.143588810000002"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="96"/>
+	<property name="ireport.y" value="73"/>
 	<subDataset name="dataset1" uuid="13010b2c-776b-42bd-be3d-0b5aacdb70c3">
 		<field name="producto.descripcion" class="java.lang.String"/>
 		<field name="precioTotal" class="java.math.BigDecimal"/>
@@ -24,7 +24,7 @@
 				<textElement textAlignment="Center">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Comprobante de Compra]]></text>
+				<text><![CDATA[Detalle de Compra]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="24" y="50" width="43" height="15" forecolor="#000000" uuid="8be96c52-a80b-4b5b-9b20-f62a0783ccf6"/>
@@ -48,14 +48,14 @@
 				<text><![CDATA[RUC:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="24" y="64" width="44" height="20" forecolor="#000000" uuid="fab0546d-cf15-4bf5-961f-ce239e8e41b2"/>
+				<reportElement x="24" y="64" width="57" height="20" forecolor="#000000" uuid="fab0546d-cf15-4bf5-961f-ce239e8e41b2"/>
 				<textElement>
 					<font size="7" isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Proveedor:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="95" y="64" width="100" height="20" forecolor="#000000" uuid="c5eb5621-1e34-4379-b6c6-1af9be3b5372"/>
+				<reportElement x="95" y="64" width="165" height="20" forecolor="#000000" uuid="c5eb5621-1e34-4379-b6c6-1af9be3b5372"/>
 				<textElement>
 					<font size="7"/>
 				</textElement>
@@ -144,7 +144,7 @@
 			<staticText>
 				<reportElement x="49" y="2" width="146" height="20" forecolor="#000000" uuid="2419faa6-693f-41e9-ab6d-8e3830835799"/>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[DETALLE DE COMPRA]]></text>
+				<text><![CDATA[DETALLE]]></text>
 			</staticText>
 			<line>
 				<reportElement positionType="Float" x="13" y="87" width="237" height="1" uuid="a17b21e9-0909-4ba6-a1d0-efa0e0da06ec"/>

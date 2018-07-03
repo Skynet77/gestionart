@@ -1,12 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inventario" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fb6194b3-e90f-4b4f-8651-155e58a77686">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+=======
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inventario" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2559df5a-67a1-4473-8b33-a63862cc05ed">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="dataset1" uuid="63aad820-91db-43a0-9582-77752b4a5e34"/>
+	<subDataset name="dataset2" uuid="40ba7ee2-5cf9-44ef-91b4-ca41b45d7fe0"/>
+	<subDataset name="dataset3" uuid="9b286774-e278-4504-8c3b-a357a98ebae6"/>
+	<subDataset name="dataset4" uuid="eea3512f-ca2d-4cb0-b037-51c97842a126"/>
+	<parameter name="fechaMes" class="java.util.Date"/>
+	<parameter name="nombreProducto" class="java.lang.String"/>
+	<parameter name="stockInicial" class="java.lang.Integer"/>
+	<parameter name="entrada" class="java.lang.Integer"/>
+	<parameter name="salida" class="java.lang.Integer"/>
+	<parameter name="stockActual" class="java.lang.String"/>
+	<field name="field1" class="java.lang.String"/>
+>>>>>>> master
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
+<<<<<<< HEAD
 		<band height="125" splitType="Stretch">
 			<staticText>
 				<reportElement x="1" y="57" width="64" height="29" uuid="91f610e4-79bc-482b-afd4-c69844fd76fa"/>
@@ -139,6 +158,193 @@
 	</detail>
 	<columnFooter>
 		<band height="77" splitType="Stretch"/>
+=======
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="20" uuid="515c070c-9a1b-4b2f-88d3-13fb052caec4"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DETALLE DE INVENTARIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="104" height="20" uuid="69c46d61-8559-4399-bef5-f90773afa020"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA DE INFORME:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="65" height="20" uuid="58d41cbe-d748-47ff-9abd-a168a238cd42"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRODUCTO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="104" y="20" width="100" height="20" uuid="8bbebc0d-68c7-41c3-acd0-565703255b92"/>
+				<textFieldExpression><![CDATA[$P{fechaMes}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="65" y="40" width="139" height="20" uuid="506edecf-9627-4d13-86c9-75583140b9a3"/>
+				<textFieldExpression><![CDATA[$P{nombreProducto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="41" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="89" height="20" uuid="c78ebc5f-2951-4077-b297-9a947425d293"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[STOCK INICIAL:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="161" y="0" width="65" height="20" uuid="346d04f9-28a0-4944-9367-327059a5c056"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ENTRADA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="281" y="0" width="52" height="20" uuid="0ec0a9c6-b2a5-4eeb-a6a1-e293d376370a"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SALIDA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="408" y="0" width="89" height="20" uuid="ab306f9e-d07d-46ae-ae86-105a70f9f397"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[STOCK ACTUAL:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="89" y="0" width="72" height="20" uuid="196b4fd8-dc71-4b1a-8c7e-c0ce6c5e403f"/>
+				<textFieldExpression><![CDATA[$P{stockInicial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="226" y="0" width="55" height="20" uuid="ba1deb86-7aca-4926-85a9-4798d9796457"/>
+				<textFieldExpression><![CDATA[$P{entrada}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="333" y="0" width="75" height="20" uuid="b80024d2-599a-4c92-bbf0-cd4653a395fd"/>
+				<textFieldExpression><![CDATA[$P{salida}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="497" y="0" width="58" height="20" uuid="b3a2233a-bf93-4556-aafc-db7fe2e6c303"/>
+				<textFieldExpression><![CDATA[$P{stockActual}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="42" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="42" uuid="f83c5489-6cdf-4b7a-aa18-6ea99da90b9b"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="66" height="42" uuid="f332dd66-4fe5-48cc-8f87-e3362232e527"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="66" y="0" width="108" height="42" uuid="83d8552a-c63a-4552-9adb-e5dca5154693"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[COMPROBANTE N°]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="175" y="0" width="180" height="42" uuid="9ce25e5d-1bc5-4247-93bb-181c725f42a6"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROVEEDOR/CLIENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="356" y="0" width="99" height="42" uuid="77916b85-dd80-4a15-a1b5-e1ab18f44074"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="454" y="0" width="101" height="42" uuid="d6def168-6e7d-42c2-80f0-72224be10a5c"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[OPERACION]]></text>
+			</staticText>
+			<line>
+				<reportElement x="454" y="0" width="1" height="42" uuid="9e15979c-bddd-488e-80bd-9dd818e00926"/>
+			</line>
+			<line>
+				<reportElement x="355" y="0" width="1" height="42" uuid="d35cc302-50a0-4173-9515-6ef4ff8db6bc"/>
+			</line>
+			<line>
+				<reportElement x="174" y="0" width="1" height="42" uuid="532614af-e071-4bb8-bf54-db077ca0ca8a"/>
+			</line>
+			<line>
+				<reportElement x="65" y="0" width="1" height="42" uuid="6da07bcb-f0e4-4a64-9957-d5a9b9955b87"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="171" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="171" uuid="dbdee54f-1806-40cd-bbe0-bb83f73a9547"/>
+			</rectangle>
+			<line>
+				<reportElement x="454" y="0" width="1" height="171" uuid="5ba315f2-2741-4d19-959e-9086dffb8db1"/>
+			</line>
+			<line>
+				<reportElement x="355" y="0" width="1" height="171" uuid="9f4189ac-12f4-4432-8233-fc12b5e8c385"/>
+			</line>
+			<line>
+				<reportElement x="174" y="0" width="1" height="171" uuid="9628d93b-4f9e-420b-8534-cc79b8534f6b"/>
+			</line>
+			<line>
+				<reportElement x="65" y="0" width="1" height="171" uuid="fcf337ec-6b34-4c61-90a1-aae54ffa9fe5"/>
+			</line>
+			<componentElement>
+				<reportElement x="0" y="0" width="555" height="50" uuid="effffdc3-4a34-42d3-9f5e-963b7ba97137"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataset4" uuid="3aaa5459-7602-4965-9a42-10ee7672b9e8">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.JREmptyDataSource(1)]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="50" width="555">
+						<textField>
+							<reportElement x="0" y="0" width="66" height="20" uuid="75b2cf2a-fef1-46ee-9aec-f12ab867d84b"/>
+							<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="66" y="0" width="108" height="20" uuid="9c7c9dc8-73ce-4b6f-a503-bda4ce5b765e"/>
+							<textFieldExpression><![CDATA[$F{comprobante}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="174" y="0" width="181" height="20" uuid="71c436fb-3589-4127-b326-ae33d6bb09bc"/>
+							<textFieldExpression><![CDATA[$F{proveedorCliente}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="356" y="0" width="98" height="20" uuid="64f6c183-ddf8-4035-ac7f-ea10f25c4dc9"/>
+							<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="455" y="0" width="100" height="20" uuid="c98bf3e0-e43d-42c3-a87d-2df527af852b"/>
+							<textFieldExpression><![CDATA[$F{operacion}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+>>>>>>> master
 	</columnFooter>
 	<pageFooter>
 		<band height="54" splitType="Stretch"/>
