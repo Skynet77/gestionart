@@ -1,14 +1,22 @@
 package com.pol.gestionart.controller.form;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +33,14 @@ import com.pol.gestionart.entity.InventarioDetalleTable;
 import com.pol.gestionart.entity.Producto;
 import com.pol.gestionart.exceptions.AjaxException;
 import com.pol.gestionart.util.GeneralUtils;
+
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 @Controller
 @Scope("request")
@@ -79,6 +95,59 @@ public class InventarioFormController extends FormController<Inventario> {
 		Inventario inventario = inventarioDao.find(idInventario);
 		map.addAttribute("listDetalle", inventarioDetalle);
 		map.addAttribute("inventario", inventario);
+		map.addAttribute("idProR", idProd);
+		map.addAttribute("mesR", mesFe);
+		map.addAttribute("idInvenR", idInventario);
+		return "inventario/modal_inventario";
+	}
+	
+	@RequestMapping(value = "reporte/{idInvenR}/{idProdR}/{mesR}", method = RequestMethod.GET)
+	public String reporteInventario(ModelMap map, HttpSession session,HttpServletRequest request,HttpServletResponse response,
+			@PathVariable(name="idProdR") Long idProd,
+			@PathVariable(name="mesR") int mesFe,
+			@PathVariable(name="idInvenR") Long idInventario) {
+		agregarValoresAdicionales(map);
+		List<InventarioDetalle> inventarioDetalle = inventarioDao.joinInventario(idProd, mesFe);
+		Inventario inventario = inventarioDao.find(idInventario);
+		String FOLDER = request.getSession().getServletContext().getRealPath("/reportes/");
+		InputStream jasperStream = null;
+		Map<String, Object> params = new HashMap<>();
+		
+		params.put("LISTA_DETALLE", inventarioDetalle);
+		params.put("fechaMes", inventario.getFechaMes());
+		params.put("nombreProducto", inventario.getProducto().getDescripcion());
+		params.put("stockInicial", inventario.getStockInicial());
+		params.put("entrada", inventario.getEntrada());
+		params.put("salida", inventario.getSalida());
+		params.put("stockActual", inventario.getActual());
+		
+		try {
+			jasperStream = new FileInputStream(FOLDER + "/inventario.jasper");
+		
+		if (jasperStream != null) {
+			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, new JREmptyDataSource());
+
+			byte[] pdfReport = JasperExportManager.exportReportToPdf(jasperPrint);
+			response.setContentType("application/x-pdf");
+			response.setHeader("Content-disposition", "attachment; filename=inventario.pdf");
+			response.reset();
+			response.setContentType("application/pdf");
+			response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+			response.setHeader("Pragma", "private");
+			response.setContentLength(pdfReport.length);
+			response.getOutputStream().write(pdfReport);
+			response.getOutputStream().flush();
+			//response.getOutputStream().close();
+		}
+		
+		} catch (JRException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+		
 		return "inventario/modal_inventario";
 	}
 
