@@ -1,6 +1,7 @@
 package com.pol.gestionart.controller.form;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.hibernate.exception.ConstraintViolationException;
@@ -40,8 +41,10 @@ public abstract class FormController<T extends GenericEntity> extends BaseContro
 	private SesionUsuario sesionUsuario;
 	
 	@RequestMapping("")
-	public String index(ModelMap map) {
-		
+	public String index(ModelMap map, HttpSession session) {
+		if(session.getAttribute("usuariologin") ==null) {
+			return "redirect:/login";
+		}
 		map.addAttribute(getNombreObjeto(), getNuevaInstancia());
 		agregarValoresAdicionales(map);
 		return getTemplatePath(); 
@@ -153,9 +156,8 @@ public abstract class FormController<T extends GenericEntity> extends BaseContro
 	}
 
 	public void agregarValoresAdicionales(ModelMap map) {
-
 	}
-
+	
 	@ModelAttribute("currentUserName")
 	public String currentUserName() {
 		if (sesionUsuario.isLogger()) {
