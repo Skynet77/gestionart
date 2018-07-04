@@ -124,7 +124,9 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="starter
 											contraseña</a>
 									</div>
 									<div class="pull-right">
-										<a th:href="@{/logout}" class="btn btn-default btn-flat">Cerrar Sesión</a>
+									<form th:action="@{/logout}" method="POST">
+										<button th:href="@{/logout}" class="btn btn-default btn-flat">Cerrar Sesión</button>
+									</form>
 									</div>
 								</li>
 							</ul></li>

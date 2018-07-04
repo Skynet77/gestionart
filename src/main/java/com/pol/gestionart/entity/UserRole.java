@@ -1,24 +1,14 @@
 package com.pol.gestionart.entity;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import javax.validation.constraints.NotEmpty;
-
-import com.pol.gestionart.main.GenericEntity;
 
 @Entity
 @Table(name="user_roles", uniqueConstraints=@UniqueConstraint(columnNames= {"role","username"}))
@@ -30,7 +20,7 @@ public class UserRole{
 	@Column(name = "user_role_id", unique=true, nullable=false)
 	private Integer userRoleId;
 
-	@ManyToOne(fetch= FetchType.LAZY)
+	@ManyToOne(fetch= FetchType.EAGER)
 	@JoinColumn(name ="username", nullable=false)
 	private User user;
 	
