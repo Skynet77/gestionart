@@ -114,6 +114,10 @@ public class CompraFormController extends FormController<CompraCabecera> {
 	@RequestMapping("buy")
 	public String indexPay(ModelMap map,HttpSession session) {
 		
+		if(session.getAttribute("usuariologin") ==null) {
+			return "redirect:/login";
+		}
+		
 		map.addAttribute(getNombreObjeto(), getNuevaInstancia());
 		agregarValoresAdicionales(map);
 		session.setAttribute(MAP_DETALLE_COMPRA,null);
