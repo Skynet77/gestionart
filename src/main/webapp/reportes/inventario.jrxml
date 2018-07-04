@@ -109,7 +109,7 @@
 			</rectangle>
 			<staticText>
 				<reportElement x="0" y="0" width="66" height="42" uuid="f332dd66-4fe5-48cc-8f87-e3362232e527"/>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[FECHA]]></text>
@@ -174,30 +174,35 @@
 				<reportElement x="65" y="0" width="1" height="171" uuid="fcf337ec-6b34-4c61-90a1-aae54ffa9fe5"/>
 			</line>
 			<componentElement>
-				<reportElement x="0" y="0" width="555" height="50" uuid="effffdc3-4a34-42d3-9f5e-963b7ba97137"/>
+				<reportElement x="0" y="0" width="555" height="22" uuid="effffdc3-4a34-42d3-9f5e-963b7ba97137"/>
 				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
 					<datasetRun subDataset="dataset1" uuid="5efcf019-eda2-41d3-88e2-3fd1aca5e9d5">
 						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{LISTA_DETALLE})]]></dataSourceExpression>
 					</datasetRun>
-					<jr:listContents height="50" width="555">
+					<jr:listContents height="22" width="555">
 						<textField>
 							<reportElement x="0" y="0" width="66" height="20" uuid="3ff870fd-980a-485c-86bc-5af3537b707c"/>
+							<textElement textAlignment="Center"/>
 							<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
 						</textField>
 						<textField>
 							<reportElement x="66" y="0" width="108" height="20" uuid="75293ff9-88cf-4ff9-aa2f-6b57409ce532"/>
+							<textElement textAlignment="Center"/>
 							<textFieldExpression><![CDATA[$F{comprobante}]]></textFieldExpression>
 						</textField>
 						<textField>
 							<reportElement x="175" y="0" width="181" height="20" uuid="b258bf5c-ea99-4204-97d9-98fd139f998b"/>
+							<textElement textAlignment="Center"/>
 							<textFieldExpression><![CDATA[$F{proveedorCliente}]]></textFieldExpression>
 						</textField>
 						<textField>
 							<reportElement x="356" y="0" width="98" height="20" uuid="51f662e2-ef39-4ca2-bff5-6eb6296ef7e6"/>
+							<textElement textAlignment="Center"/>
 							<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
 						</textField>
 						<textField>
 							<reportElement x="455" y="0" width="100" height="20" uuid="0480550c-8b88-49f6-a15f-c37821d6ba7d"/>
+							<textElement textAlignment="Center"/>
 							<textFieldExpression><![CDATA[$F{operacion}]]></textFieldExpression>
 						</textField>
 					</jr:listContents>

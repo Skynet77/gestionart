@@ -306,7 +306,7 @@ public class CajaFormController extends FormController<Caja> {
 		
 		params.put("LISTA_DETALLE", listCaja);
 		params.put("totalEgreso", reporteCaja.getTotalEgreso());
-		params.put("totalIngreso", reporteCaja.getTotalIngreso());
+		params.put("totalI", reporteCaja.getTotalIngreso());
 		params.put("totalActual", reporteCaja.getTotalActual());
 		params.put("apertura", reporteCaja.getApertura());
 		params.put("fecha", reporteCaja.getFecha());
