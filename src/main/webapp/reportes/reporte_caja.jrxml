@@ -13,14 +13,14 @@
 	<parameter name="LISTA_DETALLE" class="java.util.List"/>
 	<parameter name="fecha" class="java.lang.String"/>
 	<parameter name="apertura" class="java.math.BigDecimal"/>
-	<parameter name="totalngreso" class="java.math.BigDecimal"/>
 	<parameter name="totalEgreso" class="java.math.BigDecimal"/>
-	<parameter name="montoTotal" class="java.math.BigDecimal"/>
+	<parameter name="totalActual" class="java.math.BigDecimal"/>
+	<parameter name="totalI" class="java.math.BigDecimal"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="56" splitType="Stretch">
+		<band height="40" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="555" height="20" uuid="c23b96c8-5835-46a4-8e0f-087e46b2035f"/>
 				<textElement textAlignment="Center">
@@ -40,13 +40,16 @@
 	</title>
 	<columnHeader>
 		<band height="25" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="25" uuid="d888307f-8e80-47d9-865f-ccf7602f4d62"/>
+			</rectangle>
 			<staticText>
 				<reportElement x="0" y="0" width="78" height="20" uuid="a68ca319-dc96-470d-8e93-0902edcdd311"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[FECHA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="255" y="0" width="100" height="20" uuid="4c3293b4-0ae5-4e23-bb17-de1608b2dd83"/>
+				<reportElement x="256" y="0" width="99" height="20" uuid="4c3293b4-0ae5-4e23-bb17-de1608b2dd83"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[ENTRADA]]></text>
 			</staticText>
@@ -56,49 +59,81 @@
 				<text><![CDATA[SALIDA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="455" y="0" width="100" height="20" uuid="b826ea14-0b00-4546-80f7-36c654f7aba2"/>
+				<reportElement x="456" y="0" width="99" height="20" uuid="b826ea14-0b00-4546-80f7-36c654f7aba2"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[SALDO ACTUAL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="78" y="0" width="177" height="20" uuid="23176a78-18e3-4854-92e3-2c4089b96da1"/>
+				<reportElement x="79" y="0" width="176" height="20" uuid="23176a78-18e3-4854-92e3-2c4089b96da1"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[DESCRIPCION]]></text>
 			</staticText>
+			<line>
+				<reportElement x="78" y="0" width="1" height="25" uuid="d3a38839-b9b0-45e9-a3f5-c86e52332430"/>
+			</line>
+			<line>
+				<reportElement x="255" y="0" width="1" height="25" uuid="7a9ba248-7366-48f4-8097-7777de214bef"/>
+			</line>
+			<line>
+				<reportElement x="355" y="0" width="1" height="25" uuid="cc1041e6-6a0b-49b0-a294-568050b14663"/>
+			</line>
+			<line>
+				<reportElement x="455" y="0" width="1" height="25" uuid="0a70cec0-a2b9-4b14-96b3-ac3ed1f4d794"/>
+			</line>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="180">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="180" uuid="e2bbb694-05a9-4a8c-97c8-02c65948bdd1"/>
+			</rectangle>
 			<componentElement>
-				<reportElement x="0" y="0" width="555" height="50" uuid="822e563d-0509-46c5-a0d8-9e4c4dbba489"/>
+				<reportElement x="0" y="0" width="555" height="24" uuid="822e563d-0509-46c5-a0d8-9e4c4dbba489"/>
 				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
 					<datasetRun subDataset="dataset1" uuid="f8fc2b9a-0dc4-42e5-99f5-d684227bc66d">
 						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{LISTA_DETALLE})]]></dataSourceExpression>
 					</datasetRun>
-					<jr:listContents height="50" width="555">
+					<jr:listContents height="24" width="555">
 						<textField>
 							<reportElement x="0" y="0" width="78" height="20" uuid="e2298f6c-6327-4a33-ab9b-dafb47f9cf0b"/>
+							<textElement textAlignment="Center"/>
 							<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
 						</textField>
-						<textField>
+						<textField pattern="#,##0">
 							<reportElement x="78" y="0" width="177" height="20" uuid="428f19f9-e30f-4871-9602-97d9c3bc036a"/>
+							<textElement textAlignment="Center"/>
 							<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
 						</textField>
-						<textField>
+						<textField pattern="#,##0">
 							<reportElement x="255" y="0" width="100" height="20" uuid="76b725b1-0a5e-4808-963b-72e37db5ef13"/>
+							<textElement textAlignment="Center"/>
 							<textFieldExpression><![CDATA[$F{entrada}]]></textFieldExpression>
 						</textField>
-						<textField>
+						<textField pattern="#,##0">
 							<reportElement x="355" y="0" width="100" height="20" uuid="a9c79319-1825-456c-b1c8-0ed0b47c1d12"/>
+							<textElement textAlignment="Center"/>
 							<textFieldExpression><![CDATA[$F{salida}]]></textFieldExpression>
 						</textField>
-						<textField>
+						<textField pattern="#,##0">
 							<reportElement x="455" y="0" width="100" height="20" uuid="2609c12d-e75b-40cb-bbb9-31ed67558822"/>
+							<textElement textAlignment="Center"/>
 							<textFieldExpression><![CDATA[$F{saldoActual}]]></textFieldExpression>
 						</textField>
 					</jr:listContents>
 				</jr:list>
 			</componentElement>
+			<line>
+				<reportElement x="455" y="0" width="1" height="180" uuid="a4f9aac6-8cbe-48d4-b230-2b09a006f515"/>
+			</line>
+			<line>
+				<reportElement x="355" y="0" width="1" height="180" uuid="9d53a854-cf09-4fc1-ba95-11c6bb0068ec"/>
+			</line>
+			<line>
+				<reportElement x="255" y="0" width="1" height="180" uuid="7afbe506-4726-4f5e-a14b-e0193bb9fed1"/>
+			</line>
+			<line>
+				<reportElement x="78" y="0" width="1" height="180" uuid="11a400fe-6780-48b9-ae5c-b433c86ec404"/>
+			</line>
 		</band>
 	</detail>
 	<columnFooter>
@@ -119,21 +154,21 @@
 				<reportElement x="0" y="60" width="100" height="17" uuid="00c1fd34-99d3-46cd-8630-f89d8e1fee3c"/>
 				<text><![CDATA[MONTO TOTAL:]]></text>
 			</staticText>
-			<textField>
+			<textField pattern="#,##0">
 				<reportElement x="100" y="0" width="100" height="20" uuid="f466dd90-e62c-401f-b125-571eafe243b4"/>
 				<textFieldExpression><![CDATA[$P{apertura}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="100" y="20" width="100" height="20" uuid="2a786f80-898e-4d95-9556-dd8894bdb650"/>
-				<textFieldExpression><![CDATA[$P{totalngreso}]]></textFieldExpression>
-			</textField>
-			<textField>
+			<textField pattern="#,##0">
 				<reportElement x="100" y="40" width="100" height="20" uuid="77165252-599b-426c-be84-c7d0074897dd"/>
 				<textFieldExpression><![CDATA[$P{totalEgreso}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="100" y="60" width="100" height="17" uuid="d0647ddb-6b0b-4711-a49b-e4988642c646"/>
-				<textFieldExpression><![CDATA[$P{montoTotal}]]></textFieldExpression>
+			<textField pattern="#,##0">
+				<reportElement x="100" y="60" width="100" height="17" uuid="86312f25-b1f1-4bb4-928e-c7b61a1b77b3"/>
+				<textFieldExpression><![CDATA[$P{totalActual}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="100" y="20" width="241" height="20" uuid="f7ff03e0-9810-4a22-80e7-45634bc4b50a"/>
+				<textFieldExpression><![CDATA[$P{totalI}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnFooter>
