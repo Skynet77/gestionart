@@ -47,19 +47,19 @@ public class VentaDetalleDaoImpl extends DaoImpl<VentaDetalle> implements VentaD
 	}
 
 	@Override
-	public int countVentaCabecera() {
+	public Long countVentaCabecera() {
 		logger.info("Obteniendo la cantidad de venta cabecera");
-		int total = 0;
+		Long total = (long) 0;
 		try {
-			String sql = "SELECT object(#ENTITY#) FROM #ENTITY# AS #ENTITY# ";
+			String sql = "SELECT count(estado) FROM #ENTITY# AS #ENTITY# ";
 			sql = sql.replace("#ENTITY#", "VentaCabecera");
 			Query query = null;
 			sql = sql + " WHERE estado = ?1";
 			query = entityManager.createQuery(sql);
 			query.setParameter(1, "CONFIRMADO");
-			total = query.getMaxResults();	
+			total = (Long) query.getSingleResult();
 		} catch (Exception e) {
-			total = 0;
+			total = (long) 0;
 		}
 		
 		return total;

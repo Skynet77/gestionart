@@ -6,5 +6,5 @@ import com.pol.gestionart.entity.VentaDetalle;
 
 public interface VentaDetalleDao extends Dao<VentaDetalle>{
 	List<VentaDetalle> getListDetalle(Long idCabeceraDetalle);
-	int countVentaCabecera();
+	Long countVentaCabecera();
 }

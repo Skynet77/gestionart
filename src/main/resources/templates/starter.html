@@ -76,7 +76,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="starter
 	<div class="wrapper">
 		<header class="main-header">
 			<!-- Logo -->
-			<a th:href="@{/inicio}" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
+			<a th:href="@{/}" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
 				<span class="logo-mini"><b>A</b>GT</span> <!-- logo for regular state and mobile devices -->
 				<span class="logo-lg"><b></b>Gestionart</span>
 			</a>
@@ -275,6 +275,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="starter
 							$("#alerta").fadeIn(2000);
 							$("#alerta").fadeOut(8000);
 						}
+						
+						
 					});
 					</script>
 				</div>
@@ -334,6 +336,11 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="starter
 		th:src="@{/js/gestionart.js}"></script>
 		<script type="text/javascript" src="../js/gestionart_venta.js"
 		th:src="@{/js/gestionart_venta.js}"></script>
+		<script type="text/javascript" src="../js/morris.min.js"
+		th:src="@{/js/morris.min.js}"></script>
+		<script type="text/javascript" src="../js/raphael.min.js"
+		th:src="@{/js/raphael.min.js}"></script>
+		
 		
 </body>
 
