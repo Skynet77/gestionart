@@ -30,7 +30,7 @@ public class LoginFormController {
 	
 	  @RequestMapping(value = "/login", method = RequestMethod.GET)
 	  public String init(Model model) {
-	    model.addAttribute("msg", "Please Enter Your Login Details");
+	    
 	    model.addAttribute("loginBean", new LoginBean());
 	    return "login";
 	  }
@@ -51,5 +51,12 @@ public class LoginFormController {
 	      model.addAttribute("error", "Please enter Details");
 	      return "login";
 	    }
+	  }
+	  
+	  @RequestMapping(value = "/logout", method = RequestMethod.GET)
+	  public String logout(Model model, HttpSession session) {
+		  session.setAttribute("usuariologin",  null);
+	    model.addAttribute("loginBean", new LoginBean());
+	    return "redirect:/login";
 	  }
 	}

@@ -104,7 +104,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="starter
 								src="../dist/img/user-512.png" class="user-image"
 								alt="User Image">
 <!-- 								 <span class="hidden-xs" th:text="${session.currentUserName + ' '+ session.currentUserLast}">Usuario </span> -->
-						 <span class="hidden-xs">admin </span>
+						 <span class="hidden-xs" th:text="${session.usuariologin.nombreRazonSocial}"> </span>
 						</a>
 							<ul class="dropdown-menu">
 								<!-- User image -->
@@ -114,16 +114,16 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="starter
 <!-- 									<p th:text="${session.currentUserName + ' '+ session.currentUserLast}"> -->
 <!-- 										Usuario <small>Miembro desde 2017</small> -->
 <!-- 									</p> -->
-									<p>
+									<p th:text="${session.usuariologin.nombreRazonSocial}">
 										admin <small></small>
 									</p></li>
 								<!-- Menu Footer-->
 								<li class="user-footer">
-									<div class="pull-left">
+									<!-- <div class="pull-left">
 										<a href="#" class="btn btn-default btn-flat">Cambiar
 											contraseña</a>
-									</div>
-									<div class="pull-right">
+									</div> -->
+									<div class="text-center">
 										<a th:href="@{/logout}" class="btn btn-default btn-flat">Cerrar Sesión</a>
 									</div>
 								</li>
