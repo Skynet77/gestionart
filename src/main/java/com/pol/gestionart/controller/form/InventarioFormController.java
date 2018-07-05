@@ -106,6 +106,11 @@ public class InventarioFormController extends FormController<Inventario> {
 			@PathVariable(name="idProdR") Long idProd,
 			@PathVariable(name="mesR") int mesFe,
 			@PathVariable(name="idInvenR") Long idInventario) {
+		
+		if(session.getAttribute("usuariologin") ==null) {
+			return "redirect:/login";
+		}
+		
 		agregarValoresAdicionales(map);
 		List<InventarioDetalle> inventarioDetalle = inventarioDao.joinInventario(idProd, mesFe);
 		Inventario inventario = inventarioDao.find(idInventario);
@@ -154,6 +159,10 @@ public class InventarioFormController extends FormController<Inventario> {
 	@RequestMapping(value = "ajuste_inventario", method = RequestMethod.GET)
 	public String ajusteInventario(ModelMap map, HttpSession session) {
 		agregarValoresAdicionales(map);
+		
+		if(session.getAttribute("usuariologin") ==null) {
+			return "redirect:/login";
+		}
 
 		if(session.getAttribute("msgAjuste")!=null){
 			map.addAttribute("msgExito", session.getAttribute("msgAjuste"));

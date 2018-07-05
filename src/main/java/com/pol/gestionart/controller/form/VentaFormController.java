@@ -118,6 +118,10 @@ public class VentaFormController extends FormController<VentaCabecera> {
 	@RequestMapping("pay")
 	public String indexPay(ModelMap map,HttpSession session) {
 		
+		if(session.getAttribute("usuariologin") ==null) {
+			return "redirect:/login";
+		}
+		
 		map.addAttribute(getNombreObjeto(), getNuevaInstancia());
 		agregarValoresAdicionales(map);
 		session.setAttribute(MAP_DETALLE,null);
@@ -381,6 +385,10 @@ public class VentaFormController extends FormController<VentaCabecera> {
 	public String aConfirmar(ModelMap map,HttpSession session) {
 		
 		super.agregarValoresAdicionales(map);
+		
+		if(session.getAttribute("usuariologin") ==null) {
+			return "redirect:/login";
+		}
 		
 		if(session.getAttribute("msgExito") !=null){
 			map.addAttribute("msgExito", session.getAttribute("msgExito") );

@@ -88,7 +88,7 @@
 						<label th:text="#{login.cedula.lbl}"> Cedula</label> 
 						<input th:field="*{cedula}"
 							class="form-control" th:placeholder="#{login.username}"
-							name="username" id="username" autofocus="autofocus" /><span
+							name="username" id="username" autofocus="autofocus" onKeyPress="return soloNumeros(event)" /><span
 							class="glyphicon glyphicon-user form-control-feedback"
 							style="color: #3c8dbc;"></span>
 					</div>
@@ -110,6 +110,7 @@
 		</div>
 	</div>
 	<!-- ./wrapper -->
+	
 	<!-- Bootstrap 3.3.6 -->
 	<script th:src="@{/js/bootstrap.min.js}"
 		src="../js/bootstrap.min.js"></script>
@@ -138,5 +139,19 @@
 		th:src="@{/js/gestionart.js}"></script>
 		<script type="text/javascript" src="../js/gestionart_venta.js"
 		th:src="@{/js/gestionart_venta.js}"></script>
+		
+	<script type="text/javascript">
+
+	// Solo permite ingresar numeros.
+	
+	function soloNumeros(e){
+	
+		var key = window.Event ? e.which : e.keyCode
+	
+		return (key >= 48 && key <= 57 || (key==8) || (key==45))
+	
+	}
+	
+	</script>
 </body>
 </html>
