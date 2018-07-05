@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteCaja" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ce7737b0-9e06-46d3-95e7-9cc072d9113c">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="233"/>
 	<subDataset name="dataset1" uuid="9b77957e-e26e-4ee1-b57f-175a9ec6a4d5">
 		<field name="fecha" class="java.lang.String"/>
 		<field name="descripcion" class="java.lang.String"/>
@@ -83,9 +83,9 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="180">
+		<band height="330">
 			<rectangle>
-				<reportElement x="0" y="0" width="555" height="180" uuid="e2bbb694-05a9-4a8c-97c8-02c65948bdd1"/>
+				<reportElement x="0" y="0" width="555" height="330" uuid="e2bbb694-05a9-4a8c-97c8-02c65948bdd1"/>
 			</rectangle>
 			<componentElement>
 				<reportElement x="0" y="0" width="555" height="24" uuid="822e563d-0509-46c5-a0d8-9e4c4dbba489"/>
@@ -123,21 +123,21 @@
 				</jr:list>
 			</componentElement>
 			<line>
-				<reportElement x="455" y="0" width="1" height="180" uuid="a4f9aac6-8cbe-48d4-b230-2b09a006f515"/>
+				<reportElement x="455" y="0" width="1" height="330" uuid="a4f9aac6-8cbe-48d4-b230-2b09a006f515"/>
 			</line>
 			<line>
-				<reportElement x="355" y="0" width="1" height="180" uuid="9d53a854-cf09-4fc1-ba95-11c6bb0068ec"/>
+				<reportElement x="355" y="0" width="1" height="330" uuid="9d53a854-cf09-4fc1-ba95-11c6bb0068ec"/>
 			</line>
 			<line>
-				<reportElement x="255" y="0" width="1" height="180" uuid="7afbe506-4726-4f5e-a14b-e0193bb9fed1"/>
+				<reportElement x="255" y="0" width="1" height="330" uuid="7afbe506-4726-4f5e-a14b-e0193bb9fed1"/>
 			</line>
 			<line>
-				<reportElement x="78" y="0" width="1" height="180" uuid="11a400fe-6780-48b9-ae5c-b433c86ec404"/>
+				<reportElement x="78" y="0" width="1" height="330" uuid="11a400fe-6780-48b9-ae5c-b433c86ec404"/>
 			</line>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="77" splitType="Stretch">
+		<band height="107" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="100" height="20" uuid="7a652f4a-dcf7-4a41-8e17-eabf3ce466f8"/>
 				<text><![CDATA[APERTURA:]]></text>
