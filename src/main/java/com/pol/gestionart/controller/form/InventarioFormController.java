@@ -207,12 +207,17 @@ public class InventarioFormController extends FormController<Inventario> {
 				//+ por que es negativo
 				inventarioMesAnterio.setSalida(inventarioMesAnterio.getSalida()+cantidad);	
 			}
-		}	
+		}else if(inventarioMesAnterio == null) {
+			throw new AjaxException("No existen registros de inventario en ese mes para el producto!");
+		}
 		inventarioDao.createOrUpdate(inventarioMesAnterio);
 		session.setAttribute("msgAjuste", "Ajuste realizado con éxito!");
-		} catch (Exception e) {
-			throw new AjaxException("Ocurrió un error al intentar realizar el ajuste");
+		} catch (AjaxException e) {
+			throw new AjaxException(e.getErrorBody());
 		}
+		 catch (Exception e) {
+			 throw new AjaxException("Ocurrió un error al intentar realizar el ajuste");
+		 }
 		return inv;
 	}
 

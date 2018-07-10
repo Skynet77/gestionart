@@ -164,6 +164,18 @@
 			var fechaMes = $("#input-month").val();
 			var idProducto= suggestProducto.getValue()[0]; 
 			var cantAjuste = $("#ajuste").val();
+			var error = {};
+			if(fechaMes === ""){
+				error.description = "Debe seleccionar una fecha!"
+				ajaxErrorHandler(error, null, null, "alert-error","msgTitleError","msgDescripcionError");
+				return false;
+			}
+			
+			if(idProducto ==="" || idProducto ===null || idProducto ===undefined){
+				error.description = "Debe seleccionar un producto!"
+				ajaxErrorHandler(error, null, null, "alert-error","msgTitleError","msgDescripcionError");
+				return false;
+			}
 			
 			$.ajax({
 	           type: "POST",
@@ -176,6 +188,7 @@
 		       }).done(function(data){
 		    	   window.location.reload();
 		       }).fail(function (request, status, error) {
+		    	   var errorData = request.responseJSON;
 		    	   ajaxErrorHandler(errorData, status, request.status, "alert-error","msgTitleError","msgDescripcionError");
 		       });
 		       

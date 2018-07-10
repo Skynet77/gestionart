@@ -524,8 +524,8 @@ function ajaxErrorHandler(errorData, status, error, idError, idTitleError, idDes
     }else{
     	$("#errorMensaje").html(errorData.message);
     }
-	$("#alerta3").fadeIn(8000);
-	$("#alerta3").fadeOut(1000);
+	$("#alerta3").fadeIn(2000);
+	$("#alerta3").fadeOut(8000);
 }
 
 
