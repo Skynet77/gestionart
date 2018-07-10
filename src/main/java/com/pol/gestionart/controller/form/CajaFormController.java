@@ -188,6 +188,11 @@ public class CajaFormController extends FormController<Caja> {
 		Inventario inventario = null;
 		if("confirmar".equals(accion)){
 			if(ventaCabecera != null){
+				List<VentaDetalle>listDetalle = ventaCabeceraDao.getDetalleByIdCab(idVentaCab);
+				for (VentaDetalle ventaDetalle : listDetalle) {
+					disminuirStock(ventaDetalle, map);
+				}
+				
 				ventaCabecera.setEstado(Estado.CONFIRMADO.name());
 				
 				Caja caja = new Caja();
@@ -335,8 +340,34 @@ public class CajaFormController extends FormController<Caja> {
 			e.printStackTrace();
 		}
 		
-		
-		
-		
+	}
+	
+	
+	private void disminuirStock(VentaDetalle ventaDet, ModelMap map) throws WebAppException{
+		int resta = 0;
+		//producto para disminuir el stok
+		Producto productoDisminuir = null;
+		//sumamos la cantidad del producto en stock, ya que se elimino del detalle
+		productoDisminuir = productoDao.find(ventaDet.getProducto().getId());
+		resta = productoDisminuir.getCantidad() - ventaDet.getCantidad();
+		if(resta < 0 ) {
+			throw new WebAppException("Quedan sólo "+productoDisminuir.getCantidad().toString()+" "+productoDisminuir.getDescripcion());
+		}
+		productoDisminuir.setCantidad(resta);
+		productoDao.createOrUpdate(productoDisminuir);
+		map.addAttribute("cantProducto",resta);
+	}
+	
+	private boolean verificarStock(VentaDetalle ventaDet, ModelMap map) throws WebAppException{
+		int resta = 0;
+		//producto para disminuir el stok
+		Producto productoDisminuir = null;
+		//sumamos la cantidad del producto en stock, ya que se elimino del detalle
+		productoDisminuir = productoDao.find(ventaDet.getProducto().getId());
+		resta = productoDisminuir.getCantidad() - ventaDet.getCantidad();
+		if(resta < 0 ) {
+			return false;
+		}
+		return true;
 	}
 }

@@ -311,7 +311,7 @@ public class VentaFormController extends FormController<VentaCabecera> {
 			}
 			
 			inventarioDao.createOrUpdate(inventario);
-			disminuirStock(vd, map);
+			//disminuirStock(vd, map);
 		}
 		
 		map.addAttribute("msgExitoVenta", true);
