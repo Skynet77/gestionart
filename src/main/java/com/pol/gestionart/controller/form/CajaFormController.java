@@ -189,9 +189,7 @@ public class CajaFormController extends FormController<Caja> {
 		if("confirmar".equals(accion)){
 			if(ventaCabecera != null){
 				List<VentaDetalle>listDetalle = ventaCabeceraDao.getDetalleByIdCab(idVentaCab);
-				for (VentaDetalle ventaDetalle : listDetalle) {
-					disminuirStock(ventaDetalle, map);
-				}
+				
 				
 				ventaCabecera.setEstado(Estado.CONFIRMADO.name());
 				
@@ -211,6 +209,19 @@ public class CajaFormController extends FormController<Caja> {
 				caja.setFechaActual(new Date());
 				caja.setSalidaBigDecimal(BigDecimal.ZERO);
 				cajaDao.create(caja);
+				for (VentaDetalle ventaDetalle : listDetalle) {
+					disminuirStock(ventaDetalle, map);
+					//preguntamos si ya hay un registro de inventario de ese producto en este mes
+					inventario = inventarioDao.getInventarioByProductoFecha(ventaDetalle.getProducto().getId(),null);
+					if(inventario == null){
+						throw new WebAppException("Debe realizar una compra del producto para realizar la venta");
+					}else{
+						inventario.setActual(inventario.getActual()-ventaDetalle.getCantidad());
+						inventario.setSalida(inventario.getSalida()+ventaDetalle.getCantidad());
+					}
+					inventarioDao.createOrUpdate(inventario);
+				}
+				
 				session.setAttribute("msgExito", "Venta confirmado con exito");
 				
 			}
@@ -223,7 +234,7 @@ public class CajaFormController extends FormController<Caja> {
 				inventario.setActual(inventario.getActual()+vd.getCantidad());
 				inventario.setSalida(inventario.getSalida()-vd.getCantidad());
 				inventarioDao.createOrUpdate(inventario);
-				aumentarStock(vd.getProducto(), vd, map);
+				//aumentarStock(vd.getProducto(), vd, map);
 			}
 			for (VentaDetalle ventaDetalle : listDetalle) {
 				ventaDetalleDao.destroy(ventaDetalle);
@@ -278,7 +289,7 @@ public class CajaFormController extends FormController<Caja> {
 		reporteCajaDao.create(reporte);
 		map.addAttribute("fecha",listCaja.get(0).getFecha());
 		map.addAttribute("apertura",aperturaCaja);
-		map.addAttribute("totalIngreso",reporte.getTotalIngreso());
+		map.addAttribute("totalIngreso",reporte.getTotalIngreso().subtract(aperturaCaja));
 		map.addAttribute("totalEgreso",reporte.getTotalEgreso());
 		map.addAttribute("total",reporte.getTotalActual());
 		map.addAttribute("idReporte",reporte.getId());
